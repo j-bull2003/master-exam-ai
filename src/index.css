@@ -2,41 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* UniHack.ai Design System - Clean Academic Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Academic brand colors - deep blues and emerald accents */
+    --background: 250 100% 99%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary: Academic deep blue */
+    --primary: 213 94% 24%;
+    --primary-foreground: 250 100% 99%;
+    --primary-hover: 213 94% 20%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Success: Emerald for correct answers */
+    --success: 158 64% 52%;
+    --success-foreground: 0 0% 100%;
+    --success-light: 158 64% 96%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Warning: Amber for attention */
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 100%;
+    --warning-light: 45 93% 96%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Error: Red for incorrect answers */
+    --error: 0 84% 60%;
+    --error-foreground: 0 0% 100%;
+    --error-light: 0 84% 96%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Secondary: Soft grays for UI elements */
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --radius: 0.5rem;
+    /* Accent: Light blue for highlights */
+    --accent: 213 100% 96%;
+    --accent-foreground: 213 94% 24%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders and inputs - soft and academic */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 213 94% 24%;
+
+    --radius: 0.75rem;
+
+    /* Academic spacing and shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 13% 91% / 0.05);
+    --shadow-md: 0 4px 12px -2px hsl(220 13% 91% / 0.12);
+    --shadow-lg: 0 10px 25px -5px hsl(220 13% 91% / 0.2);
+
+    /* Typography scale */
+    --font-display: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +128,62 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body;
+    font-feature-settings: 'cv11', 'ss01';
+    font-variation-settings: 'opsz' 32;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    font-variation-settings: 'opsz' 32;
+  }
+}
+
+@layer components {
+  /* Academic-focused component styles */
+  .question-card {
+    @apply bg-card border border-border rounded-lg p-6 shadow-sm;
+    box-shadow: var(--shadow-md);
+  }
+
+  .choice-option {
+    @apply border border-border rounded-lg p-4 transition-all duration-200 cursor-pointer;
+    @apply hover:border-primary hover:bg-accent/50;
+  }
+
+  .choice-option.selected {
+    @apply border-primary bg-accent text-accent-foreground;
+  }
+
+  .choice-option.correct {
+    @apply border-success bg-success-light text-success-foreground;
+  }
+
+  .choice-option.incorrect {
+    @apply border-error bg-error-light text-error-foreground;
+  }
+
+  .difficulty-pill {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .difficulty-easy {
+    @apply bg-success-light text-success-foreground;
+  }
+
+  .difficulty-medium {
+    @apply bg-warning-light text-warning-foreground;
+  }
+
+  .difficulty-hard {
+    @apply bg-error-light text-error-foreground;
+  }
+
+  .progress-ring {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .academic-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent-foreground)) 100%);
   }
 }
