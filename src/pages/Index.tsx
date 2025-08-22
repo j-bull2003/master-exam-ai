@@ -1,130 +1,222 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Sparkles, Brain, Target, Shield, Clock, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GraduationCap, Brain, Target, TrendingUp, Users, Shield } from "lucide-react";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <GraduationCap className="h-8 w-8 text-primary" />
-            <span className="text-xl font-display font-bold">UniHack.ai</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link to="/login">
-              <Button variant="ghost">Login</Button>
-            </Link>
-            <Link to="/register">
-              <Button>Get Started</Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+  const [isHovered, setIsHovered] = useState(false);
 
+  const exams = [
+    "SAT", "ACT", "UCAT", "BMAT", "STEP", "MAT", "ESAT", "LNAT", "TSA", "PAT"
+  ];
+
+  const features = [
+    {
+      icon: Brain,
+      title: "AI-Driven Precision",
+      description: "Adaptive learning that adjusts to your pace and identifies weak spots instantly."
+    },
+    {
+      icon: Target,
+      title: "Diagnostic Excellence",
+      description: "Pinpoint your strengths and weaknesses with our comprehensive baseline assessment."
+    },
+    {
+      icon: Zap,
+      title: "Instant Feedback",
+      description: "Get detailed explanations and similar questions to master every concept."
+    },
+    {
+      icon: Clock,
+      title: "Timed Practice",
+      description: "Train under real exam conditions with our advanced timing system."
+    }
+  ];
+
+  return (
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 academic-gradient bg-clip-text text-transparent">
-            Universal University<br />Admissions Test Prep
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Master any entrance exam with personalized study plans, adaptive practice, and expert-curated content. 
-            From UCAT to SAT, BMAT to STEP - we've got you covered.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/register">
-              <Button size="lg" className="px-8">Start Your Journey</Button>
-            </Link>
-            <Link to="/exam-picker">
-              <Button variant="outline" size="lg" className="px-8">Explore Exams</Button>
-            </Link>
+      <section className="ai-hero-section">
+        <div className="ai-floating-elements"></div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center max-w-5xl mx-auto">
+            {/* Floating Badge */}
+            <div className="ai-badge mb-8 mx-auto">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Join 10,000+ students already using AI-powered prep
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+                Ace Your
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-600 bg-clip-text text-transparent">
+                Admissions Test
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+                with AI Precision
+              </span>
+            </h1>
+
+            {/* Subtext */}
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+              Any exam, one platform. Advanced AI adapts to your learning style.
+              <br />
+              <span className="text-success font-semibold">7-day free trial</span> • 
+              <span className="text-muted-foreground"> $49.99/month after</span> • 
+              <span className="text-muted-foreground">Cancel anytime</span>
+            </p>
+
+            {/* CTA Button */}
+            <div className="mb-16">
+              <Link to="/auth/register">
+                <button
+                  className="ai-cta-button text-xl px-12 py-6"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <span className="relative z-10 flex items-center gap-3">
+                    Start Free Trial
+                    <Sparkles className={`w-6 h-6 transition-transform duration-300 ${isHovered ? 'rotate-180' : ''}`} />
+                  </span>
+                </button>
+              </Link>
+            </div>
+
+            {/* Supported Exams */}
+            <div className="ai-glass-card p-6 max-w-2xl mx-auto mb-16">
+              <p className="text-sm text-muted-foreground mb-4">Supports all major admissions tests</p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {exams.map((exam, index) => (
+                  <div
+                    key={exam}
+                    className="ai-badge"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    {exam}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-16 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-display font-bold text-center mb-12">
-            Why Choose UniHack.ai?
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="question-card">
-              <CardHeader>
-                <Brain className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Adaptive Learning</CardTitle>
-                <CardDescription>
-                  Our AI-powered system adapts to your learning style and progress
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            
-            <Card className="question-card">
-              <CardHeader>
-                <Target className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Personalized Study Plans</CardTitle>
-                <CardDescription>
-                  Get custom study schedules based on your diagnostic results
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            
-            <Card className="question-card">
-              <CardHeader>
-                <TrendingUp className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Advanced Analytics</CardTitle>
-                <CardDescription>
-                  Track your progress with detailed performance insights
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            
-            <Card className="question-card">
-              <CardHeader>
-                <Users className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Expert Content</CardTitle>
-                <CardDescription>
-                  All questions created by experienced tutors and educators
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            
-            <Card className="question-card">
-              <CardHeader>
-                <Shield className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Secure & Private</CardTitle>
-                <CardDescription>
-                  GDPR compliant with top-tier data protection standards
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            
-            <Card className="question-card">
-              <CardHeader>
-                <GraduationCap className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Comprehensive Coverage</CardTitle>
-                <CardDescription>
-                  Support for all major university entrance examinations
-                </CardDescription>
-              </CardHeader>
-            </Card>
+      {/* Features Section */}
+      <section className="py-24 relative">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+              Powered by Advanced AI
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Our intelligent platform learns from your performance to create a personalized study experience.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="ai-glass-card p-8 text-center hover:scale-105 transition-transform duration-300"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center">
+                  <feature.icon className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
+                <p className="text-muted-foreground">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="py-24 relative">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Start your free trial today. No hidden fees, cancel anytime.
+            </p>
+          </div>
+
+          <div className="max-w-md mx-auto">
+            <div className="ai-pricing-card featured">
+              <div className="ai-badge mb-6 mx-auto">Most Popular</div>
+              <h3 className="text-2xl font-bold mb-2">Premium Plan</h3>
+              <div className="mb-6">
+                <span className="text-5xl font-black">$49.99</span>
+                <span className="text-muted-foreground">/month</span>
+              </div>
+              
+              <div className="ai-trial-banner mb-8">
+                <p className="font-semibold text-success">🎉 7-Day Free Trial</p>
+                <p className="text-sm text-muted-foreground">Full access, no restrictions</p>
+              </div>
+
+              <ul className="space-y-4 mb-8 text-left">
+                <li className="flex items-center gap-3">
+                  <Shield className="w-5 h-5 text-success" />
+                  <span>Unlimited practice questions</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Shield className="w-5 h-5 text-success" />
+                  <span>AI-powered personalization</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Shield className="w-5 h-5 text-success" />
+                  <span>Full mock exams</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Shield className="w-5 h-5 text-success" />
+                  <span>Advanced analytics</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Shield className="w-5 h-5 text-success" />
+                  <span>All exam types</span>
+                </li>
+              </ul>
+
+              <Link to="/auth/register" className="block">
+                <button className="ai-cta-button w-full">
+                  Start Free Trial
+                </button>
+              </Link>
+
+              <p className="text-xs text-muted-foreground mt-4">
+                <Shield className="w-4 h-4 inline mr-1" />
+                Powered by Stripe • Secure payment • Cancel anytime
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-12 px-4">
-        <div className="container mx-auto text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <GraduationCap className="h-6 w-6 text-primary" />
-            <span className="font-display font-bold">UniHack.ai</span>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            © 2024 UniHack.ai. All rights reserved.
+      <footer className="py-12 border-t border-border/20">
+        <div className="container mx-auto px-6 text-center">
+          <p className="text-muted-foreground">
+            © 2024 UniHack.ai. Empowering students with AI-driven test preparation.
           </p>
+          <div className="mt-4 space-x-6">
+            <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground">
+              Terms of Service
+            </Link>
+            <Link to="/support" className="text-sm text-muted-foreground hover:text-foreground">
+              Support
+            </Link>
+          </div>
         </div>
       </footer>
     </div>
