@@ -369,7 +369,13 @@
     0% {
       opacity: 0;
       transform: scale(0.9);
-    }
+  }
+
+  /* University logos carousel animation */
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
     100% {
       opacity: 1;
       transform: scale(1);
