@@ -313,7 +313,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <div className="space-y-4">
                 <Button 
                   className="ai-cta-button w-full"
-                  onClick={handleSubmit}
+                  onClick={() => {
+                    // TODO: Create user account and subscription
+                    onComplete?.();
+                  }}
                 >
                   Start Your Diagnostic Test
                   <ArrowRight className="w-5 h-5 ml-2" />
