@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Sparkles, Brain, Target, Shield, Clock, Zap } from "lucide-react";
+import { Sparkles, Brain, Target, Shield, Clock, Zap, CheckCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Header } from "@/components/Header";
+import { UniversityCarousel } from "@/components/UniversityCarousel";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -35,72 +37,83 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <Header />
+      
       {/* Hero Section */}
-      <section className="ai-hero-section">
+      <section className="pt-24 pb-16 ai-hero-section overflow-hidden">
         <div className="ai-floating-elements"></div>
         
         <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center max-w-5xl mx-auto">
-            {/* Floating Badge */}
-            <div className="ai-badge mb-8 mx-auto">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Join 10,000+ students already using AI-powered prep
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent">
-                Ace Your
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 bg-clip-text text-transparent">
-                Admissions Test
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent">
-                with AI Precision
-              </span>
-            </h1>
-
-            {/* Subtext */}
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-              Any exam, one platform. Advanced AI adapts to your learning style.
-              <br />
-              <span className="text-success font-semibold">7-day free trial</span> • 
-              <span className="text-muted-foreground"> $49.99/month after</span> • 
-              <span className="text-muted-foreground">Cancel anytime</span>
-            </p>
-
-            {/* CTA Button */}
-            <div className="mb-16">
-              <Link to="/auth/register">
-                <button
-                  className="ai-cta-button text-xl px-12 py-6"
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                >
-                  <span className="relative z-10 flex items-center gap-3">
-                    Start Free Trial
-                    <Sparkles className={`w-6 h-6 transition-transform duration-300 ${isHovered ? 'rotate-180' : ''}`} />
-                  </span>
-                </button>
-              </Link>
-            </div>
-
-            {/* Supported Exams */}
-            <div className="ai-glass-card p-6 max-w-2xl mx-auto mb-16">
-              <p className="text-sm text-muted-foreground mb-4">Supports all major admissions tests</p>
-              <div className="flex flex-wrap justify-center gap-3">
-                {exams.map((exam, index) => (
-                  <div
-                    key={exam}
-                    className="ai-badge"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    {exam}
-                  </div>
-                ))}
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+            {/* Left: Content */}
+            <div className="space-y-8 animate-[slideUpFade_0.8s_ease-out]">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 to-primary-variant/10 border border-primary/20 rounded-full px-4 py-2 text-sm font-medium">
+                <Sparkles className="w-4 h-4 text-primary" />
+                Join 10,000+ students already using AI-powered prep
               </div>
+
+              {/* Main Headline */}
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
+                <span className="text-foreground">Ace Your</span>
+                <br />
+                <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
+                  Admissions Test
+                </span>
+                <br />
+                <span className="text-foreground">with AI-Driven Precision</span>
+              </h1>
+
+              {/* Subtext */}
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
+                Any admission test worldwide. Personalized study plan. Adaptive quizzes & mocks. Tutor-authored content.
+              </p>
+
+              {/* Pricing Info */}
+              <div className="flex flex-wrap items-center gap-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-success" />
+                  <span className="text-success font-semibold">7-day free trial</span>
+                </div>
+                <div className="text-muted-foreground">$49.99/month after</div>
+                <div className="text-muted-foreground">Cancel anytime</div>
+              </div>
+
+              {/* CTA Button */}
+              <div className="pt-4">
+                <Link to="/auth/register">
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-300 text-lg px-8 py-6 group"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  >
+                    Start Free Trial
+                    <ArrowRight className={`w-5 h-5 ml-2 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Supported Exams */}
+              <div className="pt-8">
+                <p className="text-sm text-muted-foreground mb-4">Supports all major admissions tests</p>
+                <div className="flex flex-wrap gap-2">
+                  {exams.map((exam, index) => (
+                    <span
+                      key={exam}
+                      className="bg-background/50 backdrop-blur-sm border border-border/50 rounded-lg px-3 py-1 text-sm font-medium"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      {exam}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: University Carousel */}
+            <div className="animate-[scaleIn_1s_ease-out_0.3s_both]">
+              <UniversityCarousel />
             </div>
           </div>
         </div>
