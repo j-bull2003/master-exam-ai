@@ -2,65 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-/* UniHack.ai Design System - Clean Academic Theme */
+/* UniHack.ai Design System - Distinctive Tech-Academic Fusion */
 
 @layer base {
   :root {
-    /* Academic brand colors - deep blues and emerald accents */
-    --background: 250 100% 99%;
-    --foreground: 222 47% 11%;
+    /* UniHack brand colors - electric blues with cyber accents */
+    --background: 240 33% 99%;
+    --foreground: 230 84% 7%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 230 84% 7%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 230 84% 7%;
 
-    /* Primary: Academic deep blue */
-    --primary: 213 94% 24%;
-    --primary-foreground: 250 100% 99%;
-    --primary-hover: 213 94% 20%;
+    /* Primary: Electric cyber blue */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 217 91% 55%;
+    --primary-glow: 217 91% 70%;
 
-    /* Success: Emerald for correct answers */
-    --success: 158 64% 52%;
+    /* Success: Vibrant emerald for achievements */
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
-    --success-light: 158 64% 96%;
+    --success-light: 142 76% 96%;
+    --success-glow: 142 76% 50%;
 
-    /* Warning: Amber for attention */
-    --warning: 45 93% 47%;
+    /* Warning: Electric amber */
+    --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
-    --warning-light: 45 93% 96%;
+    --warning-light: 38 92% 96%;
 
-    /* Error: Red for incorrect answers */
-    --error: 0 84% 60%;
+    /* Error: Neon red for attention */
+    --error: 0 72% 51%;
     --error-foreground: 0 0% 100%;
-    --error-light: 0 84% 96%;
+    --error-light: 0 72% 96%;
 
-    /* Secondary: Soft grays for UI elements */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 47% 11%;
+    /* Secondary: Cool tech grays */
+    --secondary: 240 9% 89%;
+    --secondary-foreground: 230 84% 7%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 240 6% 90%;
+    --muted-foreground: 240 3.8% 46.1%;
 
-    /* Accent: Light blue for highlights */
-    --accent: 213 100% 96%;
-    --accent-foreground: 213 94% 24%;
+    /* Accent: Electric highlight */
+    --accent: 217 91% 95%;
+    --accent-foreground: 217 91% 60%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders and inputs - soft and academic */
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 213 94% 24%;
+    /* Borders and inputs - subtle tech styling */
+    --border: 240 6% 85%;
+    --input: 240 6% 85%;
+    --ring: 217 91% 60%;
 
-    --radius: 0.75rem;
+    --radius: 0.875rem;
 
-    /* Academic spacing and shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(220 13% 91% / 0.05);
-    --shadow-md: 0 4px 12px -2px hsl(220 13% 91% / 0.12);
-    --shadow-lg: 0 10px 25px -5px hsl(220 13% 91% / 0.2);
+    /* UniHack shadows with tech glow effects */
+    --shadow-sm: 0 1px 3px 0 hsl(240 6% 85% / 0.1);
+    --shadow-md: 0 4px 16px -4px hsl(240 6% 85% / 0.15);
+    --shadow-lg: 0 12px 32px -8px hsl(240 6% 85% / 0.25);
+    --shadow-glow: 0 0 20px hsl(217 91% 60% / 0.3);
+    --shadow-glow-strong: 0 0 40px hsl(217 91% 60% / 0.5);
+    
+    /* Gradients for modern tech look */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 70%) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(142 76% 50%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(230 84% 7%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(240 33% 99%) 100%);
 
     /* Typography scale */
     --font-display: 'Inter', system-ui, sans-serif;
@@ -140,50 +150,141 @@
 }
 
 @layer components {
-  /* Academic-focused component styles */
-  .question-card {
-    @apply bg-card border border-border rounded-lg p-6 shadow-sm;
+  /* UniHack.ai distinctive component styles */
+  .unihack-card {
+    @apply relative overflow-hidden rounded-2xl border border-border/50 backdrop-blur-sm;
+    background: var(--gradient-card);
     box-shadow: var(--shadow-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .unihack-card:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+
+  .unihack-hero {
+    background: var(--gradient-hero);
+    @apply relative overflow-hidden;
+  }
+
+  .unihack-hero::before {
+    content: '';
+    @apply absolute inset-0 opacity-10;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .question-card {
+    @apply unihack-card p-8;
   }
 
   .choice-option {
-    @apply border border-border rounded-lg p-4 transition-all duration-200 cursor-pointer;
-    @apply hover:border-primary hover:bg-accent/50;
+    @apply relative overflow-hidden rounded-xl border border-border/70 p-5 transition-all duration-300 cursor-pointer;
+    @apply hover:border-primary/70 hover:bg-accent/30 hover:shadow-md;
+    background: linear-gradient(145deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
+  }
+
+  .choice-option:hover {
+    transform: translateX(4px);
   }
 
   .choice-option.selected {
-    @apply border-primary bg-accent text-accent-foreground;
+    @apply border-primary bg-accent text-accent-foreground shadow-lg;
+    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.3), var(--shadow-md);
   }
 
   .choice-option.correct {
     @apply border-success bg-success-light text-success-foreground;
+    box-shadow: var(--shadow-glow);
+    background: var(--gradient-success);
   }
 
   .choice-option.incorrect {
     @apply border-error bg-error-light text-error-foreground;
+    animation: shake 0.5s ease-in-out;
   }
 
   .difficulty-pill {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+    @apply inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold tracking-wide;
+    @apply transition-all duration-200 hover:scale-105;
   }
 
   .difficulty-easy {
-    @apply bg-success-light text-success-foreground;
+    @apply bg-success-light text-success-foreground border border-success/30;
+    box-shadow: 0 2px 8px hsl(var(--success) / 0.2);
   }
 
   .difficulty-medium {
-    @apply bg-warning-light text-warning-foreground;
+    @apply bg-warning-light text-warning-foreground border border-warning/30;
+    box-shadow: 0 2px 8px hsl(var(--warning) / 0.2);
   }
 
   .difficulty-hard {
-    @apply bg-error-light text-error-foreground;
+    @apply bg-error-light text-error-foreground border border-error/30;
+    box-shadow: 0 2px 8px hsl(var(--error) / 0.2);
   }
 
   .progress-ring {
-    @apply transition-all duration-300 ease-out;
+    @apply transition-all duration-500 ease-out;
   }
 
-  .academic-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent-foreground)) 100%);
+  .unihack-gradient {
+    background: var(--gradient-primary);
+  }
+
+  .unihack-button {
+    @apply relative overflow-hidden rounded-xl font-semibold tracking-wide transition-all duration-300;
+    @apply hover:scale-105 hover:shadow-lg active:scale-95;
+  }
+
+  .unihack-button-primary {
+    @apply unihack-button bg-primary text-primary-foreground;
+    background: var(--gradient-primary);
+    box-shadow: 0 4px 16px hsl(var(--primary) / 0.3);
+  }
+
+  .unihack-button-primary:hover {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .unihack-stat-card {
+    @apply unihack-card p-6 text-center;
+    background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
+  }
+
+  .unihack-glow {
+    position: relative;
+  }
+
+  .unihack-glow::before {
+    content: '';
+    @apply absolute inset-0 rounded-inherit opacity-0 transition-opacity duration-300;
+    background: var(--gradient-primary);
+    filter: blur(10px);
+    z-index: -1;
+  }
+
+  .unihack-glow:hover::before {
+    @apply opacity-30;
+  }
+
+  /* Animations */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    }
+    50% { 
+      box-shadow: 0 0 30px hsl(var(--primary) / 0.5);
+    }
+  }
+
+  .unihack-pulse {
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 }

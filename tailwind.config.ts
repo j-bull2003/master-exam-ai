@@ -89,9 +89,17 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			boxShadow: {
-				'academic-sm': 'var(--shadow-sm)',
-				'academic-md': 'var(--shadow-md)',
-				'academic-lg': 'var(--shadow-lg)',
+				'unihack-sm': 'var(--shadow-sm)',
+				'unihack-md': 'var(--shadow-md)',
+				'unihack-lg': 'var(--shadow-lg)',
+				'unihack-glow': 'var(--shadow-glow)',
+				'unihack-glow-strong': 'var(--shadow-glow-strong)',
+			},
+			backgroundImage: {
+				'unihack-gradient': 'var(--gradient-primary)',
+				'unihack-hero': 'var(--gradient-hero)',
+				'unihack-card': 'var(--gradient-card)',
+				'unihack-success': 'var(--gradient-success)',
 			},
 			keyframes: {
 				'accordion-down': {
