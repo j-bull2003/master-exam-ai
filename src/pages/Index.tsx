@@ -49,15 +49,15 @@ const Index = () => {
 
             {/* Main Headline */}
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent">
                 Ace Your
               </span>
               <br />
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 bg-clip-text text-transparent">
                 Admissions Test
               </span>
               <br />
-              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent">
                 with AI Precision
               </span>
             </h1>
@@ -110,7 +110,7 @@ const Index = () => {
       <section className="py-24 relative">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Powered by Advanced AI
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -140,7 +140,7 @@ const Index = () => {
       <section className="py-24 relative">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Simple, Transparent Pricing
             </h2>
             <p className="text-xl text-muted-foreground">

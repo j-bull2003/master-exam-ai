@@ -6,19 +6,19 @@
 
 @layer base {
   :root {
-    /* AI Platform brand colors - modern gradients and glows */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* AI Platform brand colors - light theme with modern gradients */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
 
     /* Primary: Electric AI blue */
     --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 9%;
+    --primary-foreground: 0 0% 100%;
     --primary-hover: 217 91% 55%;
     --primary-glow: 217 91% 70%;
 
@@ -38,41 +38,41 @@
     --error-foreground: 0 0% 100%;
     --error-light: 0 72% 96%;
 
-    /* Secondary: Dark glass */
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    /* Secondary: Light glass */
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
 
     /* Accent: Glass highlight */
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders - subtle glass */
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    /* Borders - subtle light glass */
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
     --ring: 217 91% 60%;
 
     --radius: 1rem;
 
-    /* AI Platform shadows and glows */
-    --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.3);
-    --shadow-md: 0 4px 16px -4px hsl(0 0% 0% / 0.4);
-    --shadow-lg: 0 12px 32px -8px hsl(0 0% 0% / 0.5);
-    --shadow-glow: 0 0 32px hsl(217 91% 60% / 0.4);
-    --shadow-glow-strong: 0 0 48px hsl(217 91% 60% / 0.6);
-    --shadow-purple-glow: 0 0 32px hsl(270 91% 60% / 0.3);
-    --shadow-success-glow: 0 0 32px hsl(142 76% 50% / 0.3);
+    /* AI Platform shadows and glows - light theme */
+    --shadow-sm: 0 1px 3px 0 hsl(240 5.9% 10% / 0.1);
+    --shadow-md: 0 4px 16px -4px hsl(240 5.9% 10% / 0.1);
+    --shadow-lg: 0 12px 32px -8px hsl(240 5.9% 10% / 0.15);
+    --shadow-glow: 0 0 32px hsl(217 91% 60% / 0.2);
+    --shadow-glow-strong: 0 0 48px hsl(217 91% 60% / 0.3);
+    --shadow-purple-glow: 0 0 32px hsl(270 91% 60% / 0.15);
+    --shadow-success-glow: 0 0 32px hsl(142 76% 50% / 0.15);
     
-    /* AI Platform gradients */
+    /* AI Platform gradients - light theme */
     --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(270 91% 60%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(240 10% 3.9%) 0%, hsl(240 5% 6%) 50%, hsl(240 10% 3.9%) 100%);
-    --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-    --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(240 10% 99%) 0%, hsl(240 30% 98%) 50%, hsl(240 20% 99%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.8) 0%, hsl(240 30% 99% / 0.6) 100%);
+    --gradient-glass: linear-gradient(145deg, hsl(0 0% 100% / 0.7) 0%, hsl(240 30% 98% / 0.4) 100%);
     --gradient-cta: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(270 91% 60%) 50%, hsl(217 91% 60%) 100%);
 
     /* Typography scale */
@@ -157,15 +157,15 @@
   .ai-glass-card {
     @apply relative overflow-hidden rounded-3xl backdrop-blur-xl;
     background: var(--gradient-glass);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid hsl(240 5.9% 90% / 0.8);
+    box-shadow: var(--shadow-lg), inset 0 1px 0 hsl(0 0% 100% / 0.3);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .ai-glass-card:hover {
-    box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-glow), inset 0 1px 0 hsl(0 0% 100% / 0.5);
     transform: translateY(-4px);
-    border-color: rgba(55, 144, 255, 0.3);
+    border-color: hsl(217 91% 60% / 0.5);
   }
 
   .ai-hero-section {
@@ -175,17 +175,17 @@
 
   .ai-hero-section::before {
     content: '';
-    @apply absolute inset-0 opacity-30;
+    @apply absolute inset-0 opacity-15;
     background: 
-      radial-gradient(circle at 20% 50%, hsl(217 91% 60% / 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, hsl(270 91% 60% / 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 40% 80%, hsl(142 76% 50% / 0.2) 0%, transparent 50%);
+      radial-gradient(circle at 20% 50%, hsl(217 91% 60% / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(270 91% 60% / 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, hsl(142 76% 50% / 0.08) 0%, transparent 50%);
   }
 
   .ai-hero-section::after {
     content: '';
-    @apply absolute inset-0 opacity-20;
-    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.3'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E");
+    @apply absolute inset-0 opacity-10;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='%23000000' stroke-width='0.5' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E");
   }
 
   .ai-cta-button {
@@ -194,18 +194,18 @@
     background: var(--gradient-cta);
     box-shadow: var(--shadow-glow);
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid hsl(0 0% 100% / 0.3);
   }
 
   .ai-cta-button:hover {
     box-shadow: var(--shadow-glow-strong);
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: hsl(0 0% 100% / 0.5);
   }
 
   .ai-cta-button::before {
     content: '';
     @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.2) 0%, hsl(0 0% 100% / 0.1) 100%);
   }
 
   .ai-cta-button:hover::before {
@@ -218,13 +218,13 @@
   }
 
   .ai-pricing-card.featured {
-    border-color: hsl(var(--primary) / 0.5);
-    box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: var(--shadow-glow), inset 0 1px 0 hsl(0 0% 100% / 0.4);
   }
 
   .ai-pricing-card.featured::before {
     content: '';
-    @apply absolute -inset-1 rounded-3xl opacity-50;
+    @apply absolute -inset-1 rounded-3xl opacity-30;
     background: var(--gradient-primary);
     z-index: -1;
     filter: blur(20px);
@@ -236,27 +236,26 @@
   }
 
   .ai-form-input {
-    @apply w-full px-4 py-3 rounded-xl border border-border/50 bg-background/50 backdrop-blur-sm;
+    @apply w-full px-4 py-3 rounded-xl border border-border/50 bg-background/80 backdrop-blur-sm;
     @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50;
     @apply transition-all duration-200;
-    background: rgba(255, 255, 255, 0.05);
   }
 
   .ai-form-input:focus {
-    background: rgba(255, 255, 255, 0.1);
+    background: hsl(0 0% 100% / 0.9);
     box-shadow: 0 0 0 2px hsl(var(--primary) / 0.3);
   }
 
   .ai-badge {
     @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: hsl(240 5.9% 10% / 0.1);
+    border: 1px solid hsl(240 5.9% 90% / 0.8);
     backdrop-filter: blur(10px);
   }
 
   .ai-trial-banner {
     @apply ai-glass-card p-4 text-center;
-    background: linear-gradient(135deg, hsl(142 76% 36% / 0.1) 0%, hsl(217 91% 60% / 0.1) 100%);
+    background: linear-gradient(135deg, hsl(142 76% 96% / 0.8) 0%, hsl(217 91% 96% / 0.8) 100%);
     border-color: hsl(var(--success) / 0.3);
   }
 
@@ -267,19 +266,19 @@
   .ai-floating-elements::before,
   .ai-floating-elements::after {
     content: '';
-    @apply absolute rounded-full opacity-20;
+    @apply absolute rounded-full opacity-10;
     animation: float 6s ease-in-out infinite;
   }
 
   .ai-floating-elements::before {
     @apply w-32 h-32 top-1/4 left-1/4;
-    background: radial-gradient(circle, hsl(217 91% 60% / 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, hsl(217 91% 60% / 0.15) 0%, transparent 70%);
     animation-delay: -2s;
   }
 
   .ai-floating-elements::after {
     @apply w-24 h-24 top-3/4 right-1/4;
-    background: radial-gradient(circle, hsl(270 91% 60% / 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, hsl(270 91% 60% / 0.15) 0%, transparent 70%);
     animation-delay: -4s;
   }
 
