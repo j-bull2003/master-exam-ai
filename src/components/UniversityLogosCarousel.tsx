@@ -23,17 +23,22 @@ export const UniversityLogosCarousel = () => {
   const duplicatedUniversities = [...universities, ...universities];
 
   return (
-    <div className="w-full overflow-hidden bg-muted/30 py-8">
+    <div className="w-full overflow-hidden bg-muted/20 py-12 border-t border-border/30">
+      <div className="container mx-auto px-6 mb-8">
+        <p className="text-center text-sm font-medium text-muted-foreground">
+          Trusted by students preparing for admissions to top universities worldwide
+        </p>
+      </div>
       <div className="flex animate-[scroll_30s_linear_infinite] whitespace-nowrap">
         {duplicatedUniversities.map((university, index) => (
           <div
             key={`${university.name}-${index}`}
-            className="flex items-center justify-center mx-8 flex-shrink-0"
+            className="flex items-center justify-center mx-12 flex-shrink-0"
           >
             <img
               src={university.logo}
               alt={`${university.name} University`}
-              className="h-12 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300 filter grayscale hover:grayscale-0"
+              className="h-14 w-auto opacity-40 hover:opacity-70 transition-opacity duration-300 filter grayscale hover:grayscale-0"
             />
           </div>
         ))}

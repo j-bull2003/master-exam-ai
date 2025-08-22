@@ -19,6 +19,7 @@
     /* Enhanced AI/Academic Colors */
     --primary: 218 100% 58%;    /* Vibrant AI blue */
     --primary-foreground: 210 40% 98%;
+    --primary-hover: 218 100% 52%;
     --primary-variant: 252 83% 67%;  /* Purple AI accent */
     --primary-glow: 270 91% 65%;     /* Electric purple glow */
 

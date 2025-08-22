@@ -50,8 +50,9 @@ const Index = () => {
             </div>
 
             {/* Main Headline - No Transparent Text */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-8 text-foreground">
-              Ace Your Admissions Test<br />
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-8">
+              <span className="text-foreground">Ace Your Admissions Test</span>
+              <br />
               <span className="text-primary">with AI-Driven Precision</span>
             </h1>
 
@@ -75,7 +76,7 @@ const Index = () => {
               <Link to="/auth/register">
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-300 text-lg px-12 py-6 shadow-lg group"
+                  className="bg-primary hover:bg-primary-hover text-primary-foreground font-semibold text-lg px-12 py-6 shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-105 hover:-translate-y-1"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                 >
@@ -87,12 +88,12 @@ const Index = () => {
 
             {/* Supported Exams */}
             <div className="mb-16">
-              <p className="text-sm text-muted-foreground mb-6">Supports all major admissions tests</p>
+              <p className="text-sm font-medium text-muted-foreground mb-6">Supports all major admissions tests</p>
               <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
                 {exams.map((exam, index) => (
                   <span
                     key={exam}
-                    className="bg-background border border-border rounded-lg px-4 py-2 text-sm font-medium text-foreground hover:border-primary/20 transition-colors"
+                    className="bg-card border border-border/50 rounded-lg px-4 py-2 text-sm font-medium text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 hover:scale-105"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     {exam}
@@ -187,7 +188,7 @@ const Index = () => {
               </ul>
 
               <Link to="/auth/register" className="block">
-                <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-lg py-6">
+                <Button className="w-full bg-primary hover:bg-primary-hover text-primary-foreground font-semibold text-lg py-6 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200">
                   Start Free Trial
                 </Button>
               </Link>

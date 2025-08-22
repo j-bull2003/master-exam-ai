@@ -4,18 +4,18 @@ import uniHackLogo from "@/assets/unihack-logo.png";
 
 export const Header = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-sm">
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity group">
             <img 
               src={uniHackLogo} 
               alt="UniHack.ai Logo" 
-              className="w-8 h-8"
+              className="w-8 h-8 group-hover:scale-105 transition-transform duration-200"
             />
-            <span className="text-xl font-display font-bold bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent">
-              UniHack.ai
+            <span className="text-xl font-display font-bold text-foreground">
+              Uni<span className="text-primary">Hack</span>.ai
             </span>
           </Link>
 
@@ -23,33 +23,39 @@ export const Header = () => {
           <div className="hidden md:flex items-center gap-8">
             <Link 
               to="/features" 
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"
             >
               Features
+              <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
             <Link 
               to="/pricing" 
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"
             >
               Pricing
+              <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
             <Link 
               to="/about" 
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"
             >
               About
+              <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Link to="/auth/login">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="font-medium hover:bg-primary/5 hover:text-primary">
                 Sign In
               </Button>
             </Link>
             <Link to="/auth/register">
-              <Button size="sm" className="bg-gradient-to-r from-primary to-primary-variant hover:opacity-90">
+              <Button 
+                size="sm" 
+                className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium px-6 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+              >
                 Start Free Trial
               </Button>
             </Link>
