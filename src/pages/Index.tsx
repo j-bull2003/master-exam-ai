@@ -4,7 +4,6 @@ import { Sparkles, Brain, Target, Shield, Clock, Zap, CheckCircle, ArrowRight } 
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { LogoMarquee } from "@/components/LogoMarquee";
-import { universityLogos } from "@/data/logos";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -88,7 +87,7 @@ const Index = () => {
             </div>
 
             {/* Supported Exams */}
-            <div className="mb-8">
+            <div className="mb-6">
               <p className="text-sm font-medium text-muted-foreground mb-6">Supports all major admissions tests</p>
               <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
                 {exams.map((exam, index) => (
@@ -106,14 +105,14 @@ const Index = () => {
         </div>
       </section>
 
-      {/* University Logos Marquee - Directly beneath hero section */}
-      <section className="py-8 bg-muted/10 border-t border-border/20">
-        <div className="mb-6">
+      {/* University Logos Marquee - No gap above */}
+      <section className="py-6 bg-muted/5 border-t border-border/10">
+        <div className="mb-4">
           <p className="text-center text-sm font-medium text-muted-foreground">
-            Trusted by students preparing for admissions to top universities worldwide
+            Trusted by students preparing for top universities worldwide
           </p>
         </div>
-        <LogoMarquee logos={universityLogos} />
+        <LogoMarquee sortStrategy="alpha" />
       </section>
 
       {/* Features Section */}
