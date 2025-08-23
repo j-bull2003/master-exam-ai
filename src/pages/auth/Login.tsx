@@ -58,12 +58,12 @@ const Login = () => {
       
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
-        <div className="text-center mb-4">
+        <div className="text-center mb-2">
           <Link to="/" className="inline-flex items-center justify-center">
             <img 
               src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
               alt="UniHack.ai Logo" 
-              className="h-32 md:h-36 w-auto object-contain"
+              className="h-40 md:h-44 w-auto object-contain"
               style={{ backgroundColor: 'transparent' }}
             />
           </Link>
