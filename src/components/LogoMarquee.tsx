@@ -18,22 +18,25 @@ export const LogoMarquee = ({ className = "" }: LogoMarqueeProps) => {
         {duplicatedLogos.map((logo, index) => (
           <div
             key={`${logo.alt}-${index}`}
-            className="flex items-center justify-center mx-4 flex-shrink-0 group logoItem"
+            className="logoItem flex items-center justify-center flex-shrink-0 group"
+            style={{ width: '120px' }}
           >
-            {/* Fixed height container for consistent sizing */}
-            <div className="h-12 w-12 flex items-center justify-center">
-              <img
-                src={logo.src}
-                alt={logo.alt}
-                className="h-12 w-12 object-contain grayscale opacity-90 transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
-                style={{ maxHeight: '48px', objectFit: 'contain', display: 'block' }}
-                loading="lazy"
-                onError={(e) => {
-                  console.error(`Failed to load image: ${logo.src}`);
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-            </div>
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              className="grayscale opacity-90 transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+              style={{ 
+                maxHeight: '48px', 
+                maxWidth: '100%', 
+                objectFit: 'contain', 
+                display: 'block' 
+              }}
+              loading="lazy"
+              onError={(e) => {
+                console.error(`Failed to load image: ${logo.src}`);
+                e.currentTarget.style.display = 'none';
+              }}
+            />
           </div>
         ))}
       </div>
