@@ -87,7 +87,7 @@ const Index = () => {
             </div>
 
             {/* Supported Exams */}
-            <div className="mb-2">
+            <div className="mb-8">
               <p className="text-sm font-medium text-muted-foreground mb-6">Supports all major admissions tests</p>
               <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
                 {exams.map((exam, index) => (
@@ -105,9 +105,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* University Logos Marquee - Minimal gap above */}
-      <section className="py-4 bg-muted/5 border-t border-border/10">
-        <div className="mb-2">
+      {/* University Logos Marquee - Reduced gap */}
+      <section className="pt-2 pb-8 bg-muted/5 border-t border-border/10">
+        <div className="mb-4">
           <p className="text-center text-sm font-medium text-muted-foreground">
             Trusted by students preparing for top universities worldwide
           </p>
