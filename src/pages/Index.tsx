@@ -40,29 +40,29 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-24">
+      <section className="pt-32 pb-16">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm font-medium mb-8">
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
               <Sparkles className="w-4 h-4 text-primary" />
               Join 10,000+ students already using AI-powered prep
             </div>
 
-            {/* Main Headline - No Transparent Text */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-8">
+            {/* Main Headline */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6">
               <span className="text-foreground">Ace Your Admissions Test</span>
               <br />
               <span className="text-primary">with AI-Driven Precision</span>
             </h1>
 
             {/* Subtext */}
-            <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
               Any admission test worldwide. Personalized study plan. Adaptive quizzes & mocks. Tutor-authored content.
             </p>
 
             {/* Pricing Info */}
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-12">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8">
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-success" />
                 <span className="text-success font-semibold">7-day free trial</span>
@@ -72,7 +72,7 @@ const Index = () => {
             </div>
 
             {/* CTA Button */}
-            <div className="mb-16">
+            <div className="mb-8">
               <Link to="/auth/register">
                 <Button
                   size="lg"
@@ -87,9 +87,9 @@ const Index = () => {
             </div>
 
             {/* Supported Exams */}
-            <div className="mb-12">
-              <p className="text-sm font-medium text-muted-foreground mb-6">Supports all major admissions tests</p>
-              <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
+            <div className="mb-6">
+              <p className="text-sm font-medium text-muted-foreground mb-4">Supports all major admissions tests</p>
+              <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto mb-8">
                 {exams.map((exam, index) => (
                   <span
                     key={exam}
@@ -101,18 +101,18 @@ const Index = () => {
                 ))}
               </div>
             </div>
+
+            {/* University Logos Carousel - Integrated into hero */}
+            <div className="mb-4">
+              <p className="text-sm font-medium text-muted-foreground mb-4">
+                Trusted by students preparing for top universities worldwide
+              </p>
+              <div style={{ minHeight: '72px' }}>
+                <LogoMarquee />
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-
-      {/* University Logos Marquee - Reduced gap */}
-      <section className="pt-2 pb-8 bg-muted/5 border-t border-border/10">
-        <div className="mb-4">
-          <p className="text-center text-sm font-medium text-muted-foreground">
-            Trusted by students preparing for top universities worldwide
-          </p>
-        </div>
-        <LogoMarquee />
       </section>
 
       {/* Features Section */}
