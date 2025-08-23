@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
 import AccessGate from "@/components/AccessGate";
+import { UserProfile } from "@/components/UserProfile";
 import { 
   GraduationCap, 
   Target, 
@@ -209,7 +210,6 @@ const Dashboard = () => {
               <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors">Practice</Link>
               <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors">Mocks</Link>
               <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors">Analytics</Link>
-              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors">Profile</Link>
             </nav>
           </div>
         </header>
@@ -287,7 +287,9 @@ const Dashboard = () => {
           </div>
 
           {/* Main Dashboard Content */}
-          <div className="space-y-8">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Main Content - Left Side */}
+            <div className="lg:col-span-2 space-y-8">
             {/* Study Plan Table */}
             <Card className="border-border/40">
               <CardHeader className="border-b border-border/40 bg-muted/20">
@@ -532,6 +534,12 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
             </Link>
+            </div>
+            
+            {/* Profile Sidebar - Right Side */}
+            <div className="lg:col-span-1">
+              <UserProfile className="sticky top-8" />
+            </div>
           </div>
         </div>
       </div>

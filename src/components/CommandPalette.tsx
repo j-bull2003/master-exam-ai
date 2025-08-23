@@ -23,8 +23,7 @@ import {
   Target,
   BarChart3,
   GraduationCap,
-  HelpCircle,
-  User
+  HelpCircle
 } from "lucide-react";
 
 interface CommandPaletteProps {
@@ -57,7 +56,6 @@ export const CommandPalette = ({ open, setOpen }: CommandPaletteProps) => {
       items: [
         { icon: Target, title: "Diagnostic", description: "Take assessment", path: "/diagnostic" },
         { icon: GraduationCap, title: "Dashboard", description: "Study dashboard", path: "/dashboard" },
-        { icon: User, title: "Profile", description: "Manage profile", path: "/profile" },
         { icon: Zap, title: "Practice", description: "Practice questions", path: "/practice" },
         { icon: BarChart3, title: "Analytics", description: "Progress tracking", path: "/analytics" },
       ]
