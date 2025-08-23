@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Sparkles, Brain, Target, Shield, Clock, Zap, CheckCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Header } from "@/components/Header";
 import { LogoMarquee } from "@/components/LogoMarquee";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   const exams = [
     "SAT", "ACT", "UCAT", "BMAT", "STEP", "MAT", "ESAT", "LNAT", "TSA", "PAT"
@@ -40,77 +47,136 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16">
-        <div className="container mx-auto px-6">
+      <section className="pt-32 pb-16 relative overflow-hidden">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.05),transparent_50%)] pointer-events-none" />
+        
+        <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
-              <Sparkles className="w-4 h-4 text-primary" />
-              Join 10,000+ students already using AI-powered prep
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6">
-              <span className="text-foreground">Ace Your Admissions Test</span>
-              <br />
-              <span className="text-primary">with AI-Driven Precision</span>
-            </h1>
-
-            {/* Subtext */}
-            <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
-              Any admission test worldwide. Personalized study plan. Adaptive quizzes & mocks. Tutor-authored content.
-            </p>
-
-            {/* Pricing Info */}
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-success" />
-                <span className="text-success font-semibold">7-day free trial</span>
+            {/* Badge with glassmorphism */}
+            {isLoaded ? (
+              <div className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in">
+                <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
+                <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
+                  Join 10,000+ students already using AI-powered prep
+                </span>
               </div>
-              <div className="text-muted-foreground">$49.99/month after</div>
-              <div className="text-muted-foreground">Cancel anytime</div>
-            </div>
+            ) : (
+              <Skeleton className="h-8 w-80 mx-auto mb-6 rounded-full" />
+            )}
 
-            {/* CTA Button */}
-            <div className="mb-8">
-              <Link to="/auth/register">
-                <Button
-                  size="lg"
-                  className="bg-primary hover:bg-primary-hover text-primary-foreground font-semibold text-lg px-12 py-6 shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-105 hover:-translate-y-1"
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                >
-                  Start Free Trial
-                  <ArrowRight className={`w-5 h-5 ml-2 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
-                </Button>
-              </Link>
-            </div>
-
-            {/* Supported Exams */}
-            <div className="mb-6">
-              <p className="text-sm font-medium text-muted-foreground mb-4">Supports all major admissions tests</p>
-              <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto mb-8">
-                {exams.map((exam, index) => (
-                  <span
-                    key={exam}
-                    className="bg-card border border-border/50 rounded-lg px-4 py-2 text-sm font-medium text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 hover:scale-105"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    {exam}
-                  </span>
-                ))}
+            {/* Main Headline with enhanced typography */}
+            {isLoaded ? (
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+                <span className="text-foreground block mb-2">Ace Your Admissions Test</span>
+                <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+                  with AI-Driven Precision
+                </span>
+              </h1>
+            ) : (
+              <div className="space-y-4 mb-6">
+                <Skeleton className="h-16 w-full max-w-3xl mx-auto" />
+                <Skeleton className="h-16 w-full max-w-2xl mx-auto" />
               </div>
-            </div>
+            )}
 
-            {/* University Logos Carousel - Integrated into hero */}
-            <div className="mb-4">
-              <p className="text-sm font-medium text-muted-foreground mb-4">
-                Trusted by students preparing for top universities worldwide
+            {/* Subtext with better contrast */}
+            {isLoaded ? (
+              <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                Any admission test worldwide. Personalized study plan. Adaptive quizzes & mocks. Tutor-authored content.
               </p>
-              <div style={{ minHeight: '72px' }}>
-                <LogoMarquee />
+            ) : (
+              <Skeleton className="h-6 w-full max-w-xl mx-auto mb-6" />
+            )}
+
+            {/* Pricing Info with glassmorphism */}
+            {isLoaded ? (
+              <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                <div className="flex items-center gap-2 bg-success/10 backdrop-blur-sm border border-success/20 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors">
+                  <CheckCircle className="w-4 h-4 text-success" />
+                  <span className="text-success font-semibold">7-day free trial</span>
+                </div>
+                <div className="text-muted-foreground font-medium">$49.99/month after</div>
+                <div className="text-muted-foreground">Cancel anytime</div>
               </div>
-            </div>
+            ) : (
+              <Skeleton className="h-6 w-96 mx-auto mb-8" />
+            )}
+
+            {/* CTA Button with enhanced interactions */}
+            {isLoaded ? (
+              <div className="mb-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                <Link to="/auth/register">
+                  <Button
+                    size="lg"
+                    className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-12 py-6 shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 group overflow-hidden"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  >
+                    {/* Subtle shimmer effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
+                    <span className="relative z-10">Start Free Trial</span>
+                    <ArrowRight className={`w-5 h-5 ml-2 transition-transform duration-300 relative z-10 ${isHovered ? 'translate-x-1' : ''}`} />
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <Skeleton className="h-14 w-48 mx-auto mb-8" />
+            )}
+
+            {/* Supported Exams with enhanced glassmorphism */}
+            {isLoaded ? (
+              <div className="mb-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+                <p className="text-sm font-medium text-muted-foreground mb-4">Supports all major admissions tests</p>
+                <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto mb-8">
+                  {exams.map((exam, index) => (
+                    <span
+                      key={exam}
+                      className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-lg px-4 py-2 text-sm font-medium text-foreground hover:border-primary/40 hover:bg-primary/5 hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-default"
+                      style={{ 
+                        animationDelay: `${0.6 + index * 0.05}s`,
+                        animation: 'fade-in 0.3s ease-out forwards'
+                      }}
+                    >
+                      {exam}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="mb-6">
+                <Skeleton className="h-4 w-48 mx-auto mb-4" />
+                <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto mb-8">
+                  {Array.from({ length: 10 }).map((_, index) => (
+                    <Skeleton key={index} className="h-8 w-12" />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* University Logos Carousel with enhanced presentation */}
+            {isLoaded ? (
+              <div className="mb-4 animate-fade-in" style={{ animationDelay: '0.7s' }}>
+                <p className="text-sm font-medium text-muted-foreground mb-4">
+                  Trusted by students preparing for top universities worldwide
+                </p>
+                <div 
+                  className="relative"
+                  style={{ minHeight: '72px' }}
+                >
+                  {/* Subtle gradient overlays for better integration */}
+                  <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+                  <LogoMarquee />
+                </div>
+              </div>
+            ) : (
+              <div className="mb-4">
+                <Skeleton className="h-4 w-64 mx-auto mb-4" />
+                <Skeleton className="h-14 w-full max-w-4xl mx-auto" />
+              </div>
+            )}
           </div>
         </div>
       </section>
