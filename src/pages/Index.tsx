@@ -112,7 +112,7 @@ const Index = () => {
             Trusted by students preparing for top universities worldwide
           </p>
         </div>
-        <LogoMarquee sortStrategy="alpha" />
+        <LogoMarquee />
       </section>
 
       {/* Features Section */}
