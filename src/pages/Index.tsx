@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Sparkles, Brain, Target, Shield, Clock, Zap, CheckCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
-import { UniversityLogosCarousel } from "@/components/UniversityLogosCarousel";
+import { LogoMarquee } from "@/components/LogoMarquee";
+import { universityLogos } from "@/data/logos";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -87,7 +88,7 @@ const Index = () => {
             </div>
 
             {/* Supported Exams */}
-            <div className="mb-16">
+            <div className="mb-8">
               <p className="text-sm font-medium text-muted-foreground mb-6">Supports all major admissions tests</p>
               <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
                 {exams.map((exam, index) => (
@@ -105,8 +106,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* University Logos Carousel */}
-      <UniversityLogosCarousel />
+      {/* University Logos Marquee - Directly beneath hero section */}
+      <section className="py-8 bg-muted/10 border-t border-border/20">
+        <div className="mb-6">
+          <p className="text-center text-sm font-medium text-muted-foreground">
+            Trusted by students preparing for admissions to top universities worldwide
+          </p>
+        </div>
+        <LogoMarquee logos={universityLogos} />
+      </section>
 
       {/* Features Section */}
       <section className="py-24 bg-background">
