@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { 
   User, 
@@ -11,7 +11,11 @@ import {
   ArrowLeft,
   Shield,
   Calendar,
-  Sparkles
+  Sparkles,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  CheckCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +27,8 @@ interface OnboardingFlowProps {
 
 const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,6 +39,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     cvv: "",
     nameOnCard: ""
   });
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  // Focus first input when step changes
+  useEffect(() => {
+    if (currentStep === 1) {
+      nameInputRef.current?.focus();
+    }
+  }, [currentStep]);
 
   const exams = [
     { id: "SAT", name: "SAT", description: "Standardized Assessment Test", region: "US" },
@@ -54,12 +68,44 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     exam.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const validateStep = (step: number) => {
+    const newErrors: { [key: string]: string } = {};
+    
+    if (step === 1) {
+      if (!formData.name.trim()) newErrors.name = "Full name is required";
+      if (!formData.email) {
+        newErrors.email = "Email address is required";
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
+      if (!formData.password) {
+        newErrors.password = "Password is required";
+      } else if (formData.password.length < 8) {
+        newErrors.password = "Password must be at least 8 characters";
+      }
+    } else if (step === 2) {
+      if (!formData.selectedExam) newErrors.exam = "Please select an exam";
+    } else if (step === 3) {
+      if (!formData.cardNumber) newErrors.cardNumber = "Card number is required";
+      if (!formData.expiryDate) newErrors.expiryDate = "Expiry date is required";
+      if (!formData.cvv) newErrors.cvv = "CVV is required";
+      if (!formData.nameOnCard.trim()) newErrors.nameOnCard = "Name on card is required";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
   };
 
   const nextStep = () => {
-    if (currentStep < 4) {
+    if (validateStep(currentStep) && currentStep < 4) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -119,49 +165,118 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 <p className="text-muted-foreground">Start your AI-powered learning journey</p>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div>
-                  <Label htmlFor="name">Full Name</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Label htmlFor="name" className="text-sm font-medium text-foreground">
+                    Full name
+                  </Label>
+                  <div className="relative mt-2">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
                     <Input
+                      ref={nameInputRef}
                       id="name"
-                      className="ai-form-input pl-12"
+                      name="name"
+                      autoComplete="name"
+                      className={`pl-12 h-12 text-base transition-all focus:ring-2 focus:ring-primary/20 ${
+                        errors.name ? 'border-destructive focus:border-destructive' : 'border-input focus:border-primary'
+                      }`}
                       placeholder="Enter your full name"
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "name-error" : "name-help"}
                     />
                   </div>
+                  {errors.name ? (
+                    <p id="name-error" className="text-sm text-destructive flex items-center gap-2 mt-2">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.name}
+                    </p>
+                  ) : (
+                    <p id="name-help" className="text-sm text-muted-foreground mt-2">
+                      Your name as it appears on official documents
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <Label htmlFor="email">Email Address</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Label htmlFor="email" className="text-sm font-medium text-foreground">
+                    Email address
+                  </Label>
+                  <div className="relative mt-2">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
                     <Input
                       id="email"
+                      name="email"
                       type="email"
-                      className="ai-form-input pl-12"
-                      placeholder="Enter your email"
+                      autoComplete="email"
+                      className={`pl-12 h-12 text-base transition-all focus:ring-2 focus:ring-primary/20 ${
+                        errors.email ? 'border-destructive focus:border-destructive' : 'border-input focus:border-primary'
+                      }`}
+                      placeholder="Enter your email address"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
+                      aria-invalid={!!errors.email}
+                      aria-describedby={errors.email ? "email-error" : "email-help"}
                     />
+                    {!errors.email && formData.email && !/\S+@\S+\.\S+/.test(formData.email) && (
+                      <AlertCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-warning" />
+                    )}
+                    {!errors.email && formData.email && /\S+@\S+\.\S+/.test(formData.email) && (
+                      <CheckCircle2 className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-success" />
+                    )}
                   </div>
+                  {errors.email ? (
+                    <p id="email-error" className="text-sm text-destructive flex items-center gap-2 mt-2">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.email}
+                    </p>
+                  ) : (
+                    <p id="email-help" className="text-sm text-muted-foreground mt-2">
+                      We'll use this to send you study progress and reminders
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Label htmlFor="password" className="text-sm font-medium text-foreground">
+                    Password
+                  </Label>
+                  <div className="relative mt-2">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
                     <Input
                       id="password"
-                      type="password"
-                      className="ai-form-input pl-12"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      autoComplete="new-password"
+                      className={`pl-12 pr-12 h-12 text-base transition-all focus:ring-2 focus:ring-primary/20 ${
+                        errors.password ? 'border-destructive focus:border-destructive' : 'border-input focus:border-primary'
+                      }`}
                       placeholder="Create a secure password"
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
+                      aria-invalid={!!errors.password}
+                      aria-describedby={errors.password ? "password-error" : "password-help"}
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 rounded p-1"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
                   </div>
+                  {errors.password ? (
+                    <p id="password-error" className="text-sm text-destructive flex items-center gap-2 mt-2">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.password}
+                    </p>
+                  ) : (
+                    <p id="password-help" className="text-sm text-muted-foreground mt-2">
+                      Must be at least 8 characters with letters and numbers
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -175,39 +290,68 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 <p className="text-muted-foreground">Select the admissions test you're preparing for</p>
               </div>
 
-              <div className="relative mb-6">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
-                  className="ai-form-input pl-12"
-                  placeholder="Search for your exam..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
-                {filteredExams.map((exam) => (
-                  <div
-                    key={exam.id}
-                    className={`ai-step-card cursor-pointer transition-all duration-300 ${
-                      formData.selectedExam === exam.id 
-                        ? 'border-primary bg-primary/10' 
-                        : 'hover:border-primary/50'
-                    }`}
-                    onClick={() => handleInputChange('selectedExam', exam.id)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="font-semibold text-lg">{exam.name}</h3>
-                        <p className="text-sm text-muted-foreground">{exam.description}</p>
-                        <div className="ai-badge mt-2">{exam.region}</div>
-                      </div>
-                      {formData.selectedExam === exam.id && (
-                        <CheckCircle className="w-6 h-6 text-primary" />
-                      )}
-                    </div>
+              <div className="space-y-6">
+                <div>
+                  <Label htmlFor="exam-search" className="text-sm font-medium text-foreground">
+                    Search for your exam
+                  </Label>
+                  <div className="relative mt-2">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                    <Input
+                      id="exam-search"
+                      className="pl-12 h-12 text-base transition-all focus:ring-2 focus:ring-primary/20"
+                      placeholder="Type exam name or description..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                   </div>
-                ))}
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Can't find your exam? Contact support for custom exam preparation
+                  </p>
+                </div>
+
+                {errors.exam && (
+                  <div className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.exam}
+                  </div>
+                )}
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto"
+                     role="radiogroup" 
+                     aria-label="Select your exam"
+                >
+                  {filteredExams.map((exam) => (
+                    <button
+                      key={exam.id}
+                      type="button"
+                      role="radio"
+                      aria-checked={formData.selectedExam === exam.id}
+                      className={`w-full text-left p-6 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+                        formData.selectedExam === exam.id 
+                          ? 'border-primary bg-primary/10 shadow-md' 
+                          : 'border-border hover:border-primary/50 hover:bg-muted/30'
+                      }`}
+                      onClick={() => {
+                        handleInputChange('selectedExam', exam.id);
+                        if (errors.exam) setErrors(prev => ({ ...prev, exam: "" }));
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-2">
+                          <h3 className="font-semibold text-lg">{exam.name}</h3>
+                          <p className="text-sm text-muted-foreground">{exam.description}</p>
+                          <span className="inline-block px-2 py-1 text-xs font-medium bg-muted rounded-md">
+                            {exam.region}
+                          </span>
+                        </div>
+                        {formData.selectedExam === exam.id && (
+                          <CheckCircle className="w-6 h-6 text-primary flex-shrink-0" />
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           )}
@@ -228,58 +372,131 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="cardNumber">Card Number</Label>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="cardNumber" className="text-sm font-medium text-foreground">
+                    Card number
+                  </Label>
                   <div className="relative">
-                    <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
                     <Input
                       id="cardNumber"
-                      className="ai-form-input pl-12"
+                      name="cardNumber"
+                      autoComplete="cc-number"
+                      className={`pl-12 h-12 text-base transition-all focus:ring-2 focus:ring-primary/20 ${
+                        errors.cardNumber ? 'border-destructive focus:border-destructive' : 'border-input focus:border-primary'
+                      }`}
                       placeholder="1234 5678 9012 3456"
                       value={formData.cardNumber}
                       onChange={(e) => handleInputChange('cardNumber', e.target.value)}
+                      aria-invalid={!!errors.cardNumber}
+                      aria-describedby={errors.cardNumber ? "card-error" : "card-help"}
                     />
                   </div>
+                  {errors.cardNumber ? (
+                    <p id="card-error" className="text-sm text-destructive flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.cardNumber}
+                    </p>
+                  ) : (
+                    <p id="card-help" className="text-sm text-muted-foreground">
+                      Your card will not be charged during the 7-day trial
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="expiryDate">Expiry Date</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="expiryDate" className="text-sm font-medium text-foreground">
+                      Expiry date
+                    </Label>
                     <Input
                       id="expiryDate"
-                      className="ai-form-input"
+                      name="expiryDate"
+                      autoComplete="cc-exp"
+                      className={`h-12 text-base transition-all focus:ring-2 focus:ring-primary/20 ${
+                        errors.expiryDate ? 'border-destructive focus:border-destructive' : 'border-input focus:border-primary'
+                      }`}
                       placeholder="MM/YY"
                       value={formData.expiryDate}
                       onChange={(e) => handleInputChange('expiryDate', e.target.value)}
+                      aria-invalid={!!errors.expiryDate}
+                      aria-describedby={errors.expiryDate ? "expiry-error" : undefined}
                     />
+                    {errors.expiryDate && (
+                      <p id="expiry-error" className="text-sm text-destructive flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4" />
+                        {errors.expiryDate}
+                      </p>
+                    )}
                   </div>
-                  <div>
-                    <Label htmlFor="cvv">CVV</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="cvv" className="text-sm font-medium text-foreground">
+                      Security code
+                    </Label>
                     <Input
                       id="cvv"
-                      className="ai-form-input"
+                      name="cvv"
+                      autoComplete="cc-csc"
+                      className={`h-12 text-base transition-all focus:ring-2 focus:ring-primary/20 ${
+                        errors.cvv ? 'border-destructive focus:border-destructive' : 'border-input focus:border-primary'
+                      }`}
                       placeholder="123"
                       value={formData.cvv}
                       onChange={(e) => handleInputChange('cvv', e.target.value)}
+                      aria-invalid={!!errors.cvv}
+                      aria-describedby={errors.cvv ? "cvv-error" : "cvv-help"}
                     />
+                    {errors.cvv ? (
+                      <p id="cvv-error" className="text-sm text-destructive flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4" />
+                        {errors.cvv}
+                      </p>
+                    ) : (
+                      <p id="cvv-help" className="text-xs text-muted-foreground">
+                        3-digit code on back
+                      </p>
+                    )}
                   </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="nameOnCard">Name on Card</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="nameOnCard" className="text-sm font-medium text-foreground">
+                    Name on card
+                  </Label>
                   <Input
                     id="nameOnCard"
-                    className="ai-form-input"
+                    name="nameOnCard"
+                    autoComplete="cc-name"
+                    className={`h-12 text-base transition-all focus:ring-2 focus:ring-primary/20 ${
+                      errors.nameOnCard ? 'border-destructive focus:border-destructive' : 'border-input focus:border-primary'
+                    }`}
                     placeholder="Full name as on card"
                     value={formData.nameOnCard}
                     onChange={(e) => handleInputChange('nameOnCard', e.target.value)}
+                    aria-invalid={!!errors.nameOnCard}
+                    aria-describedby={errors.nameOnCard ? "name-card-error" : "name-card-help"}
                   />
+                  {errors.nameOnCard ? (
+                    <p id="name-card-error" className="text-sm text-destructive flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.nameOnCard}
+                    </p>
+                  ) : (
+                    <p id="name-card-help" className="text-sm text-muted-foreground">
+                      Enter name exactly as it appears on your card
+                    </p>
+                  )}
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-background/50 p-4 rounded-lg">
-                  <Shield className="w-5 h-5 text-success" />
-                  <span>Powered by Stripe • 256-bit SSL encryption • PCI DSS compliant</span>
+                <div className="flex items-start gap-3 p-4 bg-muted/30 border border-border/40 rounded-lg">
+                  <Shield className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-foreground">Your payment is secure</p>
+                    <p className="text-xs text-muted-foreground">
+                      Powered by Stripe • 256-bit SSL encryption • PCI DSS compliant
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -344,12 +561,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               
               <Button
                 onClick={nextStep}
-                disabled={
-                  (currentStep === 1 && (!formData.name || !formData.email || !formData.password)) ||
-                  (currentStep === 2 && !formData.selectedExam) ||
-                  (currentStep === 3 && (!formData.cardNumber || !formData.expiryDate || !formData.cvv))
-                }
-                className="ai-cta-button flex items-center gap-2"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground h-12 px-8 font-semibold focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 transition-all flex items-center gap-2"
               >
                 Continue
                 <ArrowRight className="w-4 h-4" />
