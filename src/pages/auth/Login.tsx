@@ -58,7 +58,7 @@ const Login = () => {
       
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
-        <div className="text-center mb-2">
+        <div className="text-center mb-1">
           <Link to="/" className="inline-flex items-center justify-center">
             <img 
               src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
