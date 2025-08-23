@@ -18,14 +18,14 @@ export const LogoMarquee = ({ className = "" }: LogoMarqueeProps) => {
         {duplicatedLogos.map((logo, index) => (
           <div
             key={`${logo.alt}-${index}`}
-            className="flex items-center justify-center mx-6 md:mx-8 flex-shrink-0 group logoItem"
+            className="flex items-center justify-center mx-4 flex-shrink-0 group logoItem"
           >
             {/* Fixed height container for consistent sizing */}
-            <div className="h-12 w-16 md:h-14 md:w-20 flex items-center justify-center">
+            <div className="h-12 w-12 flex items-center justify-center">
               <img
                 src={logo.src}
                 alt={logo.alt}
-                className="h-10 w-10 md:h-12 md:w-12 object-contain grayscale opacity-90 transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+                className="h-12 w-12 object-contain grayscale opacity-90 transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
                 style={{ maxHeight: '48px', objectFit: 'contain', display: 'block' }}
                 loading="lazy"
                 onError={(e) => {
