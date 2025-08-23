@@ -63,7 +63,8 @@ const Login = () => {
             <img 
               src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
               alt="UniHack.ai Logo" 
-              className="h-16 md:h-20 w-auto object-contain"
+              className="h-24 md:h-28 w-auto object-contain"
+              style={{ backgroundColor: 'transparent' }}
             />
           </Link>
         </div>
