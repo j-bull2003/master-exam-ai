@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Header } from "@/components/Header";
 import { LogoMarquee } from "@/components/LogoMarquee";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { InteractiveCard } from "@/components/InteractiveCard";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -105,9 +107,8 @@ const Index = () => {
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 relative overflow-hidden">
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.05),transparent_50%)] pointer-events-none" />
+        {/* Animated background */}
+        <AnimatedBackground />
         
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -127,7 +128,7 @@ const Index = () => {
             {isLoaded ? (
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
                 <span className="text-foreground block mb-2">Ace Your Admissions Test</span>
-                <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
                   with AI-Driven Precision
                 </span>
               </h1>
@@ -165,14 +166,14 @@ const Index = () => {
             {isLoaded ? (
               <div className="mb-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
                 <Link to="/auth/register">
-                  <Button
-                    size="lg"
-                    className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-12 py-6 shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 group overflow-hidden"
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                  >
-                    {/* Subtle shimmer effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
+                    <Button
+                      size="lg"
+                      className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-12 py-6 shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 group overflow-hidden active:scale-95"
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                    >
+                      {/* Enhanced shimmer effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
                     <span className="relative z-10">Start Free Trial</span>
                     <ArrowRight className={`w-5 h-5 ml-2 transition-transform duration-300 relative z-10 ${isHovered ? 'translate-x-1' : ''}`} />
                   </Button>
@@ -296,17 +297,21 @@ const Index = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <div
+              <InteractiveCard
                 key={index}
-                className="bg-card rounded-2xl p-8 text-center hover:shadow-lg transition-all duration-300 border border-border/50 hover:border-primary/20 group hover:scale-105"
+                tiltEnabled={true}
+                glowEnabled={true}
+                className="text-center group hover:border-primary/20"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                  <feature.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
+                <div className="p-8">
+                  <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-all duration-300 group-hover:scale-110">
+                    <feature.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-foreground">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold mb-4 text-foreground">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
-              </div>
+              </InteractiveCard>
             ))}
           </div>
         </div>
@@ -326,24 +331,26 @@ const Index = () => {
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {testimonials.map((testimonial, index) => (
-              <div
+              <InteractiveCard
                 key={index}
-                className="bg-background/80 backdrop-blur-sm rounded-2xl p-8 border border-border/50 hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+                tiltEnabled={true}
+                className="group hover:border-primary/20"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {/* Quote Icon */}
-                <Quote className="w-8 h-8 text-primary/60 mb-4 group-hover:text-primary transition-colors" />
-                
-                {/* Testimonial Quote */}
-                <p className="text-muted-foreground mb-6 italic leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
-                
-                {/* Student Info */}
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20 group-hover:border-primary/40 transition-colors">
-                    <span className="text-primary font-semibold text-sm">{testimonial.avatar}</span>
-                  </div>
+                <div className="p-8">
+                  {/* Quote Icon */}
+                  <Quote className="w-8 h-8 text-primary/60 mb-4 group-hover:text-primary transition-colors group-hover:scale-110 transform duration-200" />
+                  
+                  {/* Testimonial Quote */}
+                  <p className="text-muted-foreground mb-6 italic leading-relaxed">
+                    "{testimonial.quote}"
+                  </p>
+                  
+                  {/* Student Info */}
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20 group-hover:border-primary/40 transition-colors group-hover:scale-110 transform duration-200">
+                      <span className="text-primary font-semibold text-sm">{testimonial.avatar}</span>
+                    </div>
                   <div>
                     <div className="font-semibold text-foreground">{testimonial.name}</div>
                     <div className="text-sm text-muted-foreground">{testimonial.university}</div>
@@ -351,11 +358,12 @@ const Index = () => {
                 </div>
                 
                 {/* Score Badge */}
-                <div className="mt-4 inline-flex items-center gap-2 bg-success/10 border border-success/20 rounded-full px-3 py-1">
-                  <Star className="w-4 h-4 text-success" />
+                <div className="mt-4 inline-flex items-center gap-2 bg-success/10 border border-success/20 rounded-full px-3 py-1 group-hover:bg-success/15 transition-colors">
+                  <Star className="w-4 h-4 text-success group-hover:rotate-12 transition-transform" />
                   <span className="text-sm font-semibold text-success">{testimonial.exam}: {testimonial.score}</span>
                 </div>
-              </div>
+                </div>
+              </InteractiveCard>
             ))}
           </div>
           

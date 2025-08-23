@@ -500,6 +500,218 @@
   }
 
   .nav-link:hover {
+    color: hsl(var(--primary));
+    background: hsl(var(--primary) / 0.05);
+  }
+
+  .nav-link.active {
+    color: hsl(var(--primary));
+    background: hsl(var(--primary) / 0.1);
+  }
+
+  /* === Keyboard shortcuts & Command Palette === */
+  .command-palette-overlay {
+    background: hsl(var(--background) / 0.8);
+    backdrop-filter: blur(8px);
+  }
+
+  .command-palette-content {
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--background));
+    border-radius: calc(var(--radius) + 4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* === Enhanced Animations === */
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { 
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { 
+      transform: translateY(0px);
+    }
+    50% { 
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes tilt-n-move-shaking {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(5px, 5px) rotate(5deg); }
+    50% { transform: translate(0, 0) rotate(0eg); }
+    75% { transform: translate(-5px, 5px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  .shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-tilt {
+    animation: tilt-n-move-shaking 0.25s ease-in-out;
+  }
+
+  /* === Reduced Motion Support === */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    .shimmer,
+    .pulse-glow,
+    .float,
+    .animate-tilt {
+      animation: none;
+    }
+  }
+
+  /* === Focus Styles === */
+  .focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+
+  /* === Interactive Elements === */
+  .interactive-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: hsl(var(--primary) / 0.3);
+  }
+
+  .interactive-glow:hover {
+    box-shadow: 
+      var(--shadow-lg),
+      0 0 20px hsl(var(--primary) / 0.2);
+  }
+
+  /* === Loading States === */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted)) 25%,
+      hsl(var(--muted-foreground) / 0.1) 50%,
+      hsl(var(--muted)) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* === Status Indicators === */
+  .status-indicator {
+    position: relative;
+  }
+
+  .status-indicator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid hsl(var(--background));
+  }
+
+  .status-indicator.online::before {
+    background: hsl(var(--success));
+  }
+
+  .status-indicator.busy::before {
+    background: hsl(var(--warning));
+  }
+
+  .status-indicator.offline::before {
+    background: hsl(var(--muted-foreground));
+  }
+
+  /* === Tooltips === */
+  .tooltip {
+    position: relative;
+  }
+
+  .tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: hsl(var(--popover));
+    color: hsl(var(--popover-foreground));
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 1000;
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-md);
+  }
+
+  .tooltip:hover::before {
+    opacity: 1;
+  }
+
+  /* === Utility Classes === */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  /* === Glass Morphism === */
+  .glass {
+    background: hsl(var(--background) / 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.3);
+  }
+
+  .glass-subtle {
+    background: hsl(var(--background) / 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid hsl(var(--border) / 0.2);
+  }
+}
+
+  .nav-link:hover {
     color: hsl(var(--foreground));
     background: hsl(var(--muted) / 0.3);
   }
