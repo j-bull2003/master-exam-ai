@@ -7,6 +7,9 @@ import { Header } from "@/components/Header";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { InteractiveCard } from "@/components/InteractiveCard";
+import { MagneticButton } from "@/components/MagneticButton";
+import { EmptyState } from "@/components/EmptyState";
+import { PageProgressBar } from "@/components/PageProgressBar";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -102,23 +105,24 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" data-bg="mesh" data-depth="1">
+      <PageProgressBar />
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
+      <section className="pt-32 pb-16 relative overflow-hidden bg-mesh" data-bg="mesh">
         {/* Animated background */}
-        <AnimatedBackground />
+        <AnimatedBackground className="opacity-80" />
         
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Badge with glassmorphism */}
+            {/* Badge with enhanced glassmorphism */}
             {isLoaded ? (
-              <div className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in">
+              <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
                 <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
-                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
-                   Join 12,000+ students already using AI-powered prep
-                 </span>
+                <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
+                  Join 12,000+ students already using AI-powered prep
+                </span>
               </div>
             ) : (
               <Skeleton className="h-8 w-80 mx-auto mb-6 rounded-full" />
@@ -148,10 +152,10 @@ const Index = () => {
               <Skeleton className="h-6 w-full max-w-xl mx-auto mb-6" />
             )}
 
-            {/* Pricing Info with glassmorphism */}
+            {/* Enhanced pricing info with layered cards */}
             {isLoaded ? (
               <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-                <div className="flex items-center gap-2 bg-success/10 backdrop-blur-sm border border-success/20 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors">
+                <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors card-layered">
                   <CheckCircle className="w-4 h-4 text-success" />
                   <span className="text-success font-semibold">7-day free trial</span>
                 </div>
@@ -162,28 +166,27 @@ const Index = () => {
               <Skeleton className="h-6 w-96 mx-auto mb-8" />
             )}
 
-            {/* CTA Button with enhanced interactions */}
+            {/* Enhanced CTA with magnetic button */}
             {isLoaded ? (
               <div className="mb-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
                 <Link to="/auth/register">
-                    <Button
-                      size="lg"
-                      className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-12 py-6 shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 group overflow-hidden active:scale-95"
-                      onMouseEnter={() => setIsHovered(true)}
-                      onMouseLeave={() => setIsHovered(false)}
-                    >
-                      {/* Enhanced shimmer effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
+                  <MagneticButton
+                    className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-12 py-6 rounded-lg shadow-2xl hover:shadow-primary/30 transition-all duration-300 border border-primary/20 card-layered group overflow-hidden"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  >
+                    {/* Enhanced shimmer effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
                     <span className="relative z-10">Start Free Trial</span>
                     <ArrowRight className={`w-5 h-5 ml-2 transition-transform duration-300 relative z-10 ${isHovered ? 'translate-x-1' : ''}`} />
-                  </Button>
+                  </MagneticButton>
                 </Link>
               </div>
             ) : (
               <Skeleton className="h-14 w-48 mx-auto mb-8" />
             )}
 
-            {/* Supported Exams with enhanced glassmorphism */}
+            {/* Enhanced exam badges with better styling */}
             {isLoaded ? (
               <div className="mb-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
                 <p className="text-sm font-medium text-muted-foreground mb-4">Supports all major admissions tests</p>
@@ -191,7 +194,7 @@ const Index = () => {
                   {exams.map((exam, index) => (
                     <span
                       key={exam}
-                      className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-lg px-4 py-2 text-sm font-medium text-foreground hover:border-primary/40 hover:bg-primary/5 hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-default"
+                      className="glass border border-border/50 rounded-lg px-4 py-2 text-sm font-medium text-foreground hover:border-primary/40 hover:bg-primary/5 hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-default card-layered"
                       style={{ 
                         animationDelay: `${0.6 + index * 0.05}s`,
                         animation: 'fade-in 0.3s ease-out forwards'
