@@ -12,15 +12,15 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: '1rem',
 			screens: {
 				'2xl': '1400px'
 			}
 		},
 		extend: {
 			fontFamily: {
-				display: 'var(--font-display)',
-				body: 'var(--font-body)',
+				display: ["Inter", "system-ui", "sans-serif"],
+				body: ["Inter", "system-ui", "sans-serif"],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -88,20 +88,21 @@ export default {
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+				xl: 'calc(var(--radius) + 4px)',
+				'2xl': 'calc(var(--radius) + 8px)',
 			},
 			boxShadow: {
-				'unihack-sm': 'var(--shadow-sm)',
-				'unihack-md': 'var(--shadow-md)',
-				'unihack-lg': 'var(--shadow-lg)',
-				'unihack-glow': 'var(--shadow-glow)',
-				'unihack-glow-strong': 'var(--shadow-glow-strong)',
+				xs: 'var(--shadow-xs)',
+				sm: 'var(--shadow-sm)', 
+				md: 'var(--shadow-md)',
+				lg: 'var(--shadow-lg)',
+				xl: 'var(--shadow-xl)',
 			},
 			backgroundImage: {
-				'unihack-gradient': 'var(--gradient-primary)',
-				'unihack-hero': 'var(--gradient-hero)',
-				'unihack-card': 'var(--gradient-card)',
-				'unihack-success': 'var(--gradient-success)',
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-surface': 'var(--gradient-surface)',
 			},
 			keyframes: {
 				'accordion-down': {
