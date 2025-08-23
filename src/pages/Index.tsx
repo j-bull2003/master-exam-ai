@@ -87,7 +87,7 @@ const Index = () => {
             </div>
 
             {/* Supported Exams */}
-            <div className="mb-8">
+            <div className="mb-12">
               <p className="text-sm font-medium text-muted-foreground mb-6">Supports all major admissions tests</p>
               <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
                 {exams.map((exam, index) => (
