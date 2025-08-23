@@ -4,9 +4,9 @@ const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 export const Header = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-sm">
-      <nav className="container mx-auto px-6 py-6">
-        <div className="flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-sm h-20">
+      <nav className="container mx-auto px-6 h-full flex items-center">
+        <div className="flex items-center justify-between w-full">
           {/* Logo */}
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity group">
             <img 
