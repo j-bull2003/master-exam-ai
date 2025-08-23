@@ -8,15 +8,12 @@ export const Header = () => {
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity group">
+          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity group">
             <img 
               src={uniHackLogo} 
               alt="UniHack.ai Logo" 
-              className="w-8 h-8 group-hover:scale-105 transition-transform duration-200"
+              className="h-8 group-hover:scale-105 transition-transform duration-200"
             />
-            <span className="text-xl font-display font-bold text-foreground">
-              Uni<span className="text-primary">Hack</span>.ai
-            </span>
           </Link>
 
           {/* Navigation Links */}
