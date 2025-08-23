@@ -53,27 +53,29 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen ai-hero-section flex items-center justify-center p-6">
+    <div className="min-h-screen ai-hero-section flex items-center justify-center p-4">
       <div className="ai-floating-elements"></div>
       
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
-        <div className="text-center mb-1">
-          <Link to="/" className="inline-flex items-center justify-center">
+        <div className="text-center mb-6">
+          <Link to="/" className="inline-flex items-center justify-center group">
             <img 
               src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
               alt="UniHack.ai Logo" 
-              className="h-40 md:h-44 w-auto object-contain"
+              className="h-32 md:h-36 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               style={{ backgroundColor: 'transparent' }}
             />
           </Link>
         </div>
 
         {/* Login Form */}
-        <div className="ai-glass-card p-8">
+        <div className="ai-glass-card p-8 backdrop-blur-xl">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-            <p className="text-muted-foreground">Sign in to continue your learning journey</p>
+            <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              Welcome Back
+            </h1>
+            <p className="text-muted-foreground text-lg">Sign in to continue your learning journey</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
