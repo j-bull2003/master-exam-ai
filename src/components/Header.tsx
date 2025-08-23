@@ -13,7 +13,7 @@ export const Header = () => {
             <img 
               src={uniHackLogo} 
               alt="UniHack.ai Logo" 
-              className="h-8 md:h-10 max-h-[30px] md:max-h-[40px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+              className="h-12 md:h-16 max-h-[48px] md:max-h-[64px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
               style={{ backgroundColor: 'transparent' }}
             />
           </Link>
