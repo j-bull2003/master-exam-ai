@@ -77,25 +77,24 @@ export const Header = () => {
               variant="ghost"
               size="sm"
               onClick={() => setCommandPaletteOpen(true)}
-              className="hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border/50 px-3"
+              className="hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border/50 px-3 py-2 glass-subtle"
             >
               <Search className="w-4 h-4" />
               <span className="text-xs">Search</span>
-              <div className="flex items-center gap-1 ml-2 text-xs text-muted-foreground">
-                <Keyboard className="w-3 h-3" />
-                <span>⌘K</span>
+              <div className="flex items-center gap-1 ml-2">
+                <kbd className="kbd">⌘K</kbd>
               </div>
             </Button>
             
             <Link to="/auth/login">
-              <Button variant="ghost" size="sm" className="font-medium hover:bg-primary/5 hover:text-primary">
+              <Button variant="ghost" size="sm" className="font-medium hover:bg-primary/5 hover:text-primary border-hairline">
                 Sign In
               </Button>
             </Link>
             <Link to="/auth/register">
               <Button 
                 size="sm" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 Start Free Trial
               </Button>

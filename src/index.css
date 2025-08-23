@@ -42,22 +42,37 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Professional borders and inputs */
+    /* Enhanced borders and depth */
     --border: 240 5.9% 90%;
+    --border-hairline: 240 5.9% 85%;
+    --border-overlay: 240 5.9% 95%;
     --input: 240 5.9% 90%;
     --ring: 217 91% 60%;
+
+    /* Neutral tones for layered depth */
+    --neutral-50: 240 4.8% 98%;
+    --neutral-100: 240 4.8% 95.9%;
+    --neutral-200: 240 5.9% 90%;
+    --neutral-300: 240 4.8% 83.9%;
+    --neutral-400: 240 3.8% 46.1%;
+    --neutral-500: 240 3.8% 46.1%;
+    --neutral-600: 240 5.3% 26.1%;
+    --neutral-700: 240 5.2% 20.9%;
+    --neutral-800: 240 3.7% 15.9%;
+    --neutral-900: 240 5.9% 10%;
 
     /* Professional spacing and typography */
     --radius: 0.75rem;
     --font-display: "Inter", system-ui, sans-serif;
     --font-body: "Inter", system-ui, sans-serif;
 
-    /* Enhanced shadows with subtle elevation */
+    /* Enhanced shadows with layered depth */
     --shadow-xs: 0 1px 2px 0 hsl(240 5.9% 10% / 0.05);
     --shadow-sm: 0 1px 3px 0 hsl(240 5.9% 10% / 0.1), 0 1px 2px -1px hsl(240 5.9% 10% / 0.1);
     --shadow-md: 0 4px 6px -1px hsl(240 5.9% 10% / 0.1), 0 2px 4px -2px hsl(240 5.9% 10% / 0.1);
     --shadow-lg: 0 10px 15px -3px hsl(240 5.9% 10% / 0.1), 0 4px 6px -4px hsl(240 5.9% 10% / 0.1);
     --shadow-xl: 0 20px 25px -5px hsl(240 5.9% 10% / 0.1), 0 8px 10px -6px hsl(240 5.9% 10% / 0.1);
+    --shadow-inner: inset 0 2px 4px 0 hsl(240 5.9% 10% / 0.06);
 
     /* Refined gradients */
     --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(270 91% 60%) 100%);
@@ -76,19 +91,19 @@
     --font-size-4xl: 2.25rem;
     --font-size-5xl: 3rem;
 
-    /* Spacing grid (8px base) */
-    --spacing-1: 0.25rem;
-    --spacing-2: 0.5rem;
-    --spacing-3: 0.75rem;
-    --spacing-4: 1rem;
-    --spacing-5: 1.25rem;
-    --spacing-6: 1.5rem;
-    --spacing-8: 2rem;
-    --spacing-10: 2.5rem;
-    --spacing-12: 3rem;
-    --spacing-16: 4rem;
-    --spacing-20: 5rem;
-    --spacing-24: 6rem;
+    /* 8px spacing grid */
+    --spacing-1: 0.25rem;    /* 4px */
+    --spacing-2: 0.5rem;     /* 8px */
+    --spacing-3: 0.75rem;    /* 12px */
+    --spacing-4: 1rem;       /* 16px */
+    --spacing-5: 1.25rem;    /* 20px */
+    --spacing-6: 1.5rem;     /* 24px */
+    --spacing-8: 2rem;       /* 32px */
+    --spacing-10: 2.5rem;    /* 40px */
+    --spacing-12: 3rem;      /* 48px */
+    --spacing-16: 4rem;      /* 64px */
+    --spacing-20: 5rem;      /* 80px */
+    --spacing-24: 6rem;      /* 96px */
 
     /* Container widths */
     --container-sm: 640px;
@@ -879,9 +894,229 @@
     }
   }
 
+  /* === Focus Styles === */
   .focus-visible {
     outline: 2px solid hsl(var(--primary));
     outline-offset: 2px;
     border-radius: var(--radius);
   }
-}
+
+  /* === Interactive Elements === */
+  .interactive-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: hsl(var(--primary) / 0.3);
+  }
+
+  .interactive-glow:hover {
+    box-shadow: 
+      var(--shadow-lg),
+      0 0 20px hsl(var(--primary) / 0.2);
+  }
+
+  /* === Magnetic Hover Effect === */
+  .magnetic {
+    transition: transform 0.2s ease-out;
+  }
+
+  /* === Loading States === */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted)) 25%,
+      hsl(var(--muted-foreground) / 0.1) 50%,
+      hsl(var(--muted)) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* === Status Indicators === */
+  .status-indicator {
+    position: relative;
+  }
+
+  .status-indicator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid hsl(var(--background));
+  }
+
+  .status-indicator.online::before {
+    background: hsl(var(--success));
+  }
+
+  .status-indicator.busy::before {
+    background: hsl(var(--warning));
+  }
+
+  .status-indicator.offline::before {
+    background: hsl(var(--muted-foreground));
+  }
+
+  /* === Tooltips === */
+  .tooltip {
+    position: relative;
+  }
+
+  .tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: hsl(var(--popover));
+    color: hsl(var(--popover-foreground));
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 1000;
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-md);
+  }
+
+  .tooltip:hover::before {
+    opacity: 1;
+  }
+
+  /* === Background Patterns === */
+  .bg-grid {
+    background-image: radial-gradient(circle at 1px 1px, hsl(var(--border) / 0.3) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  .bg-mesh {
+    background: 
+      radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, hsl(var(--accent) / 0.03) 0%, transparent 50%);
+  }
+
+  /* === Depth Layers === */
+  [data-depth="0"] {
+    --shadow-depth: none;
+  }
+
+  [data-depth="1"] {
+    --shadow-depth: var(--shadow-sm);
+  }
+
+  [data-depth="2"] {
+    --shadow-depth: var(--shadow-md);
+  }
+
+  /* === Hairline Borders === */
+  .border-hairline {
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  .border-inner {
+    box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.1);
+  }
+
+  /* === Enhanced Cards === */
+  .card-layered {
+    border: 1px solid hsl(var(--border));
+    box-shadow: 
+      inset 0 1px 0 hsl(var(--foreground) / 0.05),
+      var(--shadow-xs);
+    transition: all 0.2s ease-out;
+  }
+
+  .card-layered:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      inset 0 1px 0 hsl(var(--foreground) / 0.05),
+      var(--shadow-md);
+    border-color: hsl(var(--primary) / 0.2);
+  }
+
+  .card-primary-accent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, hsl(var(--primary)), transparent);
+    border-radius: var(--radius) var(--radius) 0 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card-primary-accent:hover::before {
+    opacity: 1;
+  }
+
+  /* === Utility Classes === */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  /* === Glass Morphism === */
+  .glass {
+    background: hsl(var(--background) / 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.3);
+  }
+
+  .glass-subtle {
+    background: hsl(var(--background) / 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid hsl(var(--border) / 0.2);
+  }
+
+  /* === Keyboard Hints === */
+  .kbd {
+    background: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-family: ui-monospace, monospace;
+    color: hsl(var(--muted-foreground));
+    box-shadow: 
+      0 1px 0 hsl(var(--border)),
+      inset 0 1px 0 hsl(var(--background));
+  }
+
+  /* === Reduced Motion Support === */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    .shimmer,
+    .pulse-glow,
+    .float,
+    .animate-tilt,
+    [data-tilt="on"] {
+      animation: none;
+      transform: none !important;
+    }
+  }
