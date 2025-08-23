@@ -13,6 +13,7 @@ import {
   CheckCircle,
   ArrowRight
 } from "lucide-react";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const Features = () => {
   const features = [
@@ -62,9 +63,10 @@ const Features = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <AnimatedBackground className="opacity-80" />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16">
+      <section className="pt-32 pb-16 bg-mesh">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
@@ -88,7 +90,7 @@ const Features = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-16">
+      <section className="py-16 bg-mesh">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {features.map((feature, index) => (

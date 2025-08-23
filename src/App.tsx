@@ -18,6 +18,7 @@ import Dashboard from "./pages/Dashboard";
 import Practice from "./pages/Practice";
 import Mocks from "./pages/Mocks";
 import Analytics from "./pages/Analytics";
+import Profile from "./pages/Profile";
 import TutorStudio from "./pages/TutorStudio";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -56,6 +57,7 @@ const App = () => (
           <Route path="/practice" element={<Practice />} />
           <Route path="/mocks" element={<Mocks />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/profile" element={<Profile />} />
           
           {/* Role-based Pages */}
           <Route path="/tutor-studio" element={<TutorStudio />} />

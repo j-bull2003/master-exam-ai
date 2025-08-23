@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
+
 import { 
   GraduationCap, 
   Upload, 
@@ -87,12 +89,18 @@ const TutorStudio = () => {
       {/* Header */}
       <header className="border-b border-border bg-background/95 backdrop-blur">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2">
-            <GraduationCap className="h-8 w-8 text-primary" />
-            <span className="text-xl font-display font-bold">UniHack.ai</span>
+          <Link
+            to="/tutor-studio"
+            className="flex items-center hover:opacity-80 transition-opacity group"
+          >
+            <img
+              src={uniHackLogo}
+              alt="UniHack.ai Logo"
+              className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+              style={{ backgroundColor: "transparent" }}
+            />
           </Link>
           <nav className="flex items-center space-x-6">
-            <Link to="/dashboard" className="text-muted-foreground hover:text-foreground">Dashboard</Link>
             <Link to="/tutor-studio" className="text-primary font-medium">Tutor Studio</Link>
           </nav>
         </div>

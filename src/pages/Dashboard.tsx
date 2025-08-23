@@ -15,8 +15,10 @@ import {
   Target, 
   TrendingUp, 
   Clock, 
+  User,
   PlayCircle, 
-  BookOpen, 
+  BarChart3,
+  Clipboard,
   CheckCircle,
   AlertCircle,
   Calendar,
@@ -24,7 +26,10 @@ import {
   MoreVertical,
   ArrowUpIcon,
   ArrowDownIcon,
-  MinusIcon
+  MinusIcon,
+  LogOut,
+  Home,
+  BookOpen
 } from "lucide-react";
 
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
@@ -193,23 +198,36 @@ const Dashboard = () => {
 
   return (
     <AccessGate hasAccess={hasAccess} userEmail={userEmail}>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background bg-mesh">
         {/* Enhanced Header with UniHack Logo */}
         <header className="border-b border-border bg-background/95 backdrop-blur">
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-            <Link to="/" className="flex items-center space-x-3">
-              <img 
-                src={uniHackLogo} 
-                alt="UniHack.ai Logo" 
-                className="h-8 w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
-              />
-              <span className="text-xl font-display font-bold text-foreground">UniHack.ai</span>
-            </Link>
+          <Link
+    to="/dashboard"
+    className="flex items-center hover:opacity-80 transition-opacity group"
+  >
+    <img
+      src={uniHackLogo}
+      alt="UniHack.ai Logo"
+      className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+      style={{ backgroundColor: "transparent" }}
+    />
+  </Link>
             <nav className="flex items-center space-x-6">
-              <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary">Dashboard</Link>
-              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors">Practice</Link>
-              <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors">Mocks</Link>
-              <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors">Analytics</Link>
+              <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Home className="w-4 h-4" />Dashboard</Link>
+              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
+              <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
+              <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
+              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
+              <Link to="/">
+                <Button 
+                  size="sm" 
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </Button>
+              </Link>
             </nav>
           </div>
         </header>
@@ -224,8 +242,6 @@ const Dashboard = () => {
               Preparing for {userData.exam} • {userData.streakDays} day streak 🔥
             </p>
           </div>
-
-          {/* ... keep existing code (stats, study plan, etc.) */}
           
           {/* Stats Overview */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -287,7 +303,7 @@ const Dashboard = () => {
           </div>
 
           {/* Main Dashboard Content */}
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8 items-start">
             {/* Main Content - Left Side */}
             <div className="lg:col-span-2 space-y-8">
             {/* Study Plan Table */}
@@ -498,9 +514,9 @@ const Dashboard = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="mt-8 grid md:grid-cols-3 gap-4">
+          <div className="lg:col-span-1 space-y-4">
             <Link to="/practice">
-              <Card className="question-card cursor-pointer hover:shadow-academic-lg transition-all">
+              <Card className="question-card cursor-pointer hover:shadow-academic-lg transition-all mb-4">
                 <CardContent className="flex items-center p-6">
                   <PlayCircle className="h-8 w-8 text-primary mr-4" />
                   <div>
@@ -512,7 +528,7 @@ const Dashboard = () => {
             </Link>
 
             <Link to="/mocks">
-              <Card className="question-card cursor-pointer hover:shadow-academic-lg transition-all">
+              <Card className="question-card cursor-pointer hover:shadow-academic-lg transition-all mb-4">
                 <CardContent className="flex items-center p-6">
                   <Clock className="h-8 w-8 text-primary mr-4" />
                   <div>
@@ -524,7 +540,7 @@ const Dashboard = () => {
             </Link>
 
             <Link to="/analytics">
-              <Card className="question-card cursor-pointer hover:shadow-academic-lg transition-all">
+              <Card className="question-card cursor-pointer hover:shadow-academic-lg transition-all mb-4">
                 <CardContent className="flex items-center p-6">
                   <TrendingUp className="h-8 w-8 text-primary mr-4" />
                   <div>
@@ -534,11 +550,6 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
             </Link>
-            </div>
-            
-            {/* Profile Sidebar - Right Side */}
-            <div className="lg:col-span-1">
-              <UserProfile className="sticky top-8" />
             </div>
           </div>
         </div>

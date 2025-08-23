@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Shield, ArrowRight, Sparkles } from "lucide-react";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const Pricing = () => {
   const features = [
@@ -22,9 +23,10 @@ const Pricing = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <AnimatedBackground className="opacity-80" />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16">
+      <section className="pt-32 pb-16 bg-mesh">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
@@ -42,7 +44,7 @@ const Pricing = () => {
       </section>
 
       {/* Pricing Plans */}
-      <section className="py-16">
+      <section className="py-16 bg-mesh">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8 items-start">

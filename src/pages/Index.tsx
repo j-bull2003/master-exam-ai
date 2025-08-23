@@ -10,6 +10,7 @@ import { InteractiveCard } from "@/components/InteractiveCard";
 import { MagneticButton } from "@/components/MagneticButton";
 import { EmptyState } from "@/components/EmptyState";
 import { PageProgressBar } from "@/components/PageProgressBar";
+const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -171,14 +172,16 @@ const Index = () => {
               <div className="mb-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
                 <Link to="/auth/register">
                   <MagneticButton
-                    className="relative bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-12 py-6 rounded-lg shadow-2xl hover:shadow-primary/30 transition-all duration-300 border border-primary/20 card-layered group overflow-hidden"
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
+                    className="px-12"
+
                   >
                     {/* Enhanced shimmer effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
-                    <span className="relative z-10">Start Free Trial</span>
-                    <ArrowRight className={`w-5 h-5 ml-2 transition-transform duration-300 relative z-10 ${isHovered ? 'translate-x-1' : ''}`} />
+                    <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                    Start Free Trial
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                    
                   </MagneticButton>
                 </Link>
               </div>
@@ -218,8 +221,8 @@ const Index = () => {
 
             {/* University Logos Carousel with enhanced presentation */}
             {isLoaded ? (
-              <div className="mb-4 animate-fade-in" style={{ animationDelay: '0.7s' }}>
-                <p className="text-sm font-medium text-muted-foreground mb-4">
+              <div className=" animate-fade-in" style={{ animationDelay: '0.7s' }}>
+                <p className="text-sm font-medium text-muted-foreground mb-12">
                   Trusted by students preparing for top universities worldwide
                 </p>
                 <div 
@@ -387,85 +390,111 @@ const Index = () => {
 
       {/* Pricing Section */}
       <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+      <section className="pt-4 pb-4 ">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              Simple, Transparent Pricing
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Start your free trial today. No hidden fees, cancel anytime.
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
+              <span className="text-foreground">Simple,</span>{" "}
+              <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
+                Transparent
+              </span>{" "}
+              <span className="text-foreground">Pricing</span>
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8">
+              One plan, unlimited potential. Start your free trial today and cancel anytime.
             </p>
-          </div>
-
-          <div className="max-w-md mx-auto">
-            <div className="bg-background/90 backdrop-blur-sm rounded-3xl p-8 border border-border/50 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 relative overflow-hidden">
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-50 pointer-events-none" />
-              <div className="inline-block bg-primary/15 text-primary font-semibold px-4 py-2 rounded-full text-sm mb-6 border border-primary/20 relative z-10">🔥 Most Popular</div>
-              <h3 className="text-2xl font-bold mb-2 text-foreground relative z-10">Premium Plan</h3>
-              <div className="mb-6 relative z-10">
-                <span className="text-5xl font-black text-foreground">$49.99</span>
-                <span className="text-muted-foreground">/month</span>
-                <div className="text-sm text-muted-foreground mt-1">
-                  Save 20% with annual billing
-                </div>
-              </div>
-              
-              <div className="bg-success/10 border border-success/20 rounded-xl p-4 mb-8 relative z-10 hover:bg-success/15 transition-colors">
-                <p className="font-semibold text-success">🎉 7-Day Free Trial</p>
-                <p className="text-sm text-muted-foreground">Full access, no restrictions</p>
-                <p className="text-xs text-success/80 mt-1">No credit card required</p>
-              </div>
-
-              <ul className="space-y-4 mb-8 text-left relative z-10">
-                <li className="flex items-center gap-3">
-                  <Shield className="w-5 h-5 text-success" />
-                  <span>Unlimited practice questions</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Shield className="w-5 h-5 text-success" />
-                  <span>AI-powered personalization</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Shield className="w-5 h-5 text-success" />
-                  <span>Full mock exams</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Shield className="w-5 h-5 text-success" />
-                  <span>Advanced analytics</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Shield className="w-5 h-5 text-success" />
-                  <span>All exam types</span>
-                </li>
-              </ul>
-
-              <Link to="/auth/register" className="block relative z-10">
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg py-6 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 group overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
-                  <span className="relative z-10">Start Free Trial</span>
-                  <ArrowRight className="w-5 h-5 ml-2 relative z-10 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-
-              <p className="text-xs text-muted-foreground mt-4 relative z-10">
-                <Shield className="w-4 h-4 inline mr-1" />
-                Powered by Stripe • Secure payment • Cancel anytime
-              </p>
-            </div>
           </div>
         </div>
       </section>
 
+      {/* Pricing Plans */}
+      <section className="py-16">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 items-start">
+              
+              {/* Monthly Plan */}
+              <div className="relative p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
+                <h3 className="text-2xl font-bold mb-2">Monthly Plan</h3>
+                <div className="mb-6">
+                  <span className="text-5xl font-black">$49.99</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+                
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
+                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
+                    <Sparkles className="w-4 h-4" />
+                    7-Day Free Trial
+                  </div>
+                  <p className="text-sm text-muted-foreground">Full access, no restrictions</p>
+                </div>
+
+                <Link to="/auth/register" className="block mb-6">
+                  <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                    Start Free Trial
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+
+                <p className="text-sm text-muted-foreground text-center">
+                  Perfect for focused preparation
+                </p>
+              </div>
+
+              {/* Annual Plan */}
+              <div className="relative p-8 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    Most Popular
+                  </span>
+                </div>
+                
+                <h3 className="text-2xl font-bold mb-2">Annual Plan</h3>
+                <div className="mb-2">
+                  <span className="text-5xl font-black">$39.99</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+                <div className="mb-6">
+                  <span className="text-lg line-through text-muted-foreground">$599.88</span>
+                  <span className="text-success font-semibold ml-2">Save $120/year</span>
+                </div>
+                
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
+                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
+                    <Sparkles className="w-4 h-4" />
+                    7-Day Free Trial
+                  </div>
+                  <p className="text-sm text-muted-foreground">Full access, no restrictions</p>
+                </div>
+
+                <Link to="/auth/register" className="block mb-6">
+                  <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                    Start Free Trial
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+
+                <p className="text-sm text-muted-foreground text-center">
+                  Best value for long-term success
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </section>
+
+
       {/* Footer */}
       <footer className="py-12 border-t border-border/20">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <img 
-              src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
-              alt="UniHack.ai Logo" 
-              className="h-6 w-auto object-contain"
-            />
+          <img
+            src={uniHackLogo}
+            alt="UniHack.ai Logo"
+            className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+            style={{ backgroundColor: "transparent" }}
+          />
           </div>
           <p className="text-muted-foreground">
             © 2024 UniHack.ai. Empowering students with AI-driven test preparation.

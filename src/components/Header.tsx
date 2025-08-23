@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { CommandPalette } from "@/components/CommandPalette";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { Search, Keyboard } from "lucide-react";
+import { Instagram, Linkedin } from "lucide-react";
+
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 export const Header = () => {
@@ -34,19 +36,46 @@ export const Header = () => {
         } h-20
       `}>
       <nav className="container mx-auto px-6 h-full flex items-center">
-        <div className="flex items-center justify-between w-full">
+      <div className="relative flex items-center justify-between w-full">
           {/* Logo */}
-          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity group">
-            <img 
-              src={uniHackLogo} 
-              alt="UniHack.ai Logo" 
-              className="h-22 md:h-28 max-h-[88px] md:max-h-[112px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
-              style={{ backgroundColor: 'transparent' }}
-            />
-          </Link>
+          <div className="flex ">
+  <Link
+    to="/"
+    className="flex items-center hover:opacity-80 transition-opacity group"
+  >
+    <img
+      src={uniHackLogo}
+      alt="UniHack.ai Logo"
+      className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+      style={{ backgroundColor: "transparent" }}
+    />
+  </Link>
+
+  {/* Socials */}
+  <div className="hidden md:flex items-center gap-3 text-muted-foreground">
+    <a
+      href="https://instagram.com/unihackai"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:text-foreground transition-colors"
+    >
+      <Instagram className="w-5 h-5" />
+    </a>
+
+    <a
+      href="https://linkedin.com/company/yourorg"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:text-foreground transition-colors"
+    >
+      <Linkedin className="w-5 h-5" />
+    </a>
+  </div>
+</div>
+
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
             <Link 
               to="/features" 
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"

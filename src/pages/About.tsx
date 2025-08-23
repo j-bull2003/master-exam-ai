@@ -11,6 +11,7 @@ import {
   GraduationCap,
   Target
 } from "lucide-react";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const About = () => {
   const stats = [
@@ -64,13 +65,14 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <AnimatedBackground className="opacity-80" />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16">
+      <section className="pt-32 pb-16 bg-mesh">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
-              <span className="text-foreground">Empowering Students with</span>
+              <span className="text-foreground ">Empowering Students with</span>
               <br />
               <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
                 AI-Driven Excellence
