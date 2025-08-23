@@ -212,6 +212,13 @@ const Index = () => {
       {/* Footer */}
       <footer className="py-12 border-t border-border/20">
         <div className="container mx-auto px-6 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <img 
+              src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
+              alt="UniHack.ai Logo" 
+              className="h-6 w-auto object-contain"
+            />
+          </div>
           <p className="text-muted-foreground">
             © 2024 UniHack.ai. Empowering students with AI-driven test preparation.
           </p>

@@ -292,7 +292,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 <Sparkles className="w-10 h-10 text-success" />
               </div>
               
-              <h2 className="text-3xl font-bold">Welcome to UniHack.ai!</h2>
+              <h2 className="text-3xl font-bold">Welcome to Your Trial!</h2>
               <p className="text-xl text-muted-foreground">Your trial is now active</p>
               
               <div className="ai-glass-card p-6 space-y-4">
