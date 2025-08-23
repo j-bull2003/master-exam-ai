@@ -15,6 +15,7 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ExamPicker from "./pages/ExamPicker";
 import Diagnostic from "./pages/Diagnostic";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 import Practice from "./pages/Practice";
 import Mocks from "./pages/Mocks";
 import Analytics from "./pages/Analytics";
@@ -51,6 +52,7 @@ const App = () => (
           <Route path="/exam-picker" element={<ExamPicker />} />
           <Route path="/diagnostic" element={<Diagnostic />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
           
           {/* Practice & Assessment */}
           <Route path="/practice" element={<Practice />} />
