@@ -19,6 +19,7 @@ import Practice from "./pages/Practice";
 import Mocks from "./pages/Mocks";
 import Analytics from "./pages/Analytics";
 import Profile from "./pages/Profile";
+import Quiz from "./routes/Quiz";
 import TutorStudio from "./pages/TutorStudio";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -58,6 +59,7 @@ const App = () => (
           <Route path="/mocks" element={<Mocks />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/quiz" element={<Quiz />} />
           
           {/* Role-based Pages */}
           <Route path="/tutor-studio" element={<TutorStudio />} />

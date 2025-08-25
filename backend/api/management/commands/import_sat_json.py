@@ -25,6 +25,21 @@ class Command(BaseCommand):
         created, updated = 0, 0
 
         for uid, payload in data.items():
+            # ---------- pull/normalize content FIRST (so 'content' is defined) ----------
+            content = payload.get("content") or {}
+
+            raw_opts = content.get("answerOptions") or []
+            # normalize into a flat list of strings (content text only)
+            norm_opts = []
+            for opt in raw_opts:
+                if isinstance(opt, dict):
+                    txt = (opt.get("content") or "").strip()
+                    if txt:
+                        norm_opts.append(txt)
+                elif isinstance(opt, str):
+                    norm_opts.append(opt.strip())
+
+
             # top-level metadata
             program = payload.get("program") or "SAT"
             module_raw = (payload.get("module") or "").lower()
@@ -38,29 +53,25 @@ class Command(BaseCommand):
             score_band_range_cd = payload.get("score_band_range_cd")
             ibn = payload.get("ibn")
 
-            content = payload.get("content") or {}
-
-            # Normalize subfields
+            # text html fields from content
             stem = content.get("stem") or content.get("prompt") or content.get("question") or ""
             rationale = content.get("rationale") or (content.get("answer") or {}).get("rationale") or ""
+
             correct_answers = (
                 content.get("correct_answer")
                 or (content.get("answer") or {}).get("correct_choice")
-                or content.get("keys")
                 or []
             )
-            # normalize to list
             if isinstance(correct_answers, str):
                 correct_answers = [correct_answers]
+            if not correct_answers:
+                correct_answers = norm_opts
 
-            # Friendly test name
             test_name = {
                 "math": "Math",
                 "reading": "Reading and Writing",
                 "reading and writing": "Reading and Writing",
             }.get(module_raw, module_raw or "Unknown")
-
-            # Upsert related models
             assess, _ = Assessment.objects.get_or_create(name=program)
             test, _ = Test.objects.get_or_create(name=test_name)
 
@@ -70,7 +81,6 @@ class Command(BaseCommand):
                     code=primary_class_cd or "",
                     defaults={"name": primary_class_cd_desc or primary_class_cd or ""},
                 )
-                # update name if we later learned it
                 if primary_class_cd_desc and (domain.name != primary_class_cd_desc):
                     domain.name = primary_class_cd_desc
                     domain.save(update_fields=["name"])
@@ -86,13 +96,10 @@ class Command(BaseCommand):
                     skill.name = skill_desc
                     skill.save(update_fields=["name"])
 
-            # Keep only the leftover odds-and-ends in `content`
-            # Remove what we now store in first-class fields
+            # keep extra bits in content_slim
             content_slim = dict(content)
             for k in ["stem", "prompt", "question", "rationale", "answer", "correct_answer", "keys"]:
                 content_slim.pop(k, None)
-
-            # Keep some extras that don't have their own columns (but are useful)
             extras = {
                 "ibn": ibn,
                 "templateid": content.get("templateid"),
@@ -108,27 +115,30 @@ class Command(BaseCommand):
                     extras.pop(k, None)
             content_slim.update(extras)
 
-            # Build defaults using concrete Item fields
             defaults = {
                 "question_id": question_id,
                 "program": program,
                 "module": test_name,
                 "difficulty": difficulty,
                 "primary_class_cd": primary_class_cd,
+                "primary_class_desc": primary_class_cd_desc,
                 "score_band_range_cd": score_band_range_cd,
                 "external_id": external_id,
                 "stem": stem or "",
                 "rationale": rationale or "",
                 "correct_answers": correct_answers,
-                "content": content_slim,
+                "answer_options": norm_opts,
+                "content": content_slim, 
                 "assessment": assess,
                 "test": test,
+                "domain": domain,
                 "skill": skill,
             }
 
-            # Upsert by uid (assumes Item has a `uid` field)
             obj, was_created = Item.objects.update_or_create(uid=uid, defaults=defaults)
-            created += 1 if was_created else 0
-            updated += 0 if was_created else 1
+            if was_created:
+                created += 1
+            else:
+                updated += 1
 
         self.stdout.write(self.style.SUCCESS(f"Import complete: {created} created, {updated} updated."))

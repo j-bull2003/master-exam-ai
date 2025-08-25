@@ -32,6 +32,7 @@ class ParsedQuestion:
     difficulty: str
     correct_answer: str
     choices: List[ParsedChoice]
+    keys: List[str]
 
 
 class SatOnrenderScraper:
@@ -80,55 +81,47 @@ class SatOnrenderScraper:
     # ---- Parse a single question page ----
     def parse_question(self, url: str) -> Optional[ParsedQuestion]:
         soup = self.fetch(url)
-
-        # 1) Extract the entire main text blob (question stem + options) from the page body
         body_text = soup.get_text("\n", strip=True)
 
-        # 2) Pull the explicit "Correct Answer:  X" marker (exists on the site)
+        # Correct letter (A–D)
         m_ans = re.search(r"Correct\s*Answer:\s*([A-D])", body_text, flags=re.I)
         correct_letter = m_ans.group(1).upper() if m_ans else ""
 
-        # 3) Heuristics for the stem: take text between the first paragraph-like block
-        #    and the start of the choices list. On this site choices are shown as
-        #    numbered 1.. 2.. 3.. 4..
-        #    We'll grab the first paragraph before "  1. " pattern.
+        # Split stem vs choices (1. 2. 3. 4.)
         parts = re.split(r"\n\s*1\.\s*", body_text, maxsplit=1)
-        stem_block = parts[0].strip() if parts else ""
-        # Sometimes the stem has an instruction line like "Which choice ...?"
-        # Keep both context + stem; the API can show the whole text.
-        stem_text = stem_block
-
-        # 4) Extract options as numbered items. We capture up to 4, split on 2., 3., 4.
+        stem_text = (parts[0].strip() if parts else "")
         choices_block = parts[1] if len(parts) > 1 else ""
-        opt_splits = re.split(r"\n\s*2\.\s*|\n\s*3\.\s*|\n\s*4\.\s*", choices_block)
-        # The split removes the delimiters, so we re-find each option using a gentler regex.
-        # Instead, do a direct regex to capture 1.., 2.., 3.., 4.. lines/paragraphs.
         options = re.findall(r"(?:^|\n)\s*([1-4])\.\s*(.+?)(?=\n\s*[1-4]\.\s*|$)", choices_block, flags=re.S)
+
         labels = ["A", "B", "C", "D"]
         parsed_choices: List[ParsedChoice] = []
-        for idx, txt in options:
-            i = int(idx) - 1
+        for idx_str, txt in options:
+            i = int(idx_str) - 1
             label = labels[i] if 0 <= i < 4 else ""
             clean = re.sub(r"\s+", " ", txt).strip()
-            parsed_choices.append(
-                ParsedChoice(label=label, text=clean, html="", is_correct=(label == correct_letter))
-            )
+            parsed_choices.append(ParsedChoice(label=label, text=clean, html="", is_correct=(label == correct_letter)))
 
-        # 5) Explanation: the page shows a "Rationale" paragraph after the answer
-        # Find the substring after "Rationale" heading if present
+        # Rationale (HTML on site often becomes text here)
         exp = ""
         m_rat = re.search(r"Rationale\s*(.+)$", body_text, flags=re.S | re.I)
         if m_rat:
             exp = re.sub(r"\s+", " ", m_rat.group(1)).strip()
 
-        # 6) Section: pages show “Reading and Writing” or Math cues;
+        keys: List[str] = []
+        for ch in parsed_choices:
+            if ch.is_correct and ch.text:
+                keys.append(ch.text)
+        variants = set()
+        rat_block = m_rat.group(1) if m_rat else ""
+        for m in re.finditer(r"(?<![\d/])(?:\d+/\d+|\d*\.\d+|\.\d+)(?![\d/])", rat_block):
+            variants.add(m.group(0).strip())
+        keys.extend(sorted(variants))
+
+        keys = list(dict.fromkeys([k.strip() for k in keys if k.strip()]))
+
         raw = body_text.lower()
         section = "READ" if "reading and writing" in raw or "standard english" in raw else ("MC" if "math" in raw else "OTH")
-
-        # 7) Difficulty: the page shows "Question Difficulty:"; often the actual E/M/H isn't explicit, so leave UNK
         difficulty = "UNK"
-
-        # 8) Number in set (optional): these pages show paging like "1 / 66"
         m_num = re.search(r"(\d+)\s*/\s*\d+", body_text)
         qnum = int(m_num.group(1)) if m_num else None
 
@@ -140,11 +133,12 @@ class SatOnrenderScraper:
             qtype="MCQ",
             number=qnum,
             text=stem_text,
-            html="",  # keep plain text; the site is mostly text
+            html="",
             explanation=exp,
             difficulty=difficulty,
             correct_answer=correct_letter,
             choices=parsed_choices,
+            keys=keys,
         )
 
     # ---- Master iterator over all category questions ----

@@ -31,6 +31,7 @@ import {
   Home,
   BookOpen
 } from "lucide-react";
+import QuestionBank from "./QuestionBank";
 
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
@@ -304,34 +305,9 @@ const Dashboard = () => {
 
           {/* Main Dashboard Content */}
           <div className="grid lg:grid-cols-3 gap-8 items-start">
-            {/* Main Content - Left Side */}
             <div className="lg:col-span-2 space-y-8">
-            {/* Study Plan Table */}
             <Card className="border-border/40">
-              <CardHeader className="border-b border-border/40 bg-muted/20">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <BookOpen className="h-5 w-5 text-primary" />
-                      Today's Study Plan
-                    </CardTitle>
-                    <CardDescription className="text-sm">
-                      AI-recommended focus areas based on your performance
-                    </CardDescription>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Settings2 className="h-4 w-4" />
-                      <span>Dense</span>
-                      <Switch 
-                        checked={isDenseMode} 
-                        onCheckedChange={setIsDenseMode}
-                        className="data-[state=checked]:bg-primary"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
+            <QuestionBank></QuestionBank>
               <CardContent className="p-0">
                 {isLoading ? (
                   <div className="p-6 space-y-3">
