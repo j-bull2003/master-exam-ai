@@ -20,8 +20,9 @@ To actually run the backend:
 
 ```python manage.py runserver```
 (should be running on port http://127.0.0.1:8000)
+to go to admin go to http://127.0.0.1:8000/admin
 
-
+-------------------------------
 
 Running the frontend:
 
