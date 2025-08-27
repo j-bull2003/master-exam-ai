@@ -56,7 +56,7 @@ const Features = () => {
   ];
 
   const examTypes = [
-    "SAT", "ACT", "UCAT", "BMAT", "STEP", "MAT", 
+    "SAT", "ACT", "UCAT", "STEP", "MAT", 
     "ESAT", "LNAT", "TSA", "PAT", "UKCAT", "GAMSAT"
   ];
 

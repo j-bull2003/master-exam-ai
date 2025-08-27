@@ -100,14 +100,6 @@ const Admin = () => {
       region: "US",
       sections: ["Reading and Writing", "Math"],
       status: "active"
-    },
-    {
-      id: "bmat",
-      name: "BMAT",
-      fullName: "Biomedical Admissions Test",
-      region: "UK",
-      sections: ["Aptitude and Skills", "Scientific Knowledge", "Writing Task"],
-      status: "active"
     }
   ];
 

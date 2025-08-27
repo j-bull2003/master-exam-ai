@@ -52,7 +52,7 @@ const Index = () => {
   }, [isLoaded]);
 
   const exams = [
-    "SAT", "ACT", "UCAT", "BMAT", "STEP", "MAT", "ESAT", "LNAT", "TSA", "PAT"
+    "SAT", "ACT", "UCAT", "STEP", "MAT", "ESAT", "LNAT", "TSA", "PAT"
   ];
 
   const features = [
@@ -90,7 +90,7 @@ const Index = () => {
     {
       name: "James Wilson",
       university: "Oxford",
-      exam: "BMAT",
+      exam: "STEP",
       score: "7.2/9",
       quote: "The adaptive practice was game-changing. I felt completely prepared on exam day.",
       avatar: "JW"
@@ -425,7 +425,7 @@ const Index = () => {
                     <Sparkles className="w-4 h-4" />
                     7-Day Free Trial
                   </div>
-                  <p className="text-sm text-muted-foreground">Full access, no restrictions</p>
+                  <p className="text-sm text-muted-foreground">Explore the platform with limited access. Upgrade to unlock more</p>
                 </div>
 
                 <Link to="/auth/register" className="block mb-6">
@@ -463,7 +463,7 @@ const Index = () => {
                     <Sparkles className="w-4 h-4" />
                     7-Day Free Trial
                   </div>
-                  <p className="text-sm text-muted-foreground">Full access, no restrictions</p>
+                  <p className="text-sm text-muted-foreground">Explore the platform with limited access. Upgrade to unlock more</p>
                 </div>
 
                 <Link to="/auth/register" className="block mb-6">

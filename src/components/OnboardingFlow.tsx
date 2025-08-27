@@ -52,7 +52,6 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     { id: "SAT", name: "SAT", description: "Standardized Assessment Test", region: "US" },
     { id: "ACT", name: "ACT", description: "American College Testing", region: "US" },
     { id: "UCAT", name: "UCAT", description: "University Clinical Aptitude Test", region: "UK" },
-    { id: "BMAT", name: "BMAT", description: "BioMedical Admissions Test", region: "UK" },
     { id: "STEP", name: "STEP", description: "Sixth Term Examination Paper", region: "UK" },
     { id: "MAT", name: "MAT", description: "Mathematics Admissions Test", region: "UK" },
     { id: "ESAT", name: "ESAT", description: "Engineering & Science Admissions Test", region: "UK" },

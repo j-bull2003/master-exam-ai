@@ -30,16 +30,6 @@ const exams = [
     students: "2M+"
   },
   {
-    id: "bmat",
-    name: "BMAT",
-    fullName: "Biomedical Admissions Test",
-    description: "For medicine, veterinary medicine, and related degree applications",
-    region: "UK",
-    duration: "2 hours",
-    sections: ["Aptitude and Skills", "Scientific Knowledge", "Writing Task"],
-    students: "15,000+"
-  },
-  {
     id: "act",
     name: "ACT",
     fullName: "American College Testing",

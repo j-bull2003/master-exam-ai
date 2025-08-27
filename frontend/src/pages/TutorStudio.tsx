@@ -234,7 +234,6 @@ const TutorStudio = () => {
                       <SelectContent>
                         <SelectItem value="ucat">UCAT</SelectItem>
                         <SelectItem value="sat">SAT</SelectItem>
-                        <SelectItem value="bmat">BMAT</SelectItem>
                         <SelectItem value="act">ACT</SelectItem>
                       </SelectContent>
                     </Select>

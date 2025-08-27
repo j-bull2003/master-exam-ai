@@ -62,7 +62,7 @@ const Pricing = () => {
                     <Sparkles className="w-4 h-4" />
                     7-Day Free Trial
                   </div>
-                  <p className="text-sm text-muted-foreground">Full access, no restrictions</p>
+                  <p className="text-sm text-muted-foreground">Explore the platform with limited access. Upgrade to unlock more</p>
                 </div>
 
                 <Link to="/auth/register" className="block mb-6">
@@ -100,7 +100,7 @@ const Pricing = () => {
                     <Sparkles className="w-4 h-4" />
                     7-Day Free Trial
                   </div>
-                  <p className="text-sm text-muted-foreground">Full access, no restrictions</p>
+                  <p className="text-sm text-muted-foreground">Explore the platform with limited access. Upgrade to unlock more</p>
                 </div>
 
                 <Link to="/auth/register" className="block mb-6">
@@ -148,7 +148,7 @@ const Pricing = () => {
             <div className="space-y-6">
               <div className="p-6 rounded-xl bg-card border border-border/50">
                 <h3 className="font-semibold mb-2">How does the free trial work?</h3>
-                <p className="text-muted-foreground">You get full access to all features for 7 days. No credit card required upfront. Cancel anytime during the trial with no charges.</p>
+                <p className="text-muted-foreground">You can explore the platform with limited access for 7 days. No credit card required upfront. Cancel anytime during the trial with no charges.</p>
               </div>
               <div className="p-6 rounded-xl bg-card border border-border/50">
                 <h3 className="font-semibold mb-2">Can I cancel anytime?</h3>
@@ -156,7 +156,7 @@ const Pricing = () => {
               </div>
               <div className="p-6 rounded-xl bg-card border border-border/50">
                 <h3 className="font-semibold mb-2">Which exams do you support?</h3>
-                <p className="text-muted-foreground">We support all major admission tests worldwide including SAT, ACT, UCAT, BMAT, STEP, MAT, and many more university-specific exams.</p>
+                <p className="text-muted-foreground">We support all major admission tests worldwide including SAT, ACT, UCAT, STEP, MAT, and many more university-specific exams.</p>
               </div>
               <div className="p-6 rounded-xl bg-card border border-border/50">
                 <h3 className="font-semibold mb-2">Is the content created by real tutors?</h3>

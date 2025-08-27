@@ -266,7 +266,6 @@ export const UserProfile = ({ className = "" }: UserProfileProps) => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="UCAT">UCAT</SelectItem>
-                    <SelectItem value="BMAT">BMAT</SelectItem>
                     <SelectItem value="SAT">SAT</SelectItem>
                     <SelectItem value="ACT">ACT</SelectItem>
                     <SelectItem value="STEP">STEP</SelectItem>
