@@ -75,7 +75,7 @@ export const Header = () => {
 
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+          <div className="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 mr-8">
             <Link 
               to="/features" 
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"
