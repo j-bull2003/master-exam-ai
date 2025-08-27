@@ -75,24 +75,24 @@ export const Header = () => {
 
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 mr-8">
+          <div className="hidden md:flex items-center justify-center gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 min-w-0 max-w-2xl">
             <Link 
               to="/features" 
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
             >
               Features
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
             <Link 
               to="/pricing" 
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
             >
               Pricing
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
             <Link 
               to="/about" 
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
             >
               About
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
@@ -101,7 +101,7 @@ export const Header = () => {
               href="https://www.etonstone.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
             >
               Etonstone Education
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
