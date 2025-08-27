@@ -98,8 +98,9 @@ export const Header = () => {
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
             <a
-              href="https://www.eatonstone.org"
-              target="_self"
+              href="https://www.etonstone.org"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group"
             >
               Etonstone Education
