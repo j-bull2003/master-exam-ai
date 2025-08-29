@@ -298,34 +298,34 @@ const Diagnostic = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="p-4 bg-success-light rounded-lg">
-              <div className="text-2xl font-bold text-success-foreground">
+            <div className="p-4 bg-green-100 border border-green-200 rounded-lg">
+              <div className="text-2xl font-bold text-green-800">
                 {Math.round((2/3) * 100)}%
               </div>
-              <p className="text-sm text-success-foreground">Overall Score</p>
+              <p className="text-sm text-green-700 font-medium">Overall Score</p>
             </div>
-            <div className="p-4 bg-accent rounded-lg">
-              <div className="text-2xl font-bold text-accent-foreground">
+            <div className="p-4 bg-blue-100 border border-blue-200 rounded-lg">
+              <div className="text-2xl font-bold text-blue-800">
                 Intermediate
               </div>
-              <p className="text-sm text-accent-foreground">Level Assessment</p>
+              <p className="text-sm text-blue-700 font-medium">Level Assessment</p>
             </div>
           </div>
 
           <div className="space-y-3">
             <h3 className="font-semibold">Your Strengths & Areas for Improvement:</h3>
             <div className="space-y-2">
-              <div className="flex items-center justify-between p-3 bg-success-light rounded-lg">
-                <span className="text-sm font-medium">Verbal Reasoning</span>
-                <span className="text-sm text-success-foreground font-bold">Strong</span>
+              <div className="flex items-center justify-between p-3 bg-green-100 border border-green-200 rounded-lg">
+                <span className="text-sm font-medium text-green-900">Verbal Reasoning</span>
+                <span className="text-sm text-green-800 font-bold">Strong</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-warning-light rounded-lg">
-                <span className="text-sm font-medium">Quantitative Reasoning</span>
-                <span className="text-sm text-warning-foreground font-bold">Needs Work</span>
+              <div className="flex items-center justify-between p-3 bg-orange-100 border border-orange-200 rounded-lg">
+                <span className="text-sm font-medium text-orange-900">Quantitative Reasoning</span>
+                <span className="text-sm text-orange-800 font-bold">Needs Work</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-success-light rounded-lg">
-                <span className="text-sm font-medium">Decision Making</span>
-                <span className="text-sm text-success-foreground font-bold">Strong</span>
+              <div className="flex items-center justify-between p-3 bg-green-100 border border-green-200 rounded-lg">
+                <span className="text-sm font-medium text-green-900">Decision Making</span>
+                <span className="text-sm text-green-800 font-bold">Strong</span>
               </div>
             </div>
           </div>
