@@ -197,6 +197,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         throw new Error('No user ID returned from signup');
       }
 
+      // Get the selected exam details
+      const selectedExam = exams.find(exam => exam.id === formData.selectedExam);
+      const examName = selectedExam ? selectedExam.name : formData.selectedExam;
+
       // Update the profile with exam details using upsert to ensure it exists
       const { error: profileError } = await supabase
         .from('profiles')
@@ -204,7 +208,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           user_id: userId,
           full_name: formData.name,
           email: formData.email,
-          exam_type: formData.selectedExam,
+          exam_type: examName, // Save the readable exam name (e.g., "STEP"), not ID
           exam_date: formData.examDate?.toISOString().split('T')[0], // Store as date only
           updated_at: new Date().toISOString()
         }, {
@@ -213,7 +217,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
       console.log('Profile update result:', {
         userId,
-        examType: formData.selectedExam,
+        examType: examName, // Log the actual name being saved
         examDate: formData.examDate?.toISOString().split('T')[0],
         error: profileError
       });
