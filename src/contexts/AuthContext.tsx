@@ -83,15 +83,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       password,
     });
     
-    // Even if email is not confirmed, allow sign in if we get a session
+    // If we get "Email not confirmed" error, still return success
     // The dashboard will show a banner for unconfirmed emails
-    if (error && error.message !== 'Email not confirmed') {
+    if (error) {
+      if (error.message === 'Email not confirmed') {
+        // For development/testing, we'll allow unconfirmed users to access the dashboard
+        // In production, you might want to handle this differently
+        return { error: null, needsConfirmation: true };
+      }
       return { error };
     }
     
-    // If we have a session but email not confirmed, still return success
-    // The UI will handle the email confirmation banner
-    return { error: null };
+    return { error: null, needsConfirmation: false };
   };
 
   const signUp = async (email: string, password: string, options?: any) => {
