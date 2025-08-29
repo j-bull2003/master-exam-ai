@@ -317,7 +317,7 @@ const Dashboard = () => {
             Welcome back, {userData?.name || 'User'}! 👋
           </h1>
           <p className="text-xl text-muted-foreground">
-            Ready to excel in your {userData?.exam || 'upcoming exam'}?
+            Ready to excel in your {userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?
           </p>
         </div>
 
@@ -398,7 +398,7 @@ const Dashboard = () => {
               
               {userData?.examDate && !isExamPassed && (
                 <p className="text-muted-foreground">
-                  Keep up the great work! You're making steady progress toward your {userData.exam}.
+                  Keep up the great work! You're making steady progress toward your {userData.exam} exam.
                 </p>
               )}
             </div>
