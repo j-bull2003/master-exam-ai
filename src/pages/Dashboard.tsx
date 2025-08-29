@@ -10,6 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Switch } from "@/components/ui/switch";
 import AccessGate from "@/components/AccessGate";
 import { UserProfile } from "@/components/UserProfile";
+import { ExamCountdown } from "@/components/ExamCountdown";
 import { 
   GraduationCap, 
   Target, 
@@ -47,6 +48,7 @@ const Dashboard = () => {
   const userData = {
     name: "Alex Johnson",
     exam: "UCAT",
+    examDate: new Date("2024-03-15"), // Mock exam date - replace with actual user data
     totalQuestions: 450,
     correctAnswers: 315,
     accuracy: 70,
@@ -242,6 +244,18 @@ const Dashboard = () => {
             <p className="text-muted-foreground">
               Preparing for {userData.exam} • {userData.streakDays} day streak 🔥
             </p>
+          </div>
+          
+          {/* Exam Countdown */}
+          <div className="mb-8">
+            <ExamCountdown 
+              examDate={userData.examDate} 
+              examType={userData.exam}
+              onUpdateDate={() => {
+                // TODO: Implement exam date update functionality
+                console.log("Update exam date clicked");
+              }}
+            />
           </div>
           
           {/* Stats Overview */}

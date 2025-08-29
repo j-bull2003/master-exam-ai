@@ -11,6 +11,7 @@ import {
   ArrowLeft,
   Shield,
   Calendar,
+  CalendarIcon,
   Sparkles,
   Eye,
   EyeOff,
@@ -20,6 +21,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface OnboardingFlowProps {
   onComplete?: () => void;
@@ -34,6 +39,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     email: "",
     password: "",
     selectedExam: "",
+    examDate: null as Date | null,
     cardNumber: "",
     expiryDate: "",
     cvv: "",
@@ -85,6 +91,21 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     } else if (step === 2) {
       if (!formData.selectedExam) newErrors.exam = "Please select an exam";
     } else if (step === 3) {
+      if (!formData.examDate) {
+        newErrors.examDate = "Please select your exam date";
+      } else {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const twoYearsFromNow = new Date();
+        twoYearsFromNow.setFullYear(twoYearsFromNow.getFullYear() + 2);
+        
+        if (formData.examDate < today) {
+          newErrors.examDate = "Exam date cannot be in the past";
+        } else if (formData.examDate > twoYearsFromNow) {
+          newErrors.examDate = "Exam date must be within 2 years from now";
+        }
+      }
+    } else if (step === 4) {
       if (!formData.cardNumber) newErrors.cardNumber = "Card number is required";
       if (!formData.expiryDate) newErrors.expiryDate = "Expiry date is required";
       if (!formData.cvv) newErrors.cvv = "CVV is required";
@@ -104,7 +125,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   const nextStep = () => {
-    if (validateStep(currentStep) && currentStep < 4) {
+    if (validateStep(currentStep) && currentStep < 5) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -130,7 +151,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex justify-center mb-4">
-            {[1, 2, 3, 4].map((step) => (
+            {[1, 2, 3, 4, 5].map((step) => (
               <div key={step} className="flex items-center">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all duration-300 ${
                   step <= currentStep 
@@ -139,7 +160,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 }`}>
                   {step < currentStep ? <CheckCircle className="w-5 h-5" /> : step}
                 </div>
-                {step < 4 && (
+                {step < 5 && (
                   <div className={`w-12 h-1 mx-2 transition-colors duration-300 ${
                     step < currentStep ? 'bg-primary' : 'bg-muted'
                   }`} />
@@ -149,7 +170,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           </div>
           <div className="text-center">
             <span className="text-sm text-muted-foreground">
-              Step {currentStep} of 4
+              Step {currentStep} of 5
             </span>
           </div>
         </div>
@@ -355,8 +376,74 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             </div>
           )}
 
-          {/* Step 3: Payment Information */}
+          {/* Step 3: Exam Date Selection */}
           {currentStep === 3 && (
+            <div className="space-y-6">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold mb-2">When is your exam?</h2>
+                <p className="text-muted-foreground">Help us create a personalized study timeline for you</p>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <Label className="text-sm font-medium text-foreground">
+                    Exam date
+                  </Label>
+                  <div className="mt-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full h-12 justify-start text-left font-normal",
+                            !formData.examDate && "text-muted-foreground",
+                            errors.examDate && "border-destructive focus:border-destructive"
+                          )}
+                        >
+                          <CalendarIcon className="mr-3 h-5 w-5" />
+                          {formData.examDate ? format(formData.examDate, "PPP") : <span>Select your exam date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <CalendarComponent
+                          mode="single"
+                          selected={formData.examDate || undefined}
+                          onSelect={(date) => {
+                            setFormData(prev => ({ ...prev, examDate: date || null }));
+                            if (errors.examDate) {
+                              setErrors(prev => ({ ...prev, examDate: "" }));
+                            }
+                          }}
+                          disabled={(date) => {
+                            const today = new Date();
+                            today.setHours(0, 0, 0, 0);
+                            const twoYearsFromNow = new Date();
+                            twoYearsFromNow.setFullYear(twoYearsFromNow.getFullYear() + 2);
+                            return date < today || date > twoYearsFromNow;
+                          }}
+                          initialFocus
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  {errors.examDate ? (
+                    <p className="text-sm text-destructive flex items-center gap-2 mt-2">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.examDate}
+                    </p>
+                  ) : (
+                    <p className="text-sm text-muted-foreground mt-2">
+                      This helps us create a study plan tailored to your timeline
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: Payment Information */}
+          {currentStep === 4 && (
             <div className="space-y-6">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold mb-2">Payment Information</h2>
@@ -501,8 +588,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             </div>
           )}
 
-          {/* Step 4: Confirmation */}
-          {currentStep === 4 && (
+          {/* Step 5: Confirmation */}
+          {currentStep === 5 && (
             <div className="text-center space-y-6">
               <div className="w-20 h-20 mx-auto bg-success/20 rounded-full flex items-center justify-center mb-6">
                 <Sparkles className="w-10 h-10 text-success" />
