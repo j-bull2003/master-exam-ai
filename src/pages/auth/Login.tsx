@@ -34,6 +34,7 @@ const Login = () => {
   // Redirect if already logged in
   useEffect(() => {
     if (user && !loading) {
+      console.log('User authenticated, redirecting to dashboard:', user.email);
       navigate("/dashboard");
     }
   }, [user, loading, navigate]);
@@ -93,7 +94,11 @@ const Login = () => {
         description: "You've been successfully logged in.",
       });
       
-      // Navigation will happen automatically via useEffect when user state updates
+      // Force navigation to dashboard after successful login
+      console.log('Login successful, navigating to dashboard...');
+      navigate("/dashboard");
+      
+      // Navigation will also happen via useEffect when user state updates
     } catch (error) {
       setErrors({ 
         submit: "Invalid email or password. Please try again." 
