@@ -52,104 +52,130 @@ const Dashboard = () => {
 
   // Load user data from Supabase
   useEffect(() => {
+    let mounted = true;
+    
     const loadUserData = async () => {
       try {
+        console.log('Setting up auth state listener...');
+        
         // Set up auth state listener first
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
           console.log('Auth state changed:', event, session?.user?.id);
+          
+          if (!mounted) return;
+          
           if (session?.user) {
             // User is authenticated, load their profile
-            loadProfileData(session.user);
+            await loadProfileData(session.user);
           } else {
-            // User is not authenticated
-            setUserData(null);
+            // User is not authenticated - redirect to onboarding
+            console.log('No authenticated user, showing default data');
+            setUserData({
+              name: "Guest User",
+              exam: "Complete onboarding to get started",
+              examDate: null,
+              totalQuestions: 0,
+              correctAnswers: 0,
+              accuracy: 0,
+              weeklyTarget: 100,
+              completedThisWeek: 0,
+              streakDays: 0,
+              nextSession: "Complete onboarding first"
+            });
             setIsLoading(false);
           }
         });
 
         // Then check for existing session
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-          loadProfileData(session.user);
-        } else {
+        console.log('Checking for existing session...');
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        console.log('Session check result:', session?.user?.id, sessionError);
+        
+        if (sessionError) {
+          console.error('Session error:', sessionError);
+          setIsLoading(false);
+          return;
+        }
+        
+        if (session?.user && mounted) {
+          await loadProfileData(session.user);
+        } else if (mounted) {
           setIsLoading(false);
         }
 
-        return () => subscription.unsubscribe();
+        return () => {
+          subscription.unsubscribe();
+          mounted = false;
+        };
       } catch (error) {
         console.error('Error setting up auth:', error);
-        setIsLoading(false);
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     const loadProfileData = async (user: any) => {
+      if (!mounted) return;
+      
       try {
-        
-        if (user) {
-          const { data: profile, error } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('user_id', user.id)
-            .maybeSingle();
+        console.log('Loading profile data for user:', user.id);
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .maybeSingle();
 
-          if (error) {
-            console.error('Error loading profile:', error);
-            // Fallback to default data if no profile found
-            setUserData({
-              name: user.user_metadata?.full_name || "User",
-              exam: "Please select exam type", // Prompt user to complete onboarding
-              examDate: null,
-              totalQuestions: 450,
-              correctAnswers: 315,
-              accuracy: 70,
-              weeklyTarget: 100,
-              completedThisWeek: 65,
-              streakDays: 7,
-              nextSession: "Quantitative Reasoning - Hard"
-            });
-          } else {
-            setUserData({
-              name: profile.full_name || "User",
-              exam: profile.exam_type || "UCAT", // Use saved exam type or default
-              examDate: profile.exam_date ? new Date(profile.exam_date) : null,
-              totalQuestions: 450,
-              correctAnswers: 315,
-              accuracy: 70,
-              weeklyTarget: 100,
-              completedThisWeek: 65,
-              streakDays: 7,
-              nextSession: "Quantitative Reasoning - Hard"
-            });
-          }
-        } else {
-          // Not authenticated, use default data
-          setUserData({
-            name: "Demo User",
-            exam: "UCAT",
-            examDate: null,
-            totalQuestions: 450,
-            correctAnswers: 315,
-            accuracy: 70,
-            weeklyTarget: 100,
-            completedThisWeek: 65,
-            streakDays: 7,
-            nextSession: "Quantitative Reasoning - Hard"
-          });
+        console.log('Profile query result:', profile, error);
+
+        if (error) {
+          console.error('Error loading profile:', error);
         }
+
+        // Set user data regardless of profile success/failure
+        const userData = {
+          name: profile?.full_name || user.user_metadata?.full_name || "User",
+          exam: profile?.exam_type || "Complete onboarding",
+          examDate: profile?.exam_date ? new Date(profile.exam_date) : null,
+          totalQuestions: 450,
+          correctAnswers: 315,
+          accuracy: 70,
+          weeklyTarget: 100,
+          completedThisWeek: 65,
+          streakDays: 7,
+          nextSession: "Quantitative Reasoning - Hard"
+        };
+
+        console.log('Setting user data:', userData);
+        setUserData(userData);
       } catch (error) {
-        console.error('Error loading user data:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load user data. Please refresh the page.",
-          variant: "destructive"
+        console.error('Error loading profile data:', error);
+        // Still set some default data for authenticated user
+        setUserData({
+          name: user.user_metadata?.full_name || "User",
+          exam: "Error loading profile",
+          examDate: null,
+          totalQuestions: 0,
+          correctAnswers: 0,
+          accuracy: 0,
+          weeklyTarget: 100,
+          completedThisWeek: 0,
+          streakDays: 0,
+          nextSession: "Try refreshing the page"
         });
       } finally {
-        setIsLoading(false);
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     loadUserData();
-  }, [toast]);
+    
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const recentSessions = [
     { 
