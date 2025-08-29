@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { 
   User, 
   Mail, 
@@ -25,6 +25,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface OnboardingFlowProps {
   onComplete?: () => void;
@@ -34,6 +36,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -46,6 +49,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     nameOnCard: ""
   });
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   // Focus first input when step changes
   useEffect(() => {
@@ -96,12 +101,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       } else {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
+        const selectedDate = new Date(formData.examDate);
+        selectedDate.setHours(0, 0, 0, 0);
         const twoYearsFromNow = new Date();
         twoYearsFromNow.setFullYear(twoYearsFromNow.getFullYear() + 2);
         
-        if (formData.examDate < today) {
+        if (selectedDate < today) {
           newErrors.examDate = "Exam date cannot be in the past";
-        } else if (formData.examDate > twoYearsFromNow) {
+        } else if (selectedDate > twoYearsFromNow) {
           newErrors.examDate = "Exam date must be within 2 years from now";
         }
       }
@@ -157,9 +164,58 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   };
 
-  const handleSubmit = () => {
-    // Handle subscription creation here
-    onComplete?.();
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    try {
+      // Sign up the user
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            full_name: formData.name,
+          }
+        }
+      });
+
+      if (authError) {
+        setErrors({ submit: authError.message });
+        setIsLoading(false);
+        return;
+      }
+
+      if (authData.user) {
+        // Update profile with exam data
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .update({
+            exam_type: formData.selectedExam,
+            exam_date: formData.examDate?.toISOString().split('T')[0]
+          })
+          .eq('user_id', authData.user.id);
+
+        if (profileError) {
+          console.error('Profile update error:', profileError);
+          toast({
+            title: "Warning",
+            description: "Account created but exam data could not be saved. You can update this in your profile.",
+            variant: "destructive"
+          });
+        }
+
+        toast({
+          title: "Account Created!",
+          description: "Welcome to UniHack.ai. Let's start with your diagnostic test.",
+        });
+
+        navigate('/diagnostic');
+      }
+    } catch (error) {
+      console.error('Onboarding error:', error);
+      setErrors({ submit: 'An unexpected error occurred. Please try again.' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -709,11 +765,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               
               <Button
                 onClick={handlePayment}
-                disabled={!isPaymentFormValid()}
+                disabled={!isPaymentFormValid() || isLoading}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground h-12 px-8 font-semibold focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Complete Payment
-                <ArrowRight className="w-4 h-4" />
+                {isLoading ? 'Processing...' : 'Complete Payment'}
+                {!isLoading && <ArrowRight className="w-4 h-4" />}
               </Button>
             </div>
           )}
@@ -746,13 +802,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <div className="space-y-4">
                 <Button 
                   className="ai-cta-button w-full"
-                  onClick={() => {
-                    // TODO: Create user account and subscription
-                    onComplete?.();
-                  }}
+                  onClick={handleSubmit}
+                  disabled={isLoading}
                 >
-                  Start Your Diagnostic Test
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  {isLoading ? 'Creating Account...' : 'Start Your Diagnostic Test'}
+                  {!isLoading && <ArrowRight className="w-5 h-5 ml-2" />}
                 </Button>
                 
                 <p className="text-sm text-muted-foreground">

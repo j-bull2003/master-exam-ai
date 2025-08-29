@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,8 @@ import { Switch } from "@/components/ui/switch";
 import AccessGate from "@/components/AccessGate";
 import { UserProfile } from "@/components/UserProfile";
 import { ExamCountdown } from "@/components/ExamCountdown";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import { 
   GraduationCap, 
   Target, 
@@ -37,26 +39,86 @@ import QuestionBank from "./QuestionBank";
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 const Dashboard = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isDenseMode, setIsDenseMode] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
+  const { toast } = useToast();
   
   // TODO: Replace with actual auth/subscription check
   const hasAccess = true; // For now, always allow access for demo
   const userEmail = "demo@unihack.ai"; // Mock user email
-  
-  // Mock data - replace with actual user data
-  const userData = {
-    name: "Alex Johnson",
-    exam: "UCAT",
-    examDate: new Date("2024-03-15"), // Mock exam date - replace with actual user data
-    totalQuestions: 450,
-    correctAnswers: 315,
-    accuracy: 70,
-    weeklyTarget: 100,
-    completedThisWeek: 65,
-    streakDays: 7,
-    nextSession: "Quantitative Reasoning - Hard"
-  };
+
+  // Load user data from Supabase
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          const { data: profile, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('user_id', user.id)
+            .single();
+
+          if (error) {
+            console.error('Error loading profile:', error);
+            // Fallback to default data if no profile found
+            setUserData({
+              name: user.user_metadata?.full_name || "User",
+              exam: "UCAT", // Default fallback
+              examDate: null,
+              totalQuestions: 450,
+              correctAnswers: 315,
+              accuracy: 70,
+              weeklyTarget: 100,
+              completedThisWeek: 65,
+              streakDays: 7,
+              nextSession: "Quantitative Reasoning - Hard"
+            });
+          } else {
+            setUserData({
+              name: profile.full_name || "User",
+              exam: profile.exam_type || "UCAT", // Use saved exam type or default
+              examDate: profile.exam_date ? new Date(profile.exam_date) : null,
+              totalQuestions: 450,
+              correctAnswers: 315,
+              accuracy: 70,
+              weeklyTarget: 100,
+              completedThisWeek: 65,
+              streakDays: 7,
+              nextSession: "Quantitative Reasoning - Hard"
+            });
+          }
+        } else {
+          // Not authenticated, use default data
+          setUserData({
+            name: "Demo User",
+            exam: "UCAT",
+            examDate: null,
+            totalQuestions: 450,
+            correctAnswers: 315,
+            accuracy: 70,
+            weeklyTarget: 100,
+            completedThisWeek: 65,
+            streakDays: 7,
+            nextSession: "Quantitative Reasoning - Hard"
+          });
+        }
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load user data. Please refresh the page.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadUserData();
+  }, [toast]);
 
   const recentSessions = [
     { 
@@ -199,6 +261,18 @@ const Dashboard = () => {
     return <MinusIcon className="w-3 h-3 text-muted-foreground" />;
   };
 
+  // Show loading state while data is loading
+  if (isLoading || !userData) {
+    return (
+      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <AccessGate hasAccess={hasAccess} userEmail={userEmail}>
       <div className="min-h-screen bg-background bg-mesh">
@@ -251,9 +325,12 @@ const Dashboard = () => {
             <ExamCountdown 
               examDate={userData.examDate} 
               examType={userData.exam}
-              onUpdateDate={() => {
-                // TODO: Implement exam date update functionality
-                console.log("Update exam date clicked");
+              onUpdateDate={async () => {
+                toast({
+                  title: "Update Exam Date",
+                  description: "Navigate to your profile to update your exam date and type.",
+                });
+                // TODO: Implement exam date update modal or redirect to profile
               }}
             />
           </div>
