@@ -54,14 +54,43 @@ const Dashboard = () => {
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        // Set up auth state listener first
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+          console.log('Auth state changed:', event, session?.user?.id);
+          if (session?.user) {
+            // User is authenticated, load their profile
+            loadProfileData(session.user);
+          } else {
+            // User is not authenticated
+            setUserData(null);
+            setIsLoading(false);
+          }
+        });
+
+        // Then check for existing session
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          loadProfileData(session.user);
+        } else {
+          setIsLoading(false);
+        }
+
+        return () => subscription.unsubscribe();
+      } catch (error) {
+        console.error('Error setting up auth:', error);
+        setIsLoading(false);
+      }
+    };
+
+    const loadProfileData = async (user: any) => {
+      try {
         
         if (user) {
           const { data: profile, error } = await supabase
             .from('profiles')
             .select('*')
             .eq('user_id', user.id)
-            .single();
+            .maybeSingle();
 
           if (error) {
             console.error('Error loading profile:', error);
@@ -265,12 +294,17 @@ const Dashboard = () => {
 
   const handleUpdateExamDate = async (newDate: Date) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      console.log('Auth check - user:', user?.id, 'error:', authError);
       
       if (!user) {
+        console.log('No user found, checking session...');
+        const { data: { session } } = await supabase.auth.getSession();
+        console.log('Session check:', session?.user?.id);
+        
         toast({
-          title: "Error",
-          description: "You must be logged in to update your exam date.",
+          title: "Authentication Required",
+          description: "Please log in to update your exam date. You may need to complete the onboarding process.",
           variant: "destructive"
         });
         return;
