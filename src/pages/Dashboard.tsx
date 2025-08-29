@@ -49,6 +49,7 @@ const Dashboard = () => {
   // Load user data when auth state changes
   useEffect(() => {
     if (!authLoading && user) {
+      console.log('Auth state changed, loading profile for user:', user.id);
       loadProfileData(user);
     } else if (!authLoading && !user) {
       setUserData(null);
