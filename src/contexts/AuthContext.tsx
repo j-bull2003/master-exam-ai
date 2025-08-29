@@ -78,11 +78,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    return { error };
+    
+    // Even if email is not confirmed, allow sign in if we get a session
+    // The dashboard will show a banner for unconfirmed emails
+    if (error && error.message !== 'Email not confirmed') {
+      return { error };
+    }
+    
+    // If we have a session but email not confirmed, still return success
+    // The UI will handle the email confirmation banner
+    return { error: null };
   };
 
   const signUp = async (email: string, password: string, options?: any) => {

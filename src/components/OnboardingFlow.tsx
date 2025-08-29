@@ -180,47 +180,63 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       });
 
       if (authError) {
+        console.error('Auth error:', authError);
         setErrors({ submit: authError.message });
         setIsLoading(false);
         return;
       }
 
-      if (authData.user) {
-        console.log('User created successfully, updating profile...');
-        // Update profile with exam data
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .update({
-            exam_type: formData.selectedExam,
-            exam_date: formData.examDate?.toISOString().split('T')[0]
-          })
-          .eq('user_id', authData.user.id);
+      console.log('User created successfully, updating profile...');
 
-        console.log('Profile update result:', { 
-          userId: authData.user.id, 
-          examType: formData.selectedExam, 
-          examDate: formData.examDate?.toISOString().split('T')[0],
-          error: profileError 
-        });
+      // Wait a moment for the user to be fully created and profile trigger to run
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-        if (profileError) {
-          console.error('Profile update error:', profileError);
-          toast({
-            title: "Warning",
-            description: "Account created but exam data could not be saved. You can update this in your profile.",
-            variant: "destructive"
-          });
-        }
-
-        toast({
-          title: "Account Created!",
-          description: "Welcome to UniHack.ai. Let's start with your diagnostic test.",
-        });
-
-        navigate('/diagnostic');
+      // Get the user ID from auth data
+      const userId = authData.user?.id;
+      if (!userId) {
+        throw new Error('No user ID returned from signup');
       }
+
+      // Update the profile with exam details using upsert to ensure it exists
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .upsert({
+          user_id: userId,
+          full_name: formData.name,
+          email: formData.email,
+          exam_type: formData.selectedExam,
+          exam_date: formData.examDate?.toISOString().split('T')[0], // Store as date only
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id'
+        });
+
+      console.log('Profile update result:', {
+        userId,
+        examType: formData.selectedExam,
+        examDate: formData.examDate?.toISOString().split('T')[0],
+        error: profileError
+      });
+
+      if (profileError) {
+        console.error('Profile error:', profileError);
+        toast({
+          title: "Account Created", 
+          description: "Your account was created but there was an issue saving your exam preferences. You can update them in your dashboard.",
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "Welcome to UniHack.ai! 🎉",
+          description: "Your account has been created successfully. Please check your email to verify your account.",
+        });
+      }
+
+      // Redirect to dashboard - they can use it even without email verification
+      navigate('/dashboard');
+      
     } catch (error) {
-      console.error('Onboarding error:', error);
+      console.error('Unexpected error:', error);
       setErrors({ submit: 'An unexpected error occurred. Please try again.' });
     } finally {
       setIsLoading(false);
