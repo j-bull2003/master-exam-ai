@@ -43,6 +43,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDenseMode, setIsDenseMode] = useState(false);
   const [userData, setUserData] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const { toast } = useToast();
   
@@ -64,12 +65,15 @@ const Dashboard = () => {
           
           if (!mounted) return;
           
+          // Store current user for later use
+          setCurrentUser(session?.user || null);
+          
           if (session?.user) {
             // User is authenticated, load their profile
             await loadProfileData(session.user);
           } else {
-            // User is not authenticated - redirect to onboarding
-            console.log('No authenticated user, showing default data');
+            // User is not authenticated - show guest data
+            console.log('No authenticated user, showing guest data');
             setUserData({
               name: "Guest User",
               exam: "Complete onboarding to get started",
@@ -98,8 +102,10 @@ const Dashboard = () => {
         }
         
         if (session?.user && mounted) {
+          setCurrentUser(session.user);
           await loadProfileData(session.user);
         } else if (mounted) {
+          setCurrentUser(null);
           setIsLoading(false);
         }
 
@@ -320,26 +326,34 @@ const Dashboard = () => {
 
   const handleUpdateExamDate = async (newDate: Date) => {
     try {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
-      console.log('Auth check - user:', user?.id, 'error:', authError);
+      console.log('Updating exam date. Current user:', currentUser?.id);
       
-      if (!user) {
-        console.log('No user found, checking session...');
-        const { data: { session } } = await supabase.auth.getSession();
-        console.log('Session check:', session?.user?.id);
+      // Use stored current user instead of making fresh auth call
+      if (!currentUser?.id) {
+        console.log('No current user available, trying fresh auth check...');
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        console.log('Fresh auth check - user:', user?.id, 'error:', authError);
         
-        toast({
-          title: "Authentication Required",
-          description: "Please log in to update your exam date. You may need to complete the onboarding process.",
-          variant: "destructive"
-        });
-        return;
+        if (!user) {
+          toast({
+            title: "Authentication Required",
+            description: "Please refresh the page and try again. You may need to log in.",
+            variant: "destructive"
+          });
+          return;
+        }
+        
+        // Update stored user
+        setCurrentUser(user);
       }
+
+      const userId = currentUser?.id;
+      console.log('Updating exam date for user:', userId);
 
       const { error } = await supabase
         .from('profiles')
         .update({ exam_date: newDate.toISOString().split('T')[0] })
-        .eq('user_id', user.id);
+        .eq('user_id', userId);
 
       if (error) {
         console.error('Error updating exam date:', error);
