@@ -41,6 +41,7 @@ const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthLoading, setIsAuthLoading] = useState(true); // Separate auth loading state
   const [isDenseMode, setIsDenseMode] = useState(false);
   const [userData, setUserData] = useState<any>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -48,8 +49,8 @@ const Dashboard = () => {
   const { toast } = useToast();
   
   // Auth state will be managed properly through currentUser
-  const hasAccess = currentUser !== null; // Access based on actual auth state
-  const userEmail = currentUser?.email || ""; // Use actual user email
+  const hasAccess = !isAuthLoading && currentUser !== null; // Only check access after auth loads
+  const userEmail = currentUser?.email || "";
 
   // Load user data from Supabase
   useEffect(() => {
@@ -70,12 +71,14 @@ const Dashboard = () => {
           
           if (session?.user) {
             // User is authenticated, load their profile
+            setIsAuthLoading(false); // Auth state resolved
             await loadProfileData(session.user);
           } else {
             // User is not authenticated - clear data and stop loading
             console.log('No authenticated user');
             setUserData(null);
             setIsLoading(false);
+            setIsAuthLoading(false); // Auth state resolved (no user)
           }
         });
 
@@ -92,10 +95,12 @@ const Dashboard = () => {
         
         if (session?.user && mounted) {
           setCurrentUser(session.user);
+          setIsAuthLoading(false); // Auth state resolved
           await loadProfileData(session.user);
         } else if (mounted) {
           setCurrentUser(null);
           setIsLoading(false);
+          setIsAuthLoading(false); // Auth state resolved (no user)
         }
 
         return () => {
@@ -106,6 +111,7 @@ const Dashboard = () => {
         console.error('Error setting up auth:', error);
         if (mounted) {
           setIsLoading(false);
+          setIsAuthLoading(false); // Auth state resolved with error
         }
       }
     };
@@ -381,6 +387,18 @@ const Dashboard = () => {
       });
     }
   };
+
+  // Show loading state while auth is loading
+  if (isAuthLoading) {
+    return (
+      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Show loading state while data is loading
   if (isLoading) {
