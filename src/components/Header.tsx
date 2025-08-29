@@ -33,7 +33,7 @@ export const Header = () => {
         ${scrolled 
           ? 'bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-lg' 
           : 'bg-background/80 backdrop-blur-sm border-b border-border/20'
-        } h-20
+        } h-16
       `}>
       <nav className="container mx-auto px-6 h-full flex items-center">
       <div className="relative flex items-center justify-between w-full">

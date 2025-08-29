@@ -286,7 +286,7 @@ const Dashboard = () => {
 
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Header with Navigation */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-border/40">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-border/40 h-16">
           <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">Your learning progress at a glance</p>
