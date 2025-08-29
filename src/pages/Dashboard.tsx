@@ -35,6 +35,7 @@ import {
   BookOpen
 } from "lucide-react";
 import QuestionBank from "./QuestionBank";
+import { ExamDateUpdateModal } from "@/components/ExamDateUpdateModal";
 
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
@@ -42,6 +43,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDenseMode, setIsDenseMode] = useState(false);
   const [userData, setUserData] = useState<any>(null);
+  const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const { toast } = useToast();
   
   // TODO: Replace with actual auth/subscription check
@@ -261,6 +263,51 @@ const Dashboard = () => {
     return <MinusIcon className="w-3 h-3 text-muted-foreground" />;
   };
 
+  const handleUpdateExamDate = async (newDate: Date) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to update your exam date.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({ exam_date: newDate.toISOString().split('T')[0] })
+        .eq('user_id', user.id);
+
+      if (error) {
+        console.error('Error updating exam date:', error);
+        toast({
+          title: "Error", 
+          description: "Failed to update exam date. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Update local state
+      setUserData(prev => ({ ...prev, examDate: newDate }));
+      
+      toast({
+        title: "Success",
+        description: "Exam date updated successfully!",
+      });
+    } catch (error) {
+      console.error('Error updating exam date:', error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   // Show loading state while data is loading
   if (isLoading || !userData) {
     return (
@@ -325,15 +372,18 @@ const Dashboard = () => {
             <ExamCountdown 
               examDate={userData.examDate} 
               examType={userData.exam}
-              onUpdateDate={async () => {
-                toast({
-                  title: "Update Exam Date",
-                  description: "Navigate to your profile to update your exam date and type.",
-                });
-                // TODO: Implement exam date update modal or redirect to profile
-              }}
+              onUpdateDate={() => setIsDateModalOpen(true)}
             />
           </div>
+          
+          {/* Exam Date Update Modal */}
+          <ExamDateUpdateModal
+            isOpen={isDateModalOpen}
+            onClose={() => setIsDateModalOpen(false)}
+            currentDate={userData.examDate}
+            onUpdateDate={handleUpdateExamDate}
+            examType={userData.exam}
+          />
           
           {/* Stats Overview */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
