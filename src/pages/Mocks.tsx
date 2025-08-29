@@ -1,72 +1,144 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { LogOut, Clock, PlayCircle, CheckCircle, Eye, Calendar, Home, BarChart3, User, Clipboard, BookOpen } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
+
 const Mocks = () => {
   const [selectedMock, setSelectedMock] = useState<string | null>(null);
+  const [userExam, setUserExam] = useState<string>("UCAT"); // Default fallback
+  const { user } = useAuth();
 
-  const availableMocks = [
-    {
-      id: "ucat-mock-1",
-      name: "UCAT Mock Test 1",
-      description: "Full-length official style practice test",
-      duration: "2 hours",
+  // Load user's exam type from profile
+  useEffect(() => {
+    const loadUserExam = async () => {
+      if (!user) return;
+      
+      try {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('exam_type')
+          .eq('user_id', user.id)
+          .single();
+          
+        if (profile?.exam_type) {
+          setUserExam(profile.exam_type);
+        }
+      } catch (error) {
+        console.error('Error loading user exam:', error);
+      }
+    };
+    
+    loadUserExam();
+  }, [user]);
+
+  // Generate mock tests based on user's exam
+  const getMockTestsForExam = (examType: string) => {
+    const examConfigs: { [key: string]: any } = {
+      UCAT: {
+        sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning", "Situational Judgement"],
+        duration: "2 hours",
+        totalQuestions: 233
+      },
+      STEP: {
+        sections: ["Mathematics Paper 1", "Mathematics Paper 2", "Mathematics Paper 3"],
+        duration: "3 hours",
+        totalQuestions: 12
+      },
+      SAT: {
+        sections: ["Reading", "Writing and Language", "Math (No Calculator)", "Math (Calculator)"],
+        duration: "3 hours",
+        totalQuestions: 154
+      },
+      ACT: {
+        sections: ["English", "Mathematics", "Reading", "Science"],
+        duration: "2 hours 55 minutes",
+        totalQuestions: 215
+      }
+    };
+
+    const config = examConfigs[examType] || examConfigs.UCAT;
+    
+    return [
+      {
+        id: `${examType.toLowerCase()}-mock-1`,
+        name: `${examType} Mock Test 1`,
+        description: "Full-length official style practice test",
+        duration: config.duration,
+        sections: config.sections,
+        difficulty: "Official",
+        questions: config.totalQuestions,
+        status: "available"
+      },
+      {
+        id: `${examType.toLowerCase()}-mock-2`,
+        name: `${examType} Mock Test 2`,
+        description: "Advanced difficulty practice test",
+        duration: config.duration,
+        sections: config.sections,
+        difficulty: "Hard",
+        questions: config.totalQuestions,
+        status: "available"
+      },
+      {
+        id: `${examType.toLowerCase()}-sectional-1`,
+        name: `${config.sections[0]} Only`,
+        description: `Focused practice on ${config.sections[0].toLowerCase()}`,
+        duration: "45 minutes",
+        sections: [config.sections[0]],
+        difficulty: "Mixed",
+        questions: Math.floor(config.totalQuestions / config.sections.length),
+        status: "available"
+      }
+    ];
+  };
+
+  const availableMocks = getMockTestsForExam(userExam);
+
+  // Get config for the user's exam
+  const examConfigs: { [key: string]: any } = {
+    UCAT: {
       sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning", "Situational Judgement"],
-      difficulty: "Official",
-      questions: 233,
-      status: "available"
-    },
-    {
-      id: "ucat-mock-2",
-      name: "UCAT Mock Test 2",
-      description: "Advanced difficulty practice test",
       duration: "2 hours",
-      sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning", "Situational Judgement"],
-      difficulty: "Hard",
-      questions: 233,
-      status: "available"
+      totalQuestions: 233
     },
-    {
-      id: "ucat-sectional-1",
-      name: "Verbal Reasoning Only",
-      description: "Focused practice on verbal reasoning",
-      duration: "22 minutes",
-      sections: ["Verbal Reasoning"],
-      difficulty: "Mixed",
-      questions: 44,
-      status: "available"
+    STEP: {
+      sections: ["Mathematics Paper 1", "Mathematics Paper 2", "Mathematics Paper 3"],
+      duration: "3 hours",
+      totalQuestions: 12
+    },
+    SAT: {
+      sections: ["Reading", "Writing and Language", "Math (No Calculator)", "Math (Calculator)"],
+      duration: "3 hours",
+      totalQuestions: 154
+    },
+    ACT: {
+      sections: ["English", "Mathematics", "Reading", "Science"],
+      duration: "2 hours 55 minutes",
+      totalQuestions: 215
     }
-  ];
+  };
+
+  const config = examConfigs[userExam] || examConfigs.UCAT;
 
   const completedMocks = [
     {
       id: "completed-1",
-      name: "UCAT Mock Test 1",
+      name: `${userExam} Mock Test 1`,
       completedAt: "2024-01-15",
-      score: 2580,
-      percentile: 75,
+      score: userExam === "STEP" ? 85 : userExam === "SAT" ? 1480 : 2580,
+      maxScore: userExam === "STEP" ? 100 : userExam === "SAT" ? 1600 : 3600,
+      percentile: 85,
       timeSpent: "1h 54m",
       sections: [
-        { name: "Verbal Reasoning", score: 520, percentile: 68 },
-        { name: "Decision Making", score: 580, percentile: 82 },
-        { name: "Quantitative Reasoning", score: 480, percentile: 58 },
-        { name: "Abstract Reasoning", score: 620, percentile: 89 },
-        { name: "Situational Judgement", score: 380, percentile: 65 }
-      ]
-    },
-    {
-      id: "completed-2",
-      name: "Verbal Reasoning Only",
-      completedAt: "2024-01-12",
-      score: 540,
-      percentile: 72,
-      timeSpent: "21m",
-      sections: [
-        { name: "Verbal Reasoning", score: 540, percentile: 72 }
+        { name: config.sections[0] || "Section 1", score: userExam === "STEP" ? 85 : 520, percentile: 68 },
+        { name: config.sections[1] || "Section 2", score: userExam === "STEP" ? 78 : 580, percentile: 82 }
       ]
     }
   ];
@@ -88,11 +160,11 @@ const Mocks = () => {
             />
           </Link>
           <nav className="flex items-center space-x-6">
-          <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Home className="w-4 h-4" />Dashboard</Link>
-              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
-              <Link to="/mocks" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
-              <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
-              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
+            <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Home className="w-4 h-4" />Dashboard</Link>
+            <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
+            <Link to="/mocks" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
+            <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
+            <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
             <Link to="/">
               <Button 
                 size="sm" 
@@ -109,16 +181,16 @@ const Mocks = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-display font-bold mb-2">Mock Exams</h1>
+          <h1 className="text-3xl font-display font-bold mb-2">{userExam} Mock Tests</h1>
           <p className="text-muted-foreground">
-            Take full-length practice tests under exam conditions
+            Practice with full-length {userExam} mock tests to improve your performance
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Available Mocks */}
           <div className="lg:col-span-2">
-            <h2 className="text-xl font-display font-semibold mb-4">Available Mock Tests</h2>
+            <h2 className="text-xl font-display font-semibold mb-4">Available {userExam} Mock Tests</h2>
             <div className="space-y-4 mb-8">
               {availableMocks.map((mock) => (
                 <Card 
@@ -211,7 +283,7 @@ const Mocks = () => {
 
           {/* Completed Mocks Sidebar */}
           <div className="lg:col-span-1">
-            <h2 className="text-xl font-display font-semibold mb-4">Recent Results</h2>
+            <h2 className="text-xl font-display font-semibold mb-4">Your {userExam} Results</h2>
             <div className="space-y-4">
               {completedMocks.map((mock) => (
                 <Card key={mock.id} className="question-card">
@@ -226,7 +298,7 @@ const Mocks = () => {
                     <div className="text-center">
                       <div className="text-2xl font-bold text-primary">{mock.score}</div>
                       <div className="text-sm text-muted-foreground">
-                        {mock.percentile}th percentile
+                        Best {userExam} Score ({mock.percentile}th percentile)
                       </div>
                     </div>
                     
