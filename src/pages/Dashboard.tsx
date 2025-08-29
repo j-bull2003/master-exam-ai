@@ -284,42 +284,49 @@ const Dashboard = () => {
         </div>
       )}
 
-      <div className="container mx-auto px-4 py-8 space-y-8">
-        {/* Header with Navigation */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-border/40 h-16">
-          <div className="space-y-1">
-            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-            <p className="text-muted-foreground">Your learning progress at a glance</p>
-          </div>
-          
-          <nav className="flex items-center gap-4 text-sm">
-            <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
-            <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
-            <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
-            <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
-            <Button 
-              size="sm" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
-              onClick={async () => {
-                await signOut();
-                window.location.href = '/';
-              }}
+      <div className="container mx-auto px-4 space-y-8">
+        {/* Header */}
+        <header className="border-b border-border bg-background/95 backdrop-blur">
+          <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+            <Link
+              to="/dashboard"
+              className="flex items-center hover:opacity-80 transition-opacity group"
             >
-              <LogOut className="w-4 h-4" />
-              Logout
-            </Button>
-          </nav>
+              <img
+                src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
+                alt="UniHack.ai Logo"
+                className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+                style={{ backgroundColor: "transparent" }}
+              />
+            </Link>
+            <nav className="flex items-center space-x-6">
+              <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
+              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
+              <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
+              <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
+              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
+              <Button 
+                onClick={signOut}
+                size="sm" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </Button>
+            </nav>
+          </div>
         </header>
 
-        {/* Welcome Section */}
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold">
-            Welcome back, {userData?.name || 'User'}! 👋
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Ready to excel in your {userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?
-          </p>
-        </div>
+        <div className="py-8 space-y-8">
+          {/* Welcome Section */}
+          <div className="text-center space-y-4">
+            <h1 className="text-4xl font-bold">
+              Welcome back, {userData?.name || 'User'}! 👋
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Ready to excel in your {userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?
+            </p>
+          </div>
 
         {/* Exam Info Card */}
         <Card className="relative overflow-hidden">
@@ -554,6 +561,7 @@ const Dashboard = () => {
             </Card>
           </div>
         )}
+        </div>
       </div>
     </div>
   );
