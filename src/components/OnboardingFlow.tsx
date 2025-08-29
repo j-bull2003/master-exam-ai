@@ -186,6 +186,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       }
 
       if (authData.user) {
+        console.log('User created successfully, updating profile...');
         // Update profile with exam data
         const { error: profileError } = await supabase
           .from('profiles')
@@ -194,6 +195,13 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             exam_date: formData.examDate?.toISOString().split('T')[0]
           })
           .eq('user_id', authData.user.id);
+
+        console.log('Profile update result:', { 
+          userId: authData.user.id, 
+          examType: formData.selectedExam, 
+          examDate: formData.examDate?.toISOString().split('T')[0],
+          error: profileError 
+        });
 
         if (profileError) {
           console.error('Profile update error:', profileError);

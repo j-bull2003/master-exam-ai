@@ -47,9 +47,9 @@ const Dashboard = () => {
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const { toast } = useToast();
   
-  // TODO: Replace with actual auth/subscription check
-  const hasAccess = true; // For now, always allow access for demo
-  const userEmail = "demo@unihack.ai"; // Mock user email
+  // Auth state will be managed properly through currentUser
+  const hasAccess = currentUser !== null; // Access based on actual auth state
+  const userEmail = currentUser?.email || ""; // Use actual user email
 
   // Load user data from Supabase
   useEffect(() => {
@@ -72,20 +72,9 @@ const Dashboard = () => {
             // User is authenticated, load their profile
             await loadProfileData(session.user);
           } else {
-            // User is not authenticated - show guest data
-            console.log('No authenticated user, showing guest data');
-            setUserData({
-              name: "Guest User",
-              exam: "Complete onboarding to get started",
-              examDate: null,
-              totalQuestions: 0,
-              correctAnswers: 0,
-              accuracy: 0,
-              weeklyTarget: 100,
-              completedThisWeek: 0,
-              streakDays: 0,
-              nextSession: "Complete onboarding first"
-            });
+            // User is not authenticated - clear data and stop loading
+            console.log('No authenticated user');
+            setUserData(null);
             setIsLoading(false);
           }
         });
@@ -138,9 +127,20 @@ const Dashboard = () => {
           console.error('Error loading profile:', error);
         }
 
+        // Extract user name properly
+        const extractUserName = () => {
+          if (profile?.full_name) return profile.full_name;
+          if (user.user_metadata?.full_name) return user.user_metadata.full_name;
+          if (user.email) {
+            // Extract first part of email as name (lewisistrefi@gmail.com -> lewisistrefi)
+            return user.email.split('@')[0];
+          }
+          return "User";
+        };
+
         // Set user data regardless of profile success/failure
         const userData = {
-          name: profile?.full_name || user.user_metadata?.full_name || "User",
+          name: extractUserName(),
           exam: profile?.exam_type || "Complete onboarding",
           examDate: profile?.exam_date ? new Date(profile.exam_date) : null,
           totalQuestions: 450,
@@ -383,12 +383,41 @@ const Dashboard = () => {
   };
 
   // Show loading state while data is loading
-  if (isLoading || !userData) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           <p className="text-muted-foreground">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login prompt if not authenticated
+  if (!currentUser) {
+    return (
+      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
+        <div className="text-center space-y-6 max-w-md mx-auto p-6">
+          <h2 className="text-2xl font-bold">Please Log In</h2>
+          <p className="text-muted-foreground">
+            You need to be logged in to access your dashboard.
+          </p>
+          <Button onClick={() => window.location.href = '/auth/login'} size="lg">
+            Go to Login
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Show loading state if userData is still loading
+  if (!userData) {
+    return (
+      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading your profile...</p>
         </div>
       </div>
     );
@@ -417,15 +446,17 @@ const Dashboard = () => {
               <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
               <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
               <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
-              <Link to="/">
-                <Button 
-                  size="sm" 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
-                >
-                  <LogOut className="w-4 h-4" />
-                  Logout
-                </Button>
-              </Link>
+              <Button 
+                size="sm" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  window.location.href = '/';
+                }}
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </Button>
             </nav>
           </div>
         </header>
