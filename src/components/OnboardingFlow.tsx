@@ -228,6 +228,18 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   };
 
+  // Compute payment form validity without side effects
+  const isPaymentFormValid = () => {
+    return formData.cardNumber.trim() && 
+           formData.expiryDate.trim() && 
+           formData.cvv.trim() && 
+           formData.nameOnCard.trim() &&
+           /^\d{4}\s?\d{4}\s?\d{4}\s?\d{4}$/.test(formData.cardNumber.replace(/\s/g, '')) &&
+           /^(0[1-9]|1[0-2])\/\d{2}$/.test(formData.expiryDate) &&
+           /^\d{3,4}$/.test(formData.cvv) &&
+           formData.nameOnCard.trim().length >= 2;
+  };
+
   const trialEndDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
   return (
@@ -697,7 +709,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               
               <Button
                 onClick={handlePayment}
-                disabled={!validateStep(4)}
+                disabled={!isPaymentFormValid()}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground h-12 px-8 font-semibold focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Complete Payment
