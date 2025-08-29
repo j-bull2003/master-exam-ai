@@ -13,6 +13,7 @@ import { UserProfile } from "@/components/UserProfile";
 import { ExamCountdown } from "@/components/ExamCountdown";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   GraduationCap, 
   Target, 
@@ -41,83 +42,27 @@ const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthLoading, setIsAuthLoading] = useState(true); // Separate auth loading state
   const [isDenseMode, setIsDenseMode] = useState(false);
   const [userData, setUserData] = useState<any>(null);
-  const [currentUser, setCurrentUser] = useState<any>(null);
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const { toast } = useToast();
+  const { user, loading: authLoading, signOut } = useAuth();
   
-  // Auth state will be managed properly through currentUser
-  const hasAccess = !isAuthLoading && currentUser !== null; // Only check access after auth loads
-  const userEmail = currentUser?.email || "";
+  // Auth state is managed by AuthContext
+  const hasAccess = !authLoading && user !== null;
+  const userEmail = user?.email || "";
 
-  // Load user data from Supabase
+  // Load user data when auth state changes
   useEffect(() => {
-    let mounted = true;
-    
-    const loadUserData = async () => {
-      try {
-        console.log('Setting up auth state listener...');
-        
-        // Set up auth state listener first
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-          console.log('Auth state changed:', event, session?.user?.id);
-          
-          if (!mounted) return;
-          
-          // Store current user for later use
-          setCurrentUser(session?.user || null);
-          
-          if (session?.user) {
-            // User is authenticated, load their profile
-            setIsAuthLoading(false); // Auth state resolved
-            await loadProfileData(session.user);
-          } else {
-            // User is not authenticated - clear data and stop loading
-            console.log('No authenticated user');
-            setUserData(null);
-            setIsLoading(false);
-            setIsAuthLoading(false); // Auth state resolved (no user)
-          }
-        });
+    if (!authLoading && user) {
+      loadProfileData(user);
+    } else if (!authLoading && !user) {
+      setUserData(null);
+      setIsLoading(false);
+    }
+  }, [user, authLoading]);
 
-        // Then check for existing session
-        console.log('Checking for existing session...');
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        console.log('Session check result:', session?.user?.id, sessionError);
-        
-        if (sessionError) {
-          console.error('Session error:', sessionError);
-          setIsLoading(false);
-          return;
-        }
-        
-        if (session?.user && mounted) {
-          setCurrentUser(session.user);
-          setIsAuthLoading(false); // Auth state resolved
-          await loadProfileData(session.user);
-        } else if (mounted) {
-          setCurrentUser(null);
-          setIsLoading(false);
-          setIsAuthLoading(false); // Auth state resolved (no user)
-        }
-
-        return () => {
-          subscription.unsubscribe();
-          mounted = false;
-        };
-      } catch (error) {
-        console.error('Error setting up auth:', error);
-        if (mounted) {
-          setIsLoading(false);
-          setIsAuthLoading(false); // Auth state resolved with error
-        }
-      }
-    };
-
-    const loadProfileData = async (user: any) => {
-      if (!mounted) return;
+  const loadProfileData = async (user: any) => {
       
       try {
         console.log('Loading profile data for user:', user.id);
@@ -176,18 +121,9 @@ const Dashboard = () => {
           nextSession: "Try refreshing the page"
         });
       } finally {
-        if (mounted) {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }
     };
-
-    loadUserData();
-    
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   const recentSessions = [
     { 
@@ -332,34 +268,24 @@ const Dashboard = () => {
 
   const handleUpdateExamDate = async (newDate: Date) => {
     try {
-      console.log('Updating exam date. Current user:', currentUser?.id);
+      console.log('Updating exam date. Current user:', user?.id);
       
-      // Use stored current user instead of making fresh auth call
-      if (!currentUser?.id) {
-        console.log('No current user available, trying fresh auth check...');
-        const { data: { user }, error: authError } = await supabase.auth.getUser();
-        console.log('Fresh auth check - user:', user?.id, 'error:', authError);
-        
-        if (!user) {
-          toast({
-            title: "Authentication Required",
-            description: "Please refresh the page and try again. You may need to log in.",
-            variant: "destructive"
-          });
-          return;
-        }
-        
-        // Update stored user
-        setCurrentUser(user);
+      if (!user?.id) {
+        toast({
+          title: "Authentication Required",
+          description: "Please refresh the page and try again. You may need to log in.",
+          variant: "destructive"
+        });
+        return;
       }
-
-      const userId = currentUser?.id;
-      console.log('Updating exam date for user:', userId);
 
       const { error } = await supabase
         .from('profiles')
-        .update({ exam_date: newDate.toISOString().split('T')[0] })
-        .eq('user_id', userId);
+        .update({ 
+          exam_date: newDate.toISOString().split('T')[0],
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id);
 
       if (error) {
         console.error('Error updating exam date:', error);
@@ -373,6 +299,11 @@ const Dashboard = () => {
 
       // Update local state
       setUserData(prev => ({ ...prev, examDate: newDate }));
+      
+      // Also re-fetch the profile to ensure we have the latest data
+      if (user) {
+        await loadProfileData(user);
+      }
       
       toast({
         title: "Success",
@@ -389,7 +320,7 @@ const Dashboard = () => {
   };
 
   // Show loading state while auth is loading
-  if (isAuthLoading) {
+  if (authLoading) {
     return (
       <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -413,7 +344,7 @@ const Dashboard = () => {
   }
 
   // Show login prompt if not authenticated
-  if (!currentUser) {
+  if (!user) {
     return (
       <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
         <div className="text-center space-y-6 max-w-md mx-auto p-6">
@@ -468,7 +399,7 @@ const Dashboard = () => {
                 size="sm" 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
                 onClick={async () => {
-                  await supabase.auth.signOut();
+                  await signOut();
                   window.location.href = '/';
                 }}
               >

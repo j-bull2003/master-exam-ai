@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +29,14 @@ const Login = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { signIn, user, loading } = useAuth();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user && !loading) {
+      navigate("/dashboard");
+    }
+  }, [user, loading, navigate]);
 
   // Focus email input on mount
   useEffect(() => {
@@ -64,15 +73,27 @@ const Login = () => {
     setErrors({});
 
     try {
-      // TODO: Implement actual login logic with Supabase
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const { error } = await signIn(formData.email, formData.password);
+      
+      if (error) {
+        console.error('Login error:', error);
+        setErrors({ 
+          submit: error.message || "Invalid email or password. Please try again." 
+        });
+        toast({
+          title: "Login failed",
+          description: error.message || "Please check your credentials and try again.",
+          variant: "destructive",
+        });
+        return;
+      }
       
       toast({
         title: "Welcome back!",
         description: "You've been successfully logged in.",
       });
       
-      navigate("/dashboard");
+      // Navigation will happen automatically via useEffect when user state updates
     } catch (error) {
       setErrors({ 
         submit: "Invalid email or password. Please try again." 
