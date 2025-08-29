@@ -106,22 +106,43 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         }
       }
     } else if (step === 4) {
-      if (!formData.cardNumber) newErrors.cardNumber = "Card number is required";
-      if (!formData.expiryDate) newErrors.expiryDate = "Expiry date is required";
-      if (!formData.cvv) newErrors.cvv = "CVV is required";
-      if (!formData.nameOnCard.trim()) newErrors.nameOnCard = "Name on card is required";
+      // Validate payment fields
+      if (!formData.cardNumber.trim()) {
+        newErrors.cardNumber = "Card number is required";
+      } else if (!/^\d{4}\s?\d{4}\s?\d{4}\s?\d{4}$/.test(formData.cardNumber.replace(/\s/g, ''))) {
+        newErrors.cardNumber = "Please enter a valid 16-digit card number";
+      }
+      
+      if (!formData.expiryDate.trim()) {
+        newErrors.expiryDate = "Expiry date is required";
+      } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(formData.expiryDate)) {
+        newErrors.expiryDate = "Enter expiry as MM/YY";
+      } else {
+        // Check if expiry date is not in the past
+        const [month, year] = formData.expiryDate.split('/');
+        const expiryDate = new Date(2000 + parseInt(year), parseInt(month) - 1);
+        const today = new Date();
+        today.setDate(1); // Set to first day of current month for comparison
+        if (expiryDate < today) {
+          newErrors.expiryDate = "Card has expired";
+        }
+      }
+      
+      if (!formData.cvv.trim()) {
+        newErrors.cvv = "Security code is required";
+      } else if (!/^\d{3,4}$/.test(formData.cvv)) {
+        newErrors.cvv = "Enter a valid 3 or 4-digit security code";
+      }
+      
+      if (!formData.nameOnCard.trim()) {
+        newErrors.nameOnCard = "Name on card is required";
+      } else if (formData.nameOnCard.trim().length < 2) {
+        newErrors.nameOnCard = "Please enter a valid name";
+      }
     }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }));
-    }
   };
 
   const nextStep = () => {
@@ -139,6 +160,72 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const handleSubmit = () => {
     // Handle subscription creation here
     onComplete?.();
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    // Format card number with spaces
+    if (field === 'cardNumber') {
+      const cleanValue = value.replace(/\s/g, '');
+      if (cleanValue.length <= 16) {
+        const formattedValue = cleanValue.replace(/(\d{4})(?=\d)/g, '$1 ');
+        setFormData(prev => ({ ...prev, [field]: formattedValue }));
+      }
+    }
+    // Format expiry date as MM/YY
+    else if (field === 'expiryDate') {
+      const cleanValue = value.replace(/\D/g, '');
+      if (cleanValue.length <= 4) {
+        const formattedValue = cleanValue.length >= 2 
+          ? `${cleanValue.slice(0, 2)}/${cleanValue.slice(2, 4)}`
+          : cleanValue;
+        setFormData(prev => ({ ...prev, [field]: formattedValue }));
+      }
+    }
+    // Limit CVV to 4 digits
+    else if (field === 'cvv') {
+      const cleanValue = value.replace(/\D/g, '');
+      if (cleanValue.length <= 4) {
+        setFormData(prev => ({ ...prev, [field]: cleanValue }));
+      }
+    }
+    else {
+      setFormData(prev => ({ ...prev, [field]: value }));
+    }
+    
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const handlePayment = async () => {
+    if (!validateStep(4)) return;
+    
+    try {
+      // TODO: Implement actual Stripe payment processing
+      // For now, just proceed to confirmation step
+      console.log('Processing payment with:', {
+        cardNumber: formData.cardNumber,
+        expiryDate: formData.expiryDate,
+        cvv: formData.cvv,
+        nameOnCard: formData.nameOnCard,
+        email: formData.email,
+        selectedExam: formData.selectedExam,
+        examDate: formData.examDate
+      });
+      
+      // Simulate payment processing delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Move to confirmation step
+      setCurrentStep(5);
+    } catch (error) {
+      console.error('Payment failed:', error);
+      setErrors(prev => ({ 
+        ...prev, 
+        payment: 'Payment failed. Please check your card details and try again.' 
+      }));
+    }
   };
 
   const trialEndDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
@@ -575,6 +662,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   )}
                 </div>
 
+                {/* Payment Error Display */}
+                {errors.payment && (
+                  <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.payment}
+                  </div>
+                )}
+
                 <div className="flex items-start gap-3 p-4 bg-muted/30 border border-border/40 rounded-lg">
                   <Shield className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                   <div className="space-y-1">
@@ -585,6 +680,29 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Step 4: Payment Action Buttons */}
+          {currentStep === 4 && (
+            <div className="flex justify-between mt-8 pt-6 border-t border-border/20">
+              <Button
+                variant="ghost"
+                onClick={prevStep}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Previous
+              </Button>
+              
+              <Button
+                onClick={handlePayment}
+                disabled={!validateStep(4)}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground h-12 px-8 font-semibold focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Complete Payment
+                <ArrowRight className="w-4 h-4" />
+              </Button>
             </div>
           )}
 
