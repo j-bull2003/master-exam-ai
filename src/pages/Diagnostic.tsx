@@ -70,6 +70,7 @@ const Diagnostic = () => {
     setCurrentStep('test');
     setTimeRemaining(30 * 60);
     setAnswers(new Array(diagnosticQuestions.length).fill(""));
+    setSelectedAnswer(""); // Reset selected answer for first question
   };
 
   const handleAnswerSelect = (answer: string) => {
@@ -80,13 +81,27 @@ const Diagnostic = () => {
     const newAnswers = [...answers];
     newAnswers[currentQuestion] = selectedAnswer;
     setAnswers(newAnswers);
-    setSelectedAnswer("");
 
     if (currentQuestion < diagnosticQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
+      // Load existing answer for next question
+      const nextQuestionAnswer = newAnswers[currentQuestion + 1] || "";
+      setSelectedAnswer(nextQuestionAnswer);
     } else {
       handleSubmitTest();
     }
+  };
+
+  const handlePreviousQuestion = () => {
+    const newAnswers = [...answers];
+    newAnswers[currentQuestion] = selectedAnswer;
+    setAnswers(newAnswers);
+    
+    const prevQuestionIndex = Math.max(0, currentQuestion - 1);
+    setCurrentQuestion(prevQuestionIndex);
+    // Load existing answer for previous question
+    const prevQuestionAnswer = newAnswers[prevQuestionIndex] || "";
+    setSelectedAnswer(prevQuestionAnswer);
   };
 
   const handleSubmitTest = () => {
@@ -210,19 +225,38 @@ const Diagnostic = () => {
                 <div className="space-y-3">
                   {question.choices.map((choice, index) => {
                     const optionLetter = String.fromCharCode(65 + index); // A, B, C, D
+                    const isSelected = selectedAnswer === optionLetter;
                     return (
-                      <div
+                      <button
                         key={index}
-                        className={`choice-option ${selectedAnswer === optionLetter ? 'selected' : ''}`}
+                        type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        tabIndex={0}
+                        className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+                          isSelected
+                            ? 'border-primary bg-primary/10 shadow-md'
+                            : 'border-border hover:border-primary/50 hover:bg-muted/30'
+                        }`}
                         onClick={() => handleAnswerSelect(optionLetter)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleAnswerSelect(optionLetter);
+                          }
+                        }}
                       >
                         <div className="flex items-start space-x-3">
-                          <div className="w-6 h-6 border border-border rounded-full flex items-center justify-center text-sm font-medium bg-background">
-                            {optionLetter}
+                          <div className={`w-6 h-6 border-2 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                            isSelected 
+                              ? 'border-primary bg-primary text-primary-foreground' 
+                              : 'border-border bg-background'
+                          }`}>
+                            {isSelected ? '✓' : optionLetter}
                           </div>
-                          <p className="flex-1">{choice}</p>
+                          <p className="flex-1 text-sm md:text-base">{choice}</p>
                         </div>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
@@ -231,7 +265,7 @@ const Diagnostic = () => {
                   <Button 
                     variant="outline" 
                     disabled={currentQuestion === 0}
-                    onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
+                    onClick={handlePreviousQuestion}
                   >
                     Previous
                   </Button>
