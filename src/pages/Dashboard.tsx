@@ -66,7 +66,7 @@ const Dashboard = () => {
             // Fallback to default data if no profile found
             setUserData({
               name: user.user_metadata?.full_name || "User",
-              exam: "UCAT", // Default fallback
+              exam: "Please select exam type", // Prompt user to complete onboarding
               examDate: null,
               totalQuestions: 450,
               correctAnswers: 315,

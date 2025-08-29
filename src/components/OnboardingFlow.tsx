@@ -37,6 +37,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -49,8 +51,6 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     nameOnCard: ""
   });
   const nameInputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
-  const { toast } = useToast();
 
   // Focus first input when step changes
   useEffect(() => {
