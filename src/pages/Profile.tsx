@@ -4,7 +4,7 @@ const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 import UserProfile from "@/components/UserProfile";
 import { LogOut, Home, User, Clipboard, BookOpen, BarChart3 } from "lucide-react";
 
-const Analytics = () => {
+const Profile = () => {
   return (
     <div className="min-h-screen bg-background bg-mesh">
       {/* Header */}
@@ -50,4 +50,4 @@ const Analytics = () => {
   );
 };
 
-export default Analytics;
+export default Profile;
