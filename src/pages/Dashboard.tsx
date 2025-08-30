@@ -43,8 +43,8 @@ const Dashboard = () => {
   const hasAccess = !authLoading && user !== null;
   const userEmail = user?.email || "";
 
-  // Check if email is confirmed
-  const isEmailConfirmed = user?.email_confirmed_at !== null;
+  // Check if email is confirmed (Django users are always confirmed)
+  const isEmailConfirmed = true;
 
   // Load user data when auth state changes
   useEffect(() => {
@@ -151,7 +151,7 @@ const Dashboard = () => {
           exam_date: newDate.toISOString().split('T')[0],
           updated_at: new Date().toISOString()
         })
-        .eq('user_id', user.id);
+        .eq('user_id', user.id.toString());
 
       if (error) {
         console.error('Error updating exam date:', error);

@@ -1,13 +1,11 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import { authAPI, User } from '@/lib/auth-api';
 
 interface AuthContextType {
   user: User | null;
-  session: Session | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string, options?: any) => Promise<{ error: any }>;
+  signUp: (email: string, password: string, firstName?: string, lastName?: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -27,84 +25,54 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let mounted = true;
-
     const initializeAuth = async () => {
       try {
-        // Set up auth state listener first
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-          async (event, session) => {
-            console.log('Auth state changed:', event, session?.user?.id);
-            
-            if (!mounted) return;
-
-            setSession(session);
-            setUser(session?.user ?? null);
-            setLoading(false);
-          }
-        );
-
-        // Then check for existing session
-        const { data: { session: currentSession } } = await supabase.auth.getSession();
+        const { user: currentUser, error } = await authAPI.getCurrentUser();
         
-        if (mounted) {
-          setSession(currentSession);
-          setUser(currentSession?.user ?? null);
-          setLoading(false);
+        if (currentUser) {
+          setUser(currentUser);
         }
-
-        return () => {
-          mounted = false;
-          subscription.unsubscribe();
-        };
+        
+        setLoading(false);
       } catch (error) {
         console.error('Error initializing auth:', error);
-        if (mounted) {
-          setLoading(false);
-        }
+        setLoading(false);
       }
     };
 
-    const cleanup = initializeAuth();
-    
-    return () => {
-      mounted = false;
-      cleanup.then(cleanupFn => cleanupFn?.());
-    };
+    initializeAuth();
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { user: authUser, error } = await authAPI.login(email, password);
+    
+    if (authUser) {
+      setUser(authUser);
+    }
     
     return { error };
   };
 
-  const signUp = async (email: string, password: string, options?: any) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
-        ...options,
-      },
-    });
+  const signUp = async (email: string, password: string, firstName?: string, lastName?: string) => {
+    const { user: authUser, error } = await authAPI.register(email, password, firstName, lastName);
+    
+    if (authUser) {
+      setUser(authUser);
+    }
+    
     return { error };
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await authAPI.logout();
+    setUser(null);
   };
 
   const value = {
     user,
-    session,
     loading,
     signIn,
     signUp,

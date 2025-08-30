@@ -68,6 +68,13 @@ CORS_ALLOWED_ORIGINS = [
     "http://172.20.5.247:8080",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
