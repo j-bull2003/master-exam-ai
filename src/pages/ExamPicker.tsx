@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GraduationCap, Search, MapPin, Clock, Users } from "lucide-react";
 
+// Available exams with resources
+const availableExams = ["TMUA", "MAT", "SAT", "UCAT"];
+
 // Mock exam data - replace with actual API
 const exams = [
   {
@@ -17,7 +20,8 @@ const exams = [
     region: "UK",
     duration: "2 hours",
     sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning", "Situational Judgement"],
-    students: "30,000+"
+    students: "30,000+",
+    available: true
   },
   {
     id: "sat",
@@ -27,7 +31,8 @@ const exams = [
     region: "US",
     duration: "3 hours",
     sections: ["Reading and Writing", "Math"],
-    students: "2M+"
+    students: "2M+",
+    available: true
   },
   {
     id: "act",
@@ -37,7 +42,8 @@ const exams = [
     region: "US",
     duration: "3 hours",
     sections: ["English", "Math", "Reading", "Science", "Writing (Optional)"],
-    students: "1.8M+"
+    students: "1.8M+",
+    available: false
   },
   {
     id: "step",
@@ -47,7 +53,8 @@ const exams = [
     region: "UK",
     duration: "3 hours",
     sections: ["Pure Mathematics", "Mechanics", "Statistics"],
-    students: "5,000+"
+    students: "5,000+",
+    available: false
   },
   {
     id: "mat",
@@ -57,7 +64,41 @@ const exams = [
     region: "UK",
     duration: "2.5 hours",
     sections: ["Multiple Choice", "Longer Problems"],
-    students: "3,000+"
+    students: "3,000+",
+    available: true
+  },
+  {
+    id: "tmua",
+    name: "TMUA",
+    fullName: "Test of Mathematics for University Admission",
+    description: "Mathematics test for university admissions in the UK",
+    region: "UK",
+    duration: "2.5 hours",
+    sections: ["Mathematical Thinking", "Mathematical Reasoning"],
+    students: "2,000+",
+    available: true
+  },
+  {
+    id: "gmat",
+    name: "GMAT",
+    fullName: "Graduate Management Admission Test",
+    description: "Standardized test for business school admissions",
+    region: "INTL",
+    duration: "3.5 hours",
+    sections: ["Analytical Writing", "Integrated Reasoning", "Quantitative", "Verbal"],
+    students: "200,000+",
+    available: false
+  },
+  {
+    id: "gre",
+    name: "GRE",
+    fullName: "Graduate Record Examinations",
+    description: "Standardized test for graduate school admissions",
+    region: "INTL",
+    duration: "3 hours 45 minutes",
+    sections: ["Analytical Writing", "Verbal Reasoning", "Quantitative Reasoning"],
+    students: "500,000+",
+    available: false
   }
 ];
 
@@ -75,7 +116,10 @@ const ExamPicker = () => {
   });
 
   const handleExamSelect = (examId: string) => {
-    setSelectedExam(examId);
+    const exam = exams.find(e => e.id === examId);
+    if (exam?.available) {
+      setSelectedExam(examId);
+    }
   };
 
   return (
@@ -137,15 +181,24 @@ const ExamPicker = () => {
           {filteredExams.map((exam) => (
             <Card 
               key={exam.id} 
-              className={`question-card cursor-pointer transition-all duration-200 ${
-                selectedExam === exam.id ? 'ring-2 ring-primary border-primary' : 'hover:shadow-academic-lg'
+              className={`question-card transition-all duration-200 ${
+                exam.available 
+                  ? `cursor-pointer ${selectedExam === exam.id ? 'ring-2 ring-primary border-primary' : 'hover:shadow-academic-lg'}`
+                  : 'opacity-60 cursor-not-allowed'
               }`}
               onClick={() => handleExamSelect(exam.id)}
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-2xl font-display">{exam.name}</CardTitle>
+                    <CardTitle className="text-2xl font-display flex items-center gap-2">
+                      {exam.name}
+                      {!exam.available && (
+                        <Badge variant="secondary" className="text-xs">
+                          Coming Soon
+                        </Badge>
+                      )}
+                    </CardTitle>
                     <CardDescription className="text-sm font-medium">{exam.fullName}</CardDescription>
                   </div>
                   <Badge variant="outline" className="text-xs">
@@ -155,7 +208,10 @@ const ExamPicker = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">{exam.description}</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {exam.description}
+                  {!exam.available && " Resources coming soon!"}
+                </p>
                 
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center text-muted-foreground">
