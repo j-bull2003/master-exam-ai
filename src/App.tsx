@@ -23,6 +23,7 @@ import Profile from "./pages/Profile";
 import Quiz from "./routes/Quiz";
 import TutorStudio from "./pages/TutorStudio";
 import Admin from "./pages/Admin";
+import FeedbackButton from "@/components/FeedbackButton";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -70,9 +71,10 @@ const App = () => {
           <Route path="/admin" element={<Admin />} />
           
           {/* Catch-all */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <FeedbackButton />
+        </BrowserRouter>
     </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>
