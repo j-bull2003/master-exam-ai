@@ -80,28 +80,28 @@ const Index = () => {
 
   const testimonials = [
     {
-      name: "Sarah Chen",
+      name: "Sarah",
       university: "MIT",
       exam: "SAT",
       score: "1580",
       quote: "UniHack's AI identified exactly where I was struggling and helped me improve my score by 200 points!",
-      avatar: "SC"
+      avatar: "S"
     },
     {
-      name: "James Wilson",
+      name: "James",
       university: "Oxford",
       exam: "STEP",
       score: "7.2/9",
       quote: "The adaptive practice was game-changing. I felt completely prepared on exam day.",
-      avatar: "JW"
+      avatar: "J"
     },
     {
-      name: "Maria Rodriguez",
+      name: "Maria",
       university: "Stanford",
       exam: "ACT",
       score: "35",
       quote: "The personalized study plan saved me months of preparation time. Absolutely brilliant!",
-      avatar: "MR"
+      avatar: "M"
     }
   ];
 
