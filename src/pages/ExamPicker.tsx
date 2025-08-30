@@ -6,108 +6,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GraduationCap, Search, MapPin, Clock, Users } from "lucide-react";
-
-// Available exams with resources
-const availableExams = ["TMUA", "MAT", "SAT", "UCAT"];
-
-// Mock exam data - replace with actual API
-const exams = [
-  {
-    id: "ucat",
-    name: "UCAT",
-    fullName: "University Clinical Aptitude Test",
-    description: "Required for medicine and dentistry applications in UK, Australia, and New Zealand",
-    region: "UK",
-    duration: "2 hours",
-    sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning", "Situational Judgement"],
-    students: "30,000+",
-    available: true
-  },
-  {
-    id: "sat",
-    name: "SAT",
-    fullName: "Scholastic Assessment Test",
-    description: "Standardized test for college admissions in the United States",
-    region: "US",
-    duration: "3 hours",
-    sections: ["Reading and Writing", "Math"],
-    students: "2M+",
-    available: true
-  },
-  {
-    id: "act",
-    name: "ACT",
-    fullName: "American College Testing",
-    description: "Standardized test for college admissions in the United States",
-    region: "US",
-    duration: "3 hours",
-    sections: ["English", "Math", "Reading", "Science", "Writing (Optional)"],
-    students: "1.8M+",
-    available: false
-  },
-  {
-    id: "step",
-    name: "STEP",
-    fullName: "Sixth Term Examination Paper",
-    description: "Mathematics examination for Cambridge and other top UK universities",
-    region: "UK",
-    duration: "3 hours",
-    sections: ["Pure Mathematics", "Mechanics", "Statistics"],
-    students: "5,000+",
-    available: false
-  },
-  {
-    id: "mat",
-    name: "MAT",
-    fullName: "Mathematics Admissions Test",
-    description: "Required for mathematics courses at Oxford and other universities",
-    region: "UK",
-    duration: "2.5 hours",
-    sections: ["Multiple Choice", "Longer Problems"],
-    students: "3,000+",
-    available: true
-  },
-  {
-    id: "tmua",
-    name: "TMUA",
-    fullName: "Test of Mathematics for University Admission",
-    description: "Mathematics test for university admissions in the UK",
-    region: "UK",
-    duration: "2.5 hours",
-    sections: ["Mathematical Thinking", "Mathematical Reasoning"],
-    students: "2,000+",
-    available: true
-  },
-  {
-    id: "gmat",
-    name: "GMAT",
-    fullName: "Graduate Management Admission Test",
-    description: "Standardized test for business school admissions",
-    region: "INTL",
-    duration: "3.5 hours",
-    sections: ["Analytical Writing", "Integrated Reasoning", "Quantitative", "Verbal"],
-    students: "200,000+",
-    available: false
-  },
-  {
-    id: "gre",
-    name: "GRE",
-    fullName: "Graduate Record Examinations",
-    description: "Standardized test for graduate school admissions",
-    region: "INTL",
-    duration: "3 hours 45 minutes",
-    sections: ["Analytical Writing", "Verbal Reasoning", "Quantitative Reasoning"],
-    students: "500,000+",
-    available: false
-  }
-];
+import { EXAM_CONFIGS } from "@/data/examConfig";
 
 const ExamPicker = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("all");
   const [selectedExam, setSelectedExam] = useState<string | null>(null);
 
-  const filteredExams = exams.filter(exam => {
+  const filteredExams = EXAM_CONFIGS.filter(exam => {
     const matchesSearch = exam.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          exam.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          exam.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -116,7 +22,7 @@ const ExamPicker = () => {
   });
 
   const handleExamSelect = (examId: string) => {
-    const exam = exams.find(e => e.id === examId);
+    const exam = EXAM_CONFIGS.find(e => e.id === examId);
     if (exam?.available) {
       setSelectedExam(examId);
     }

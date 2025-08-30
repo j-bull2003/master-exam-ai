@@ -26,6 +26,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { authAPI } from "@/lib/auth-api";
+import { ONBOARDING_EXAMS } from "@/data/examConfig";
 
 interface OnboardingFlowProps {
   onComplete: () => void;
@@ -61,36 +62,13 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     nameInputRef.current?.focus();
   }, []);
 
-  const examTypes = [
-    { 
-      id: 'SAT', 
-      name: 'SAT',
-      description: 'Scholastic Assessment Test',
-      universities: ['Harvard', 'Stanford', 'MIT', 'Yale'],
-      scoreRange: '400-1600'
-    },
-    { 
-      id: 'ACT', 
-      name: 'ACT',
-      description: 'American College Testing',
-      universities: ['Northwestern', 'University of Chicago', 'Duke'],
-      scoreRange: '1-36'
-    },
-    { 
-      id: 'STEP', 
-      name: 'STEP',
-      description: 'Sixth Term Examination Paper',
-      universities: ['Cambridge', 'Oxford'],
-      scoreRange: 'Grades 1-S'
-    },
-    { 
-      id: 'UCAT', 
-      name: 'UCAT',
-      description: 'University Clinical Aptitude Test',
-      universities: ['Oxford Medical', 'Cambridge Medical', 'Imperial'],
-      scoreRange: '1200-3600'
-    }
-  ];
+  const examTypes = ONBOARDING_EXAMS.map(exam => ({
+    id: exam.id.toUpperCase(),
+    name: exam.name,
+    description: exam.fullName,
+    universities: exam.universities || [],
+    scoreRange: exam.scoreRange || 'N/A'
+  }));
 
   const validateStep1 = () => {
     const newErrors: { [key: string]: string } = {};
@@ -380,9 +358,12 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             {/* Step 2: Exam Selection */}
             {currentStep === 2 && (
               <div className="space-y-6">
-                <div className="text-center">
+                <div className="text-center space-y-2">
                   <p className="text-muted-foreground">
                     Choose the exam you're preparing for to get personalized practice content
+                  </p>
+                  <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg px-3 py-2">
+                    Currently available: {ONBOARDING_EXAMS.map(e => e.name).join(', ')}
                   </p>
                 </div>
 

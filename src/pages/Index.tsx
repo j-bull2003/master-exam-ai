@@ -10,6 +10,7 @@ import { InteractiveCard } from "@/components/InteractiveCard";
 import { MagneticButton } from "@/components/MagneticButton";
 import { EmptyState } from "@/components/EmptyState";
 import { PageProgressBar } from "@/components/PageProgressBar";
+import { EXAM_CONFIGS } from "@/data/examConfig";
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 const Index = () => {
@@ -51,9 +52,6 @@ const Index = () => {
     }
   }, [isLoaded]);
 
-  const exams = [
-    "SAT", "ACT", "UCAT", "STEP", "MAT", "ESAT", "LNAT", "TSA", "PAT"
-  ];
 
   const features = [
     {
@@ -193,18 +191,32 @@ const Index = () => {
               <div className="mb-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
                 <p className="text-sm font-medium text-muted-foreground mb-4">Supports all major admissions tests</p>
                 <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto mb-8">
-                  {exams.map((exam, index) => (
-                    <span
-                      key={exam}
-                      className="glass border border-border/50 rounded-lg px-4 py-2 text-sm font-medium text-foreground hover:border-primary/40 hover:bg-primary/5 hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-default card-layered"
-                      style={{ 
-                        animationDelay: `${0.6 + index * 0.05}s`,
-                        animation: 'fade-in 0.3s ease-out forwards'
-                      }}
-                    >
-                      {exam}
-                    </span>
-                  ))}
+                  {EXAM_CONFIGS.map((exam, index) => {
+                    const isAvailable = exam.available;
+                    return (
+                      <span
+                        key={exam.name}
+                        className={`glass border rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 card-layered ${
+                          isAvailable
+                            ? "border-border/50 text-foreground hover:border-primary/40 hover:bg-primary/5 hover:shadow-md hover:scale-105 cursor-default"
+                            : "border-border/30 text-muted-foreground opacity-60 cursor-not-allowed"
+                        }`}
+                        style={{ 
+                          animationDelay: `${0.6 + index * 0.05}s`,
+                          animation: 'fade-in 0.3s ease-out forwards'
+                        }}
+                      >
+                        <div className="flex items-center gap-2">
+                          {exam.name}
+                          {!isAvailable && (
+                            <span className="text-xs bg-muted text-muted-foreground px-1.5 py-0.5 rounded">
+                              Soon
+                            </span>
+                          )}
+                        </div>
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             ) : (
