@@ -452,7 +452,7 @@ const Index = () => {
                 </p>
               </div>
 
-              {/* Annual Plan */}
+              {/* Lifetime Plan */}
               <div className="relative p-8 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-semibold">
@@ -460,14 +460,14 @@ const Index = () => {
                   </span>
                 </div>
                 
-                <h3 className="text-2xl font-bold mb-2">Annual Plan</h3>
+                <h3 className="text-2xl font-bold mb-2">Lifetime Access</h3>
                 <div className="mb-2">
-                  <span className="text-5xl font-black">$39.99</span>
-                  <span className="text-muted-foreground">/month</span>
+                  <span className="text-5xl font-black">$299</span>
+                  <span className="text-muted-foreground"> one-time</span>
                 </div>
                 <div className="mb-6">
-                  <span className="text-lg line-through text-muted-foreground">$599.88</span>
-                  <span className="text-success font-semibold ml-2">Save $120/year</span>
+                  <span className="text-lg line-through text-muted-foreground">$599.88/year</span>
+                  <span className="text-success font-semibold ml-2">Pay once, use forever</span>
                 </div>
                 
                 <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
@@ -486,7 +486,7 @@ const Index = () => {
                 </Link>
 
                 <p className="text-sm text-muted-foreground text-center">
-                  Best value for long-term success
+                  Unlimited access for life
                 </p>
               </div>
             </div>
