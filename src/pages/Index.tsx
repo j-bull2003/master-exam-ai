@@ -210,7 +210,7 @@ const Index = () => {
                           {exam.name}
                           {!isAvailable && (
                             <span className="text-xs bg-muted text-muted-foreground px-1.5 py-0.5 rounded">
-                              Soon
+                              Coming Soon
                             </span>
                           )}
                         </div>
