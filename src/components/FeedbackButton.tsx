@@ -77,9 +77,9 @@ const FeedbackButton = () => {
         <Button
           variant="outline"
           size="sm"
-          className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 bg-primary text-primary-foreground hover:bg-primary/90"
+          className="fixed bottom-6 right-6 z-50 px-4 py-2 h-auto rounded-full shadow-lg hover:shadow-xl transition-all duration-200 bg-primary text-primary-foreground hover:bg-primary/90"
         >
-          <MessageCircle className="h-5 w-5" />
+          <span className="text-sm font-medium">Feedback</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
