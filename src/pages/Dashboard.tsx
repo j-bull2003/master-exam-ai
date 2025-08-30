@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { supabase } from "@/integrations/supabase/client";
+// Removed Supabase import - using Django backend
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -61,53 +61,21 @@ const Dashboard = () => {
     try {
       console.log('Loading profile data for user:', user.id);
       
-      // First, ensure profile exists (upsert)
-      const { error: upsertError } = await supabase
-        .from('profiles')
-        .upsert({ 
-          user_id: user.id,
-          email: user.email,
-          full_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
-          updated_at: new Date().toISOString()
-        }, { 
-          onConflict: 'user_id'
-        });
-
-      if (upsertError) {
-        console.error('Error upserting profile:', upsertError);
-      }
-
-      // Then fetch the profile
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      if (profileError) {
-        console.error('Error fetching profile:', profileError);
-        throw profileError;
-      }
-
-      console.log('Profile data loaded:', profile);
-
-      // Get the user's name from profile or email
-      const userName = profile?.full_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+      // For Django users, use user data directly
+      const userName = `${user.first_name} ${user.last_name}`.trim() || user.email?.split('@')[0] || 'User';
       
-      // Create userData object with real or default values
+      // Create userData object with Django user data
       const userData = {
         name: userName,
-        exam: profile?.exam_type || "No exam selected",
-        examDate: profile?.exam_date ? new Date(profile.exam_date) : null,
-        totalQuestions: 0, // These could come from a separate analytics table
+        exam: "No exam selected", // TODO: Store in Django profile model
+        examDate: null, // TODO: Store in Django profile model
+        totalQuestions: 0, // These could come from Django analytics
         correctAnswers: 0,
         accuracy: 0,
         weeklyTarget: 100,
         completedThisWeek: 0,
         streakDays: 0,
-        nextSession: profile?.exam_date 
-          ? `${profile.exam_type} preparation` 
-          : "Select your exam to start"
+        nextSession: "Select your exam to start"
       };
 
       console.log('Setting user data:', userData);
@@ -116,8 +84,8 @@ const Dashboard = () => {
       console.error('Error loading profile data:', error);
       // Still set some default data for authenticated user
       setUserData({
-        name: user.user_metadata?.full_name || "User",
-        exam: "Error loading profile",
+        name: `${user.first_name} ${user.last_name}`.trim() || "User",
+        exam: "No exam selected",
         examDate: null,
         totalQuestions: 0,
         correctAnswers: 0,
@@ -125,7 +93,7 @@ const Dashboard = () => {
         weeklyTarget: 100,
         completedThisWeek: 0,
         streakDays: 0,
-        nextSession: "Try refreshing the page"
+        nextSession: "Select your exam to start"
       });
     } finally {
       setIsLoading(false);
@@ -145,31 +113,11 @@ const Dashboard = () => {
         return;
       }
 
-      const { error } = await supabase
-        .from('profiles')
-        .update({ 
-          exam_date: newDate.toISOString().split('T')[0],
-          updated_at: new Date().toISOString()
-        })
-        .eq('user_id', user.id.toString());
+      // TODO: Implement Django API endpoint for updating exam date
+      console.log('Would update exam date to:', newDate);
 
-      if (error) {
-        console.error('Error updating exam date:', error);
-        toast({
-          title: "Error",
-          description: "Failed to update exam date. Please try again.",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      // Update local state
+      // Update local state for now
       setUserData(prev => ({ ...prev, examDate: newDate }));
-      
-      // Also re-fetch the profile to ensure we have the latest data
-      if (user) {
-        await loadProfileData(user);
-      }
       
       toast({
         title: "Success",

@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { LogOut, Clock, PlayCircle, CheckCircle, Eye, Calendar, Home, BarChart3, User, Clipboard, BookOpen } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
+// Removed Supabase import - using Django backend
 
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
@@ -21,15 +21,9 @@ const Mocks = () => {
       if (!user) return;
       
       try {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('exam_type')
-          .eq('user_id', user.id.toString())
-          .single();
-          
-        if (profile?.exam_type) {
-          setUserExam(profile.exam_type);
-        }
+        // TODO: Implement Django API endpoint for user profile
+        console.log('Would load user exam type for:', user.id);
+        // For now, keep default UCAT
       } catch (error) {
         console.error('Error loading user exam:', error);
       }

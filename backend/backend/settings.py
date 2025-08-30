@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-_tqc^ht+v&hpr41rk8)4m%%o2_&2$r63%ygs6!^n!v*j+esm5&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]  # For development - restrict in production
 
 
 # Application definition
@@ -66,6 +66,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:8080",
     "http://172.20.5.247:8080",
+    "https://c56425b3-d6fe-4c2f-baa1-a8be2e6b9a9b.sandbox.lovable.dev",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -73,6 +74,7 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://c56425b3-d6fe-4c2f-baa1-a8be2e6b9a9b.sandbox.lovable.dev",
 ]
 
 from pathlib import Path

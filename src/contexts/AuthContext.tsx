@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       try {
         const { user: currentUser, error } = await authAPI.getCurrentUser();
         
-        if (currentUser) {
+        if (currentUser && !error) {
           setUser(currentUser);
         }
         
@@ -47,28 +47,46 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { user: authUser, error } = await authAPI.login(email, password);
-    
-    if (authUser) {
-      setUser(authUser);
+    try {
+      const { user: authUser, error } = await authAPI.login(email, password);
+      
+      if (authUser && !error) {
+        setUser(authUser);
+        return { error: null };
+      }
+      
+      return { error: error || 'Login failed' };
+    } catch (error: any) {
+      console.error('Sign in error:', error);
+      return { error: error.message || 'Login failed' };
     }
-    
-    return { error };
   };
 
   const signUp = async (email: string, password: string, firstName?: string, lastName?: string) => {
-    const { user: authUser, error } = await authAPI.register(email, password, firstName, lastName);
-    
-    if (authUser) {
-      setUser(authUser);
+    try {
+      const { user: authUser, error } = await authAPI.register(email, password, firstName, lastName);
+      
+      if (authUser && !error) {
+        setUser(authUser);
+        return { error: null };
+      }
+      
+      return { error: error || 'Registration failed' };
+    } catch (error: any) {
+      console.error('Sign up error:', error);
+      return { error: error.message || 'Registration failed' };
     }
-    
-    return { error };
   };
 
   const signOut = async () => {
-    await authAPI.logout();
-    setUser(null);
+    try {
+      await authAPI.logout();
+      setUser(null);
+    } catch (error) {
+      console.error('Sign out error:', error);
+      // Still clear user state even if logout request fails
+      setUser(null);
+    }
   };
 
   const value = {
