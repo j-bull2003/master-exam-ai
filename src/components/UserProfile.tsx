@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   User, 
   Mail, 
@@ -19,339 +19,362 @@ import {
   Save, 
   X,
   Calendar,
-  BookOpen,
-  Award,
-  University
+  MapPin,
+  Trophy,
+  BookOpen
 } from "lucide-react";
 
-interface Profile {
-  id: string;
-  user_id: string;
+interface ProfileData {
   full_name: string;
   email: string;
-  exam_type?: string;
-  exam_date?: string;
-  created_at: string;
-  updated_at: string;
+  exam_type: string;
+  exam_date: string | null;
 }
 
-interface UserProfileProps {
-  className?: string;
-}
-
-export const UserProfile = ({ className = "" }: UserProfileProps) => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+const UserProfile = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [profile, setProfile] = useState<ProfileData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [editForm, setEditForm] = useState({
+  const [editForm, setEditForm] = useState<ProfileData>({
     full_name: "",
-    exam_type: "STEP",
-    exam_date: "",
-    target_score: "",
-    study_goal: "",
-    university_preferences: [] as string[]
+    email: "",
+    exam_type: "",
+    exam_date: null
   });
-  const { toast } = useToast();
 
-  // Exam configurations with proper university targets and scoring
-  const examConfigs: { [key: string]: any } = {
-    STEP: {
-      fullName: "Sixth Term Examination Paper",
-      universities: ["University of Cambridge", "University of Oxford", "Imperial College London"],
-      targetUniversity: "University of Cambridge",
-      maxScore: 100,
-      targetScore: 85,
-      studyGoal: "Get into Cambridge for Mathematics",
-      scoringSystem: "Grade 1-3 (3 being highest)"
-    },
-    UCAT: {
-      fullName: "University Clinical Aptitude Test", 
-      universities: ["University of Oxford", "University of Cambridge", "Imperial College London", "King's College London"],
-      targetUniversity: "University of Oxford",
-      maxScore: 3600,
-      targetScore: 2800,
-      studyGoal: "Get into medical school at University of Oxford",
-      scoringSystem: "Scale 1200-3600"
-    },
+  // Exam configurations
+  const examConfig = {
     SAT: {
-      fullName: "Scholastic Assessment Test",
-      universities: ["Harvard University", "Stanford University", "MIT", "Yale University"],
-      targetUniversity: "Harvard University", 
-      maxScore: 1600,
-      targetScore: 1520,
-      studyGoal: "Get into Harvard University",
-      scoringSystem: "Scale 400-1600"
+      university: "Harvard University",
+      color: "#C8102E",
+      studyGoal: "Achieve 1500+ for Ivy League admission",
+      preferredUnis: ["Harvard", "Stanford", "MIT", "Yale"],
+      scoringSystem: "1600 Point Scale",
+      sections: ["Reading", "Writing & Language", "Math (No Calculator)", "Math (Calculator)"]
     },
     ACT: {
-      fullName: "American College Testing",
-      universities: ["Harvard University", "Stanford University", "MIT", "Princeton University"],
-      targetUniversity: "Stanford University",
-      maxScore: 36,
-      targetScore: 34,
-      studyGoal: "Get into Stanford University",
-      scoringSystem: "Scale 1-36"
+      university: "Stanford University", 
+      color: "#8C1515",
+      studyGoal: "Score 32+ for top-tier universities",
+      preferredUnis: ["Stanford", "Northwestern", "University of Chicago", "Duke"],
+      scoringSystem: "36 Point Scale",
+      sections: ["English", "Math", "Reading", "Science"]
+    },
+    STEP: {
+      university: "University of Cambridge",
+      color: "#A3C1DA",
+      studyGoal: "Achieve Grade S for Cambridge entry",
+      preferredUnis: ["Cambridge", "Oxford"],
+      scoringSystem: "Grades 1-S Scale",
+      sections: ["STEP 2", "STEP 3", "Mathematics"]
+    },
+    UCAT: {
+      university: "University of Oxford",
+      color: "#002147",
+      studyGoal: "Score 2700+ for medical school",
+      preferredUnis: ["Oxford Medical", "Cambridge Medical", "Imperial"],
+      scoringSystem: "3600 Point Scale", 
+      sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning"]
     }
   };
 
   useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  const fetchProfile = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      if (error) throw error;
-      
-      console.log('Loaded profile data:', data);
-      setProfile(data);
-      
-      // Get exam config for the user's exam type
-      const examConfig = examConfigs[data.exam_type] || examConfigs.STEP;
-      
-      setEditForm({
-        full_name: data.full_name || "",
-        exam_type: data.exam_type || "STEP",
-        exam_date: data.exam_date || "",
-        target_score: examConfig.targetScore.toString(),
-        study_goal: examConfig.studyGoal,
-        university_preferences: examConfig.universities
-      });
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load profile data",
-        variant: "destructive"
-      });
-    } finally {
+    if (user) {
+      // Use Django user data
+      const profileData: ProfileData = {
+        full_name: `${user.first_name} ${user.last_name}`.trim() || user.username,
+        email: user.email,
+        exam_type: 'SAT', // Default for now - you might want to store this in Django user profile
+        exam_date: null // Default for now - you might want to store this in Django user profile
+      };
+      setProfile(profileData);
+      setEditForm(profileData);
       setIsLoading(false);
     }
-  };
+  }, [user]);
 
   const handleSave = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          full_name: editForm.full_name,
-          exam_type: editForm.exam_type,
-          exam_date: editForm.exam_date,
-          updated_at: new Date().toISOString()
-        })
-        .eq('user_id', user.id);
-
-      if (error) throw error;
-
-      toast({
-        title: "Profile Updated",
-        description: "Your profile has been successfully updated.",
-      });
-
-      // Refresh profile data
-      await fetchProfile();
+      // For now, we'll just update the local state
+      // In a full implementation, you'd want to update the Django user model
+      // or create a separate profile model in Django
+      
+      setProfile(editForm);
       setIsEditing(false);
+      
+      toast({
+        title: "Profile updated",
+        description: "Your profile has been updated successfully.",
+      });
     } catch (error) {
       console.error('Error updating profile:', error);
       toast({
         title: "Error",
-        description: "Failed to update profile",
+        description: "Failed to update profile.",
         variant: "destructive"
       });
     }
   };
 
+  const handleCancel = () => {
+    if (profile) {
+      setEditForm(profile);
+    }
+    setIsEditing(false);
+  };
+
   if (isLoading) {
     return (
-      <div className="animate-pulse space-y-4">
-        <div className="h-8 bg-muted rounded w-3/4"></div>
-        <div className="h-64 bg-muted rounded"></div>
+      <div className="space-y-6">
+        <div className="h-8 bg-muted animate-pulse rounded" />
+        <div className="h-64 bg-muted animate-pulse rounded" />
+        <div className="h-48 bg-muted animate-pulse rounded" />
       </div>
     );
   }
 
   if (!profile) {
     return (
-      <Card className={className}>
-        <CardContent className="p-6">
-          <p>No profile data available</p>
+      <Card>
+        <CardContent className="flex items-center justify-center h-64">
+          <p className="text-muted-foreground">Failed to load profile data</p>
         </CardContent>
       </Card>
     );
   }
 
-  // Get current exam configuration
-  const currentExamConfig = examConfigs[profile.exam_type || editForm.exam_type] || examConfigs.STEP;
+  const currentExam = profile.exam_type as keyof typeof examConfig;
+  const config = examConfig[currentExam] || examConfig.SAT;
 
   return (
-    <div className={`space-y-6 ${className}`}>
-      <Card className="card-layered">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Avatar className="h-16 w-16">
-                <AvatarImage src="/placeholder-avatar.jpg" />
-                <AvatarFallback className="text-lg font-semibold bg-primary/10 text-primary">
-                  {profile?.full_name?.split(' ').map(n => n[0]).join('') || 'U'}
-                </AvatarFallback>
-              </Avatar>
-              <div>
-                <CardTitle className="text-2xl">{profile?.full_name || 'User'}</CardTitle>
-                <CardDescription className="flex items-center space-x-2 mt-1">
-                  <Mail className="h-4 w-4" />
-                  <span>{profile?.email}</span>
-                </CardDescription>
-                <div className="flex items-center space-x-2 mt-1">
-                  <BookOpen className="h-4 w-4 text-primary" />
-                  <span className="font-medium">{profile?.exam_type || 'STEP'}</span>
-                  <span className="text-muted-foreground">• {currentExamConfig.fullName}</span>
-                </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Profile</h1>
+          <p className="text-muted-foreground">Manage your account and exam preferences</p>
+        </div>
+        <Button
+          variant={isEditing ? "outline" : "default"}
+          onClick={() => setIsEditing(!isEditing)}
+          className="flex items-center gap-2"
+        >
+          {isEditing ? (
+            <>
+              <X className="w-4 h-4" />
+              Cancel
+            </>
+          ) : (
+            <>
+              <Edit3 className="w-4 h-4" />
+              Edit Profile
+            </>
+          )}
+        </Button>
+      </div>
+
+      {/* Profile Overview Card */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center space-x-4">
+            <Avatar className="h-20 w-20">
+              <AvatarImage src="" alt={profile.full_name} />
+              <AvatarFallback className="text-lg font-semibold">
+                {profile.full_name.split(' ').map(n => n[0]).join('').toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="space-y-1">
+              <CardTitle className="text-2xl">{profile.full_name}</CardTitle>
+              <CardDescription className="flex items-center gap-2">
+                <Mail className="w-4 h-4" />
+                {profile.email}
+              </CardDescription>
+              <div className="flex items-center gap-2">
+                <Badge 
+                  variant="secondary" 
+                  className="font-medium"
+                  style={{ backgroundColor: `${config.color}20`, color: config.color }}
+                >
+                  <BookOpen className="w-3 h-3 mr-1" />
+                  {profile.exam_type} Student
+                </Badge>
+                <Badge variant="outline" className="font-medium">
+                  <GraduationCap className="w-3 h-3 mr-1" />
+                  {config.university}
+                </Badge>
               </div>
             </div>
-            {!isEditing ? (
-              <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
-                <Edit3 className="h-4 w-4 mr-2" />
-                Edit Profile
-              </Button>
-            ) : (
-              <div className="flex space-x-2">
-                <Button variant="outline" size="sm" onClick={() => setIsEditing(false)}>
-                  <X className="h-4 w-4 mr-2" />
-                  Cancel
-                </Button>
-                <Button size="sm" onClick={handleSave}>
-                  <Save className="h-4 w-4 mr-2" />
-                  Save
-                </Button>
-              </div>
-            )}
           </div>
         </CardHeader>
+      </Card>
 
-        <CardContent>
-          {!isEditing ? (
-            <div className="space-y-6">
-              {/* Exam Information */}
-              <div>
-                <div className="flex items-center space-x-2 mb-3">
-                  <GraduationCap className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold">Exam & Target University</h3>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-muted/30 rounded-lg">
-                    <Label className="text-sm font-medium text-muted-foreground">Exam Type</Label>
-                    <p className="text-lg font-semibold">{profile?.exam_type || 'STEP'}</p>
-                    <p className="text-sm text-muted-foreground">{currentExamConfig.fullName}</p>
-                  </div>
-                  <div className="p-4 bg-muted/30 rounded-lg">
-                    <Label className="text-sm font-medium text-muted-foreground">Target University</Label>
-                    <p className="text-lg font-semibold">{currentExamConfig.targetUniversity}</p>
-                    <p className="text-sm text-muted-foreground">Primary goal institution</p>
-                  </div>
-                  <div className="p-4 bg-muted/30 rounded-lg">
-                    <Label className="text-sm font-medium text-muted-foreground">Exam Date</Label>
-                    <p className="text-lg font-semibold">
-                      {profile?.exam_date 
-                        ? new Date(profile.exam_date).toLocaleDateString('en-US', { 
-                            month: 'long', day: 'numeric', year: 'numeric' 
-                          })
-                        : 'Not set'
-                      }
-                    </p>
-                  </div>
-                  <div className="p-4 bg-muted/30 rounded-lg">
-                    <Label className="text-sm font-medium text-muted-foreground">Target Score</Label>
-                    <p className="text-lg font-semibold">{currentExamConfig.targetScore}</p>
-                    <p className="text-sm text-muted-foreground">{currentExamConfig.scoringSystem}</p>
-                  </div>
-                </div>
+      {/* Personal Information */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <User className="w-5 h-5" />
+            Personal Information
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {isEditing ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="fullName">Full Name</Label>
+                <Input
+                  id="fullName"
+                  value={editForm.full_name}
+                  onChange={(e) => setEditForm(prev => ({ ...prev, full_name: e.target.value }))}
+                  placeholder="Enter your full name"
+                />
               </div>
-
-              <Separator />
-
-              {/* University Preferences */}
-              <div>
-                <div className="flex items-center space-x-2 mb-3">
-                  <University className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold">University Preferences</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {currentExamConfig.universities.map((uni: string, index: number) => (
-                    <Badge 
-                      key={index} 
-                      variant={index === 0 ? "default" : "secondary"}
-                      className="text-sm py-1 px-3"
-                    >
-                      {uni}
-                    </Badge>
-                  ))}
-                </div>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Study goal: {currentExamConfig.studyGoal}
-                </p>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={editForm.email}
+                  onChange={(e) => setEditForm(prev => ({ ...prev, email: e.target.value }))}
+                  placeholder="Enter your email"
+                />
               </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-muted-foreground">Full Name</Label>
+                <p className="font-medium">{profile.full_name}</p>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-muted-foreground">Email Address</Label>
+                <p className="font-medium">{profile.email}</p>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
-              <Separator />
-
-              {/* Account Info */}
-              <div>
-                <div className="flex items-center space-x-2 mb-3">
-                  <Calendar className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold">Account Information</h3>
-                </div>
-                <div className="text-sm text-muted-foreground space-y-1">
-                  <p>Member since: {new Date(profile.created_at).toLocaleDateString()}</p>
-                  <p>Last updated: {new Date(profile.updated_at).toLocaleDateString()}</p>
-                </div>
+      {/* Exam Information */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Target className="w-5 h-5" />
+            Exam Information
+          </CardTitle>
+          <CardDescription>
+            Your exam type and target goals
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {isEditing ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="examType">Exam Type</Label>
+                <Select
+                  value={editForm.exam_type}
+                  onValueChange={(value) => setEditForm(prev => ({ ...prev, exam_type: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select exam type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="SAT">SAT - Scholastic Assessment Test</SelectItem>
+                    <SelectItem value="ACT">ACT - American College Testing</SelectItem>
+                    <SelectItem value="STEP">STEP - Sixth Term Examination Paper</SelectItem>
+                    <SelectItem value="UCAT">UCAT - University Clinical Aptitude Test</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="examDate">Exam Date</Label>
+                <Input
+                  id="examDate"
+                  type="date"
+                  value={editForm.exam_date || ''}
+                  onChange={(e) => setEditForm(prev => ({ ...prev, exam_date: e.target.value }))}
+                />
               </div>
             </div>
           ) : (
             <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Exam Overview */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="full_name">Full Name</Label>
-                  <Input
-                    id="full_name"
-                    value={editForm.full_name}
-                    onChange={(e) => setEditForm({...editForm, full_name: e.target.value})}
-                  />
+                  <Label className="text-sm font-medium text-muted-foreground">Current Exam</Label>
+                  <div className="flex items-center gap-2">
+                    <Badge 
+                      style={{ backgroundColor: config.color, color: 'white' }}
+                      className="font-medium"
+                    >
+                      {profile.exam_type}
+                    </Badge>
+                    <span className="font-medium">{config.scoringSystem}</span>
+                  </div>
                 </div>
-                
                 <div className="space-y-2">
-                  <Label htmlFor="exam_type">Exam Type</Label>
-                  <Select value={editForm.exam_type} onValueChange={(value) => setEditForm({...editForm, exam_type: value})}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select exam type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="STEP">STEP - Cambridge Mathematics</SelectItem>
-                      <SelectItem value="UCAT">UCAT - UK Medical Schools</SelectItem>
-                      <SelectItem value="SAT">SAT - US Universities</SelectItem>
-                      <SelectItem value="ACT">ACT - US Universities</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label className="text-sm font-medium text-muted-foreground">Target University</Label>
+                  <p className="font-medium">{config.university}</p>
                 </div>
-
                 <div className="space-y-2">
-                  <Label htmlFor="exam_date">Exam Date</Label>
-                  <Input
-                    id="exam_date"
-                    type="date"
-                    value={editForm.exam_date}
-                    onChange={(e) => setEditForm({...editForm, exam_date: e.target.value})}
-                  />
+                  <Label className="text-sm font-medium text-muted-foreground">Exam Date</Label>
+                  <p className="font-medium">
+                    {profile.exam_date ? new Date(profile.exam_date).toLocaleDateString() : 'Not set'}
+                  </p>
                 </div>
               </div>
+
+              <Separator />
+
+              {/* Study Goals */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium text-muted-foreground">Study Goals</Label>
+                <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+                  <Trophy className="w-5 h-5 text-amber-500" />
+                  <span className="font-medium">{config.studyGoal}</span>
+                </div>
+              </div>
+
+              {/* Preferred Universities */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium text-muted-foreground">Preferred Universities</Label>
+                <div className="flex flex-wrap gap-2">
+                  {config.preferredUnis.map((uni) => (
+                    <Badge key={uni} variant="outline" className="font-medium">
+                      <GraduationCap className="w-3 h-3 mr-1" />
+                      {uni}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* Exam Sections */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium text-muted-foreground">Exam Sections</Label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {config.sections.map((section) => (
+                    <div key={section} className="p-2 bg-muted/50 rounded text-sm font-medium text-center">
+                      {section}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {isEditing && (
+            <div className="flex justify-end gap-2 pt-4">
+              <Button variant="outline" onClick={handleCancel}>
+                <X className="w-4 h-4 mr-2" />
+                Cancel
+              </Button>
+              <Button onClick={handleSave}>
+                <Save className="w-4 h-4 mr-2" />
+                Save Changes
+              </Button>
             </div>
           )}
         </CardContent>
@@ -359,3 +382,5 @@ export const UserProfile = ({ className = "" }: UserProfileProps) => {
     </div>
   );
 };
+
+export default UserProfile;

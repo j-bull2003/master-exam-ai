@@ -247,42 +247,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background bg-mesh">
-      {/* Email confirmation banner */}
-      {user && !isEmailConfirmed && (
-        <div className="bg-warning/20 border-b border-warning/30">
-          <div className="container mx-auto px-4 py-3">
-            <Alert className="border-warning bg-warning/10">
-              <AlertDescription className="flex items-center justify-between">
-                <span>Please check your email to verify your account.</span>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={async () => {
-                    const { error } = await supabase.auth.resend({
-                      type: 'signup',
-                      email: user.email!
-                    });
-                    if (error) {
-                      toast({
-                        title: "Error",
-                        description: "Failed to resend verification email.",
-                        variant: "destructive"
-                      });
-                    } else {
-                      toast({
-                        title: "Success",
-                        description: "Verification email sent!"
-                      });
-                    }
-                  }}
-                >
-                  Resend Verification
-                </Button>
-              </AlertDescription>
-            </Alert>
-          </div>
-        </div>
-      )}
+      {/* Django users don't need email verification */}
 
       <div className="container mx-auto px-4 space-y-8">
         {/* Header */}
