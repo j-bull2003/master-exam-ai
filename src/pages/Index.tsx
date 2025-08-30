@@ -37,9 +37,9 @@ const Index = () => {
           const easeOut = 1 - Math.pow(1 - progress, 3);
           
           setStatsCounter({
-            students: Math.floor(easeOut * 12847),
-            questions: Math.floor(easeOut * 2500000),
-            accuracy: Math.floor(easeOut * 94)
+            students: Math.floor(easeOut * 500),
+            questions: Math.floor(easeOut * 50000),
+            accuracy: Math.floor(easeOut * 96)
           });
           
           if (step >= steps) clearInterval(counter);
@@ -121,7 +121,7 @@ const Index = () => {
               <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
                 <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
-                  Join 12,000+ students already using AI-powered prep
+                  Join the beta program - exclusive early access
                 </span>
               </div>
             ) : (
@@ -249,9 +249,9 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Trusted by Students Worldwide
+              Built with Cutting-Edge Technology
             </h2>
-            <p className="text-muted-foreground">Real results from real students</p>
+            <p className="text-muted-foreground">Powered by advanced AI and machine learning algorithms</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -261,7 +261,7 @@ const Index = () => {
                 <div className="text-4xl font-bold text-foreground mb-2">
                   {statsCounter.students.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium">Active Students</div>
+                <div className="text-muted-foreground font-medium">Beta Users</div>
               </div>
             </div>
             
@@ -271,7 +271,7 @@ const Index = () => {
                 <div className="text-4xl font-bold text-foreground mb-2">
                   {statsCounter.questions.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium">Questions Answered</div>
+                <div className="text-muted-foreground font-medium">AI Training Data Points</div>
               </div>
             </div>
             
@@ -281,7 +281,7 @@ const Index = () => {
                 <div className="text-4xl font-bold text-foreground mb-2">
                   {statsCounter.accuracy}%
                 </div>
-                <div className="text-muted-foreground font-medium">Average Score Improvement</div>
+                <div className="text-muted-foreground font-medium">Prediction Accuracy</div>
               </div>
             </div>
           </div>
