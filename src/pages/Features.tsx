@@ -130,7 +130,7 @@ const Features = () => {
                 return (
                   <div
                     key={exam.name}
-                    className={`bg-background rounded-lg p-3 text-center border transition-all duration-200 ${
+                    className={`bg-background rounded-lg p-3 text-center border transition-all duration-200 min-h-[60px] flex items-center justify-center ${
                       isAvailable
                         ? "border-border/50 hover:border-primary/20 hover:bg-primary/5 hover:shadow-md hover:scale-105"
                         : "border-border/30 opacity-60"
