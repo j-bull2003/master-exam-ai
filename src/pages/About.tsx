@@ -15,7 +15,7 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const About = () => {
   const stats = [
-    { number: "10,000+", label: "Students Served" },
+    { number: "500K+", label: "Questions Created by Top Scorers" },
     { number: "50+", label: "Universities Represented" },
     { number: "95%", label: "Score Improvement" },
     { number: "25+", label: "Exam Types Supported" }
@@ -131,7 +131,9 @@ const About = () => {
               </div>
               <div className="bg-gradient-to-br from-primary/5 to-primary-variant/5 rounded-3xl p-8 border border-primary/10">
                 <div className="text-center">
-                  <div className="text-6xl mb-4">🎯</div>
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary/20 to-primary-variant/20 flex items-center justify-center">
+                    <Target className="w-8 h-8 text-primary" />
+                  </div>
                   <h3 className="text-xl font-semibold mb-4">Our Promise</h3>
                   <p className="text-muted-foreground">
                     We're committed to helping every student achieve their academic dreams through personalized, effective, and accessible test preparation.
@@ -201,7 +203,7 @@ const About = () => {
             </p>
             <div className="bg-card rounded-2xl p-8 border border-border/50">
               <blockquote className="text-lg italic text-muted-foreground mb-4">
-                "The AI really understands where I'm struggling and gives me exactly the practice I need. My STEP scores improved by 40% in just 6 weeks."
+                "The questions created by top scorers really challenged me and exposed my weak areas. My STEP scores improved by 40% in just 6 weeks."
               </blockquote>
               <div className="text-sm font-semibold">Sarah M., Cambridge Applicant</div>
             </div>
