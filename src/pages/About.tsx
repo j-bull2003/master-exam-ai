@@ -15,7 +15,7 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const About = () => {
   const stats = [
-    { number: "500K+", label: "Questions Created by Top Scorers" },
+    { number: "5K+", label: "Questions Created by Top Scorers" },
     { number: "50+", label: "Universities Represented" },
     { number: "95%", label: "Score Improvement" },
     { number: "25+", label: "Exam Types Supported" }
@@ -129,16 +129,11 @@ const About = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-gradient-to-br from-primary/5 to-primary-variant/5 rounded-3xl p-8 border border-primary/10">
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary/20 to-primary-variant/20 flex items-center justify-center">
-                    <Target className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-4">Our Promise</h3>
-                  <p className="text-muted-foreground">
-                    We're committed to helping every student achieve their academic dreams through personalized, effective, and accessible test preparation.
-                  </p>
-                </div>
+              <div className="bg-card rounded-2xl p-8 border border-border/50">
+                <h3 className="text-2xl font-semibold mb-4 text-primary">Our Promise</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  We're committed to helping every student achieve their academic dreams through personalized, effective, and accessible test preparation. Our platform combines expert-created content with intelligent technology to deliver results that matter.
+                </p>
               </div>
             </div>
           </div>
