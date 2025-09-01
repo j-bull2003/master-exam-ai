@@ -14,6 +14,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { EXAM_CONFIGS } from "@/data/examConfig";
 
 const Features = () => {
   const features = [
@@ -55,10 +56,6 @@ const Features = () => {
     }
   ];
 
-  const examTypes = [
-    "SAT", "ACT", "UCAT", "STEP", "MAT", 
-    "ESAT", "LNAT", "TSA", "PAT", "UKCAT", "GAMSAT"
-  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -128,14 +125,28 @@ const Features = () => {
               From standardized tests to university-specific assessments, we've got you covered.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {examTypes.map((exam, index) => (
-                <div
-                  key={exam}
-                  className="bg-background rounded-lg p-4 text-center border border-border/50 hover:border-primary/20 transition-colors"
-                >
-                  <span className="font-semibold text-lg">{exam}</span>
-                </div>
-              ))}
+              {EXAM_CONFIGS.map((exam, index) => {
+                const isAvailable = exam.available;
+                return (
+                  <div
+                    key={exam.name}
+                    className={`bg-background rounded-lg p-4 text-center border transition-all duration-200 ${
+                      isAvailable
+                        ? "border-border/50 hover:border-primary/20 hover:bg-primary/5 hover:shadow-md hover:scale-105"
+                        : "border-border/30 opacity-60"
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-2">
+                      <span className="font-semibold text-lg">{exam.name}</span>
+                      {!isAvailable && (
+                        <span className="text-xs bg-muted text-muted-foreground px-1.5 py-0.5 rounded">
+                          Coming Soon
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
