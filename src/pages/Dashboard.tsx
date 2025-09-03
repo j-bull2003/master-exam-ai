@@ -55,7 +55,7 @@ const DashboardContent = () => {
   // Use try-catch to handle potential context issues
   let currentAvatarId: AvatarId = "coach";
   let setAvatarId: (id: AvatarId) => void = () => {};
-  let avatar: any = null;
+  let avatar: any = { name: "Coach", assets: { avatar: "💪" } }; // Default fallback
   
   try {
     const avatarTheme = useAvatarTheme();
@@ -64,6 +64,9 @@ const DashboardContent = () => {
     avatar = avatarTheme.avatar;
   } catch (error) {
     console.warn('Avatar theme not available, using defaults');
+    // Import the default avatar config
+    const { getAvatar } = require('@/data/avatars');
+    avatar = getAvatar("coach");
   }
   
   // Auth state is managed by AuthContext
@@ -250,13 +253,11 @@ const DashboardContent = () => {
               />
             </Link>
             <nav className="flex items-center space-x-6">
-              {avatar && (
-                <AvatarPicker 
-                  currentAvatarId={currentAvatarId}
-                  onAvatarSelect={setAvatarId}
-                  className="mr-4"
-                />
-              )}
+              <AvatarPicker 
+                currentAvatarId={currentAvatarId}
+                onAvatarSelect={setAvatarId}
+                className="mr-4"
+              />
               <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
               <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
               <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
