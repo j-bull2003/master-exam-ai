@@ -106,6 +106,7 @@ export const SupportChatbot: React.FC = () => {
           isOpen ? 'scale-0' : 'scale-100'
         }`}
         size="icon"
+        title="Help & Support"
       >
         <MessageCircle className="h-6 w-6" />
       </Button>
