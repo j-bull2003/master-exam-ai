@@ -28,20 +28,14 @@ export interface AvatarConfig {
 export const avatars: Record<AvatarId, AvatarConfig> = {
   coach: {
     name: "Coach",
-    assets: {
+    assets: { 
       avatar: "/lovable-uploads/14f9398d-1ef4-4b74-b650-684a4e6ce4d2.png"
     },
     theme: {
       accent: "hsl(210, 90%, 55%)",
       bgGradient: "from-slate-900 via-slate-800 to-slate-900",
-      card: {
-        radius: "1.25rem",
-        shadow: "shadow-lg"
-      },
-      motion: {
-        intensity: "high",
-        successFx: "pulse"
-      }
+      card: { radius: "1.25rem", shadow: "shadow-lg" },
+      motion: { intensity: "high", successFx: "pulse" }
     },
     coaching: {
       tone: "energetic",
@@ -55,20 +49,14 @@ export const avatars: Record<AvatarId, AvatarConfig> = {
   },
   mentor: {
     name: "Mentor",
-    assets: {
+    assets: { 
       avatar: "/lovable-uploads/34cb225c-7816-41e3-a03c-099855b1b4a0.png"
     },
     theme: {
       accent: "hsl(160, 70%, 45%)",
       bgGradient: "from-zinc-950 via-zinc-900 to-zinc-950",
-      card: {
-        radius: "1rem",
-        shadow: "shadow-md"
-      },
-      motion: {
-        intensity: "medium",
-        successFx: "checkmark"
-      }
+      card: { radius: "1rem", shadow: "shadow-md" },
+      motion: { intensity: "medium", successFx: "checkmark" }
     },
     coaching: {
       tone: "calm-precise",
@@ -82,20 +70,14 @@ export const avatars: Record<AvatarId, AvatarConfig> = {
   },
   buddy: {
     name: "Buddy",
-    assets: {
+    assets: { 
       avatar: "/lovable-uploads/3a535299-2c20-4dc9-a443-a5b0e448a8cb.png"
     },
     theme: {
       accent: "hsl(280, 80%, 60%)",
       bgGradient: "from-indigo-950 via-indigo-900 to-indigo-950",
-      card: {
-        radius: "1.5rem",
-        shadow: "shadow"
-      },
-      motion: {
-        intensity: "low",
-        successFx: "confetti-dots"
-      }
+      card: { radius: "1.5rem", shadow: "shadow" },
+      motion: { intensity: "low", successFx: "confetti-dots" }
     },
     coaching: {
       tone: "casual",
@@ -109,6 +91,10 @@ export const avatars: Record<AvatarId, AvatarConfig> = {
   }
 } as const;
 
-export const getAvatarConfig = (avatarId: AvatarId): AvatarConfig => {
-  return avatars[avatarId] || avatars.coach;
+export const getAvatar = (avatarId: AvatarId): AvatarConfig => {
+  return avatars[avatarId];
+};
+
+export const getAvatarIds = (): AvatarId[] => {
+  return Object.keys(avatars) as AvatarId[];
 };

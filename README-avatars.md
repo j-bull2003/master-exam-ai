@@ -1,151 +1,168 @@
 # AI Avatars System
 
+The AI Avatars system provides personalized learning experiences through different AI personalities that adapt the app's theming, coaching style, and micro-interactions.
+
 ## Overview
-The AI Avatars system provides personalized learning experiences through three distinct coaching personalities that dynamically adjust the app's theming, coaching behavior, and micro-interactions.
 
-## Available Avatars
-
-### 🏋️ Coach
-- **Theme**: Bold blue accent, high motion intensity
-- **Coaching Style**: Energetic, early hints, concise feedback
-- **Best For**: Students who need motivation and quick wins
-
-### 🎓 Mentor  
-- **Theme**: Calm green accent, medium motion intensity
-- **Coaching Style**: Precise, structured explanations, definition-based
-- **Best For**: Students who prefer methodical learning
-
-### 🤝 Buddy
-- **Theme**: Purple accent, low motion intensity
-- **Coaching Style**: Casual, on-demand help, short tips
-- **Best For**: Students who want relaxed, friendly guidance
+Three AI avatars are available:
+- **Coach**: Energetic, early hints, high-energy animations
+- **Mentor**: Calm and precise, structured explanations, medium energy
+- **Buddy**: Casual tone, on-demand help, low-energy animations
 
 ## Architecture
 
 ### Core Files
-- `src/data/avatars.ts` - Avatar configurations and themes
-- `src/components/AvatarPicker.tsx` - UI component for avatar selection
-- `src/providers/AvatarThemeProvider.tsx` - Theme injection and management
-- `src/lib/coaching.ts` - Coaching behavior and messaging logic
 
-### Database
-- Added `avatar_id` column to `profiles` table
-- Constraint ensures valid avatar IDs ('coach', 'mentor', 'buddy')
+- `src/data/avatars.ts` - Avatar configurations and type definitions
+- `src/components/AvatarPicker.tsx` - Avatar selection UI component
+- `src/providers/AvatarThemeProvider.tsx` - Theme application and persistence
+- `src/lib/coaching.ts` - Coaching behaviors and messaging
 
 ### Integration Points
-- **Dashboard**: Avatar picker in header, dynamic motivation messages
-- **Profile**: Full avatar selection with previews
-- **Theme System**: CSS custom properties for dynamic theming
-- **Coaching Messages**: Context-aware hints, explanations, and encouragement
+
+- **Dashboard**: Header avatar picker and motivational messages
+- **UserProfile**: Avatar selection in settings
+- **Practice/Results**: Coaching feedback and success animations
+- **Global**: Theme variables and background gradients
 
 ## Adding a New Avatar (< 10 minutes)
 
-### 1. Update Avatar Configuration (2 mins)
-```typescript
-// src/data/avatars.ts
-export type AvatarId = \"coach\" | \"mentor\" | \"buddy\" | \"scholar\"; // Add new ID
+### 1. Add Avatar Configuration (`src/data/avatars.ts`)
 
-export const avatars: Record<AvatarId, AvatarConfig> = {
-  // ... existing avatars
-  scholar: {
-    name: \"Scholar\",
-    assets: {
-      avatar: \"/path/to/scholar-avatar.png\"
-    },
-    theme: {
-      accent: \"hsl(45, 80%, 50%)\", // Gold theme
-      bgGradient: \"from-amber-950 via-amber-900 to-amber-950\",
-      card: { radius: \"0.75rem\", shadow: \"shadow-sm\" },
-      motion: { intensity: \"medium\", successFx: \"checkmark\" }
-    },
-    coaching: {
-      tone: \"academic\",
-      hintPolicy: \"detailed-research\",
-      explainFormat: \"theory → evidence → application\",
-      motivate: ({ examType, examDate }) => 
-        examType && examDate 
-          ? `Deep preparation for ${examType} (${examDate}). Knowledge builds upon knowledge.`
-          : \"True understanding comes through careful study.\"
-    }
+```typescript
+// Add to AvatarId type
+export type AvatarId = "coach" | "mentor" | "buddy" | "newAvatar";
+
+// Add to avatars object
+newAvatar: {
+  name: "New Avatar",
+  assets: { 
+    avatar: "/path/to/avatar-image.png"
+  },
+  theme: {
+    accent: "hsl(hue, saturation%, lightness%)",
+    bgGradient: "from-color-950 via-color-900 to-color-950",
+    card: { radius: "1rem", shadow: "shadow-md" },
+    motion: { intensity: "medium", successFx: "pulse" }
+  },
+  coaching: {
+    tone: "supportive", // or "energetic", "calm-precise", "casual"
+    hintPolicy: "balanced", // or "early-short", "late-structured", "on-demand"
+    explainFormat: "step-by-step with examples",
+    motivate: ({ examType, examDate }) =>
+      examType && examDate
+        ? `Custom message for ${examType} on ${examDate}`
+        : "Default motivational message"
   }
-};
+}
 ```
 
-### 2. Update Database Constraint (2 mins)
-```sql
--- Add migration to update the constraint
-ALTER TABLE public.profiles DROP CONSTRAINT avatar_id_check;
-ALTER TABLE public.profiles ADD CONSTRAINT avatar_id_check 
-  CHECK (avatar_id IN ('coach', 'mentor', 'buddy', 'scholar'));
-```
+### 2. Add Avatar Image
 
-### 3. Add Coaching Behaviors (3 mins)
+Place the avatar image in `/public/` or use an existing uploaded image path.
+
+### 3. Test the Integration
+
+1. Avatar appears in picker dialog
+2. Theme changes apply (background, accent color, card styling)
+3. Coaching messages reflect the new tone
+4. Persistence works across sessions
+
+### 4. Customize Coaching Behavior (Optional)
+
+Extend `src/lib/coaching.ts` methods to handle your new tone:
+
 ```typescript
-// src/lib/coaching.ts - Add new cases in relevant methods
-private getAcademicSuccess(context: CoachingContext): string {
-  return \"Excellent scholarly work. Your analysis demonstrates deep understanding.\";
-}
-
-// Update switch statements to include 'academic' tone
-switch (config.coaching.tone) {
-  case \"academic\":
-    return this.getAcademicSuccess(context);
-  // ... existing cases
-}
+// In getSuccessFeedback method
+case 'supportive':
+  return isCorrect 
+    ? "Great job! You're building confidence with each correct answer."
+    : "That's okay - every mistake is a learning opportunity.";
 ```
 
-### 4. Add Avatar Asset (1 min)
-- Place avatar image in `public/` directory
-- Update the `assets.avatar` path in the configuration
+## Theme Customization
 
-### 5. Test Integration (2 mins)
-- Verify avatar appears in picker components
-- Test theme application
-- Confirm coaching messages work
+### Color System
+- Use HSL format: `hsl(hue, saturation%, lightness%)`
+- Accent colors should have good contrast in both light/dark modes
+- Background gradients use Tailwind's `from-` `via-` `to-` classes
+
+### Motion System
+- **high**: Full animations, prominent success effects
+- **medium**: Moderate animations, balanced feedback
+- **low**: Minimal animations, subtle feedback
+
+Automatically respects `prefers-reduced-motion` system setting.
+
+### Success Effects
+- **pulse**: Pulsing glow effect
+- **checkmark**: Animated checkmark appearance
+- **confetti-dots**: Small celebration particles
+
+## Coaching Behaviors
+
+### Tone Options
+- **energetic**: Motivational, action-oriented language
+- **calm-precise**: Measured, academic language
+- **casual**: Friendly, conversational language
+
+### Hint Policies
+- **early-short**: Quick hints appear early
+- **late-structured**: Detailed hints after multiple attempts
+- **on-demand**: Hints only when explicitly requested
+
+### Explanation Formats
+Customize how mistakes are explained:
+- Steps-based: "1. First, identify... 2. Then, apply..."
+- Definition-based: "Definition → Principle → Example"
+- Example-based: "Here's a similar problem..."
+
+## State Management
+
+### Persistence
+- Avatar selection stored in `localStorage`
+- Survives browser sessions and page reloads
+- Falls back to "coach" if no selection found
+
+### Theme Application
+- CSS variables injected at document root
+- Tailwind classes applied to body element
+- Data attributes for motion preferences
+
+### Context Integration
+- CoachingService receives user context (exam type, date, performance)
+- Messages adapt based on progress and milestones
+- Nudges avoid repetition with internal tracking
+
+## Accessibility
+
+- Motion respects `prefers-reduced-motion`
+- Success animations never block task flow
+- High contrast maintained across themes
+- Keyboard navigation supported in avatar picker
 
 ## Verification Checklist
 
-✅ **Theme Switching**
-- [ ] Pick \"Coach\" → app accent changes to blue, hints are brief + early
-- [ ] Switch to \"Mentor\" → calmer green palette, explanations use definitions + steps  
-- [ ] Switch to \"Buddy\" → purple theme, casual copy, fewer animations
+- [ ] Avatar picker appears in Dashboard header
+- [ ] Avatar selection persists across sessions
+- [ ] Theme changes apply globally (background, accent, cards)
+- [ ] Coaching messages reflect selected avatar personality
+- [ ] Success animations match avatar configuration
+- [ ] Motion respects system accessibility preferences
+- [ ] Motivational messages include exam context when available
+- [ ] Empty state messages reflect avatar tone
+- [ ] All three default avatars work correctly
 
-✅ **Persistence**
-- [ ] Avatar choice persists across sessions and pages
-- [ ] Theme applies consistently across all core learning views
+## Troubleshooting
 
-✅ **Accessibility**
-- [ ] Motion respects `prefers-reduced-motion` setting
-- [ ] All micro-interactions remain functional, never block task flow
+### Theme Not Applying
+Check that `AvatarThemeProvider` wraps the app root and CSS variables are being set on `document.documentElement`.
 
-✅ **Coaching Behavior**
-- [ ] Motivational messages reference exam type and date when available
-- [ ] Different explanation formats based on avatar personality
-- [ ] Success feedback matches avatar style
+### Coaching Messages Not Updating
+Verify `CoachingService` is receiving the correct avatar ID and context data.
 
-✅ **Performance**
-- [ ] Theme changes are smooth and immediate
-- [ ] No layout shifts when switching avatars
-- [ ] CSS custom properties update correctly
+### Images Not Loading
+Ensure avatar image paths are correct and files exist in the public directory.
 
-## Technical Notes
-
-### CSS Custom Properties
-The system injects these CSS variables for theming:
-- `--avatar-accent` - Primary accent color
-- `--avatar-card-radius` - Card border radius
-- `--avatar-motion-intensity` - Animation intensity level
-- `--avatar-success-fx` - Success feedback type
-
-### Motion Preferences
-Automatically respects system motion preferences and can be overridden per avatar for accessibility.
-
-### Coaching Context
-The coaching service accepts context including:
-- `examType` - Current exam (SAT, ACT, etc.)
-- `examDate` - Target exam date
-- `accuracy` - Current performance metrics
-- `streakDays` - Study streak information
-- `isCorrect` - For question-specific feedback
-
-This system creates a personalized learning environment that adapts to each student's preferred learning style while maintaining professional, accessible design standards.
+### Persistence Issues
+Check browser localStorage permissions and fallback behavior.

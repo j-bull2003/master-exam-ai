@@ -8,6 +8,10 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import { AvatarPicker } from "@/components/AvatarPicker";
+import { AvatarThemeProvider, useAvatarTheme } from "@/providers/AvatarThemeProvider";
+import { CoachingService } from "@/lib/coaching";
+import { type AvatarId } from "@/data/avatars";
 import {
   Calendar,
   Target,
@@ -31,13 +35,15 @@ import {
   AlertTriangle
 } from "lucide-react";
 
-const Dashboard = () => {
+const DashboardContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDenseMode, setIsDenseMode] = useState(false);
   const [userData, setUserData] = useState<any>(null);
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
+  const [coachingService, setCoachingService] = useState<CoachingService | null>(null);
   const { toast } = useToast();
   const { user, loading: authLoading, signOut } = useAuth();
+  const { currentAvatarId, setAvatarId, avatar } = useAvatarTheme();
   
   // Auth state is managed by AuthContext
   const hasAccess = !authLoading && user !== null;
@@ -45,6 +51,12 @@ const Dashboard = () => {
 
   // Check if email is confirmed (Django users are always confirmed)
   const isEmailConfirmed = true;
+
+  // Initialize coaching service when avatar changes
+  useEffect(() => {
+    const service = new CoachingService(currentAvatarId);
+    setCoachingService(service);
+  }, [currentAvatarId]);
 
   // Load user data when auth state changes
   useEffect(() => {
@@ -217,6 +229,11 @@ const Dashboard = () => {
               />
             </Link>
             <nav className="flex items-center space-x-6">
+              <AvatarPicker 
+                currentAvatarId={currentAvatarId}
+                onAvatarSelect={setAvatarId}
+                className="mr-4"
+              />
               <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
               <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
               <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
@@ -241,7 +258,10 @@ const Dashboard = () => {
               Welcome back, {userData?.name || 'User'}! 👋
             </h1>
             <p className="text-xl text-muted-foreground">
-              Ready to excel in your {userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?
+              {coachingService?.getMotivationalMessage({
+                examType: userData?.exam !== "No exam selected" ? userData?.exam : undefined,
+                examDate: userData?.examDate
+              }) || `Ready to excel in your ${userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?`}
             </p>
           </div>
 
@@ -481,6 +501,14 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Dashboard = () => {
+  return (
+    <AvatarThemeProvider initialAvatarId="coach">
+      <DashboardContent />
+    </AvatarThemeProvider>
   );
 };
 
