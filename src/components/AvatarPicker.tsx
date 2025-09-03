@@ -30,9 +30,8 @@ export const AvatarPicker = ({
 
   const defaultTrigger = (
     <Button variant="outline" size="sm" className={`flex items-center gap-2 ${className}`}>
-      <Avatar className="h-6 w-6">
-        <AvatarImage src={currentAvatar.assets.avatar} alt={currentAvatar.name} />
-        <AvatarFallback>{currentAvatar.name[0]}</AvatarFallback>
+      <Avatar className="h-6 w-6 text-lg">
+        <AvatarFallback className="text-xs">{currentAvatar.assets.avatar}</AvatarFallback>
       </Avatar>
       <span className="hidden sm:inline">{currentAvatar.name}</span>
       <Palette className="h-4 w-4" />
@@ -44,42 +43,46 @@ export const AvatarPicker = ({
       <DialogTrigger asChild>
         {trigger || defaultTrigger}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Choose Your AI Avatar</DialogTitle>
-          <DialogDescription>
-            Select an AI personality to customize your learning experience.
+      <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
+        <DialogHeader className="space-y-3">
+          <DialogTitle className="text-xl font-bold">Choose Your AI Avatar</DialogTitle>
+          <DialogDescription className="text-base">
+            Select an AI personality to transform your learning environment and get special powers!
           </DialogDescription>
         </DialogHeader>
         
-        <div className="grid gap-4">
+        <div className="grid gap-3">
           {Object.entries(avatars).map(([id, avatar]) => {
             const isSelected = id === currentAvatarId;
             
             return (
               <Card 
                 key={id}
-                className={`cursor-pointer transition-all hover:shadow-md ${
-                  isSelected ? 'ring-2 ring-primary' : ''
+                className={`cursor-pointer transition-all hover:shadow-lg border-2 ${
+                  isSelected ? 'ring-2 ring-primary border-primary bg-primary/5' : 'border-border hover:border-primary/50'
                 }`}
                 onClick={() => handleAvatarSelect(id as AvatarId)}
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Avatar className="h-10 w-10">
-                        <AvatarImage src={avatar.assets.avatar} alt={avatar.name} />
-                        <AvatarFallback>{avatar.name[0]}</AvatarFallback>
-                      </Avatar>
+                      <div className="text-3xl p-2 rounded-full bg-gradient-to-br from-primary/20 to-primary/10">
+                        {avatar.assets.avatar}
+                      </div>
                       <div>
-                        <CardTitle className="text-lg">{avatar.name}</CardTitle>
-                        <CardDescription className="capitalize">
+                        <CardTitle className="text-lg flex items-center gap-2">
+                          {avatar.name}
+                          {isSelected && <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded-full">ACTIVE</span>}
+                        </CardTitle>
+                        <CardDescription className="capitalize text-sm">
                           {avatar.coaching.tone.replace('-', ' ')} approach
                         </CardDescription>
                       </div>
                     </div>
                     {isSelected && (
-                      <Check className="h-5 w-5 text-primary" />
+                      <div className="flex items-center gap-2">
+                        <Check className="h-5 w-5 text-primary" />
+                      </div>
                     )}
                   </div>
                 </CardHeader>
@@ -123,8 +126,8 @@ export const AvatarPicker = ({
           })}
         </div>
         
-        <div className="text-xs text-muted-foreground text-center">
-          Your choice will be saved and applied across all learning sessions.
+        <div className="text-xs text-muted-foreground text-center pt-2 border-t">
+          🌟 Your choice transforms the entire learning environment and unlocks special abilities!
         </div>
       </DialogContent>
     </Dialog>

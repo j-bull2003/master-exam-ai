@@ -30,6 +30,8 @@ export const AvatarThemeProvider = ({
   const avatar = getAvatar(currentAvatarId);
 
   useEffect(() => {
+    console.log('🎨 Applying avatar theme:', currentAvatarId, avatar);
+    
     // Apply avatar theme CSS variables to document root
     const root = document.documentElement;
     
@@ -74,6 +76,12 @@ export const AvatarThemeProvider = ({
     root.setAttribute('data-avatar-motion', avatar.theme.motion.intensity);
     root.setAttribute('data-avatar-success-fx', avatar.theme.motion.successFx);
     root.setAttribute('data-avatar-special', avatar.theme.special.name.toLowerCase().replace(' ', '-'));
+    
+    // Force a small visual indication that the theme changed
+    body.style.transition = 'all 0.5s ease-in-out';
+    setTimeout(() => {
+      body.style.transition = '';
+    }, 500);
     
   }, [currentAvatarId, avatar]);
 

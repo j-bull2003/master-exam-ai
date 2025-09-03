@@ -46,7 +46,7 @@ export const avatars: Record<AvatarId, AvatarConfig> = {
   coach: {
     name: "Coach",
     assets: { 
-      avatar: "/lovable-uploads/14f9398d-1ef4-4b74-b650-684a4e6ce4d2.png"
+      avatar: "💪" // Using emoji instead of university images
     },
     theme: {
       accent: "hsl(210, 90%, 55%)",
@@ -87,7 +87,7 @@ export const avatars: Record<AvatarId, AvatarConfig> = {
   mentor: {
     name: "Mentor",
     assets: { 
-      avatar: "/lovable-uploads/34cb225c-7816-41e3-a03c-099855b1b4a0.png"
+      avatar: "🧠" // Using emoji instead of university images
     },
     theme: {
       accent: "hsl(160, 70%, 45%)",
@@ -128,7 +128,7 @@ export const avatars: Record<AvatarId, AvatarConfig> = {
   buddy: {
     name: "Buddy",
     assets: { 
-      avatar: "/lovable-uploads/3a535299-2c20-4dc9-a443-a5b0e448a8cb.png"
+      avatar: "😊" // Using emoji instead of university images
     },
     theme: {
       accent: "hsl(280, 80%, 60%)",
