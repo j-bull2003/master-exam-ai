@@ -102,7 +102,7 @@ export const SupportChatbot: React.FC = () => {
       {/* Floating Button */}
       <Button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-50 ${
+        className={`fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-[9999] ${
           isOpen ? 'scale-0' : 'scale-100'
         }`}
         size="icon"
@@ -112,7 +112,7 @@ export const SupportChatbot: React.FC = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-background border rounded-2xl shadow-2xl z-50 flex flex-col">
+        <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-background border rounded-2xl shadow-2xl z-[9999] flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b bg-primary/5 rounded-t-2xl">
             <div className="flex items-center gap-2">
