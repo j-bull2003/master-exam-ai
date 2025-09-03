@@ -82,12 +82,13 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (user) {
-      // Use Django user data
+      // Use Supabase user data
+      const userMetadata = (user as any).user_metadata || {};
       const profileData: ProfileData = {
-        full_name: `${user.first_name} ${user.last_name}`.trim() || user.username,
-        email: user.email,
-        exam_type: 'SAT', // Default for now - you might want to store this in Django user profile
-        exam_date: null // Default for now - you might want to store this in Django user profile
+        full_name: userMetadata.full_name || userMetadata.first_name || user.email?.split('@')[0] || 'User',
+        email: user.email || '',
+        exam_type: 'SAT', // Default for now - you might want to store this in user profile
+        exam_date: null // Default for now - you might want to store this in user profile
       };
       setProfile(profileData);
       setEditForm(profileData);

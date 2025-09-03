@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { authAPI, User } from '@/lib/auth-api';
+import { supabase } from '@/integrations/supabase/client';
+import type { User, Session } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
+  session: Session | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, firstName?: string, lastName?: string) => Promise<{ error: any }>;
@@ -25,37 +27,37 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        const { user: currentUser, error } = await authAPI.getCurrentUser();
-        
-        if (currentUser && !error) {
-          setUser(currentUser);
-        }
-        
-        setLoading(false);
-      } catch (error) {
-        console.error('Error initializing auth:', error);
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
         setLoading(false);
       }
-    };
+    );
 
-    initializeAuth();
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const signIn = async (email: string, password: string) => {
     try {
-      const { user: authUser, error } = await authAPI.login(email, password);
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
       
-      if (authUser && !error) {
-        setUser(authUser);
-        return { error: null };
-      }
-      
-      return { error: error || 'Login failed' };
+      return { error };
     } catch (error: any) {
       console.error('Sign in error:', error);
       return { error: error.message || 'Login failed' };
@@ -64,14 +66,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signUp = async (email: string, password: string, firstName?: string, lastName?: string) => {
     try {
-      const { user: authUser, error } = await authAPI.register(email, password, firstName, lastName);
+      const redirectUrl = `${window.location.origin}/`;
       
-      if (authUser && !error) {
-        setUser(authUser);
-        return { error: null };
-      }
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            full_name: firstName && lastName ? `${firstName} ${lastName}` : firstName || '',
+          }
+        }
+      });
       
-      return { error: error || 'Registration failed' };
+      return { error };
     } catch (error: any) {
       console.error('Sign up error:', error);
       return { error: error.message || 'Registration failed' };
@@ -80,17 +90,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signOut = async () => {
     try {
-      await authAPI.logout();
-      setUser(null);
+      await supabase.auth.signOut();
     } catch (error) {
       console.error('Sign out error:', error);
-      // Still clear user state even if logout request fails
-      setUser(null);
     }
   };
 
   const value = {
     user,
+    session,
     loading,
     signIn,
     signUp,
