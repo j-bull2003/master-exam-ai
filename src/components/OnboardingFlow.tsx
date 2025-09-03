@@ -25,7 +25,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
-import { authAPI } from "@/lib/auth-api";
+import { useAuth } from "@/contexts/AuthContext";
 import { ONBOARDING_EXAMS } from "@/data/examConfig";
 
 interface OnboardingFlowProps {
