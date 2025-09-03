@@ -10,6 +10,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { AvatarPicker } from "@/components/AvatarPicker";
+import { type AvatarId } from "@/data/avatars";
 import { 
   User, 
   Mail, 
@@ -21,7 +24,8 @@ import {
   Calendar,
   MapPin,
   Trophy,
-  BookOpen
+  BookOpen,
+  Palette
 } from "lucide-react";
 
 interface ProfileData {
@@ -29,6 +33,7 @@ interface ProfileData {
   email: string;
   exam_type: string;
   exam_date: string | null;
+  avatar_id: AvatarId;
 }
 
 const UserProfile = () => {
@@ -41,7 +46,8 @@ const UserProfile = () => {
     full_name: "",
     email: "",
     exam_type: "",
-    exam_date: null
+    exam_date: null,
+    avatar_id: "coach"
   });
 
   // Exam configurations
@@ -81,28 +87,59 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      // Use Supabase user data
-      const userMetadata = (user as any).user_metadata || {};
-      const profileData: ProfileData = {
-        full_name: userMetadata.full_name || userMetadata.first_name || user.email?.split('@')[0] || 'User',
-        email: user.email || '',
-        exam_type: 'SAT', // Default for now - you might want to store this in user profile
-        exam_date: null // Default for now - you might want to store this in user profile
-      };
-      setProfile(profileData);
-      setEditForm(profileData);
-      setIsLoading(false);
-    }
+    const fetchProfile = async () => {
+      if (user) {
+        try {
+          const { data: profileData, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('user_id', user.id)
+            .single();
+
+          if (error && error.code !== 'PGRST116') {
+            console.error('Error fetching profile:', error);
+          }
+
+          const finalProfile: ProfileData = {
+            full_name: profileData?.full_name || user.email?.split('@')[0] || 'User',
+            email: profileData?.email || user.email || '',
+            exam_type: profileData?.exam_type || 'SAT',
+            exam_date: profileData?.exam_date || null,
+            avatar_id: (profileData?.avatar_id as AvatarId) || 'coach'
+          };
+
+          setProfile(finalProfile);
+          setEditForm(finalProfile);
+        } catch (error) {
+          console.error('Error loading profile:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchProfile();
   }, [user]);
 
   const handleSave = async () => {
     try {
       if (!user) return;
 
-      // For now, we'll just update the local state
-      // In a full implementation, you'd want to update the Django user model
-      // or create a separate profile model in Django
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          user_id: user.id,
+          full_name: editForm.full_name,
+          email: editForm.email,
+          exam_type: editForm.exam_type,
+          exam_date: editForm.exam_date,
+          avatar_id: editForm.avatar_id,
+        });
+
+      if (error) {
+        console.error('Error updating profile:', error);
+        throw error;
+      }
       
       setProfile(editForm);
       setIsEditing(false);
@@ -211,6 +248,30 @@ const UserProfile = () => {
             </div>
           </div>
         </CardHeader>
+      </Card>
+
+      {/* Avatar Selection */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Palette className="w-5 h-5" />
+            AI Learning Coach
+          </CardTitle>
+          <CardDescription>
+            Choose your AI coach to personalize your learning experience
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <AvatarPicker
+            currentAvatar={isEditing ? editForm.avatar_id : profile.avatar_id}
+            onSelect={(avatarId) => {
+              if (isEditing) {
+                setEditForm(prev => ({ ...prev, avatar_id: avatarId }));
+              }
+            }}
+            size="lg"
+          />
+        </CardContent>
       </Card>
 
       {/* Personal Information */}

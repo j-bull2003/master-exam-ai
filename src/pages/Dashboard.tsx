@@ -5,9 +5,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-// Removed Supabase import - using Django backend
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { AvatarPicker } from "@/components/AvatarPicker";
+import { AvatarThemeProvider } from "@/providers/AvatarThemeProvider";
+import { CoachingService } from "@/lib/coaching";
+import { type AvatarId } from "@/data/avatars";
 import {
   Calendar,
   Target,
@@ -36,6 +40,8 @@ const Dashboard = () => {
   const [isDenseMode, setIsDenseMode] = useState(false);
   const [userData, setUserData] = useState<any>(null);
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
+  const [currentAvatar, setCurrentAvatar] = useState<AvatarId>("coach");
+  const [coachingService, setCoachingService] = useState<CoachingService | null>(null);
   const { toast } = useToast();
   const { user, loading: authLoading, signOut } = useAuth();
   
