@@ -145,18 +145,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         throw new Error(authError);
       }
 
-      if (!authUser) {
-        throw new Error('Registration failed - no user returned');
-      }
-
-      console.log('User registered successfully:', authUser.email);
-      
-      // Note: For now we skip profile creation since we're using Django auth
-      // In the future, you might want to store additional profile data in Django models
+      console.log('User registered successfully:', formData.email);
       
       toast({
         title: "Registration successful!",
-        description: "Welcome to UniHack.ai! Let's start your practice.",
+        description: "Welcome to UniHack.ai! Check your email to verify your account.",
       });
 
       onComplete();
