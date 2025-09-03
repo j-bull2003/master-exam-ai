@@ -263,13 +263,17 @@ const UserProfile = () => {
         </CardHeader>
         <CardContent>
           <AvatarPicker
-            currentAvatar={isEditing ? editForm.avatar_id : profile.avatar_id}
-            onSelect={(avatarId) => {
+            currentAvatarId={isEditing ? editForm.avatar_id : profile.avatar_id}
+            onAvatarSelect={(avatarId) => {
               if (isEditing) {
                 setEditForm(prev => ({ ...prev, avatar_id: avatarId }));
               }
             }}
-            size="lg"
+            trigger={
+              <Button variant="outline" size="sm">
+                Change Avatar
+              </Button>
+            }
           />
         </CardContent>
       </Card>

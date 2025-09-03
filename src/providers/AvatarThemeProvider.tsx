@@ -35,8 +35,13 @@ export const AvatarThemeProvider = ({
     
     // Set avatar-specific CSS variables
     root.style.setProperty('--avatar-accent', avatar.theme.accent);
+    root.style.setProperty('--avatar-primary', avatar.theme.atmosphere.primary);
+    root.style.setProperty('--avatar-secondary', avatar.theme.atmosphere.secondary);
+    root.style.setProperty('--avatar-surface', avatar.theme.atmosphere.surface);
+    root.style.setProperty('--avatar-muted', avatar.theme.atmosphere.muted);
     root.style.setProperty('--avatar-card-radius', avatar.theme.card.radius);
     root.style.setProperty('--avatar-card-shadow', avatar.theme.card.shadow);
+    root.style.setProperty('--avatar-card-border', avatar.theme.card.border);
     root.style.setProperty('--avatar-motion-intensity', avatar.theme.motion.intensity);
     
     // Apply background gradient classes
@@ -45,17 +50,30 @@ export const AvatarThemeProvider = ({
     body.classList.remove(
       'bg-gradient-to-br',
       'from-slate-900', 'via-slate-800', 'to-slate-900',
-      'from-zinc-950', 'via-zinc-900', 'to-zinc-950',
-      'from-indigo-950', 'via-indigo-900', 'to-indigo-950'
+      'from-slate-900', 'via-blue-900', 'to-slate-900',
+      'from-emerald-950', 'via-teal-900', 'to-emerald-950',
+      'from-purple-950', 'via-pink-900', 'to-purple-950',
+      'circuit-pattern', 'geometric-grid', 'dots-pattern'
     );
     
     // Add new gradient classes based on avatar
     const gradientClasses = avatar.theme.bgGradient.split(' ');
     body.classList.add('bg-gradient-to-br', ...gradientClasses);
     
-    // Set data attribute for motion preferences
+    // Add background pattern if specified
+    if (avatar.theme.backgroundPattern) {
+      body.classList.add(avatar.theme.backgroundPattern);
+    }
+    
+    // Apply typography classes
+    body.classList.remove('font-bold', 'font-semibold', 'font-medium', 'font-normal', 'tracking-tight', 'tracking-normal', 'tracking-wide');
+    const typographyClasses = avatar.theme.typography.headingFont.split(' ');
+    body.classList.add(...typographyClasses);
+    
+    // Set data attributes for motion and effects
     root.setAttribute('data-avatar-motion', avatar.theme.motion.intensity);
     root.setAttribute('data-avatar-success-fx', avatar.theme.motion.successFx);
+    root.setAttribute('data-avatar-special', avatar.theme.special.name.toLowerCase().replace(' ', '-'));
     
   }, [currentAvatarId, avatar]);
 

@@ -84,7 +84,7 @@ export const AvatarPicker = ({
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <div className="flex flex-wrap gap-1">
                       <Badge variant="secondary" className="text-xs">
                         {avatar.coaching.hintPolicy.replace('-', ' ')}
@@ -92,11 +92,28 @@ export const AvatarPicker = ({
                       <Badge variant="outline" className="text-xs">
                         {avatar.theme.motion.intensity} energy
                       </Badge>
+                      <Badge 
+                        variant="default" 
+                        className="text-xs bg-gradient-to-r from-primary to-primary/80"
+                      >
+                        {avatar.theme.special.name}
+                      </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground">
                       {avatar.coaching.explainFormat}
                     </p>
-                    <div className="text-xs text-muted-foreground italic">
+                    <div className="p-2 bg-muted/50 rounded-md">
+                      <p className="text-xs font-medium text-foreground mb-1">
+                        🎁 Special Ability:
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {avatar.theme.special.description}
+                      </p>
+                      <p className="text-xs text-primary font-medium mt-1">
+                        {avatar.theme.special.effect}
+                      </p>
+                    </div>
+                    <div className="text-xs text-muted-foreground italic border-l-2 border-primary/30 pl-2">
                       "{avatar.coaching.motivate({ examType: "SAT", examDate: "March 2024" })}"
                     </div>
                   </div>

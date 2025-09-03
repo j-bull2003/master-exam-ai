@@ -8,13 +8,30 @@ export interface AvatarConfig {
   theme: {
     accent: string;
     bgGradient: string;
+    backgroundPattern?: string;
+    atmosphere: {
+      primary: string;
+      secondary: string;
+      surface: string;
+      muted: string;
+    };
     card: {
       radius: string;
       shadow: string;
+      border: string;
     };
     motion: {
       intensity: "low" | "medium" | "high";
       successFx: "pulse" | "checkmark" | "confetti-dots";
+    };
+    typography: {
+      headingFont: string;
+      bodyFont: string;
+    };
+    special: {
+      name: string;
+      description: string;
+      effect: string;
     };
   };
   coaching: {
@@ -33,9 +50,29 @@ export const avatars: Record<AvatarId, AvatarConfig> = {
     },
     theme: {
       accent: "hsl(210, 90%, 55%)",
-      bgGradient: "from-slate-900 via-slate-800 to-slate-900",
-      card: { radius: "1.25rem", shadow: "shadow-lg" },
-      motion: { intensity: "high", successFx: "pulse" }
+      bgGradient: "from-slate-900 via-blue-900 to-slate-900",
+      backgroundPattern: "circuit-pattern",
+      atmosphere: {
+        primary: "hsl(210, 100%, 60%)",
+        secondary: "hsl(210, 50%, 40%)",
+        surface: "hsl(210, 40%, 8%)",
+        muted: "hsl(210, 20%, 25%)"
+      },
+      card: { 
+        radius: "1.25rem", 
+        shadow: "shadow-lg shadow-blue-500/20",
+        border: "border-blue-500/30"
+      },
+      motion: { intensity: "high", successFx: "pulse" },
+      typography: {
+        headingFont: "font-bold tracking-tight",
+        bodyFont: "font-medium"
+      },
+      special: {
+        name: "Performance Mode",
+        description: "High-energy training environment with instant feedback",
+        effect: "2x streak multiplier for correct answers in a row"
+      }
     },
     coaching: {
       tone: "energetic",
@@ -54,9 +91,29 @@ export const avatars: Record<AvatarId, AvatarConfig> = {
     },
     theme: {
       accent: "hsl(160, 70%, 45%)",
-      bgGradient: "from-zinc-950 via-zinc-900 to-zinc-950",
-      card: { radius: "1rem", shadow: "shadow-md" },
-      motion: { intensity: "medium", successFx: "checkmark" }
+      bgGradient: "from-emerald-950 via-teal-900 to-emerald-950",
+      backgroundPattern: "geometric-grid",
+      atmosphere: {
+        primary: "hsl(160, 80%, 50%)",
+        secondary: "hsl(160, 40%, 35%)",
+        surface: "hsl(160, 30%, 8%)",
+        muted: "hsl(160, 15%, 25%)"
+      },
+      card: { 
+        radius: "1rem", 
+        shadow: "shadow-md shadow-emerald-500/15",
+        border: "border-emerald-500/25"
+      },
+      motion: { intensity: "medium", successFx: "checkmark" },
+      typography: {
+        headingFont: "font-semibold tracking-normal",
+        bodyFont: "font-normal"
+      },
+      special: {
+        name: "Scholar Mode",
+        description: "Academic environment with detailed explanations",
+        effect: "Unlock detailed solution breakdowns for every question"
+      }
     },
     coaching: {
       tone: "calm-precise",
@@ -75,9 +132,29 @@ export const avatars: Record<AvatarId, AvatarConfig> = {
     },
     theme: {
       accent: "hsl(280, 80%, 60%)",
-      bgGradient: "from-indigo-950 via-indigo-900 to-indigo-950",
-      card: { radius: "1.5rem", shadow: "shadow" },
-      motion: { intensity: "low", successFx: "confetti-dots" }
+      bgGradient: "from-purple-950 via-pink-900 to-purple-950",
+      backgroundPattern: "dots-pattern",
+      atmosphere: {
+        primary: "hsl(280, 90%, 65%)",
+        secondary: "hsl(280, 50%, 45%)",
+        surface: "hsl(280, 40%, 8%)",
+        muted: "hsl(280, 20%, 25%)"
+      },
+      card: { 
+        radius: "1.5rem", 
+        shadow: "shadow shadow-purple-500/20",
+        border: "border-purple-500/30"
+      },
+      motion: { intensity: "low", successFx: "confetti-dots" },
+      typography: {
+        headingFont: "font-medium tracking-wide",
+        bodyFont: "font-normal"
+      },
+      special: {
+        name: "Zen Mode",
+        description: "Relaxed learning with gentle encouragement",
+        effect: "Stress-free practice with unlimited time per question"
+      }
     },
     coaching: {
       tone: "casual",
