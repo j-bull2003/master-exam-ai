@@ -132,8 +132,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      // Sign up the user with Django
-      const { user: authUser, error: authError } = await authAPI.register(
+      // Sign up the user with Supabase
+      const { error: authError } = await signUp(
         formData.email,
         formData.password,
         formData.name.split(' ')[0], // first name
@@ -142,7 +142,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
       if (authError) {
         console.error('Registration error:', authError);
-        throw new Error(authError);
+        throw new Error(authError.message || 'Registration failed');
       }
 
       console.log('User registered successfully:', formData.email);
