@@ -35,6 +35,14 @@ import {
   AlertTriangle
 } from "lucide-react";
 
+const Dashboard = () => {
+  return (
+    <AvatarThemeProvider initialAvatarId="coach">
+      <DashboardContent />
+    </AvatarThemeProvider>
+  );
+};
+
 const DashboardContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDenseMode, setIsDenseMode] = useState(false);
@@ -43,7 +51,20 @@ const DashboardContent = () => {
   const [coachingService, setCoachingService] = useState<CoachingService | null>(null);
   const { toast } = useToast();
   const { user, loading: authLoading, signOut } = useAuth();
-  const { currentAvatarId, setAvatarId, avatar } = useAvatarTheme();
+  
+  // Use try-catch to handle potential context issues
+  let currentAvatarId: AvatarId = "coach";
+  let setAvatarId: (id: AvatarId) => void = () => {};
+  let avatar: any = null;
+  
+  try {
+    const avatarTheme = useAvatarTheme();
+    currentAvatarId = avatarTheme.currentAvatarId;
+    setAvatarId = avatarTheme.setAvatarId;
+    avatar = avatarTheme.avatar;
+  } catch (error) {
+    console.warn('Avatar theme not available, using defaults');
+  }
   
   // Auth state is managed by AuthContext
   const hasAccess = !authLoading && user !== null;
@@ -229,11 +250,13 @@ const DashboardContent = () => {
               />
             </Link>
             <nav className="flex items-center space-x-6">
-              <AvatarPicker 
-                currentAvatarId={currentAvatarId}
-                onAvatarSelect={setAvatarId}
-                className="mr-4"
-              />
+              {avatar && (
+                <AvatarPicker 
+                  currentAvatarId={currentAvatarId}
+                  onAvatarSelect={setAvatarId}
+                  className="mr-4"
+                />
+              )}
               <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
               <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
               <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
@@ -258,10 +281,13 @@ const DashboardContent = () => {
               Welcome back, {userData?.name || 'User'}! 👋
             </h1>
             <p className="text-xl text-muted-foreground">
-              {coachingService?.getMotivationalMessage({
-                examType: userData?.exam !== "No exam selected" ? userData?.exam : undefined,
-                examDate: userData?.examDate
-              }) || `Ready to excel in your ${userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?`}
+              {coachingService && avatar ? 
+                coachingService.getMotivationalMessage({
+                  examType: userData?.exam !== "No exam selected" ? userData?.exam : undefined,
+                  examDate: userData?.examDate
+                }) : 
+                `Ready to excel in your ${userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?`
+              }
             </p>
           </div>
 
@@ -501,14 +527,6 @@ const DashboardContent = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-const Dashboard = () => {
-  return (
-    <AvatarThemeProvider initialAvatarId="coach">
-      <DashboardContent />
-    </AvatarThemeProvider>
   );
 };
 
