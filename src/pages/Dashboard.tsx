@@ -8,10 +8,10 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { AvatarPicker } from "@/components/AvatarPicker";
-import { AvatarThemeProvider, useAvatarTheme } from "@/providers/AvatarThemeProvider";
+import { ModeSelector } from "@/components/ModeSelector";
+import { ModeThemeProvider, useModeTheme } from "@/providers/ModeThemeProvider";
 import { CoachingService } from "@/lib/coaching";
-import { type AvatarId } from "@/data/avatars";
+import { type ModeId } from "@/data/modes";
 import {
   Calendar,
   Target,
@@ -37,9 +37,9 @@ import {
 
 const Dashboard = () => {
   return (
-    <AvatarThemeProvider initialAvatarId="coach">
+    <ModeThemeProvider initialModeId="focus">
       <DashboardContent />
-    </AvatarThemeProvider>
+    </ModeThemeProvider>
   );
 };
 
@@ -53,20 +53,20 @@ const DashboardContent = () => {
   const { user, loading: authLoading, signOut } = useAuth();
   
   // Use try-catch to handle potential context issues
-  let currentAvatarId: AvatarId = "coach";
-  let setAvatarId: (id: AvatarId) => void = () => {};
-  let avatar: any = { name: "Coach", assets: { avatar: "💪" } }; // Default fallback
+  let currentModeId: ModeId = "focus";
+  let setModeId: (id: ModeId) => void = () => {};
+  let mode: any = { name: "Focus Mode", icon: "⚡", tagline: "Peak performance training" }; // Default fallback
   
   try {
-    const avatarTheme = useAvatarTheme();
-    currentAvatarId = avatarTheme.currentAvatarId;
-    setAvatarId = avatarTheme.setAvatarId;
-    avatar = avatarTheme.avatar;
+    const modeTheme = useModeTheme();
+    currentModeId = modeTheme.currentModeId;
+    setModeId = modeTheme.setModeId;
+    mode = modeTheme.mode;
   } catch (error) {
-    console.warn('Avatar theme not available, using defaults');
-    // Import the default avatar config
-    const { getAvatar } = require('@/data/avatars');
-    avatar = getAvatar("coach");
+    console.warn('Mode theme not available, using defaults');
+    // Import the default mode config
+    const { getStudyMode } = require('@/data/modes');
+    mode = getStudyMode("focus");
   }
   
   // Auth state is managed by AuthContext
@@ -76,11 +76,14 @@ const DashboardContent = () => {
   // Check if email is confirmed (Django users are always confirmed)
   const isEmailConfirmed = true;
 
-  // Initialize coaching service when avatar changes
+  // Initialize coaching service when mode changes
   useEffect(() => {
-    const service = new CoachingService(currentAvatarId);
+    // Convert mode to avatar-compatible format for coaching service
+    const avatarId = currentModeId === "focus" ? "coach" : 
+                     currentModeId === "mentor" ? "mentor" : "buddy";
+    const service = new CoachingService(avatarId as any);
     setCoachingService(service);
-  }, [currentAvatarId]);
+  }, [currentModeId]);
 
   // Load user data when auth state changes
   useEffect(() => {
@@ -253,9 +256,9 @@ const DashboardContent = () => {
               />
             </Link>
             <nav className="flex items-center space-x-6">
-              <AvatarPicker 
-                currentAvatarId={currentAvatarId}
-                onAvatarSelect={setAvatarId}
+              <ModeSelector 
+                currentModeId={currentModeId}
+                onModeSelect={setModeId}
                 className="mr-4"
               />
               <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
@@ -281,15 +284,21 @@ const DashboardContent = () => {
             <h1 className="text-4xl font-bold">
               Welcome back, {userData?.name || 'User'}! 👋
             </h1>
-            <p className="text-xl text-muted-foreground">
-              {coachingService && avatar ? 
-                coachingService.getMotivationalMessage({
-                  examType: userData?.exam !== "No exam selected" ? userData?.exam : undefined,
-                  examDate: userData?.examDate
-                }) : 
-                `Ready to excel in your ${userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?`
-              }
-            </p>
+            <div className="space-y-2">
+              <p className="text-xl text-muted-foreground">
+                {coachingService && mode ? 
+                  coachingService.getMotivationalMessage({
+                    examType: userData?.exam !== "No exam selected" ? userData?.exam : undefined,
+                    examDate: userData?.examDate
+                  }) : 
+                  `Ready to excel in your ${userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?`
+                }
+              </p>
+              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <span className="text-lg">{mode?.icon}</span>
+                <span>Currently in <strong>{mode?.name}</strong> - {mode?.tagline}</span>
+              </div>
+            </div>
           </div>
 
         {/* Exam Info Card */}
