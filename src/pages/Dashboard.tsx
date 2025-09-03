@@ -61,8 +61,10 @@ const Dashboard = () => {
     try {
       console.log('Loading profile data for user:', user.id);
       
-      // For Django users, use user data directly
-      const userName = `${user.first_name} ${user.last_name}`.trim() || user.email?.split('@')[0] || 'User';
+      // For Supabase users, use user metadata
+      const firstName = user.user_metadata?.first_name || '';
+      const lastName = user.user_metadata?.last_name || '';
+      const userName = `${firstName} ${lastName}`.trim() || user.email?.split('@')[0] || 'User';
       
       // Create userData object with Django user data
       const userData = {
@@ -83,8 +85,10 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error loading profile data:', error);
       // Still set some default data for authenticated user
+      const firstName = user.user_metadata?.first_name || '';
+      const lastName = user.user_metadata?.last_name || '';
       setUserData({
-        name: `${user.first_name} ${user.last_name}`.trim() || "User",
+        name: `${firstName} ${lastName}`.trim() || "User",
         exam: "No exam selected",
         examDate: null,
         totalQuestions: 0,
