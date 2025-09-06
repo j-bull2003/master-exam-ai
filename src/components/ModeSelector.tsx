@@ -31,7 +31,7 @@ export const ModeSelector = ({
   };
 
   const defaultTrigger = (
-    <Button variant="outline" size="sm" className={`flex items-center gap-2 ${className}`}>
+    <Button variant="outline" size="sm" className={`mode-button flex items-center gap-2 ${className}`}>
       <span className="text-lg">{currentMode.icon}</span>
       <span className="hidden sm:inline">{currentMode.name}</span>
       <Settings className="h-4 w-4" />
@@ -43,13 +43,13 @@ export const ModeSelector = ({
       <DialogTrigger asChild>
         {trigger || defaultTrigger}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto">
+      <DialogContent className="dialog-content sm:max-w-2xl max-h-[85vh] overflow-y-auto">
         <DialogHeader className="space-y-3">
-          <DialogTitle className="text-2xl font-bold flex items-center gap-2">
-            <Lightbulb className="h-6 w-6 text-primary" />
+          <DialogTitle className="text-2xl font-bold flex items-center gap-2 mode-text">
+            <Lightbulb className="h-6 w-6" style={{ color: 'var(--primary)' }} />
             Choose Your Study Mode
           </DialogTitle>
-          <DialogDescription className="text-base">
+          <DialogDescription className="text-base mode-text-muted">
             Select a learning environment that matches your goals and learning style.
           </DialogDescription>
         </DialogHeader>
@@ -66,31 +66,46 @@ export const ModeSelector = ({
               <div key={mode.id} className="relative">
                 <Label htmlFor={mode.id} className="cursor-pointer">
                   <Card 
-                    className={`transition-all hover:shadow-lg border-2 ${
+                    className={`mode-card transition-all hover:shadow-lg border-2 ${
                       isSelected 
-                        ? 'ring-2 ring-primary border-primary bg-primary/5' 
-                        : 'border-border hover:border-primary/50'
+                        ? 'ring-2 border-4' 
+                        : 'hover:border-2'
                     }`}
+                    style={{
+                      borderColor: isSelected ? 'var(--primary)' : 'var(--border)'
+                    }}
                   >
                     <CardHeader className="pb-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                          <div className="text-4xl p-3 rounded-full bg-gradient-to-br from-primary/20 to-primary/10">
+                          <div 
+                            className="text-4xl p-3 rounded-full"
+                            style={{
+                              background: `linear-gradient(135deg, var(--primary) 0%, var(--primary) 100%)`,
+                              opacity: 0.2
+                            }}
+                          >
                             {mode.icon}
                           </div>
                           <div className="flex-1">
-                            <CardTitle className="text-xl flex items-center gap-3">
+                            <CardTitle className="text-xl flex items-center gap-3 mode-text">
                               {mode.name}
                               {isSelected && (
-                                <Badge className="text-xs bg-primary text-primary-foreground">
+                                <Badge 
+                                  className="text-xs text-white" 
+                                  style={{ 
+                                    background: 'var(--primary)',
+                                    color: 'var(--primary-foreground)'
+                                  }}
+                                >
                                   SELECTED
                                 </Badge>
                               )}
                             </CardTitle>
-                            <CardDescription className="text-base font-medium mt-1">
+                            <CardDescription className="text-base font-medium mt-1 mode-text-muted">
                               {mode.tagline}
                             </CardDescription>
-                            <p className="text-sm text-muted-foreground mt-2">
+                            <p className="text-sm mode-text-muted mt-2">
                               {mode.optimizes}
                             </p>
                           </div>
@@ -99,27 +114,28 @@ export const ModeSelector = ({
                           value={mode.id} 
                           id={mode.id}
                           className="mt-2"
+                          style={{ borderColor: 'var(--primary)' }}
                         />
                       </div>
                     </CardHeader>
                     <CardContent className="pt-0">
                       <div className="space-y-3">
                         <div>
-                          <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
+                          <h4 className="text-sm font-semibold mode-text mb-2 flex items-center gap-1">
                             <span>✨</span> What You Get:
                           </h4>
                           <ul className="space-y-1">
                             {mode.benefits.map((benefit, index) => (
-                              <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                                <span className="text-primary mt-0.5">•</span>
+                              <li key={index} className="text-sm mode-text-muted flex items-start gap-2">
+                                <span style={{ color: 'var(--primary)' }} className="mt-0.5">•</span>
                                 <span>{benefit}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
                         
-                        <div className="pt-2 border-t border-border/50">
-                          <p className="text-xs text-muted-foreground italic">
+                        <div className="pt-2 mode-border border-t border-opacity-50">
+                          <p className="text-xs mode-text-muted italic">
                             "{mode.coaching.motivate({ examType: "SAT", examDate: "March 2024" })}"
                           </p>
                         </div>
@@ -132,17 +148,22 @@ export const ModeSelector = ({
           })}
         </RadioGroup>
         
-        <div className="flex items-center justify-between pt-4 border-t">
-          <div className="text-xs text-muted-foreground">
+        <div className="flex items-center justify-between pt-4 mode-border border-t">
+          <div className="text-xs mode-text-muted">
             🎯 Your choice transforms the entire learning environment
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => setIsOpen(false)}>
+            <Button 
+              variant="outline" 
+              onClick={() => setIsOpen(false)}
+              className="btn-outline"
+            >
               Cancel
             </Button>
             <Button 
               onClick={handleModeSelect}
               disabled={selectedMode === currentModeId}
+              className="mode-button"
             >
               {selectedMode === currentModeId ? 'Current Mode' : 'Apply Mode'}
             </Button>

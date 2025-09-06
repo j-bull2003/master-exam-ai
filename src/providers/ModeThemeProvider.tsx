@@ -32,10 +32,10 @@ export const ModeThemeProvider = ({
   useEffect(() => {
     console.log('🎨 Applying study mode theme:', currentModeId, mode);
     
-    // Apply dramatic theme changes via CSS variables
+    // Apply comprehensive theme changes via CSS variables
     const root = document.documentElement;
     
-    // Set comprehensive theme CSS variables
+    // Set core CSS variables that Shadcn components use
     root.style.setProperty('--background', mode.theme.bg);
     root.style.setProperty('--card', mode.theme.cardBg);
     root.style.setProperty('--card-foreground', mode.theme.text);
@@ -46,26 +46,38 @@ export const ModeThemeProvider = ({
     root.style.setProperty('--border', mode.theme.border);
     root.style.setProperty('--input', mode.theme.cardBorder);
     root.style.setProperty('--ring', mode.theme.accent);
+    root.style.setProperty('--popover', mode.theme.cardBg);
+    root.style.setProperty('--popover-foreground', mode.theme.text);
     
-    // Custom mode-specific variables
-    root.style.setProperty('--mode-gradient', mode.theme.gradient);
-    root.style.setProperty('--mode-button-bg', mode.theme.buttonBg);
-    root.style.setProperty('--mode-button-hover', mode.theme.buttonHover);
-    root.style.setProperty('--mode-shadow', mode.theme.shadow);
-    
-    // Apply background styling directly to body
+    // Apply background styling directly to body with smooth transition
     const body = document.body;
     body.style.background = mode.theme.gradient;
     body.style.color = mode.theme.text;
     body.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
     
-    // Update card styling globally
+    // Update global styling with high specificity
     const style = document.getElementById('mode-theme-styles') || document.createElement('style');
     style.id = 'mode-theme-styles';
     style.textContent = `
+      /* Ensure dialog and modal content uses theme colors */
+      [data-radix-popper-content-wrapper] {
+        background: ${mode.theme.cardBg} !important;
+        border: 1px solid ${mode.theme.border} !important;
+        color: ${mode.theme.text} !important;
+        box-shadow: ${mode.theme.shadow} !important;
+      }
+      
+      /* Dialog content styling */
+      .dialog-content, [role="dialog"] {
+        background: ${mode.theme.cardBg} !important;
+        color: ${mode.theme.text} !important;
+        border: 1px solid ${mode.theme.border} !important;
+      }
+      
+      /* Mode-specific utility classes */
       .mode-card {
         background: ${mode.theme.cardBg} !important;
-        border-color: ${mode.theme.cardBorder} !important;
+        border: 1px solid ${mode.theme.border} !important;
         color: ${mode.theme.text} !important;
         box-shadow: ${mode.theme.shadow} !important;
       }
@@ -73,10 +85,12 @@ export const ModeThemeProvider = ({
       .mode-button {
         background: ${mode.theme.buttonBg} !important;
         color: ${mode.theme.accentForeground} !important;
+        border: 1px solid ${mode.theme.accent} !important;
       }
       
       .mode-button:hover {
         background: ${mode.theme.buttonHover} !important;
+        transform: translateY(-1px);
       }
       
       .mode-text {
@@ -90,13 +104,32 @@ export const ModeThemeProvider = ({
       .mode-border {
         border-color: ${mode.theme.border} !important;
       }
+      
+      /* Ensure all cards use theme styling */
+      .card {
+        background: ${mode.theme.cardBg} !important;
+        border: 1px solid ${mode.theme.border} !important;
+        color: ${mode.theme.text} !important;
+      }
+      
+      /* Button variants with proper contrast */
+      .btn-outline {
+        background: transparent !important;
+        border: 2px solid ${mode.theme.accent} !important;
+        color: ${mode.theme.accent} !important;
+      }
+      
+      .btn-outline:hover {
+        background: ${mode.theme.accent} !important;
+        color: ${mode.theme.accentForeground} !important;
+      }
     `;
     
     if (!document.head.contains(style)) {
       document.head.appendChild(style);
     }
     
-    // Set data attributes
+    // Set data attributes for additional styling hooks
     root.setAttribute('data-mode', currentModeId);
     
     // Clean up transition after animation completes
