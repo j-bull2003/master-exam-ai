@@ -237,7 +237,7 @@ const DashboardContent = () => {
   const isExamPassed = examCountdown !== null && examCountdown < 0;
 
   return (
-    <div className="min-h-screen bg-background bg-mesh">
+    <div className="min-h-screen transition-all duration-600">
       {/* Django users don't need email verification */}
 
       <div className="container mx-auto px-4 space-y-8">
@@ -281,11 +281,11 @@ const DashboardContent = () => {
         <div className="py-8 space-y-8">
           {/* Welcome Section */}
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-4xl font-bold mode-text">
               Welcome back, {userData?.name || 'User'}! 👋
             </h1>
             <div className="space-y-2">
-              <p className="text-xl text-muted-foreground">
+              <p className="text-xl mode-text-muted">
                 {coachingService && mode ? 
                   coachingService.getMotivationalMessage({
                     examType: userData?.exam !== "No exam selected" ? userData?.exam : undefined,
@@ -294,7 +294,7 @@ const DashboardContent = () => {
                   `Ready to excel in your ${userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?`
                 }
               </p>
-              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center justify-center gap-2 text-sm mode-text-muted">
                 <span className="text-lg">{mode?.icon}</span>
                 <span>Currently in <strong>{mode?.name}</strong> - {mode?.tagline}</span>
               </div>
@@ -302,7 +302,7 @@ const DashboardContent = () => {
           </div>
 
         {/* Exam Info Card */}
-        <Card className="relative overflow-hidden">
+        <Card className="mode-card relative overflow-hidden">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
@@ -387,56 +387,56 @@ const DashboardContent = () => {
 
         {/* Quick Actions Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+          <Card className="mode-card hover:shadow-lg transition-all cursor-pointer">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Start Practice</CardTitle>
-              <BookOpen className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium mode-text">Start Practice</CardTitle>
+              <BookOpen className="h-4 w-4 mode-text-muted" />
             </CardHeader>
             <CardContent>
               <Link to="/practice">
-                <Button className="w-full" size="sm">
+                <Button className="mode-button w-full" size="sm">
                   Begin Session
                 </Button>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+          <Card className="mode-card hover:shadow-lg transition-all cursor-pointer">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Take Mock Test</CardTitle>
-              <Clipboard className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium mode-text">Take Mock Test</CardTitle>
+              <Clipboard className="h-4 w-4 mode-text-muted" />
             </CardHeader>
             <CardContent>
               <Link to="/mocks">
-                <Button className="w-full" variant="outline" size="sm">
+                <Button className="mode-button w-full" variant="outline" size="sm">
                   Start Mock
                 </Button>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+          <Card className="mode-card hover:shadow-lg transition-all cursor-pointer">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">View Analytics</CardTitle>
-              <BarChart3 className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium mode-text">View Analytics</CardTitle>
+              <BarChart3 className="h-4 w-4 mode-text-muted" />
             </CardHeader>
             <CardContent>
               <Link to="/analytics">
-                <Button className="w-full" variant="outline" size="sm">
+                <Button className="mode-button w-full" variant="outline" size="sm">
                   View Progress
                 </Button>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+          <Card className="mode-card hover:shadow-lg transition-all cursor-pointer">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Update Profile</CardTitle>
-              <User className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium mode-text">Update Profile</CardTitle>
+              <User className="h-4 w-4 mode-text-muted" />
             </CardHeader>
             <CardContent>
               <Link to="/profile">
-                <Button className="w-full" variant="outline" size="sm">
+                <Button className="mode-button w-full" variant="outline" size="sm">
                   Manage
                 </Button>
               </Link>

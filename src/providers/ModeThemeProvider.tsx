@@ -32,56 +32,77 @@ export const ModeThemeProvider = ({
   useEffect(() => {
     console.log('🎨 Applying study mode theme:', currentModeId, mode);
     
-    // Apply mode theme CSS variables to document root
+    // Apply dramatic theme changes via CSS variables
     const root = document.documentElement;
     
-    // Set mode-specific CSS variables
-    root.style.setProperty('--mode-accent', mode.theme.accent);
-    root.style.setProperty('--mode-primary', mode.theme.atmosphere.primary);
-    root.style.setProperty('--mode-secondary', mode.theme.atmosphere.secondary);
-    root.style.setProperty('--mode-surface', mode.theme.atmosphere.surface);
-    root.style.setProperty('--mode-muted', mode.theme.atmosphere.muted);
-    root.style.setProperty('--mode-card-radius', mode.theme.card.radius);
-    root.style.setProperty('--mode-card-shadow', mode.theme.card.shadow);
-    root.style.setProperty('--mode-card-border', mode.theme.card.border);
-    root.style.setProperty('--mode-motion-intensity', mode.theme.motion.intensity);
+    // Set comprehensive theme CSS variables
+    root.style.setProperty('--background', mode.theme.bg);
+    root.style.setProperty('--card', mode.theme.cardBg);
+    root.style.setProperty('--card-foreground', mode.theme.text);
+    root.style.setProperty('--foreground', mode.theme.text);
+    root.style.setProperty('--muted-foreground', mode.theme.textMuted);
+    root.style.setProperty('--primary', mode.theme.accent);
+    root.style.setProperty('--primary-foreground', mode.theme.accentForeground);
+    root.style.setProperty('--border', mode.theme.border);
+    root.style.setProperty('--input', mode.theme.cardBorder);
+    root.style.setProperty('--ring', mode.theme.accent);
     
-    // Apply background gradient classes
+    // Custom mode-specific variables
+    root.style.setProperty('--mode-gradient', mode.theme.gradient);
+    root.style.setProperty('--mode-button-bg', mode.theme.buttonBg);
+    root.style.setProperty('--mode-button-hover', mode.theme.buttonHover);
+    root.style.setProperty('--mode-shadow', mode.theme.shadow);
+    
+    // Apply background styling directly to body
     const body = document.body;
-    // Remove any existing mode gradient classes
-    body.classList.remove(
-      'bg-gradient-to-br',
-      'from-slate-900', 'via-slate-800', 'to-slate-900',
-      'from-slate-900', 'via-blue-900', 'to-slate-900',
-      'from-emerald-950', 'via-teal-900', 'to-emerald-950',
-      'from-purple-950', 'via-pink-900', 'to-purple-950',
-      'circuit-pattern', 'geometric-grid', 'dots-pattern'
-    );
+    body.style.background = mode.theme.gradient;
+    body.style.color = mode.theme.text;
+    body.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
     
-    // Add new gradient classes based on mode
-    const gradientClasses = mode.theme.bgGradient.split(' ');
-    body.classList.add('bg-gradient-to-br', ...gradientClasses);
+    // Update card styling globally
+    const style = document.getElementById('mode-theme-styles') || document.createElement('style');
+    style.id = 'mode-theme-styles';
+    style.textContent = `
+      .mode-card {
+        background: ${mode.theme.cardBg} !important;
+        border-color: ${mode.theme.cardBorder} !important;
+        color: ${mode.theme.text} !important;
+        box-shadow: ${mode.theme.shadow} !important;
+      }
+      
+      .mode-button {
+        background: ${mode.theme.buttonBg} !important;
+        color: ${mode.theme.accentForeground} !important;
+      }
+      
+      .mode-button:hover {
+        background: ${mode.theme.buttonHover} !important;
+      }
+      
+      .mode-text {
+        color: ${mode.theme.text} !important;
+      }
+      
+      .mode-text-muted {
+        color: ${mode.theme.textMuted} !important;
+      }
+      
+      .mode-border {
+        border-color: ${mode.theme.border} !important;
+      }
+    `;
     
-    // Add background pattern if specified
-    if (mode.theme.backgroundPattern) {
-      body.classList.add(mode.theme.backgroundPattern);
+    if (!document.head.contains(style)) {
+      document.head.appendChild(style);
     }
     
-    // Apply typography classes
-    body.classList.remove('font-bold', 'font-semibold', 'font-medium', 'font-normal', 'tracking-tight', 'tracking-normal', 'tracking-wide');
-    const typographyClasses = mode.theme.typography.headingFont.split(' ');
-    body.classList.add(...typographyClasses);
-    
-    // Set data attributes for motion and effects
+    // Set data attributes
     root.setAttribute('data-mode', currentModeId);
-    root.setAttribute('data-mode-motion', mode.theme.motion.intensity);
-    root.setAttribute('data-mode-success-fx', mode.theme.motion.successFx);
     
-    // Force a small visual indication that the theme changed
-    body.style.transition = 'all 0.5s ease-in-out';
+    // Clean up transition after animation completes
     setTimeout(() => {
       body.style.transition = '';
-    }, 500);
+    }, 600);
     
   }, [currentModeId, mode]);
 
