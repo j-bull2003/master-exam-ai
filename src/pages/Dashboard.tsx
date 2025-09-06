@@ -5,13 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+// Removed Supabase import - using Django backend
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
-import { ModeSelector } from "@/components/ModeSelector";
-import { ModeThemeProvider, useModeTheme } from "@/providers/ModeThemeProvider";
-import { CoachingService } from "@/lib/coaching";
-import { type ModeId } from "@/data/modes";
 import {
   Calendar,
   Target,
@@ -36,38 +32,12 @@ import {
 } from "lucide-react";
 
 const Dashboard = () => {
-  return (
-    <ModeThemeProvider initialModeId="focus">
-      <DashboardContent />
-    </ModeThemeProvider>
-  );
-};
-
-const DashboardContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDenseMode, setIsDenseMode] = useState(false);
   const [userData, setUserData] = useState<any>(null);
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
-  const [coachingService, setCoachingService] = useState<CoachingService | null>(null);
   const { toast } = useToast();
   const { user, loading: authLoading, signOut } = useAuth();
-  
-  // Use try-catch to handle potential context issues
-  let currentModeId: ModeId = "focus";
-  let setModeId: (id: ModeId) => void = () => {};
-  let mode: any = { name: "Focus Mode", icon: "⚡", tagline: "Peak performance training" }; // Default fallback
-  
-  try {
-    const modeTheme = useModeTheme();
-    currentModeId = modeTheme.currentModeId;
-    setModeId = modeTheme.setModeId;
-    mode = modeTheme.mode;
-  } catch (error) {
-    console.warn('Mode theme not available, using defaults');
-    // Import the default mode config
-    const { getStudyMode } = require('@/data/modes');
-    mode = getStudyMode("focus");
-  }
   
   // Auth state is managed by AuthContext
   const hasAccess = !authLoading && user !== null;
@@ -75,15 +45,6 @@ const DashboardContent = () => {
 
   // Check if email is confirmed (Django users are always confirmed)
   const isEmailConfirmed = true;
-
-  // Initialize coaching service when mode changes
-  useEffect(() => {
-    // Convert mode to avatar-compatible format for coaching service
-    const avatarId = currentModeId === "focus" ? "coach" : 
-                     currentModeId === "mentor" ? "mentor" : "buddy";
-    const service = new CoachingService(avatarId as any);
-    setCoachingService(service);
-  }, [currentModeId]);
 
   // Load user data when auth state changes
   useEffect(() => {
@@ -100,10 +61,8 @@ const DashboardContent = () => {
     try {
       console.log('Loading profile data for user:', user.id);
       
-      // For Supabase users, use user metadata
-      const firstName = user.user_metadata?.first_name || '';
-      const lastName = user.user_metadata?.last_name || '';
-      const userName = `${firstName} ${lastName}`.trim() || user.email?.split('@')[0] || 'User';
+      // For Django users, use user data directly
+      const userName = `${user.first_name} ${user.last_name}`.trim() || user.email?.split('@')[0] || 'User';
       
       // Create userData object with Django user data
       const userData = {
@@ -124,10 +83,8 @@ const DashboardContent = () => {
     } catch (error) {
       console.error('Error loading profile data:', error);
       // Still set some default data for authenticated user
-      const firstName = user.user_metadata?.first_name || '';
-      const lastName = user.user_metadata?.last_name || '';
       setUserData({
-        name: `${firstName} ${lastName}`.trim() || "User",
+        name: `${user.first_name} ${user.last_name}`.trim() || "User",
         exam: "No exam selected",
         examDate: null,
         totalQuestions: 0,
@@ -237,7 +194,7 @@ const DashboardContent = () => {
   const isExamPassed = examCountdown !== null && examCountdown < 0;
 
   return (
-    <div className="min-h-screen transition-all duration-600">
+    <div className="min-h-screen bg-background bg-mesh">
       {/* Django users don't need email verification */}
 
       <div className="container mx-auto px-4 space-y-8">
@@ -256,11 +213,6 @@ const DashboardContent = () => {
               />
             </Link>
             <nav className="flex items-center space-x-6">
-              <ModeSelector 
-                currentModeId={currentModeId}
-                onModeSelect={setModeId}
-                className="mr-4"
-              />
               <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
               <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
               <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
@@ -281,28 +233,16 @@ const DashboardContent = () => {
         <div className="py-8 space-y-8">
           {/* Welcome Section */}
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold mode-text">
+            <h1 className="text-4xl font-bold">
               Welcome back, {userData?.name || 'User'}! 👋
             </h1>
-            <div className="space-y-2">
-              <p className="text-xl mode-text-muted">
-                {coachingService && mode ? 
-                  coachingService.getMotivationalMessage({
-                    examType: userData?.exam !== "No exam selected" ? userData?.exam : undefined,
-                    examDate: userData?.examDate
-                  }) : 
-                  `Ready to excel in your ${userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?`
-                }
-              </p>
-              <div className="flex items-center justify-center gap-2 text-sm mode-text-muted">
-                <span className="text-lg">{mode?.icon}</span>
-                <span>Currently in <strong>{mode?.name}</strong> - {mode?.tagline}</span>
-              </div>
-            </div>
+            <p className="text-xl text-muted-foreground">
+              Ready to excel in your {userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?
+            </p>
           </div>
 
         {/* Exam Info Card */}
-        <Card className="mode-card relative overflow-hidden">
+        <Card className="relative overflow-hidden">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
@@ -387,56 +327,56 @@ const DashboardContent = () => {
 
         {/* Quick Actions Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="mode-card hover:shadow-lg transition-all cursor-pointer">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium mode-text">Start Practice</CardTitle>
-              <BookOpen className="h-4 w-4 mode-text-muted" />
+              <CardTitle className="text-sm font-medium">Start Practice</CardTitle>
+              <BookOpen className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <Link to="/practice">
-                <Button className="mode-button w-full" size="sm">
+                <Button className="w-full" size="sm">
                   Begin Session
                 </Button>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="mode-card hover:shadow-lg transition-all cursor-pointer">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium mode-text">Take Mock Test</CardTitle>
-              <Clipboard className="h-4 w-4 mode-text-muted" />
+              <CardTitle className="text-sm font-medium">Take Mock Test</CardTitle>
+              <Clipboard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <Link to="/mocks">
-                <Button className="mode-button w-full" variant="outline" size="sm">
+                <Button className="w-full" variant="outline" size="sm">
                   Start Mock
                 </Button>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="mode-card hover:shadow-lg transition-all cursor-pointer">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium mode-text">View Analytics</CardTitle>
-              <BarChart3 className="h-4 w-4 mode-text-muted" />
+              <CardTitle className="text-sm font-medium">View Analytics</CardTitle>
+              <BarChart3 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <Link to="/analytics">
-                <Button className="mode-button w-full" variant="outline" size="sm">
+                <Button className="w-full" variant="outline" size="sm">
                   View Progress
                 </Button>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="mode-card hover:shadow-lg transition-all cursor-pointer">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium mode-text">Update Profile</CardTitle>
-              <User className="h-4 w-4 mode-text-muted" />
+              <CardTitle className="text-sm font-medium">Update Profile</CardTitle>
+              <User className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <Link to="/profile">
-                <Button className="mode-button w-full" variant="outline" size="sm">
+                <Button className="w-full" variant="outline" size="sm">
                   Manage
                 </Button>
               </Link>
