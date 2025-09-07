@@ -4,19 +4,17 @@ import {
   User, 
   Mail, 
   Lock, 
-  Search, 
-  CreditCard, 
   CheckCircle, 
   ArrowRight,
   ArrowLeft,
-  Shield,
   Calendar,
   CalendarIcon,
   Sparkles,
   Eye,
   EyeOff,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  GraduationCap
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,9 +22,16 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarPicker } from "@/components/ui/calendar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
-import { ONBOARDING_EXAMS } from "@/data/examConfig";
+import { admissionTests } from "@/data/admissionTests";
+import { universityRequirements } from "@/data/universityRequirements";
+import { ProfileAPI } from "@/lib/profile-api";
+import type { ExamType } from "@/types/profile";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface OnboardingFlowProps {
   onComplete: () => void;
@@ -36,13 +41,16 @@ interface FormData {
   name: string;
   email: string;
   password: string;
-  examType: string;
+  examType: ExamType | "";
   examDate: Date | null;
+  targetUniversity: string;
+  targetCourse: string;
 }
 
 const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const { toast } = useToast();
   const { signUp } = useAuth();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -56,6 +64,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     password: "",
     examType: "",
     examDate: null,
+    targetUniversity: "",
+    targetCourse: "",
   });
 
   // Focus name input on mount
@@ -63,13 +73,16 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     nameInputRef.current?.focus();
   }, []);
 
-  const examTypes = ONBOARDING_EXAMS.map(exam => ({
-    id: exam.id.toUpperCase(),
-    name: exam.name,
-    description: exam.fullName,
-    universities: exam.universities || [],
-    scoreRange: exam.scoreRange || 'N/A'
-  }));
+  // Get available universities
+  const availableUniversities = universityRequirements;
+  
+  // Check if selected university has specific exam requirements
+  const selectedUniversityReq = universityRequirements.find(
+    uni => uni.universityId === formData.targetUniversity || uni.universityName === formData.targetUniversity
+  );
+  
+  const shouldShowCourseInput = selectedUniversityReq && 
+    (selectedUniversityReq.specificity === "VARIES" || selectedUniversityReq.specificity === "UNKNOWN");
 
   const validateStep1 = () => {
     const newErrors: { [key: string]: string } = {};
@@ -109,6 +122,42 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const validateStep3 = () => {
+    const newErrors: { [key: string]: string } = {};
+    
+    if (!formData.examDate) {
+      newErrors.examDate = "Please select an exam date";
+    } else {
+      const selectedDate = new Date(formData.examDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      if (selectedDate <= today) {
+        newErrors.examDate = "Exam date must be in the future";
+      }
+      
+      const maxDate = new Date();
+      maxDate.setMonth(maxDate.getMonth() + 24);
+      if (selectedDate > maxDate) {
+        newErrors.examDate = "Exam date cannot be more than 24 months in the future";
+      }
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStep4 = () => {
+    const newErrors: { [key: string]: string } = {};
+    
+    if (shouldShowCourseInput && !formData.targetCourse.trim()) {
+      newErrors.targetCourse = "Please enter your intended course";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const nextStep = () => {
     let isValid = false;
     
@@ -116,9 +165,13 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       isValid = validateStep1();
     } else if (currentStep === 2) {
       isValid = validateStep2();
+    } else if (currentStep === 3) {
+      isValid = validateStep3();
+    } else if (currentStep === 4) {
+      isValid = validateStep4();
     }
     
-    if (isValid && currentStep < 3) {
+    if (isValid && currentStep < 5) {
       setCurrentStep(currentStep + 1);
       setErrors({});
     }
@@ -131,6 +184,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   const handleSubmit = async () => {
+    if (!validateStep4()) return;
+    
     setIsLoading(true);
     try {
       // Sign up the user with Supabase
@@ -146,16 +201,28 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         throw new Error(authError.message || 'Registration failed');
       }
 
-      console.log('User registered successfully:', formData.email);
-      
-      toast({
-        title: "Registration successful!",
-        description: "Welcome to UniHack.ai! Check your email to verify your account.",
+      // Wait a moment for the user to be created and profile triggered
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Save onboarding data to profile
+      await ProfileAPI.saveOnboardingData({
+        examType: formData.examType as ExamType,
+        examDate: formData.examDate!.toISOString().split('T')[0],
+        targetUniversity: formData.targetUniversity,
+        targetCourse: formData.targetCourse || undefined,
       });
 
-      onComplete();
+      console.log('User registered and onboarding data saved successfully');
+      
+      toast({
+        title: "Welcome to UniHack.ai!",
+        description: "Your account has been created and your study plan is ready.",
+      });
+
+      // Navigate to dashboard instead of calling onComplete
+      navigate('/dashboard');
     } catch (error: any) {
-      console.error('Registration error:', error);
+      console.error('Registration/onboarding error:', error);
       toast({
         title: "Registration failed",
         description: error.message || "Please try again.",
@@ -168,7 +235,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !isLoading) {
-      if (currentStep < 3) {
+      if (currentStep < 5) {
         nextStep();
       } else {
         handleSubmit();
@@ -196,7 +263,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         {/* Progress Indicator */}
         <div className="flex justify-center mb-8">
           <div className="flex items-center space-x-4">
-            {[1, 2, 3].map((step) => (
+            {[1, 2, 3, 4, 5].map((step) => (
               <div key={step} className="flex items-center">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
                   step < currentStep 
@@ -207,7 +274,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 }`}>
                   {step < currentStep ? <CheckCircle className="w-5 h-5" /> : step}
                 </div>
-                {step < 3 && (
+                {step < 5 && (
                   <div className={`w-12 h-0.5 transition-colors duration-300 ${
                     step < currentStep ? 'bg-primary' : 'bg-muted'
                   }`} />
@@ -223,12 +290,16 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             <CardTitle className="text-3xl font-bold text-center bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               {currentStep === 1 && "Create Your Account"}
               {currentStep === 2 && "Choose Your Exam"}
-              {currentStep === 3 && "Ready to Start!"}
+              {currentStep === 3 && "Set Your Exam Date"}
+              {currentStep === 4 && "Target University"}
+              {currentStep === 5 && "Ready to Start!"}
             </CardTitle>
             <CardDescription className="text-center text-lg">
               {currentStep === 1 && "Let's get you set up with a secure account"}
               {currentStep === 2 && "Select the exam you're preparing for"}
-              {currentStep === 3 && "You're all set! Time to begin your journey"}
+              {currentStep === 3 && "When are you planning to take your exam?"}
+              {currentStep === 4 && "Which university are you targeting?"}
+              {currentStep === 5 && "You're all set! Time to begin your journey"}
             </CardDescription>
           </CardHeader>
 
@@ -357,22 +428,22 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     Choose the exam you're preparing for to get personalized practice content
                   </p>
                   <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg px-3 py-2">
-                    Currently available: {ONBOARDING_EXAMS.map(e => e.name).join(', ')}
+                    Currently available: {admissionTests.map(e => e.name).join(', ')}
                   </p>
                 </div>
 
                 <RadioGroup 
                   value={formData.examType} 
                   onValueChange={(value) => {
-                    setFormData(prev => ({ ...prev, examType: value }));
+                    setFormData(prev => ({ ...prev, examType: value as ExamType }));
                     if (errors.examType) setErrors(prev => ({ ...prev, examType: "" }));
                   }}
                   className="space-y-4"
                 >
-                  {examTypes.map((exam) => (
+                  {admissionTests.map((exam) => (
                     <div key={exam.id} className="flex items-center space-x-3">
                       <RadioGroupItem value={exam.id} id={exam.id} />
-                      <div className="flex-1 cursor-pointer" onClick={() => setFormData(prev => ({ ...prev, examType: exam.id }))}>
+                      <div className="flex-1 cursor-pointer" onClick={() => setFormData(prev => ({ ...prev, examType: exam.id as ExamType }))}>
                         <Card className={`transition-all duration-200 hover:shadow-md ${
                           formData.examType === exam.id ? 'ring-2 ring-primary border-primary' : 'border-input'
                         }`}>
@@ -380,21 +451,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                             <div className="flex justify-between items-start">
                               <div>
                                 <h3 className="font-semibold text-lg">{exam.name}</h3>
-                                <p className="text-sm text-muted-foreground mb-2">{exam.description}</p>
-                                <p className="text-sm text-muted-foreground">Score Range: {exam.scoreRange}</p>
-                              </div>
-                              <div className="text-right">
-                                <p className="text-sm font-medium text-muted-foreground mb-1">Target Universities:</p>
-                                <div className="flex flex-wrap gap-1 justify-end">
-                                  {exam.universities.slice(0, 2).map((uni) => (
-                                    <span key={uni} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-                                      {uni}
-                                    </span>
-                                  ))}
-                                  {exam.universities.length > 2 && (
-                                    <span className="text-xs text-muted-foreground">+{exam.universities.length - 2} more</span>
-                                  )}
-                                </div>
+                                <p className="text-sm text-muted-foreground mb-2">
+                                  {exam.topics.length} topics: {exam.topics.slice(0, 3).join(', ')}
+                                  {exam.topics.length > 3 && '...'}
+                                </p>
                               </div>
                             </div>
                           </CardContent>
@@ -413,8 +473,134 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               </div>
             )}
 
-            {/* Step 3: Confirmation */}
+            {/* Step 3: Exam Date */}
             {currentStep === 3 && (
+              <div className="space-y-6">
+                <div className="text-center space-y-2">
+                  <p className="text-muted-foreground">
+                    When are you planning to take your {formData.examType} exam?
+                  </p>
+                </div>
+
+                <div className="flex justify-center">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-[280px] justify-start text-left font-normal",
+                          !formData.examDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {formData.examDate ? format(formData.examDate, "PPP") : <span>Pick an exam date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <CalendarPicker
+                        mode="single"
+                        selected={formData.examDate || undefined}
+                        onSelect={(date) => {
+                          setFormData(prev => ({ ...prev, examDate: date || null }));
+                          if (errors.examDate) setErrors(prev => ({ ...prev, examDate: "" }));
+                        }}
+                        disabled={(date) => date <= new Date()}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+
+                {errors.examDate && (
+                  <p className="text-sm text-destructive flex items-center gap-2 justify-center">
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.examDate}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Step 4: University Selection */}
+            {currentStep === 4 && (
+              <div className="space-y-6">
+                <div className="text-center space-y-2">
+                  <p className="text-muted-foreground">
+                    Which university are you targeting? (Optional)
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="university">Target University</Label>
+                    <Select
+                      value={formData.targetUniversity}
+                      onValueChange={(value) => {
+                        setFormData(prev => ({ ...prev, targetUniversity: value }));
+                        // Auto-suggest exam type if university has exact requirement
+                        const universityReq = universityRequirements.find(
+                          uni => uni.universityId === value || uni.universityName === value
+                        );
+                        if (universityReq?.specificity === "EXACT" && universityReq.defaultExamType && !formData.examType) {
+                          setFormData(prev => ({ ...prev, examType: universityReq.defaultExamType as ExamType }));
+                        }
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a university" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {universityRequirements.map((uni) => (
+                          <SelectItem key={uni.universityId} value={uni.universityId}>
+                            <div className="flex items-center gap-2">
+                              <GraduationCap className="w-4 h-4" />
+                              {uni.universityName}
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {shouldShowCourseInput && (
+                    <div className="space-y-2">
+                      <Label htmlFor="course">Intended Course</Label>
+                      <Input
+                        id="course"
+                        value={formData.targetCourse}
+                        onChange={(e) => {
+                          setFormData(prev => ({ ...prev, targetCourse: e.target.value }));
+                          if (errors.targetCourse) setErrors(prev => ({ ...prev, targetCourse: "" }));
+                        }}
+                        placeholder="e.g., Medicine, Mathematics, Computer Science"
+                      />
+                      {selectedUniversityReq && (
+                        <p className="text-sm text-muted-foreground">
+                          {selectedUniversityReq.notes}
+                        </p>
+                      )}
+                      {errors.targetCourse && (
+                        <p className="text-sm text-destructive flex items-center gap-2">
+                          <AlertCircle className="w-4 h-4" />
+                          {errors.targetCourse}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {selectedUniversityReq && !shouldShowCourseInput && (
+                    <div className="p-3 bg-muted/50 rounded-lg">
+                      <p className="text-sm text-muted-foreground">
+                        {selectedUniversityReq.notes}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Step 5: Confirmation */}
+            {currentStep === 5 && (
               <div className="space-y-6 text-center">
                 <div className="space-y-4">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
@@ -424,99 +610,111 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   <div>
                     <h3 className="text-xl font-semibold mb-2">Welcome to UniHack.ai!</h3>
                     <p className="text-muted-foreground">
-                      You're all set to start your {examTypes.find(e => e.id === formData.examType)?.name} preparation journey.
+                      Your account will be created and you'll be ready to start practicing for your {formData.examType} exam.
                     </p>
                   </div>
 
-                  <div className="bg-muted/50 rounded-lg p-4 space-y-2">
-                    <div className="flex justify-between">
-                      <span className="font-medium">Name:</span>
-                      <span>{formData.name}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Email:</span>
-                      <span>{formData.email}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Exam:</span>
-                      <span>{examTypes.find(e => e.id === formData.examType)?.name}</span>
+                  <div className="bg-muted/50 rounded-lg p-4 text-left max-w-md mx-auto">
+                    <h4 className="font-semibold mb-2">Your Study Plan:</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Name:</span>
+                        <span>{formData.name}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Email:</span>
+                        <span>{formData.email}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Exam:</span>
+                        <span>{formData.examType}</span>
+                      </div>
+                      {formData.examDate && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Exam Date:</span>
+                          <span>{format(formData.examDate, "MMM d, yyyy")}</span>
+                        </div>
+                      )}
+                      {formData.targetUniversity && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Target:</span>
+                          <span>{universityRequirements.find(u => u.universityId === formData.targetUniversity)?.universityName || formData.targetUniversity}</span>
+                        </div>
+                      )}
+                      {formData.targetCourse && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Course:</span>
+                          <span>{formData.targetCourse}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Navigation Buttons */}
+            {/* Navigation */}
             <div className="flex justify-between pt-6">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={prevStep}
-                disabled={currentStep === 1 || isLoading}
-                className="flex items-center gap-2"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Back
-              </Button>
-
-              {currentStep < 3 ? (
-                <Button
-                  type="button"
-                  onClick={nextStep}
-                  disabled={isLoading}
-                  className="flex items-center gap-2"
-                >
-                  Next Step
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={isLoading}
-                  className="flex items-center gap-2"
-                >
-                  {isLoading ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Creating Account...
-                    </>
-                  ) : (
-                    <>
-                      Start Learning
-                      <ArrowRight className="w-4 h-4" />
-                    </>
-                  )}
+              {currentStep > 1 && (
+                <Button variant="outline" onClick={prevStep} className="flex items-center gap-2">
+                  <ArrowLeft className="w-4 h-4" />
+                  Previous
                 </Button>
               )}
+              
+              <div className={currentStep === 1 ? "ml-auto" : ""}>
+                {currentStep < 5 ? (
+                  <Button onClick={nextStep} className="flex items-center gap-2">
+                    Next
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                ) : (
+                  <Button 
+                    onClick={handleSubmit} 
+                    disabled={isLoading}
+                    className="flex items-center gap-2"
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                        Creating Account...
+                      </>
+                    ) : (
+                      <>
+                        Create Account
+                        <CheckCircle className="w-4 h-4" />
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 space-y-4">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link 
-              to="/auth/login" 
-              className="text-primary hover:text-primary/80 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 rounded px-1"
-            >
+            <Link to="/auth/login" className="text-primary hover:underline font-medium">
               Sign in here
             </Link>
           </p>
-        </div>
-
-        {/* Trust Signals */}
-        <div className="text-center mt-6 space-y-2">
-          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-            <Shield className="w-4 h-4 text-success" />
-            <span>256-bit SSL encryption</span>
-            <span>•</span>
-            <span>GDPR compliant</span>
+          
+          <div className="flex items-center justify-center space-x-6 text-sm text-muted-foreground">
+            <div className="flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              <span>Trusted by 10,000+ students</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              <span>Free 7-day trial</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              <span>Cancel anytime</span>
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Join 10,000+ students achieving their dream scores
-          </p>
         </div>
       </div>
     </div>

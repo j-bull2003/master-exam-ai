@@ -5,9 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-// Removed Supabase import - using Django backend
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { ProfileAPI } from "@/lib/profile-api";
+import { getTopicsForExam } from "@/lib/topicMap";
+import type { UserProfile } from "@/types/profile";
 import {
   Calendar,
   Target,
@@ -34,7 +36,7 @@ import {
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDenseMode, setIsDenseMode] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const { toast } = useToast();
   const { user, loading: authLoading, signOut } = useAuth();
@@ -43,58 +45,32 @@ const Dashboard = () => {
   const hasAccess = !authLoading && user !== null;
   const userEmail = user?.email || "";
 
-  // Check if email is confirmed (Django users are always confirmed)
+  // Check if email is confirmed
   const isEmailConfirmed = true;
 
   // Load user data when auth state changes
   useEffect(() => {
     if (!authLoading && user) {
       console.log('Auth state changed, loading profile for user:', user.id);
-      loadProfileData(user);
+      loadProfileData();
     } else if (!authLoading && !user) {
-      setUserData(null);
+      setProfile(null);
       setIsLoading(false);
     }
   }, [user, authLoading]);
 
-  const loadProfileData = async (user: any) => {
+  const loadProfileData = async () => {
     try {
-      console.log('Loading profile data for user:', user.id);
+      console.log('Loading profile data...');
       
-      // For Django users, use user data directly
-      const userName = `${user.first_name} ${user.last_name}`.trim() || user.email?.split('@')[0] || 'User';
+      const profileData = await ProfileAPI.getProfile();
+      console.log('Profile data loaded:', profileData);
       
-      // Create userData object with Django user data
-      const userData = {
-        name: userName,
-        exam: "No exam selected", // TODO: Store in Django profile model
-        examDate: null, // TODO: Store in Django profile model
-        totalQuestions: 0, // These could come from Django analytics
-        correctAnswers: 0,
-        accuracy: 0,
-        weeklyTarget: 100,
-        completedThisWeek: 0,
-        streakDays: 0,
-        nextSession: "Select your exam to start"
-      };
-
-      console.log('Setting user data:', userData);
-      setUserData(userData);
+      setProfile(profileData);
     } catch (error) {
       console.error('Error loading profile data:', error);
-      // Still set some default data for authenticated user
-      setUserData({
-        name: `${user.first_name} ${user.last_name}`.trim() || "User",
-        exam: "No exam selected",
-        examDate: null,
-        totalQuestions: 0,
-        correctAnswers: 0,
-        accuracy: 0,
-        weeklyTarget: 100,
-        completedThisWeek: 0,
-        streakDays: 0,
-        nextSession: "Select your exam to start"
-      });
+      // Profile might not exist yet, this is okay
+      setProfile(null);
     } finally {
       setIsLoading(false);
     }
@@ -102,7 +78,7 @@ const Dashboard = () => {
 
   const handleUpdateExamDate = async (newDate: Date) => {
     try {
-      console.log('Updating exam date. Current user:', user?.id);
+      console.log('Updating exam date:', newDate);
       
       if (!user?.id) {
         toast({
@@ -113,11 +89,12 @@ const Dashboard = () => {
         return;
       }
 
-      // TODO: Implement Django API endpoint for updating exam date
-      console.log('Would update exam date to:', newDate);
+      const dateString = newDate.toISOString().split('T')[0];
+      await ProfileAPI.updateExamDate(dateString);
 
-      // Update local state for now
-      setUserData(prev => ({ ...prev, examDate: newDate }));
+      // Update local state
+      setProfile(prev => prev ? { ...prev, examDate: dateString } : null);
+      setIsDateModalOpen(false);
       
       toast({
         title: "Success",
@@ -176,10 +153,10 @@ const Dashboard = () => {
 
   // Calculate exam countdown
   const getExamCountdown = () => {
-    if (!userData?.examDate) return null;
+    if (!profile?.examDate) return null;
     
     const now = new Date();
-    const examDate = new Date(userData.examDate);
+    const examDate = new Date(profile.examDate);
     
     // Set exam date to end of day to avoid "passed" issues
     examDate.setHours(23, 59, 59, 999);
@@ -192,6 +169,9 @@ const Dashboard = () => {
 
   const examCountdown = getExamCountdown();
   const isExamPassed = examCountdown !== null && examCountdown < 0;
+  
+  // Get available topics for the user's exam
+  const availableTopics = profile?.examType ? getTopicsForExam(profile.examType) : [];
 
   return (
     <div className="min-h-screen bg-background bg-mesh">
@@ -234,10 +214,14 @@ const Dashboard = () => {
           {/* Welcome Section */}
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold">
-              Welcome back, {userData?.name || 'User'}! 👋
+              Welcome back, {profile?.full_name || user?.email?.split('@')[0] || 'User'}! 👋
             </h1>
             <p className="text-xl text-muted-foreground">
-              Ready to excel in your {userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?
+              {profile?.examType ? (
+                <>Ready to excel in your {profile.examType} exam?</>
+              ) : (
+                <>Ready to start your exam preparation journey?</>
+              )}
             </p>
           </div>
 
@@ -247,9 +231,9 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="text-2xl">
-                  {userData?.exam || 'No Exam Selected'}
+                  {profile?.examType || 'No Exam Selected'}
                 </CardTitle>
-                {userData?.examDate && (
+                {profile?.examDate && (
                   <CardDescription className="text-lg mt-2">
                     {isExamPassed ? (
                       <span className="text-destructive font-medium">
@@ -266,9 +250,9 @@ const Dashboard = () => {
                 )}
               </div>
               <div className="text-right">
-                {userData?.examDate ? (
+                {profile?.examDate ? (
                   <Badge variant="secondary" className="text-lg px-4 py-2">
-                    {new Date(userData.examDate).toLocaleDateString('en-US', {
+                    {new Date(profile.examDate).toLocaleDateString('en-US', {
                       month: 'long',
                       day: 'numeric',
                       year: 'numeric'
@@ -301,24 +285,75 @@ const Dashboard = () => {
                 </Alert>
               )}
               
-              {!userData?.exam || userData?.exam === "No exam selected" && (
+              {(!profile?.examType || !profile?.examDate) && (
                 <Alert>
                   <AlertDescription>
                     <div className="flex items-center justify-between">
-                      <span>Get started by selecting your exam type and target date.</span>
-                      <Link to="/exam-picker">
-                        <Button size="sm">
-                          Choose Exam
-                        </Button>
-                      </Link>
+                      <span>Complete your profile to get started with personalized study plans.</span>
+                      <div className="flex gap-2">
+                        {!profile?.examType && (
+                          <Button size="sm" onClick={() => window.location.href = '/auth/register'}>
+                            Complete Setup
+                          </Button>
+                        )}
+                        {profile?.examType && !profile?.examDate && (
+                          <Button size="sm" onClick={() => setIsDateModalOpen(true)}>
+                            Set Exam Date
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </AlertDescription>
                 </Alert>
               )}
+
+              {/* Goals Card */}
+              {(profile?.targetUniversity || profile?.targetCourse) && (
+                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                    <Trophy className="w-4 h-4" />
+                    Your Goals
+                  </h4>
+                  <div className="space-y-1 text-sm">
+                    {profile.targetUniversity && (
+                      <p>
+                        <span className="text-muted-foreground">Target University:</span> {profile.targetUniversity}
+                      </p>
+                    )}
+                    {profile.targetCourse && (
+                      <p>
+                        <span className="text-muted-foreground">Intended Course:</span> {profile.targetCourse}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Topics Available */}
+              {availableTopics.length > 0 && (
+                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4" />
+                    Available Topics ({availableTopics.length})
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {availableTopics.slice(0, 6).map((topic) => (
+                      <Badge key={topic} variant="outline" className="text-xs">
+                        {topic}
+                      </Badge>
+                    ))}
+                    {availableTopics.length > 6 && (
+                      <Badge variant="outline" className="text-xs">
+                        +{availableTopics.length - 6} more
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              )}
               
-              {userData?.examDate && !isExamPassed && (
-                <p className="text-muted-foreground">
-                  Keep up the great work! You're making steady progress toward your {userData.exam} exam.
+              {profile?.examDate && !isExamPassed && (
+                <p className="text-muted-foreground mt-4">
+                  Keep up the great work! You're making steady progress toward your {profile.examType} exam.
                 </p>
               )}
             </div>
@@ -392,9 +427,9 @@ const Dashboard = () => {
               <Target className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{userData?.totalQuestions || 0}</div>
+              <div className="text-2xl font-bold">0</div>
               <p className="text-xs text-muted-foreground">
-                +0 from last week
+                Start practicing to see progress
               </p>
             </CardContent>
           </Card>
@@ -405,9 +440,9 @@ const Dashboard = () => {
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{userData?.accuracy || 0}%</div>
+              <div className="text-2xl font-bold">0%</div>
               <p className="text-xs text-muted-foreground">
-                +0% from last week
+                Start practicing to see progress
               </p>
             </CardContent>
           </Card>
@@ -418,9 +453,9 @@ const Dashboard = () => {
               <Zap className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{userData?.streakDays || 0}</div>
+              <div className="text-2xl font-bold">0</div>
               <p className="text-xs text-muted-foreground">
-                consecutive days
+                Start your study streak today
               </p>
             </CardContent>
           </Card>
@@ -431,7 +466,7 @@ const Dashboard = () => {
               <Award className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{userData?.completedThisWeek || 0}/{userData?.weeklyTarget || 100}</div>
+              <div className="text-2xl font-bold">0/100</div>
               <p className="text-xs text-muted-foreground">
                 questions this week
               </p>

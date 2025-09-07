@@ -21,7 +21,7 @@ export const ProfileAPI = {
         .from('profiles')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
       if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
         throw new ProfileApiError(`Failed to fetch profile: ${error.message}`);
@@ -37,9 +37,9 @@ export const ProfileAPI = {
         full_name: data.full_name,
         examType: data.exam_type as ExamType,
         examDate: data.exam_date,
-        targetUniversity: data.target_university,
-        targetCourse: data.target_course,
-        studyMode: data.study_mode,
+        targetUniversity: (data as any).target_university,
+        targetCourse: (data as any).target_course,
+        studyMode: (data as any).study_mode,
         createdAt: data.created_at,
         updatedAt: data.updated_at,
       };
@@ -84,9 +84,9 @@ export const ProfileAPI = {
         full_name: profileData.full_name,
         examType: profileData.exam_type as ExamType,
         examDate: profileData.exam_date,
-        targetUniversity: profileData.target_university,
-        targetCourse: profileData.target_course,
-        studyMode: profileData.study_mode,
+        targetUniversity: (profileData as any).target_university,
+        targetCourse: (profileData as any).target_course,
+        studyMode: (profileData as any).study_mode,
         createdAt: profileData.created_at,
         updatedAt: profileData.updated_at,
       };
