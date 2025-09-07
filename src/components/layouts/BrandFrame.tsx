@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
+const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
+
 interface BrandFrameProps {
   children: ReactNode;
   showLogo?: boolean;
@@ -11,15 +13,18 @@ const BrandFrame = ({ children, showLogo = true }: BrandFrameProps) => {
     <div className="min-h-screen flex flex-col">
       {showLogo && (
         <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="container flex h-14 items-center">
+          <div className="container flex h-16 items-center">
             <Link 
               to="/" 
               className="flex items-center space-x-2"
               data-testid="unihack-logo"
             >
-              <div className="font-bold text-xl bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                UNIHACK
-              </div>
+              <img
+                src={uniHackLogo}
+                alt="UNIHACK Logo"
+                className="h-8 w-auto object-contain mix-blend-multiply dark:mix-blend-screen hover:scale-105 transition-transform duration-200"
+                style={{ backgroundColor: "transparent" }}
+              />
             </Link>
           </div>
         </header>
