@@ -15,11 +15,14 @@ import {
   Eye,
   EyeOff,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  LockIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { admissionTests } from "@/data/admissionTests";
+import { toast } from "sonner";
 
 interface OnboardingFlowProps {
   onComplete?: () => void;
@@ -48,21 +51,35 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   }, [currentStep]);
 
-  const exams = [
-    { id: "SAT", name: "SAT", description: "Standardized Assessment Test", region: "US" },
-    { id: "ACT", name: "ACT", description: "American College Testing", region: "US" },
-    { id: "UCAT", name: "UCAT", description: "University Clinical Aptitude Test", region: "UK" },
-    { id: "STEP", name: "STEP", description: "Sixth Term Examination Paper", region: "UK" },
-    { id: "MAT", name: "MAT", description: "Mathematics Admissions Test", region: "UK" },
-    { id: "ESAT", name: "ESAT", description: "Engineering & Science Admissions Test", region: "UK" },
-    { id: "LNAT", name: "LNAT", description: "Law National Aptitude Test", region: "UK" },
-    { id: "TSA", name: "TSA", description: "Thinking Skills Assessment", region: "UK" },
-    { id: "PAT", name: "PAT", description: "Physics Aptitude Test", region: "UK" }
-  ];
+  const examRegions = {
+    "SAT": "US",
+    "TMUA": "UK", 
+    "UCAT": "UK",
+    "STEP": "UK",
+    "GRE": "INTL",
+    "GMAT": "INTL",
+    "MAT": "UK"
+  };
+
+  const examDescriptions = {
+    "SAT": "Scholastic Assessment Test",
+    "TMUA": "Test of Mathematics for University Admission",
+    "UCAT": "University Clinical Aptitude Test",
+    "STEP": "Sixth Term Examination Paper",
+    "GRE": "Graduate Record Examinations",
+    "GMAT": "Graduate Management Admission Test", 
+    "MAT": "Mathematics Admissions Test"
+  };
 
   const [searchTerm, setSearchTerm] = useState("");
   
-  const filteredExams = exams.filter(exam => 
+  const examsWithMeta = admissionTests.map(exam => ({
+    ...exam,
+    region: examRegions[exam.id as keyof typeof examRegions] || "INTL",
+    description: examDescriptions[exam.id as keyof typeof examDescriptions] || exam.name
+  }));
+  
+  const filteredExams = examsWithMeta.filter(exam => 
     exam.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     exam.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -327,24 +344,40 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                       role="radio"
                       aria-checked={formData.selectedExam === exam.id}
                       className={`w-full text-left p-6 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 ${
-                        formData.selectedExam === exam.id 
-                          ? 'border-primary bg-primary/10 shadow-md' 
-                          : 'border-border hover:border-primary/50 hover:bg-muted/30'
+                        !exam.enabled 
+                          ? 'border-muted bg-muted/20 opacity-60 cursor-not-allowed'
+                          : formData.selectedExam === exam.id 
+                            ? 'border-primary bg-primary/10 shadow-md' 
+                            : 'border-border hover:border-primary/50 hover:bg-muted/30'
                       }`}
                       onClick={() => {
+                        if (!exam.enabled) {
+                          toast.error("Coming soon! This exam is not available yet.");
+                          return;
+                        }
                         handleInputChange('selectedExam', exam.id);
                         if (errors.exam) setErrors(prev => ({ ...prev, exam: "" }));
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <div className="space-y-2">
-                          <h3 className="font-semibold text-lg">{exam.name}</h3>
+                        <div className="space-y-2 flex-1">
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-semibold text-lg">{exam.name}</h3>
+                            {!exam.enabled && <LockIcon className="w-4 h-4 text-muted-foreground" />}
+                          </div>
                           <p className="text-sm text-muted-foreground">{exam.description}</p>
-                          <span className="inline-block px-2 py-1 text-xs font-medium bg-muted rounded-md">
-                            {exam.region}
-                          </span>
+                          <div className="flex gap-2">
+                            <span className="inline-block px-2 py-1 text-xs font-medium bg-muted rounded-md">
+                              {exam.region}
+                            </span>
+                            {!exam.enabled && (
+                              <span className="inline-block px-2 py-1 text-xs font-medium bg-orange-100 text-orange-800 rounded-md">
+                                {exam.note}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                        {formData.selectedExam === exam.id && (
+                        {formData.selectedExam === exam.id && exam.enabled && (
                           <CheckCircle className="w-6 h-6 text-primary flex-shrink-0" />
                         )}
                       </div>

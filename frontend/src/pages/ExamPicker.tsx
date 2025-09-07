@@ -5,68 +5,74 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { GraduationCap, Search, MapPin, Clock, Users } from "lucide-react";
+import { GraduationCap, Search, MapPin, Clock, Users, Lock } from "lucide-react";
+import { admissionTests } from "@/data/admissionTests";
+import { toast } from "sonner";
 
-// Mock exam data - replace with actual API
-const exams = [
-  {
-    id: "ucat",
-    name: "UCAT",
-    fullName: "University Clinical Aptitude Test",
-    description: "Required for medicine and dentistry applications in UK, Australia, and New Zealand",
-    region: "UK",
-    duration: "2 hours",
-    sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning", "Situational Judgement"],
-    students: "30,000+"
-  },
-  {
-    id: "sat",
-    name: "SAT",
+// Extended exam data with regions and metadata
+const examMetadata = {
+  SAT: {
     fullName: "Scholastic Assessment Test",
     description: "Standardized test for college admissions in the United States",
     region: "US",
     duration: "3 hours",
-    sections: ["Reading and Writing", "Math"],
     students: "2M+"
   },
-  {
-    id: "act",
-    name: "ACT",
-    fullName: "American College Testing",
-    description: "Standardized test for college admissions in the United States",
-    region: "US",
-    duration: "3 hours",
-    sections: ["English", "Math", "Reading", "Science", "Writing (Optional)"],
-    students: "1.8M+"
+  TMUA: {
+    fullName: "Test of Mathematics for University Admission",
+    description: "Mathematics test for Cambridge and other UK universities",
+    region: "UK", 
+    duration: "2.5 hours",
+    students: "8,000+"
   },
-  {
-    id: "step",
-    name: "STEP",
+  UCAT: {
+    fullName: "University Clinical Aptitude Test",
+    description: "Required for medicine and dentistry applications in UK, Australia, and New Zealand",
+    region: "UK",
+    duration: "2 hours",
+    students: "30,000+"
+  },
+  STEP: {
     fullName: "Sixth Term Examination Paper",
     description: "Mathematics examination for Cambridge and other top UK universities",
     region: "UK",
     duration: "3 hours",
-    sections: ["Pure Mathematics", "Mechanics", "Statistics"],
     students: "5,000+"
   },
-  {
-    id: "mat",
-    name: "MAT",
+  GRE: {
+    fullName: "Graduate Record Examinations",
+    description: "Standardized test for graduate school admissions",
+    region: "INTL",
+    duration: "3 hours 45 minutes",
+    students: "500,000+"
+  },
+  GMAT: {
+    fullName: "Graduate Management Admission Test",
+    description: "Standardized test for business school admissions",
+    region: "INTL",
+    duration: "3 hours 7 minutes", 
+    students: "200,000+"
+  },
+  MAT: {
     fullName: "Mathematics Admissions Test",
     description: "Required for mathematics courses at Oxford and other universities",
     region: "UK",
     duration: "2.5 hours",
-    sections: ["Multiple Choice", "Longer Problems"],
     students: "3,000+"
   }
-];
+};
 
 const ExamPicker = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("all");
   const [selectedExam, setSelectedExam] = useState<string | null>(null);
 
-  const filteredExams = exams.filter(exam => {
+  const examsWithMetadata = admissionTests.map(exam => ({
+    ...exam,
+    ...examMetadata[exam.id as keyof typeof examMetadata]
+  }));
+
+  const filteredExams = examsWithMetadata.filter(exam => {
     const matchesSearch = exam.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          exam.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          exam.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -75,6 +81,11 @@ const ExamPicker = () => {
   });
 
   const handleExamSelect = (examId: string) => {
+    const exam = admissionTests.find(e => e.id === examId);
+    if (!exam?.enabled) {
+      toast.error("Coming soon! This exam is not available yet.");
+      return;
+    }
     setSelectedExam(examId);
   };
 
@@ -137,21 +148,35 @@ const ExamPicker = () => {
           {filteredExams.map((exam) => (
             <Card 
               key={exam.id} 
-              className={`question-card cursor-pointer transition-all duration-200 ${
-                selectedExam === exam.id ? 'ring-2 ring-primary border-primary' : 'hover:shadow-academic-lg'
+              className={`question-card transition-all duration-200 ${
+                !exam.enabled 
+                  ? 'opacity-60 cursor-not-allowed'
+                  : selectedExam === exam.id 
+                    ? 'ring-2 ring-primary border-primary cursor-pointer' 
+                    : 'hover:shadow-academic-lg cursor-pointer'
               }`}
               onClick={() => handleExamSelect(exam.id)}
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-2xl font-display">{exam.name}</CardTitle>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <CardTitle className="text-2xl font-display">{exam.name}</CardTitle>
+                      {!exam.enabled && <Lock className="h-4 w-4 text-muted-foreground" />}
+                    </div>
                     <CardDescription className="text-sm font-medium">{exam.fullName}</CardDescription>
                   </div>
-                  <Badge variant="outline" className="text-xs">
-                    <MapPin className="h-3 w-3 mr-1" />
-                    {exam.region}
-                  </Badge>
+                  <div className="flex flex-col gap-1">
+                    <Badge variant="outline" className="text-xs">
+                      <MapPin className="h-3 w-3 mr-1" />
+                      {exam.region}
+                    </Badge>
+                    {!exam.enabled && (
+                      <Badge variant="secondary" className="text-xs bg-orange-100 text-orange-800">
+                        {exam.note}
+                      </Badge>
+                    )}
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
@@ -169,16 +194,16 @@ const ExamPicker = () => {
                 </div>
 
                 <div className="mt-4">
-                  <p className="text-xs font-medium text-muted-foreground mb-2">Sections:</p>
+                  <p className="text-xs font-medium text-muted-foreground mb-2">Topics:</p>
                   <div className="flex flex-wrap gap-1">
-                    {exam.sections.slice(0, 3).map((section) => (
-                      <Badge key={section} variant="secondary" className="text-xs">
-                        {section}
+                    {exam.topics.slice(0, 3).map((topic) => (
+                      <Badge key={topic} variant="secondary" className="text-xs">
+                        {topic}
                       </Badge>
                     ))}
-                    {exam.sections.length > 3 && (
+                    {exam.topics.length > 3 && (
                       <Badge variant="secondary" className="text-xs">
-                        +{exam.sections.length - 3} more
+                        +{exam.topics.length - 3} more
                       </Badge>
                     )}
                   </div>

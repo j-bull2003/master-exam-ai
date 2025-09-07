@@ -1,0 +1,78 @@
+name: Project Structure Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  structure-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Check for stray React app files in root
+      run: |
+        # Check for prohibited files/directories in root
+        ERRORS=0
+        
+        if [ -d "src" ]; then
+          echo "❌ ERROR: Root /src directory found - should be in /frontend only"
+          ERRORS=$((ERRORS + 1))
+        fi
+        
+        if [ -d "public" ]; then
+          echo "❌ ERROR: Root /public directory found - should be in /frontend only" 
+          ERRORS=$((ERRORS + 1))
+        fi
+        
+        if [ -f "vite.config.ts" ] || [ -f "vite.config.js" ]; then
+          echo "❌ ERROR: Root vite config found - should be in /frontend only"
+          ERRORS=$((ERRORS + 1))
+        fi
+        
+        if [ -f "tailwind.config.ts" ] || [ -f "tailwind.config.js" ]; then
+          echo "❌ ERROR: Root tailwind config found - should be in /frontend only"
+          ERRORS=$((ERRORS + 1))
+        fi
+        
+        if [ -f "tsconfig.app.json" ]; then
+          echo "❌ ERROR: Root tsconfig.app.json found - should be in /frontend only"
+          ERRORS=$((ERRORS + 1))
+        fi
+        
+        # Check package.json doesn't have frontend dev scripts
+        if grep -q '"dev".*"vite"' package.json 2>/dev/null; then
+          echo "❌ ERROR: Root package.json contains vite dev script - should be workspace-only"
+          ERRORS=$((ERRORS + 1))
+        fi
+        
+        if [ $ERRORS -gt 0 ]; then
+          echo ""
+          echo "❌ Project structure check failed with $ERRORS errors"
+          echo "Run the consolidation script to fix these issues"
+          exit 1
+        fi
+        
+        echo "✅ Project structure check passed"
+        
+    - name: Verify frontend and backend directories exist
+      run: |
+        if [ ! -d "frontend" ]; then
+          echo "❌ ERROR: /frontend directory missing"
+          exit 1
+        fi
+        
+        if [ ! -d "backend" ]; then
+          echo "❌ ERROR: /backend directory missing"  
+          exit 1
+        fi
+        
+        if [ ! -f "frontend/package.json" ]; then
+          echo "❌ ERROR: /frontend/package.json missing"
+          exit 1
+        fi
+        
+        echo "✅ Required directories and files present"
