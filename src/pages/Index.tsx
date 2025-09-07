@@ -14,6 +14,7 @@ import { EXAM_CONFIGS } from "@/data/examConfig";
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 const Index = () => {
+  console.log('Index page component rendering');
   const [isHovered, setIsHovered] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [statsCounter, setStatsCounter] = useState({ students: 0, questions: 0, accuracy: 0 });
