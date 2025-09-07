@@ -8,9 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { ProfileAPI } from "@/lib/profile-api";
-import { getTopicsForExams } from "@/lib/topicMap";
-import { universities } from "@/data/universities";
-import { isExamEnabled, getExamById } from "@/data/admissionTests";
+import { getTopicsForExam } from "@/lib/topicMap";
 import type { UserProfile } from "@/types/profile";
 import {
   Calendar,
@@ -32,13 +30,8 @@ import {
   Clipboard,
   RotateCcw,
   ChevronRight,
-  AlertTriangle,
-  GraduationCap,
-  MapPin,
-  Edit,
-  Home
+  AlertTriangle
 } from "lucide-react";
-import BrandFrame from "@/components/layouts/BrandFrame";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,400 +48,467 @@ const Dashboard = () => {
   // Check if email is confirmed
   const isEmailConfirmed = true;
 
+  // Load user data when auth state changes
   useEffect(() => {
-    const loadProfile = async () => {
-      if (!hasAccess || authLoading) {
-        setIsLoading(false);
+    if (!authLoading && user) {
+      console.log('Auth state changed, loading profile for user:', user.id);
+      loadProfileData();
+    } else if (!authLoading && !user) {
+      setProfile(null);
+      setIsLoading(false);
+    }
+  }, [user, authLoading]);
+
+  const loadProfileData = async () => {
+    try {
+      console.log('Loading profile data...');
+      
+      const profileData = await ProfileAPI.getProfile();
+      console.log('Profile data loaded:', profileData);
+      
+      setProfile(profileData);
+    } catch (error) {
+      console.error('Error loading profile data:', error);
+      // Profile might not exist yet, this is okay
+      setProfile(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUpdateExamDate = async (newDate: Date) => {
+    try {
+      console.log('Updating exam date:', newDate);
+      
+      if (!user?.id) {
+        toast({
+          title: "Authentication Required",
+          description: "Please refresh the page and try again. You may need to log in.",
+          variant: "destructive"
+        });
         return;
       }
 
-      try {
-        const userProfile = await ProfileAPI.getProfile();
-        setProfile(userProfile);
-      } catch (error) {
-        console.error("Failed to load profile:", error);
-        toast({
-          title: "Error",
-          description: "Failed to load profile data",
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      const dateString = newDate.toISOString().split('T')[0];
+      await ProfileAPI.updateExamDate(dateString);
 
-    loadProfile();
-  }, [hasAccess, authLoading, toast]);
+      // Update local state
+      setProfile(prev => prev ? { ...prev, examDate: dateString } : null);
+      setIsDateModalOpen(false);
+      
+      toast({
+        title: "Success",
+        description: "Exam date updated successfully!",
+      });
+    } catch (error) {
+      console.error('Error updating exam date:', error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
 
-  // Don't render anything while auth is loading
+  // Show loading state while auth is loading
   if (authLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading...</p>
+      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Checking authentication...</p>
         </div>
       </div>
     );
   }
 
-  // Redirect to auth if not logged in
-  if (!hasAccess) {
+  // Show login prompt if not authenticated
+  if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CardTitle>Access Required</CardTitle>
-            <CardDescription>Please sign in to access your dashboard</CardDescription>
-          </CardHeader>
-          <CardContent className="text-center space-y-4">
-            <Button asChild className="w-full">
-              <Link to="/auth/login">Sign In</Link>
-            </Button>
-            <Button variant="outline" asChild className="w-full">
-              <Link to="/auth/register">Create Account</Link>
-            </Button>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
+        <div className="text-center space-y-6 max-w-md mx-auto p-6">
+          <h2 className="text-2xl font-bold">Please Log In</h2>
+          <p className="text-muted-foreground">
+            You need to be logged in to access your dashboard.
+          </p>
+          <Button onClick={() => window.location.href = '/auth/login'} size="lg">
+            Go to Login
+          </Button>
+        </div>
       </div>
     );
   }
 
-  // Show onboarding prompt if no profile
-  if (!isLoading && !profile) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CardTitle>Welcome to UNIHACK!</CardTitle>
-            <CardDescription>Let's set up your profile to get started</CardDescription>
-          </CardHeader>
-          <CardContent className="text-center space-y-4">
-            <Button asChild className="w-full">
-              <Link to="/exam-picker">Complete Setup</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
+  // Show loading state while data is loading
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading dashboard...</p>
+      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading your dashboard...</p>
         </div>
       </div>
     );
   }
 
-  // Calculate days until exam
-  const getDaysUntilExam = (): string => {
-    if (!profile?.examDate) return "Set Date";
+  // Calculate exam countdown
+  const getExamCountdown = () => {
+    if (!profile?.examDate) return null;
     
+    const now = new Date();
     const examDate = new Date(profile.examDate);
-    const today = new Date();
-    const diffTime = examDate.getTime() - today.getTime();
+    
+    // Set exam date to end of day to avoid "passed" issues
+    examDate.setHours(23, 59, 59, 999);
+    
+    const diffTime = examDate.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
-    if (diffDays < 0) return "Exam Passed";
-    if (diffDays === 0) return "Today!";
-    return `${diffDays} days left`;
+    return diffDays;
   };
 
-  // Get university names from IDs
-  const getUniversityNames = (universityIds: string[]): string[] => {
-    return universityIds.map(id => {
-      const uni = universities.find(u => u.id === id);
-      return uni?.name || id;
-    });
-  };
-
-  // Get available topics for user's exams
-  const availableTopics = profile ? getTopicsForExams(profile.examTypes) : [];
-
-  const handleSignOut = () => {
-    signOut();
-  };
+  const examCountdown = getExamCountdown();
+  const isExamPassed = examCountdown !== null && examCountdown < 0;
+  
+  // Get available topics for the user's exam
+  const availableTopics = profile?.examType ? getTopicsForExam(profile.examType) : [];
 
   return (
     <div className="min-h-screen bg-background bg-mesh">
-      {/* Header */}
-      <header className="border-b border-border bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link
-            to="/dashboard"
-            className="flex items-center hover:opacity-80 transition-opacity group"
-          >
-            <img
-              src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
-              alt="UniHack.ai Logo"
-              className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
-              style={{ backgroundColor: "transparent" }}
-            />
-          </Link>
-          <nav className="flex items-center space-x-6">
-            <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Home className="w-4 h-4" />Dashboard</Link>
-            <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
-            <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
-            <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
-            <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
-            <Button 
-              onClick={handleSignOut}
-              size="sm" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
+      {/* Django users don't need email verification */}
+
+      <div className="container mx-auto px-4 space-y-8">
+        {/* Header */}
+        <header className="border-b border-border bg-background/95 backdrop-blur">
+          <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+            <Link
+              to="/dashboard"
+              className="flex items-center hover:opacity-80 transition-opacity group"
             >
-              <LogOut className="w-4 h-4" />
-              Logout
-            </Button>
-          </nav>
-        </div>
-      </header>
-
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-        {/* Email verification banner */}
-        {!isEmailConfirmed && (
-          <Alert className="rounded-none border-x-0 border-t-0 bg-yellow-50 border-yellow-200">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
-              Please verify your email address to ensure you receive important updates.
-              <Button variant="link" className="ml-2 h-auto p-0">
-                Resend verification
+              <img
+                src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
+                alt="UniHack.ai Logo"
+                className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+                style={{ backgroundColor: "transparent" }}
+              />
+            </Link>
+            <nav className="flex items-center space-x-6">
+              <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
+              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
+              <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
+              <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
+              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
+              <Button 
+                onClick={signOut}
+                size="sm" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
               </Button>
-            </AlertDescription>
-          </Alert>
-        )}
+            </nav>
+          </div>
+        </header>
 
-        <div className="container mx-auto p-6 space-y-8">
-          {/* Disabled Exam Warning */}
-          {profile?.examTypes && profile.examTypes.some(examType => !isExamEnabled(examType)) && (
-            <Alert className="border-orange-200 bg-orange-50 dark:bg-orange-950/20">
-              <AlertTriangle className="h-4 w-4 text-orange-600" />
-              <AlertDescription className="text-orange-800 dark:text-orange-200">
-                Some of your selected exams ({profile.examTypes.filter(e => !isExamEnabled(e)).join(", ")}) are coming soon. 
-                Please update your profile to include only SAT or TMUA for now.
-                <Button variant="link" asChild className="ml-2 h-auto p-0 text-orange-600 hover:text-orange-800">
-                  <Link to="/profile">Update Profile</Link>
-                </Button>
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {/* Header Section */}
-          <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              Welcome back, {profile?.full_name || "Student"}!
+        <div className="py-8 space-y-8">
+          {/* Welcome Section */}
+          <div className="text-center space-y-4">
+            <h1 className="text-4xl font-bold">
+              Welcome back, {profile?.full_name || user?.email?.split('@')[0] || 'User'}! 👋
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Here's your study progress and upcoming goals. Ready to achieve your dreams?
+            <p className="text-xl text-muted-foreground">
+              {profile?.examType ? (
+                <>Ready to excel in your {profile.examType} exam?</>
+              ) : (
+                <>Ready to start your exam preparation journey?</>
+              )}
             </p>
           </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent"></div>
-              <CardContent className="p-6 relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Days Until Exam</p>
-                    <p className="text-3xl font-bold text-blue-900 dark:text-blue-100">{getDaysUntilExam()}</p>
-                  </div>
-                  <Calendar className="h-10 w-10 text-blue-600 dark:text-blue-400" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent"></div>
-              <CardContent className="p-6 relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-purple-700 dark:text-purple-300">Target Universities</p>
-                    <p className="text-3xl font-bold text-purple-900 dark:text-purple-100">{profile?.targetUniversities?.length || 0}</p>
-                  </div>
-                  <GraduationCap className="h-10 w-10 text-purple-600 dark:text-purple-400" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent"></div>
-              <CardContent className="p-6 relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-green-700 dark:text-green-300">Available Topics</p>
-                    <p className="text-3xl font-bold text-green-900 dark:text-green-100">{availableTopics.length}</p>
-                  </div>
-                  <BookOpen className="h-10 w-10 text-green-600 dark:text-green-400" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent"></div>
-              <CardContent className="p-6 relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-orange-700 dark:text-orange-300">Study Mode</p>
-                    <p className="text-3xl font-bold text-orange-900 dark:text-orange-100 capitalize">{profile?.studyMode || "Focus"}</p>
-                  </div>
-                  <Brain className="h-10 w-10 text-orange-600 dark:text-orange-400" />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Main Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Goals & Progress */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Goals Card */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Target className="h-5 w-5" />
-                    Your Goals
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {profile?.targetUniversities && profile.targetUniversities.length > 0 ? (
-                    <div>
-                      <h4 className="font-medium mb-2">Target Universities</h4>
-                      <div className="space-y-2">
-                        {getUniversityNames(profile.targetUniversities).map((uniName, index) => (
-                          <div key={index} className="flex items-center justify-between p-2 border rounded">
-                            <span className="flex items-center gap-2">
-                              <MapPin className="h-4 w-4 text-muted-foreground" />
-                              {uniName}
-                            </span>
-                            {profile.targetCourses?.[index] && (
-                              <Badge variant="outline">{profile.targetCourses[index]}</Badge>
-                            )}
-                          </div>
-                        ))}
+        {/* Exam Info Card */}
+        <Card className="relative overflow-hidden">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-2xl">
+                  {profile?.examType || 'No Exam Selected'}
+                </CardTitle>
+                {profile?.examDate && (
+                  <CardDescription className="text-lg mt-2">
+                    {isExamPassed ? (
+                      <span className="text-destructive font-medium">
+                        Exam Date Passed
+                      </span>
+                    ) : (
+                      examCountdown !== null && (
+                        <span className="text-primary font-medium">
+                          {examCountdown} days remaining
+                        </span>
+                      )
+                    )}
+                  </CardDescription>
+                )}
+              </div>
+              <div className="text-right">
+                {profile?.examDate ? (
+                  <Badge variant="secondary" className="text-lg px-4 py-2">
+                    {new Date(profile.examDate).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}
+                  </Badge>
+                ) : (
+                  <Badge variant="outline" className="text-lg px-4 py-2">
+                    Date not set
+                  </Badge>
+                )}
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {isExamPassed && (
+                <Alert className="border-destructive bg-destructive/10">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertDescription>
+                    Your exam date has passed. Would you like to update it?
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="ml-4"
+                      onClick={() => setIsDateModalOpen(true)}
+                    >
+                      Update Date
+                    </Button>
+                  </AlertDescription>
+                </Alert>
+              )}
+              
+              {(!profile?.examType || !profile?.examDate) && (
+                <Alert>
+                  <AlertDescription>
+                    <div className="flex items-center justify-between">
+                      <span>Complete your profile to get started with personalized study plans.</span>
+                      <div className="flex gap-2">
+                        {!profile?.examType && (
+                          <Button size="sm" onClick={() => window.location.href = '/auth/register'}>
+                            Complete Setup
+                          </Button>
+                        )}
+                        {profile?.examType && !profile?.examDate && (
+                          <Button size="sm" onClick={() => setIsDateModalOpen(true)}>
+                            Set Exam Date
+                          </Button>
+                        )}
                       </div>
                     </div>
-                  ) : (
-                    <div className="text-center py-8">
-                      <Target className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                      <h4 className="font-medium mb-2">Set Your Goals</h4>
-                      <p className="text-muted-foreground mb-4">
-                        Choose your target universities to get personalized study plans
-                      </p>
-                      <Button asChild>
-                        <Link to="/exam-picker">Set Goals</Link>
-                      </Button>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                  </AlertDescription>
+                </Alert>
+              )}
 
-              {/* Study Topics */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BookOpen className="h-5 w-5" />
-                    Study Topics
-                    {profile?.examTypes && profile.examTypes.length > 1 && (
-                      <Badge variant="outline">{profile.examTypes[0]}</Badge>
+              {/* Goals Card */}
+              {(profile?.targetUniversity || profile?.targetCourse) && (
+                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                    <Trophy className="w-4 h-4" />
+                    Your Goals
+                  </h4>
+                  <div className="space-y-1 text-sm">
+                    {profile.targetUniversity && (
+                      <p>
+                        <span className="text-muted-foreground">Target University:</span> {profile.targetUniversity}
+                      </p>
                     )}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {availableTopics.length > 0 ? (
-                    <div className="grid grid-cols-2 gap-2">
-                      {availableTopics.slice(0, 8).map((topic, index) => (
-                        <div key={index} className="p-2 border rounded text-sm">
-                          {topic}
-                        </div>
-                      ))}
-                      {availableTopics.length > 8 && (
-                        <div className="p-2 border rounded text-sm text-center text-muted-foreground col-span-2">
-                          +{availableTopics.length - 8} more topics
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="text-center py-8">
-                      <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                      <h4 className="font-medium mb-2">No Topics Available</h4>
-                      <p className="text-muted-foreground mb-4">
-                        Select your exam types to see available study topics
+                    {profile.targetCourse && (
+                      <p>
+                        <span className="text-muted-foreground">Intended Course:</span> {profile.targetCourse}
                       </p>
-                      <Button asChild>
-                        <Link to="/exam-picker">Choose Exams</Link>
-                      </Button>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Zap className="h-5 w-5" />
-                    Quick Actions
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button asChild className="w-full justify-start">
-                    <Link to="/practice">
-                      <BookOpen className="w-4 h-4 mr-2" />
-                      Start Practice
-                    </Link>
-                  </Button>
-                  
-                  <Button variant="outline" asChild className="w-full justify-start">
-                    <Link to="/mocks">
-                      <Clipboard className="w-4 h-4 mr-2" />
-                      Take Mock Exam
-                    </Link>
-                  </Button>
-                  
-                  <Button variant="outline" asChild className="w-full justify-start">
-                    <Link to="/analytics">
-                      <BarChart3 className="w-4 h-4 mr-2" />
-                      View Analytics
-                    </Link>
-                  </Button>
-
-                  <Separator />
-
-                  <Button variant="ghost" asChild className="w-full justify-start">
-                    <Link to="/profile">
-                      <Settings className="w-4 h-4 mr-2" />
-                      Settings
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Recent Activity */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Clock className="h-5 w-5" />
-                    Recent Activity
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-8">
-                    <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h4 className="font-medium mb-2">No Recent Activity</h4>
-                    <p className="text-muted-foreground">
-                      Start practicing to see your activity here
-                    </p>
+                    )}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              )}
+
+              {/* Topics Available */}
+              {availableTopics.length > 0 && (
+                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4" />
+                    Available Topics ({availableTopics.length})
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {availableTopics.slice(0, 6).map((topic) => (
+                      <Badge key={topic} variant="outline" className="text-xs">
+                        {topic}
+                      </Badge>
+                    ))}
+                    {availableTopics.length > 6 && (
+                      <Badge variant="outline" className="text-xs">
+                        +{availableTopics.length - 6} more
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              )}
+              
+              {profile?.examDate && !isExamPassed && (
+                <p className="text-muted-foreground mt-4">
+                  Keep up the great work! You're making steady progress toward your {profile.examType} exam.
+                </p>
+              )}
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Actions Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Start Practice</CardTitle>
+              <BookOpen className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <Link to="/practice">
+                <Button className="w-full" size="sm">
+                  Begin Session
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Take Mock Test</CardTitle>
+              <Clipboard className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <Link to="/mocks">
+                <Button className="w-full" variant="outline" size="sm">
+                  Start Mock
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">View Analytics</CardTitle>
+              <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <Link to="/analytics">
+                <Button className="w-full" variant="outline" size="sm">
+                  View Progress
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Update Profile</CardTitle>
+              <User className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <Link to="/profile">
+                <Button className="w-full" variant="outline" size="sm">
+                  Manage
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Questions</CardTitle>
+              <Target className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">0</div>
+              <p className="text-xs text-muted-foreground">
+                Start practicing to see progress
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Accuracy Rate</CardTitle>
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">0%</div>
+              <p className="text-xs text-muted-foreground">
+                Start practicing to see progress
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Study Streak</CardTitle>
+              <Zap className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">0</div>
+              <p className="text-xs text-muted-foreground">
+                Start your study streak today
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Weekly Progress</CardTitle>
+              <Award className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">0/100</div>
+              <p className="text-xs text-muted-foreground">
+                questions this week
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Exam Date Update Modal */}
+        {isDateModalOpen && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <Card className="w-full max-w-md m-4">
+              <CardHeader>
+                <CardTitle>Update Exam Date</CardTitle>
+                <CardDescription>
+                  Choose your new target exam date
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <input
+                  type="date"
+                  min={new Date().toISOString().split('T')[0]}
+                  max={new Date(Date.now() + 2 * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                  className="w-full p-2 border rounded"
+                  onChange={async (e) => {
+                    const newDate = new Date(e.target.value);
+                    await handleUpdateExamDate(newDate);
+                    setIsDateModalOpen(false);
+                  }}
+                />
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setIsDateModalOpen(false)}
+                    className="flex-1"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
+        )}
         </div>
       </div>
     </div>

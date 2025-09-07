@@ -1,6 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { UserProfile, OnboardingData, ExamType } from "@/types/profile";
-import { isExamEnabled } from "@/data/admissionTests";
 
 export class ProfileApiError extends Error {
   constructor(message: string) {
@@ -36,10 +35,10 @@ export const ProfileAPI = {
         userId: data.user_id,
         email: data.email,
         full_name: data.full_name,
-        examTypes: data.exam_type ? [data.exam_type as ExamType] : [],
+        examType: data.exam_type as ExamType,
         examDate: data.exam_date,
-        targetUniversities: (data as any).target_university ? [(data as any).target_university] : [],
-        targetCourses: (data as any).target_course ? [(data as any).target_course] : [],
+        targetUniversity: (data as any).target_university,
+        targetCourse: (data as any).target_course,
         studyMode: (data as any).study_mode,
         createdAt: data.created_at,
         updatedAt: data.updated_at,
@@ -60,17 +59,11 @@ export const ProfileAPI = {
         throw new ProfileApiError('User not authenticated');
       }
 
-      // Validate all exam types are enabled
-      const disabledExams = data.examTypes.filter(examType => !isExamEnabled(examType));
-      if (disabledExams.length > 0) {
-        throw new ProfileApiError(`Exam not available yet: ${disabledExams.join(", ")}`);
-      }
-
       const updateData = {
-        exam_type: data.examTypes[0] || null, // Store first exam type for backward compatibility
+        exam_type: data.examType,
         exam_date: data.examDate,
-        target_university: data.targetUniversities[0] || null,
-        target_course: data.targetCourses?.[0] || null,
+        target_university: data.targetUniversity,
+        target_course: data.targetCourse,
         updated_at: new Date().toISOString(),
       };
 
@@ -89,10 +82,10 @@ export const ProfileAPI = {
         userId: profileData.user_id,
         email: profileData.email,
         full_name: profileData.full_name,
-        examTypes: profileData.exam_type ? [profileData.exam_type as ExamType] : [],
+        examType: profileData.exam_type as ExamType,
         examDate: profileData.exam_date,
-        targetUniversities: (profileData as any).target_university ? [(profileData as any).target_university] : [],
-        targetCourses: (profileData as any).target_course ? [(profileData as any).target_course] : [],
+        targetUniversity: (profileData as any).target_university,
+        targetCourse: (profileData as any).target_course,
         studyMode: (profileData as any).study_mode,
         createdAt: profileData.created_at,
         updatedAt: profileData.updated_at,

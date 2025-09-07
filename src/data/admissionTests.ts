@@ -2,15 +2,12 @@ export interface AdmissionTest {
   id: string;
   name: string;
   topics: string[];
-  enabled: boolean;
-  note?: string;
 }
 
 export const admissionTests: AdmissionTest[] = [
   { 
     id: "SAT",  
     name: "SAT",
-    enabled: true,
     topics: [
       "Reading Comprehension", 
       "Writing & Language", 
@@ -20,20 +17,8 @@ export const admissionTests: AdmissionTest[] = [
     ] 
   },
   { 
-    id: "TMUA", 
-    name: "TMUA",
-    enabled: true,
-    topics: [
-      "Mathematical Thinking", 
-      "Mathematical Reasoning", 
-      "Problem Solving"
-    ] 
-  },
-  { 
     id: "UCAT", 
     name: "UCAT",
-    enabled: false,
-    note: "Coming soon",
     topics: [
       "Verbal Reasoning", 
       "Decision Making", 
@@ -45,8 +30,6 @@ export const admissionTests: AdmissionTest[] = [
   { 
     id: "STEP", 
     name: "STEP",
-    enabled: false,
-    note: "Coming soon",
     topics: [
       "Algebra", 
       "Functions", 
@@ -61,8 +44,6 @@ export const admissionTests: AdmissionTest[] = [
   { 
     id: "GRE",  
     name: "GRE",
-    enabled: false,
-    note: "Coming soon",
     topics: [
       "Quantitative (Arithmetic/Algebra/Geometry/Data)", 
       "Verbal (Text Completion/SE/RC)", 
@@ -72,8 +53,6 @@ export const admissionTests: AdmissionTest[] = [
   { 
     id: "GMAT", 
     name: "GMAT",
-    enabled: false,
-    note: "Coming soon",
     topics: [
       "Quantitative", 
       "Verbal", 
@@ -84,27 +63,20 @@ export const admissionTests: AdmissionTest[] = [
   { 
     id: "MAT", 
     name: "MAT",
-    enabled: false,
-    note: "Coming soon",
     topics: [
       "Mathematical Thinking", 
       "Multiple Choice Questions", 
       "Longer Problems", 
       "Pure Mathematics"
     ] 
+  },
+  { 
+    id: "TMUA", 
+    name: "TMUA",
+    topics: [
+      "Mathematical Thinking", 
+      "Mathematical Reasoning", 
+      "Problem Solving"
+    ] 
   }
 ];
-
-// Helper functions
-export const getEnabledExams = (): AdmissionTest[] => {
-  return admissionTests.filter(exam => exam.enabled);
-};
-
-export const isExamEnabled = (examId: string): boolean => {
-  const exam = admissionTests.find(e => e.id === examId);
-  return exam?.enabled ?? false;
-};
-
-export const getExamById = (examId: string): AdmissionTest | undefined => {
-  return admissionTests.find(e => e.id === examId);
-};

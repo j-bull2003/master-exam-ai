@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -32,26 +31,6 @@ const queryClient = new QueryClient();
 
 const App = () => {
   console.log('App component rendering');
-  
-  // Add error boundary logging
-  useEffect(() => {
-    const handleError = (event: ErrorEvent) => {
-      console.error('Global error caught:', event.error);
-    };
-    
-    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      console.error('Unhandled promise rejection:', event.reason);
-    };
-
-    window.addEventListener('error', handleError);
-    window.addEventListener('unhandledrejection', handleUnhandledRejection);
-
-    return () => {
-      window.removeEventListener('error', handleError);
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
-    };
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
@@ -59,48 +38,48 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              {/* Landing Page */}
-              <Route path="/" element={<Index />} />
-              <Route path="/features" element={<Features />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/about" element={<About />} />
-              
-              {/* Authentication */}
-              <Route path="/auth/login" element={<Login />} />
-              <Route path="/auth/register" element={<Register />} />
-              <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-              
-              {/* Legacy routes for backwards compatibility */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              
-              {/* Core App Flow */}
-              <Route path="/exam-picker" element={<ExamPicker />} />
-              <Route path="/diagnostic" element={<Diagnostic />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              
-              {/* Practice & Assessment */}
-              <Route path="/practice" element={<Practice />} />
-              <Route path="/mocks" element={<Mocks />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/quiz" element={<Quiz />} />
-              
-              {/* Role-based Pages */}
-              <Route path="/tutor-studio" element={<TutorStudio />} />
-              <Route path="/admin" element={<Admin />} />
-              
-              {/* Catch-all */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <FeedbackButton />
-            <SupportChatbot />
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+        <Routes>
+          {/* Landing Page */}
+          <Route path="/" element={<Index />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/about" element={<About />} />
+          
+          {/* Authentication */}
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/register" element={<Register />} />
+          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+          
+          {/* Legacy routes for backwards compatibility */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          
+          {/* Core App Flow */}
+          <Route path="/exam-picker" element={<ExamPicker />} />
+          <Route path="/diagnostic" element={<Diagnostic />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          
+          {/* Practice & Assessment */}
+          <Route path="/practice" element={<Practice />} />
+          <Route path="/mocks" element={<Mocks />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/quiz" element={<Quiz />} />
+          
+          {/* Role-based Pages */}
+          <Route path="/tutor-studio" element={<TutorStudio />} />
+          <Route path="/admin" element={<Admin />} />
+          
+          {/* Catch-all */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <FeedbackButton />
+          <SupportChatbot />
+        </BrowserRouter>
+    </TooltipProvider>
+    </AuthProvider>
+  </QueryClientProvider>
   );
 };
 

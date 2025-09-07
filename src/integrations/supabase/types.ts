@@ -182,13 +182,10 @@ export type Database = {
           email: string
           exam_date: string | null
           exam_type: string | null
-          exam_types: string[] | null
           full_name: string
           id: string
           study_mode: string | null
           target_course: string | null
-          target_courses: string[] | null
-          target_universities: string[] | null
           target_university: string | null
           updated_at: string
           user_id: string
@@ -199,13 +196,10 @@ export type Database = {
           email: string
           exam_date?: string | null
           exam_type?: string | null
-          exam_types?: string[] | null
           full_name: string
           id?: string
           study_mode?: string | null
           target_course?: string | null
-          target_courses?: string[] | null
-          target_universities?: string[] | null
           target_university?: string | null
           updated_at?: string
           user_id: string
@@ -216,13 +210,10 @@ export type Database = {
           email?: string
           exam_date?: string | null
           exam_type?: string | null
-          exam_types?: string[] | null
           full_name?: string
           id?: string
           study_mode?: string | null
           target_course?: string | null
-          target_courses?: string[] | null
-          target_universities?: string[] | null
           target_university?: string | null
           updated_at?: string
           user_id?: string

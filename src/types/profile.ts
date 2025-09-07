@@ -4,18 +4,18 @@ export interface UserProfile {
   userId: string;
   email: string;
   full_name?: string;
-  examTypes: ExamType[];        // allow multi-select
-  examDate?: string;            // ISO yyyy-mm-dd (date-only)
-  targetUniversities: string[]; // list of universityIds
-  targetCourses?: string[];     // optional free-text per uni
-  studyMode?: "focus" | "mentor" | "momentum";
+  examType?: ExamType;
+  examDate?: string; // ISO yyyy-mm-dd (date-only)
+  targetUniversity?: string; // universityId or free-text
+  targetCourse?: string;
+  studyMode?: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface OnboardingData {
-  examTypes: ExamType[];
+  examType: ExamType;
   examDate: string;
-  targetUniversities: string[];
-  targetCourses?: string[];
+  targetUniversity?: string;
+  targetCourse?: string;
 }
