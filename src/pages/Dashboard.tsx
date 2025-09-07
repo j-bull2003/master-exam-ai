@@ -10,6 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ProfileAPI } from "@/lib/profile-api";
 import { getTopicsForExams } from "@/lib/topicMap";
 import { universities } from "@/data/universities";
+import { isExamEnabled, getExamById } from "@/data/admissionTests";
 import type { UserProfile } from "@/types/profile";
 import {
   Calendar,
@@ -221,6 +222,20 @@ const Dashboard = () => {
         )}
 
         <div className="container mx-auto p-6 space-y-8">
+          {/* Disabled Exam Warning */}
+          {profile?.examTypes && profile.examTypes.some(examType => !isExamEnabled(examType)) && (
+            <Alert className="border-orange-200 bg-orange-50 dark:bg-orange-950/20">
+              <AlertTriangle className="h-4 w-4 text-orange-600" />
+              <AlertDescription className="text-orange-800 dark:text-orange-200">
+                Some of your selected exams ({profile.examTypes.filter(e => !isExamEnabled(e)).join(", ")}) are coming soon. 
+                Please update your profile to include only SAT or TMUA for now.
+                <Button variant="link" asChild className="ml-2 h-auto p-0 text-orange-600 hover:text-orange-800">
+                  <Link to="/profile">Update Profile</Link>
+                </Button>
+              </AlertDescription>
+            </Alert>
+          )}
+
           {/* Header Section */}
           <div className="text-center space-y-2">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">

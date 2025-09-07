@@ -29,7 +29,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
-import { admissionTests } from "@/data/admissionTests";
+import { admissionTests, getEnabledExams, isExamEnabled } from "@/data/admissionTests";
 import { universities } from "@/data/universities";
 import { universityExamMap, requiresCourseSpecification } from "@/data/universityExamMap";
 import { ProfileAPI } from "@/lib/profile-api";
@@ -356,38 +356,80 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
-                {admissionTests.map((test) => (
-                  <div
-                    key={test.id}
-                    className={cn(
-                      "flex items-center space-x-3 rounded-lg border p-4 cursor-pointer transition-colors",
-                      formData.examTypes.includes(test.id as ExamType)
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:bg-muted/50"
-                    )}
-                    onClick={() => {
-                      const examType = test.id as ExamType;
-                      setFormData(prev => ({
-                        ...prev,
-                        examTypes: prev.examTypes.includes(examType)
-                          ? prev.examTypes.filter(t => t !== examType)
-                          : [...prev.examTypes, examType]
-                      }));
-                    }}
-                  >
-                    <Checkbox 
-                      checked={formData.examTypes.includes(test.id as ExamType)}
-                      onChange={() => {}}
-                    />
-                    <div className="flex-1">
-                      <h4 className="font-medium">{test.name}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Topics: {test.topics.slice(0, 3).join(", ")}
-                        {test.topics.length > 3 && ` +${test.topics.length - 3} more`}
-                      </p>
+                {admissionTests.map((test) => {
+                  const isSelected = formData.examTypes.includes(test.id as ExamType);
+                  const isDisabled = !test.enabled;
+                  
+                  return (
+                    <div
+                      key={test.id}
+                      className={cn(
+                        "flex items-center space-x-3 rounded-lg border p-4 transition-colors",
+                        isDisabled 
+                          ? "opacity-50 cursor-not-allowed bg-muted/30"
+                          : "cursor-pointer",
+                        isSelected && !isDisabled
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:bg-muted/50"
+                      )}
+                      onClick={() => {
+                        if (isDisabled) {
+                          toast({
+                            title: "Coming Soon",
+                            description: `${test.name} will be available soon. Stay tuned!`,
+                          });
+                          return;
+                        }
+                        
+                        const examType = test.id as ExamType;
+                        setFormData(prev => ({
+                          ...prev,
+                          examTypes: prev.examTypes.includes(examType)
+                            ? prev.examTypes.filter(t => t !== examType)
+                            : [...prev.examTypes, examType]
+                        }));
+                      }}
+                      role="button"
+                      tabIndex={isDisabled ? -1 : 0}
+                      aria-disabled={isDisabled}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          if (!isDisabled) {
+                            const examType = test.id as ExamType;
+                            setFormData(prev => ({
+                              ...prev,
+                              examTypes: prev.examTypes.includes(examType)
+                                ? prev.examTypes.filter(t => t !== examType)
+                                : [...prev.examTypes, examType]
+                            }));
+                          }
+                        }
+                      }}
+                    >
+                      <Checkbox 
+                        checked={isSelected && !isDisabled}
+                        disabled={isDisabled}
+                        onChange={() => {}}
+                        tabIndex={-1}
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-medium">{test.name}</h4>
+                          {isDisabled && (
+                            <Badge variant="secondary" className="text-xs">
+                              {test.note || "Coming soon"}
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          Topics: {test.topics.slice(0, 3).join(", ")}
+                          {test.topics.length > 3 && ` +${test.topics.length - 3} more`}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
               {errors.examTypes && <p className="text-sm text-red-500 mt-4">{errors.examTypes}</p>}
             </CardContent>

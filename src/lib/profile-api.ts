@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { UserProfile, OnboardingData, ExamType } from "@/types/profile";
+import { isExamEnabled } from "@/data/admissionTests";
 
 export class ProfileApiError extends Error {
   constructor(message: string) {
@@ -57,6 +58,12 @@ export const ProfileAPI = {
       
       if (authError || !user) {
         throw new ProfileApiError('User not authenticated');
+      }
+
+      // Validate all exam types are enabled
+      const disabledExams = data.examTypes.filter(examType => !isExamEnabled(examType));
+      if (disabledExams.length > 0) {
+        throw new ProfileApiError(`Exam not available yet: ${disabledExams.join(", ")}`);
       }
 
       const updateData = {

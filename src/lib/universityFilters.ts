@@ -1,5 +1,6 @@
 import type { ExamType } from "@/types/profile";
 import type { University } from "@/data/universities";
+import { isExamEnabled } from "@/data/admissionTests";
 
 // Map exam types to the countries/regions they're primarily used for
 const examToCountryMap: Record<ExamType, string[]> = {
@@ -16,13 +17,16 @@ export const getRelevantUniversities = (
   universities: University[], 
   selectedExamTypes: ExamType[]
 ): University[] => {
-  if (selectedExamTypes.length === 0) {
-    return universities; // Show all if no exams selected
+  // Filter to only enabled exams
+  const enabledExams = selectedExamTypes.filter(examType => isExamEnabled(examType));
+  
+  if (enabledExams.length === 0) {
+    return universities; // Show all if no enabled exams selected
   }
 
-  // Get all countries relevant to the selected exam types
+  // Get all countries relevant to the enabled exam types
   const relevantCountries = new Set<string>();
-  selectedExamTypes.forEach(examType => {
+  enabledExams.forEach(examType => {
     examToCountryMap[examType]?.forEach(country => {
       relevantCountries.add(country);
     });
