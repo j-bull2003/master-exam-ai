@@ -175,63 +175,67 @@ const Dashboard = () => {
     <div className="min-h-screen bg-background">
       {/* Navigation Header */}
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center">
+        <div className="container flex h-16 items-center">
           <div className="mr-4 flex">
             <Link to="/" className="mr-6 flex items-center space-x-2">
               <img
                 src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
                 alt="UNIHACK Logo"
-                className="h-8 w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
+                className="h-12 w-auto object-contain mix-blend-multiply dark:mix-blend-screen hover:scale-105 transition-transform duration-200"
                 style={{ backgroundColor: "transparent" }}
               />
             </Link>
             <nav className="flex items-center space-x-6 text-sm font-medium">
               <Link
                 to="/dashboard"
-                className="transition-colors hover:text-foreground/80 text-foreground"
+                className="transition-colors hover:text-foreground/80 text-foreground border-b-2 border-primary"
               >
                 Dashboard
               </Link>
               <Link
                 to="/practice"
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                className="transition-colors hover:text-foreground/80 text-foreground/60 hover:border-b-2 hover:border-primary/50 pb-[2px]"
               >
                 Practice
               </Link>
               <Link
                 to="/mocks"
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                className="transition-colors hover:text-foreground/80 text-foreground/60 hover:border-b-2 hover:border-primary/50 pb-[2px]"
               >
                 Mocks
               </Link>
               <Link
                 to="/analytics"
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                className="transition-colors hover:text-foreground/80 text-foreground/60 hover:border-b-2 hover:border-primary/50 pb-[2px]"
               >
                 Analytics
               </Link>
               <Link
                 to="/profile"
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                className="transition-colors hover:text-foreground/80 text-foreground/60 hover:border-b-2 hover:border-primary/50 pb-[2px]"
               >
                 Profile
               </Link>
             </nav>
           </div>
-          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-            <div className="w-full flex-1 md:w-auto md:flex-none">
-            </div>
-            <nav className="flex items-center">
-              <Button variant="outline" size="sm" onClick={handleSignOut}>
-                <LogOut className="w-4 h-4 mr-2" />
+          <div className="flex flex-1 items-center justify-end space-x-4">
+            {/* User Info and Sign Out */}
+            <div className="flex items-center gap-4">
+              {profile?.examTypes && profile.examTypes.length > 0 && (
+                <Badge variant="secondary" className="px-3 py-1 text-sm">
+                  {profile.examTypes.join(", ")} • {getDaysUntilExam()}
+                </Badge>
+              )}
+              <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
+                <LogOut className="w-4 h-4" />
                 Sign Out
               </Button>
-            </nav>
+            </div>
           </div>
         </div>
       </header>
 
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         {/* Email verification banner */}
         {!isEmailConfirmed && (
           <Alert className="rounded-none border-x-0 border-t-0 bg-yellow-50 border-yellow-200">
@@ -245,86 +249,74 @@ const Dashboard = () => {
           </Alert>
         )}
 
-        <div className="container mx-auto p-6 space-y-6">
+        <div className="container mx-auto p-6 space-y-8">
           {/* Header Section */}
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-            <div>
-              <h1 className="text-3xl font-bold">
-                Welcome back, {profile?.full_name || "Student"}!
-              </h1>
-              <p className="text-muted-foreground">
-                Here's your study progress and upcoming goals
-              </p>
-            </div>
-
-            {/* Status Chip */}
-            <div className="flex items-center gap-2">
-              {profile?.examTypes && profile.examTypes.length > 0 && (
-                <Badge variant="secondary" className="px-3 py-1">
-                  Tests: {profile.examTypes.join(", ")} • {getDaysUntilExam()}
-                </Badge>
-              )}
-              
-              <Button variant="outline" size="sm" onClick={handleSignOut}>
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
-              </Button>
-            </div>
+          <div className="text-center space-y-2">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              Welcome back, {profile?.full_name || "Student"}!
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Here's your study progress and upcoming goals. Ready to achieve your dreams?
+            </p>
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card>
-              <CardContent className="p-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent"></div>
+              <CardContent className="p-6 relative">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Days Until Exam</p>
-                    <p className="text-2xl font-bold">{getDaysUntilExam()}</p>
+                    <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Days Until Exam</p>
+                    <p className="text-3xl font-bold text-blue-900 dark:text-blue-100">{getDaysUntilExam()}</p>
                   </div>
-                  <Calendar className="h-8 w-8 text-primary" />
+                  <Calendar className="h-10 w-10 text-blue-600 dark:text-blue-400" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4">
+            <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent"></div>
+              <CardContent className="p-6 relative">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Target Universities</p>
-                    <p className="text-2xl font-bold">{profile?.targetUniversities?.length || 0}</p>
+                    <p className="text-sm font-medium text-purple-700 dark:text-purple-300">Target Universities</p>
+                    <p className="text-3xl font-bold text-purple-900 dark:text-purple-100">{profile?.targetUniversities?.length || 0}</p>
                   </div>
-                  <GraduationCap className="h-8 w-8 text-primary" />
+                  <GraduationCap className="h-10 w-10 text-purple-600 dark:text-purple-400" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4">
+            <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent"></div>
+              <CardContent className="p-6 relative">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Available Topics</p>
-                    <p className="text-2xl font-bold">{availableTopics.length}</p>
+                    <p className="text-sm font-medium text-green-700 dark:text-green-300">Available Topics</p>
+                    <p className="text-3xl font-bold text-green-900 dark:text-green-100">{availableTopics.length}</p>
                   </div>
-                  <BookOpen className="h-8 w-8 text-primary" />
+                  <BookOpen className="h-10 w-10 text-green-600 dark:text-green-400" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4">
+            <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent"></div>
+              <CardContent className="p-6 relative">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Study Mode</p>
-                    <p className="text-2xl font-bold capitalize">{profile?.studyMode || "Focus"}</p>
+                    <p className="text-sm font-medium text-orange-700 dark:text-orange-300">Study Mode</p>
+                    <p className="text-3xl font-bold text-orange-900 dark:text-orange-100 capitalize">{profile?.studyMode || "Focus"}</p>
                   </div>
-                  <Brain className="h-8 w-8 text-primary" />
+                  <Brain className="h-10 w-10 text-orange-600 dark:text-orange-400" />
                 </div>
               </CardContent>
             </Card>
           </div>
 
           {/* Main Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Goals & Progress */}
             <div className="lg:col-span-2 space-y-6">
               {/* Goals Card */}
