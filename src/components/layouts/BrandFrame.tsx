@@ -22,7 +22,7 @@ const BrandFrame = ({ children, showLogo = true }: BrandFrameProps) => {
               <img
                 src={uniHackLogo}
                 alt="UNIHACK Logo"
-                className="h-8 w-auto object-contain mix-blend-multiply dark:mix-blend-screen hover:scale-105 transition-transform duration-200"
+                className="h-10 w-auto object-contain mix-blend-multiply dark:mix-blend-screen hover:scale-105 transition-transform duration-200"
                 style={{ backgroundColor: "transparent" }}
               />
             </Link>

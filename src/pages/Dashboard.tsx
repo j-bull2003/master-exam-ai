@@ -81,72 +81,64 @@ const Dashboard = () => {
   // Don't render anything while auth is loading
   if (authLoading) {
     return (
-      <BrandFrame>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Loading...</p>
-          </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
-      </BrandFrame>
+      </div>
     );
   }
 
   // Redirect to auth if not logged in
   if (!hasAccess) {
     return (
-      <BrandFrame>
-        <div className="flex items-center justify-center min-h-screen">
-          <Card className="w-full max-w-md">
-            <CardHeader className="text-center">
-              <CardTitle>Access Required</CardTitle>
-              <CardDescription>Please sign in to access your dashboard</CardDescription>
-            </CardHeader>
-            <CardContent className="text-center space-y-4">
-              <Button asChild className="w-full">
-                <Link to="/auth/login">Sign In</Link>
-              </Button>
-              <Button variant="outline" asChild className="w-full">
-                <Link to="/auth/register">Create Account</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </BrandFrame>
+      <div className="flex items-center justify-center min-h-screen">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <CardTitle>Access Required</CardTitle>
+            <CardDescription>Please sign in to access your dashboard</CardDescription>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <Button asChild className="w-full">
+              <Link to="/auth/login">Sign In</Link>
+            </Button>
+            <Button variant="outline" asChild className="w-full">
+              <Link to="/auth/register">Create Account</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
   // Show onboarding prompt if no profile
   if (!isLoading && !profile) {
     return (
-      <BrandFrame>
-        <div className="flex items-center justify-center min-h-screen">
-          <Card className="w-full max-w-md">
-            <CardHeader className="text-center">
-              <CardTitle>Welcome to UNIHACK!</CardTitle>
-              <CardDescription>Let's set up your profile to get started</CardDescription>
-            </CardHeader>
-            <CardContent className="text-center space-y-4">
-              <Button asChild className="w-full">
-                <Link to="/exam-picker">Complete Setup</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </BrandFrame>
+      <div className="flex items-center justify-center min-h-screen">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <CardTitle>Welcome to UNIHACK!</CardTitle>
+            <CardDescription>Let's set up your profile to get started</CardDescription>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <Button asChild className="w-full">
+              <Link to="/exam-picker">Complete Setup</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
   if (isLoading) {
     return (
-      <BrandFrame>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Loading dashboard...</p>
-          </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading dashboard...</p>
         </div>
-      </BrandFrame>
+      </div>
     );
   }
 
@@ -180,7 +172,65 @@ const Dashboard = () => {
   };
 
   return (
-    <BrandFrame>
+    <div className="min-h-screen bg-background">
+      {/* Navigation Header */}
+      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-14 items-center">
+          <div className="mr-4 flex">
+            <Link to="/" className="mr-6 flex items-center space-x-2">
+              <img
+                src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
+                alt="UNIHACK Logo"
+                className="h-8 w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
+                style={{ backgroundColor: "transparent" }}
+              />
+            </Link>
+            <nav className="flex items-center space-x-6 text-sm font-medium">
+              <Link
+                to="/dashboard"
+                className="transition-colors hover:text-foreground/80 text-foreground"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/practice"
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+              >
+                Practice
+              </Link>
+              <Link
+                to="/mocks"
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+              >
+                Mocks
+              </Link>
+              <Link
+                to="/analytics"
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+              >
+                Analytics
+              </Link>
+              <Link
+                to="/profile"
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+              >
+                Profile
+              </Link>
+            </nav>
+          </div>
+          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+            <div className="w-full flex-1 md:w-auto md:flex-none">
+            </div>
+            <nav className="flex items-center">
+              <Button variant="outline" size="sm" onClick={handleSignOut}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </Button>
+            </nav>
+          </div>
+        </div>
+      </header>
+
       <div className="min-h-screen bg-background">
         {/* Email verification banner */}
         {!isEmailConfirmed && (
@@ -423,7 +473,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </BrandFrame>
+    </div>
   );
 };
 
