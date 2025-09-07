@@ -8,3 +8,8 @@ export const testTopics: Record<ExamType, string[]> = Object.fromEntries(
 export const getTopicsForExam = (examType: ExamType): string[] => {
   return testTopics[examType] || [];
 };
+
+export const getTopicsForExams = (examTypes: ExamType[]): string[] => {
+  const allTopics = examTypes.flatMap(examType => testTopics[examType] || []);
+  return [...new Set(allTopics)]; // Remove duplicates
+};

@@ -35,10 +35,10 @@ export const ProfileAPI = {
         userId: data.user_id,
         email: data.email,
         full_name: data.full_name,
-        examType: data.exam_type as ExamType,
+        examTypes: data.exam_type ? [data.exam_type as ExamType] : [],
         examDate: data.exam_date,
-        targetUniversity: (data as any).target_university,
-        targetCourse: (data as any).target_course,
+        targetUniversities: (data as any).target_university ? [(data as any).target_university] : [],
+        targetCourses: (data as any).target_course ? [(data as any).target_course] : [],
         studyMode: (data as any).study_mode,
         createdAt: data.created_at,
         updatedAt: data.updated_at,
@@ -60,10 +60,10 @@ export const ProfileAPI = {
       }
 
       const updateData = {
-        exam_type: data.examType,
+        exam_type: data.examTypes[0] || null, // Store first exam type for backward compatibility
         exam_date: data.examDate,
-        target_university: data.targetUniversity,
-        target_course: data.targetCourse,
+        target_university: data.targetUniversities[0] || null,
+        target_course: data.targetCourses?.[0] || null,
         updated_at: new Date().toISOString(),
       };
 
@@ -82,10 +82,10 @@ export const ProfileAPI = {
         userId: profileData.user_id,
         email: profileData.email,
         full_name: profileData.full_name,
-        examType: profileData.exam_type as ExamType,
+        examTypes: profileData.exam_type ? [profileData.exam_type as ExamType] : [],
         examDate: profileData.exam_date,
-        targetUniversity: (profileData as any).target_university,
-        targetCourse: (profileData as any).target_course,
+        targetUniversities: (profileData as any).target_university ? [(profileData as any).target_university] : [],
+        targetCourses: (profileData as any).target_course ? [(profileData as any).target_course] : [],
         studyMode: (profileData as any).study_mode,
         createdAt: profileData.created_at,
         updatedAt: profileData.updated_at,

@@ -38,48 +38,48 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-        <Routes>
-          {/* Landing Page */}
-          <Route path="/" element={<Index />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/about" element={<About />} />
-          
-          {/* Authentication */}
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
-          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-          
-          {/* Legacy routes for backwards compatibility */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          
-          {/* Core App Flow */}
-          <Route path="/exam-picker" element={<ExamPicker />} />
-          <Route path="/diagnostic" element={<Diagnostic />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          
-          {/* Practice & Assessment */}
-          <Route path="/practice" element={<Practice />} />
-          <Route path="/mocks" element={<Mocks />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/quiz" element={<Quiz />} />
-          
-          {/* Role-based Pages */}
-          <Route path="/tutor-studio" element={<TutorStudio />} />
-          <Route path="/admin" element={<Admin />} />
-          
-          {/* Catch-all */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <FeedbackButton />
-          <SupportChatbot />
-        </BrowserRouter>
-    </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+            <Routes>
+              {/* Landing Page */}
+              <Route path="/" element={<Index />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/about" element={<About />} />
+              
+              {/* Authentication */}
+              <Route path="/auth/login" element={<Login />} />
+              <Route path="/auth/register" element={<Register />} />
+              <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+              
+              {/* Legacy routes for backwards compatibility */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              
+              {/* Core App Flow */}
+              <Route path="/exam-picker" element={<ExamPicker />} />
+              <Route path="/diagnostic" element={<Diagnostic />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              
+              {/* Practice & Assessment */}
+              <Route path="/practice" element={<Practice />} />
+              <Route path="/mocks" element={<Mocks />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/quiz" element={<Quiz />} />
+              
+              {/* Role-based Pages */}
+              <Route path="/tutor-studio" element={<TutorStudio />} />
+              <Route path="/admin" element={<Admin />} />
+              
+              {/* Catch-all */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <FeedbackButton />
+            <SupportChatbot />
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 
