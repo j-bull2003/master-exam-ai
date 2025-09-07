@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 
 export const Consulting = () => {
+  console.log('Consulting component rendering');
+
   const programmes = [
     {
       title: "US University Admissions",
@@ -196,28 +198,6 @@ export const Consulting = () => {
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-20 px-6 bg-background/50 backdrop-blur-sm">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Services</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive support across every aspect of university admissions
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => (
-              <Card key={index} className="card-layered text-center p-8 hover:shadow-lg transition-all duration-300">
-                <div className="mb-4">{service.icon}</div>
-                <h3 className="text-lg font-semibold mb-3">{service.title}</h3>
-                <p className="text-muted-foreground text-sm">{service.description}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Success Stories Section */}
       <section id="success-stories" className="py-20 px-6 bg-background/50 backdrop-blur-sm">
         <div className="container mx-auto">
@@ -293,8 +273,30 @@ export const Consulting = () => {
         </div>
       </section>
 
-      {/* Process Section */}
+      {/* Services Grid */}
       <section className="py-20 px-6">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Services</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Comprehensive support across every aspect of university admissions
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => (
+              <Card key={index} className="card-layered text-center p-8 hover:shadow-lg transition-all duration-300">
+                <div className="mb-4">{service.icon}</div>
+                <h3 className="text-lg font-semibold mb-3">{service.title}</h3>
+                <p className="text-muted-foreground text-sm">{service.description}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section className="py-20 px-6 bg-background/50 backdrop-blur-sm">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
