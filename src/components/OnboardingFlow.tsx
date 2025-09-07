@@ -37,6 +37,7 @@ import type { ExamType } from "@/types/profile";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import BrandFrame from "@/components/layouts/BrandFrame";
+import { getRelevantUniversities, getExamRecommendations } from "@/lib/universityFilters";
 
 interface OnboardingFlowProps {
   onComplete: () => void;
@@ -196,7 +197,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   };
 
-  const filteredUniversities = universities.filter(uni =>
+  // Filter universities based on selected exam types
+  const relevantUniversities = getRelevantUniversities(universities, formData.examTypes);
+  
+  const filteredUniversities = relevantUniversities.filter(uni =>
     uni.name.toLowerCase().includes(formData.universitySearch.toLowerCase()) ||
     uni.aliases?.some(alias => alias.toLowerCase().includes(formData.universitySearch.toLowerCase()))
   );
@@ -442,6 +446,15 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             <CardHeader className="text-center">
               <CardTitle className="text-2xl">Target Universities</CardTitle>
               <CardDescription>Where do you want to study?</CardDescription>
+              {formData.examTypes.length > 0 && relevantUniversities.length < universities.length && (
+                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    <CheckCircle2 className="inline h-4 w-4 mr-1" />
+                    Showing universities relevant to {formData.examTypes.join(", ")} 
+                    ({relevantUniversities.length} of {universities.length} universities)
+                  </p>
+                </div>
+              )}
             </CardHeader>
             <CardContent className="space-y-6">
               {/* University Search */}
