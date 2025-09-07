@@ -6,67 +6,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GraduationCap, Search, MapPin, Clock, Users } from "lucide-react";
-
-// Mock exam data - replace with actual API
-const exams = [
-  {
-    id: "ucat",
-    name: "UCAT",
-    fullName: "University Clinical Aptitude Test",
-    description: "Required for medicine and dentistry applications in UK, Australia, and New Zealand",
-    region: "UK",
-    duration: "2 hours",
-    sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning", "Situational Judgement"],
-    students: "30,000+"
-  },
-  {
-    id: "sat",
-    name: "SAT",
-    fullName: "Scholastic Assessment Test",
-    description: "Standardized test for college admissions in the United States",
-    region: "US",
-    duration: "3 hours",
-    sections: ["Reading and Writing", "Math"],
-    students: "2M+"
-  },
-  {
-    id: "act",
-    name: "ACT",
-    fullName: "American College Testing",
-    description: "Standardized test for college admissions in the United States",
-    region: "US",
-    duration: "3 hours",
-    sections: ["English", "Math", "Reading", "Science", "Writing (Optional)"],
-    students: "1.8M+"
-  },
-  {
-    id: "step",
-    name: "STEP",
-    fullName: "Sixth Term Examination Paper",
-    description: "Mathematics examination for Cambridge and other top UK universities",
-    region: "UK",
-    duration: "3 hours",
-    sections: ["Pure Mathematics", "Mechanics", "Statistics"],
-    students: "5,000+"
-  },
-  {
-    id: "mat",
-    name: "MAT",
-    fullName: "Mathematics Admissions Test",
-    description: "Required for mathematics courses at Oxford and other universities",
-    region: "UK",
-    duration: "2.5 hours",
-    sections: ["Multiple Choice", "Longer Problems"],
-    students: "3,000+"
-  }
-];
+import { EXAM_CONFIGS } from "@/data/examConfig";
 
 const ExamPicker = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("all");
   const [selectedExam, setSelectedExam] = useState<string | null>(null);
 
-  const filteredExams = exams.filter(exam => {
+  const filteredExams = EXAM_CONFIGS.filter(exam => {
     const matchesSearch = exam.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          exam.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          exam.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -75,7 +22,10 @@ const ExamPicker = () => {
   });
 
   const handleExamSelect = (examId: string) => {
-    setSelectedExam(examId);
+    const exam = EXAM_CONFIGS.find(e => e.id === examId);
+    if (exam?.available) {
+      setSelectedExam(examId);
+    }
   };
 
   return (
@@ -137,15 +87,24 @@ const ExamPicker = () => {
           {filteredExams.map((exam) => (
             <Card 
               key={exam.id} 
-              className={`question-card cursor-pointer transition-all duration-200 ${
-                selectedExam === exam.id ? 'ring-2 ring-primary border-primary' : 'hover:shadow-academic-lg'
+              className={`question-card transition-all duration-200 ${
+                exam.available 
+                  ? `cursor-pointer ${selectedExam === exam.id ? 'ring-2 ring-primary border-primary' : 'hover:shadow-academic-lg'}`
+                  : 'opacity-60 cursor-not-allowed'
               }`}
               onClick={() => handleExamSelect(exam.id)}
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-2xl font-display">{exam.name}</CardTitle>
+                    <CardTitle className="text-2xl font-display flex items-center gap-2">
+                      {exam.name}
+                      {!exam.available && (
+                        <Badge variant="secondary" className="text-xs">
+                          Coming Soon
+                        </Badge>
+                      )}
+                    </CardTitle>
                     <CardDescription className="text-sm font-medium">{exam.fullName}</CardDescription>
                   </div>
                   <Badge variant="outline" className="text-xs">
@@ -155,7 +114,10 @@ const ExamPicker = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">{exam.description}</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {exam.description}
+                  {!exam.available && " Resources coming soon!"}
+                </p>
                 
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center text-muted-foreground">
