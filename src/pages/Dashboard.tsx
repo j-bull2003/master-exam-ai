@@ -34,7 +34,8 @@ import {
   AlertTriangle,
   GraduationCap,
   MapPin,
-  Edit
+  Edit,
+  Home
 } from "lucide-react";
 import BrandFrame from "@/components/layouts/BrandFrame";
 
@@ -172,66 +173,36 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Navigation Header */}
-      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center">
-          <div className="mr-4 flex">
-            <Link to="/" className="mr-6 flex items-center space-x-2">
-              <img
-                src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
-                alt="UNIHACK Logo"
-                className="h-12 w-auto object-contain mix-blend-multiply dark:mix-blend-screen hover:scale-105 transition-transform duration-200"
-                style={{ backgroundColor: "transparent" }}
-              />
-            </Link>
-            <nav className="flex items-center space-x-6 text-sm font-medium">
-              <Link
-                to="/dashboard"
-                className="transition-colors hover:text-foreground/80 text-foreground border-b-2 border-primary"
-              >
-                Dashboard
-              </Link>
-              <Link
-                to="/practice"
-                className="transition-colors hover:text-foreground/80 text-foreground/60 hover:border-b-2 hover:border-primary/50 pb-[2px]"
-              >
-                Practice
-              </Link>
-              <Link
-                to="/mocks"
-                className="transition-colors hover:text-foreground/80 text-foreground/60 hover:border-b-2 hover:border-primary/50 pb-[2px]"
-              >
-                Mocks
-              </Link>
-              <Link
-                to="/analytics"
-                className="transition-colors hover:text-foreground/80 text-foreground/60 hover:border-b-2 hover:border-primary/50 pb-[2px]"
-              >
-                Analytics
-              </Link>
-              <Link
-                to="/profile"
-                className="transition-colors hover:text-foreground/80 text-foreground/60 hover:border-b-2 hover:border-primary/50 pb-[2px]"
-              >
-                Profile
-              </Link>
-            </nav>
-          </div>
-          <div className="flex flex-1 items-center justify-end space-x-4">
-            {/* User Info and Sign Out */}
-            <div className="flex items-center gap-4">
-              {profile?.examTypes && profile.examTypes.length > 0 && (
-                <Badge variant="secondary" className="px-3 py-1 text-sm">
-                  {profile.examTypes.join(", ")} • {getDaysUntilExam()}
-                </Badge>
-              )}
-              <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
-                <LogOut className="w-4 h-4" />
-                Sign Out
-              </Button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-background bg-mesh">
+      {/* Header */}
+      <header className="border-b border-border bg-background/95 backdrop-blur">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <Link
+            to="/dashboard"
+            className="flex items-center hover:opacity-80 transition-opacity group"
+          >
+            <img
+              src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
+              alt="UniHack.ai Logo"
+              className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+              style={{ backgroundColor: "transparent" }}
+            />
+          </Link>
+          <nav className="flex items-center space-x-6">
+            <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Home className="w-4 h-4" />Dashboard</Link>
+            <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
+            <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
+            <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
+            <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
+            <Button 
+              onClick={handleSignOut}
+              size="sm" 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
+            </Button>
+          </nav>
         </div>
       </header>
 
