@@ -97,15 +97,13 @@ export const Header = () => {
               About
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
-            <a
-              href="https://www.etonstone.org"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/consulting"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
             >
-              Etonstone Education
+              Consulting
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
-            </a>
+            </Link>
           </div>
 
           {/* Command Palette Button & CTA Buttons */}

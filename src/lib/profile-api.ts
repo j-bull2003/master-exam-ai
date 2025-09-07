@@ -37,9 +37,9 @@ export const ProfileAPI = {
         full_name: data.full_name,
         examType: data.exam_type as ExamType,
         examDate: data.exam_date,
-        targetUniversity: data.target_university,
-        targetCourse: data.target_course,
-        studyMode: data.study_mode,
+        targetUniversity: '', // Not in database yet
+        targetCourse: '', // Not in database yet
+        studyMode: 'self', // Default value
         createdAt: data.created_at,
         updatedAt: data.updated_at,
       };
@@ -62,8 +62,6 @@ export const ProfileAPI = {
       const updateData = {
         exam_type: data.examType,
         exam_date: data.examDate,
-        target_university: data.targetUniversity,
-        target_course: data.targetCourse,
         updated_at: new Date().toISOString(),
       };
 
@@ -84,9 +82,9 @@ export const ProfileAPI = {
         full_name: profileData.full_name,
         examType: profileData.exam_type as ExamType,
         examDate: profileData.exam_date,
-        targetUniversity: profileData.target_university,
-        targetCourse: profileData.target_course,
-        studyMode: profileData.study_mode,
+        targetUniversity: '', // Not in database yet
+        targetCourse: '', // Not in database yet
+        studyMode: 'self', // Default value
         createdAt: profileData.created_at,
         updatedAt: profileData.updated_at,
       };
