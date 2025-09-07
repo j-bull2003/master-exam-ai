@@ -35,7 +35,7 @@ export const Consulting = () => {
       title: "UK University Admissions", 
       description: "Expert guidance for Oxford, Cambridge, and Russell Group universities",
       features: [
-        "UCAT/BMAT/MAT preparation",
+        "UCAT/MAT/TMUA preparation",
         "Personal statement crafting",
         "Interview training",
         "Course selection strategy",
@@ -117,7 +117,12 @@ export const Consulting = () => {
               <Calendar className="w-5 h-5 mr-2" />
               Book Strategy Call
             </Button>
-            <Button variant="outline" size="lg" className="px-8 py-3 text-lg">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="px-8 py-3 text-lg"
+              onClick={() => document.getElementById('success-stories')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               View Success Stories
             </Button>
           </div>
@@ -209,6 +214,81 @@ export const Consulting = () => {
                 <p className="text-muted-foreground text-sm">{service.description}</p>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Success Stories Section */}
+      <section id="success-stories" className="py-20 px-6 bg-background/50 backdrop-blur-sm">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Success Stories</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Real results from students who trusted us with their university journey
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="card-layered p-8 text-center">
+              <div className="mb-6">
+                <div className="w-16 h-16 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <GraduationCap className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Sarah M.</h3>
+                <p className="text-muted-foreground text-sm mb-4">SAT: 1480 → 1560</p>
+              </div>
+              <blockquote className="text-muted-foreground mb-4 italic">
+                "The personalized SAT prep strategy helped me improve by 80 points. Now I'm studying Computer Science at MIT!"
+              </blockquote>
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+                MIT - Class of 2028
+              </Badge>
+            </Card>
+
+            <Card className="card-layered p-8 text-center">
+              <div className="mb-6">
+                <div className="w-16 h-16 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <Trophy className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">James L.</h3>
+                <p className="text-muted-foreground text-sm mb-4">UCAT: 2640</p>
+              </div>
+              <blockquote className="text-muted-foreground mb-4 italic">
+                "The interview preparation was incredible. I felt confident and prepared for my Oxford Medicine interviews."
+              </blockquote>
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+                Oxford Medicine - 2024
+              </Badge>
+            </Card>
+
+            <Card className="card-layered p-8 text-center">
+              <div className="mb-6">
+                <div className="w-16 h-16 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <Target className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Emma R.</h3>
+                <p className="text-muted-foreground text-sm mb-4">TMUA: 7.8/9.0</p>
+              </div>
+              <blockquote className="text-muted-foreground mb-4 italic">
+                "The TMUA preparation was exactly what I needed. The practice questions were spot-on for the actual exam."
+              </blockquote>
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+                Cambridge Mathematics - 2024
+              </Badge>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-lg text-muted-foreground mb-6">
+              Join 200+ students who achieved their dream university placements
+            </p>
+            <Button 
+              size="lg"
+              onClick={() => window.open('https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-e', '_blank')}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
+            >
+              Start Your Success Story
+            </Button>
           </div>
         </div>
       </section>
