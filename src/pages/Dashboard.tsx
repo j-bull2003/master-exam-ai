@@ -39,7 +39,7 @@ const Dashboard = () => {
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const { toast } = useToast();
   const { user, loading: authLoading, signOut } = useAuth();
-  const { profileData, updateExamDate } = useUserProfile();
+  const { profileData, isLoading: profileLoading, updateExamDate } = useUserProfile();
   
   // Auth state is managed by AuthContext
   const hasAccess = !authLoading && user !== null;
@@ -50,10 +50,10 @@ const Dashboard = () => {
 
   // Load user data when auth state changes
   useEffect(() => {
-    if (!authLoading && hasAccess && profileData) {
+    if (!authLoading && !profileLoading) {
       setIsLoading(false);
     }
-  }, [authLoading, hasAccess, profileData]);
+  }, [authLoading, profileLoading]);
 
   // Empty arrays - no mock data, starts at 0 for everything
   const recentSessions = [];
