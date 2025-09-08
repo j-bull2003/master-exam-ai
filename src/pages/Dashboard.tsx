@@ -338,23 +338,59 @@ const Dashboard = () => {
                     Study Plan
                   </CardTitle>
                   <CardDescription>
-                    Your personalized study schedule
+                    Your personalized SAT study schedule
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {studyPlan.length === 0 ? (
-                    <div className="text-center py-8">
-                      <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold mb-2">No Study Plan Yet</h3>
-                      <p className="text-muted-foreground mb-4">
-                        Complete your diagnostic test to get a personalized study plan
-                      </p>
-                      <Link to="/diagnostic">
-                        <Button>
-                          <Brain className="w-4 h-4 mr-2" />
-                          Take Diagnostic Test
-                        </Button>
-                      </Link>
+                    <div className="space-y-4">
+                      <div className="text-center py-6">
+                        <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold mb-2">Build Your Study Plan</h3>
+                        <p className="text-muted-foreground mb-4">
+                          Complete your diagnostic test to get a personalized SAT study plan
+                        </p>
+                        <Link to="/diagnostic">
+                          <Button>
+                            <Brain className="w-4 h-4 mr-2" />
+                            Take Diagnostic Test
+                          </Button>
+                        </Link>
+                      </div>
+                      
+                      {/* SAT Sections Overview */}
+                      <div className="border-t pt-4">
+                        <h4 className="font-semibold mb-3 text-sm">SAT Test Sections</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div className="p-3 border rounded-lg bg-muted/50">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Calculator className="w-4 h-4 text-blue-500" />
+                              <span className="font-medium text-sm">Math</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground mb-2">
+                              Algebra, Geometry, Statistics & Probability
+                            </p>
+                            <div className="flex justify-between text-xs">
+                              <span>Questions: 0/44</span>
+                              <span>Score: 0/800</span>
+                            </div>
+                          </div>
+                          
+                          <div className="p-3 border rounded-lg bg-muted/50">
+                            <div className="flex items-center gap-2 mb-2">
+                              <BookOpen className="w-4 h-4 text-green-500" />
+                              <span className="font-medium text-sm">Reading & Writing</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground mb-2">
+                              Reading Comprehension & Language Usage
+                            </p>
+                            <div className="flex justify-between text-xs">
+                              <span>Questions: 0/54</span>
+                              <span>Score: 0/800</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <div className="space-y-4">
