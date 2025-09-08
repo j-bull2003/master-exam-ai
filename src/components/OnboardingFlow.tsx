@@ -387,12 +387,12 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
             {/* Step 2: Exam Selection */}
             {currentStep === 2 && (
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div className="text-center space-y-2">
-                  <p className="text-muted-foreground">
+                  <p className="text-sm sm:text-base text-muted-foreground px-2">
                     Choose the SAT exam you're preparing for to get personalized practice content
                   </p>
-                  <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg px-3 py-2">
+                  <p className="text-xs sm:text-sm text-muted-foreground bg-muted/50 rounded-lg px-2 sm:px-3 py-2 mx-2 sm:mx-0">
                     Currently available: {ONBOARDING_EXAMS.map(e => e.name).join(', ')}
                   </p>
                 </div>
@@ -403,32 +403,32 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     setFormData(prev => ({ ...prev, examType: value }));
                     if (errors.examType) setErrors(prev => ({ ...prev, examType: "" }));
                   }}
-                  className="space-y-4"
+                  className="space-y-3 sm:space-y-4"
                 >
                   {examTypes.map((exam) => (
-                    <div key={exam.id} className="flex items-center space-x-3">
-                      <RadioGroupItem value={exam.id} id={exam.id} />
+                    <div key={exam.id} className="flex items-start sm:items-center space-x-2 sm:space-x-3">
+                      <RadioGroupItem value={exam.id} id={exam.id} className="mt-1 sm:mt-0" />
                       <div className="flex-1 cursor-pointer" onClick={() => setFormData(prev => ({ ...prev, examType: exam.id }))}>
                         <Card className={`transition-all duration-200 hover:shadow-md ${
                           formData.examType === exam.id ? 'ring-2 ring-primary border-primary' : 'border-input'
                         }`}>
-                          <CardContent className="p-4">
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <h3 className="font-semibold text-lg">{exam.name}</h3>
-                                <p className="text-sm text-muted-foreground mb-2">{exam.description}</p>
-                                <p className="text-sm text-muted-foreground">Score Range: {exam.scoreRange}</p>
+                          <CardContent className="p-3 sm:p-4">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start space-y-3 sm:space-y-0">
+                              <div className="flex-1">
+                                <h3 className="font-semibold text-base sm:text-lg">{exam.name}</h3>
+                                <p className="text-xs sm:text-sm text-muted-foreground mb-2 leading-relaxed">{exam.description}</p>
+                                <p className="text-xs sm:text-sm text-muted-foreground">Score Range: {exam.scoreRange}</p>
                               </div>
-                              <div className="text-right">
-                                <p className="text-sm font-medium text-muted-foreground mb-1">Target Universities:</p>
-                                <div className="flex flex-wrap gap-1 justify-end">
+                              <div className="sm:text-right sm:ml-4">
+                                <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-1 sm:mb-1">Target Universities:</p>
+                                <div className="flex flex-wrap gap-1 sm:justify-end">
                                   {exam.universities.slice(0, 2).map((uni) => (
-                                    <span key={uni} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                                    <span key={uni} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded whitespace-nowrap">
                                       {uni}
                                     </span>
                                   ))}
                                   {exam.universities.length > 2 && (
-                                    <span className="text-xs text-muted-foreground">+{exam.universities.length - 2} more</span>
+                                    <span className="text-xs text-muted-foreground whitespace-nowrap">+{exam.universities.length - 2} more</span>
                                   )}
                                 </div>
                               </div>
@@ -441,8 +441,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 </RadioGroup>
 
                 {errors.examType && (
-                  <p className="text-sm text-destructive flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4" />
+                  <p className="text-sm text-destructive flex items-center gap-2 px-2 sm:px-0">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0" />
                     {errors.examType}
                   </p>
                 )}
