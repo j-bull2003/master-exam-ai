@@ -126,7 +126,7 @@ const SATPrograms = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <a href="https://calendly.com/etonstone-education/1-hour-consultation" target="_blank" rel="noopener noreferrer">
+              <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer">
                 <Button size="lg" className="px-8 py-4 text-lg bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
                   Book Free Consultation
                   <Calendar className="w-5 h-5 ml-2" />
@@ -293,7 +293,7 @@ const SATPrograms = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://calendly.com/etonstone-education/1-hour-consultation" target="_blank" rel="noopener noreferrer">
+              <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer">
                 <Button size="lg" className="px-12 py-4 text-lg bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
                   Book Free Consultation
                   <Calendar className="w-5 h-5 ml-2" />
