@@ -53,7 +53,7 @@ const SATPrograms = () => {
       improvement: "+340",
       college: "Stanford University",
       quote: "The personalized approach helped me identify my weak areas and turn them into strengths. I couldn't have achieved my dream score without this program.",
-      program: "1:1 Tutoring"
+      program: "1:1 Booster Program"
     },
     {
       name: "Marcus Williams", 
@@ -61,8 +61,8 @@ const SATPrograms = () => {
       after: "1520",
       improvement: "+340",
       college: "MIT",
-      quote: "The group program was perfect - I learned from my peers while getting expert guidance. The collaborative environment kept me motivated throughout.",
-      program: "Group Program"
+      quote: "The 1:1 coaching was perfect - I got expert guidance tailored specifically to my needs. The personalized attention kept me motivated throughout.",
+      program: "1:1 Booster Program"
     },
     {
       name: "Priya Patel",
@@ -70,8 +70,8 @@ const SATPrograms = () => {
       after: "1560",
       improvement: "+260", 
       college: "Harvard University",
-      quote: "Beyond just SAT prep, the admissions guidance helped me craft a compelling application that stood out. The comprehensive support made all the difference.",
-      program: "Premium Package"
+      quote: "Beyond just SAT prep, the comprehensive support helped me craft a compelling application that stood out. The one-on-one guidance made all the difference.",
+      program: "1:1 Booster Program"
     }
   ];
 
@@ -128,7 +128,7 @@ const SATPrograms = () => {
                 { number: "500+", label: "Elite Students Coached" },
                 { number: "1580", label: "Average Achievement" },
                 { number: "98%", label: "Success Rate" },
-                { number: "+340", label: "Average Improvement" }
+                { number: "+210", label: "Average Improvement" }
               ].map((metric, idx) => (
                 <div key={idx} className="text-center group">
                   <div className="text-3xl font-bold text-slate-900 mb-2 font-serif group-hover:scale-110 transition-transform duration-300">{metric.number}</div>
@@ -179,18 +179,18 @@ const SATPrograms = () => {
                 
                 <div className="flex items-center justify-center gap-4 mb-6">
                   <div className="text-center">
-                    <span className="font-serif text-5xl font-bold text-slate-900">{program.price}</span>
-                    <div className="text-slate-500 mt-2">Investment</div>
+                    <span className="font-serif text-4xl font-bold text-slate-900">{program.price}</span>
+                    <div className="text-slate-500 mt-1 text-sm">Investment</div>
                   </div>
                   <div className="text-left">
-                    <div className="text-xl text-slate-400 line-through font-light">{program.originalPrice}</div>
-                    <div className="text-sm text-emerald-700 font-semibold bg-emerald-50 px-3 py-1 rounded-full inline-block">
+                    <div className="text-lg text-slate-400 line-through font-light">{program.originalPrice}</div>
+                    <div className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-1 rounded-full inline-block">
                       Limited Time: 50% Savings
                     </div>
                   </div>
                 </div>
                 
-                <div className="text-slate-600 mb-6 font-medium">{program.duration} Intensive Program</div>
+                <div className="text-slate-600 mb-4 font-medium text-sm">{program.duration} Intensive Program</div>
                 <div className="inline-block bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 px-8 py-4 rounded-2xl font-semibold border border-emerald-200/50 shadow-sm">
                   {program.guarantee}
                 </div>
