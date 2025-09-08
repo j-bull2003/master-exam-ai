@@ -3,178 +3,133 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { 
   PlayCircle, 
-  Settings, 
-  Filter, 
   BookOpen, 
-  Target, 
-  Clock, 
-  LogOut, 
   Home, 
   BarChart3, 
   Clipboard, 
   User,
   Calculator,
-  ChevronRight,
-  TrendingUp
+  LogOut,
+  Sparkles,
+  Target
 } from "lucide-react";
 
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 const Practice = () => {
-  const [selectedSection, setSelectedSection] = useState("");
-  const [selectedDomain, setSelectedDomain] = useState("");
-  const [selectedSubdomain, setSelectedSubdomain] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("adaptive");
-  const [instantFeedback, setInstantFeedback] = useState(false);
-  const [questionCount, setQuestionCount] = useState("20");
+  const [selectedSection, setSelectedSection] = useState<"reading-writing" | "math" | null>(null);
 
-  // Exact SAT structure with domains and subdomains
-  const satStructure = {
-    "reading-writing": {
-      name: "Reading and Writing",
-      icon: BookOpen,
-      color: "blue",
-      domains: {
-        "information-ideas": {
-          name: "Information and Ideas",
-          percentage: 26,
-          subdomains: [
-            "Central Ideas and Details",
-            "Command of Evidence: Quantitative", 
-            "Command of Evidence: Textual",
-            "Inference"
-          ]
-        },
-        "craft-structure": {
-          name: "Craft and Structure", 
-          percentage: 28,
-          subdomains: [
-            "Cross-Text Connections",
-            "Text Structure and Purpose",
-            "Words in Context"
-          ]
-        },
-        "expression-ideas": {
-          name: "Expression of Ideas",
-          percentage: 20,
-          subdomains: [
-            "Rhetorical Synthesis",
-            "Transitions"
-          ]
-        },
-        "standard-english": {
-          name: "Standard English Conventions",
-          percentage: 26,
-          subdomains: [
-            "Boundaries",
-            "Form, Structure, Sense"
-          ]
-        }
-      }
-    },
-    "math": {
-      name: "Math",
-      icon: Calculator,
-      color: "emerald",
-      domains: {
-        "algebra": {
-          name: "Algebra",
-          percentage: 35,
-          subdomains: [
-            "Linear equations in 1 variable",
-            "Linear equations in 2 variables", 
-            "Linear functions",
-            "Systems of 2 linear equations in 2 variables",
-            "Linear inequalities in 1 or 2 variables"
-          ]
-        },
-        "advanced-math": {
-          name: "Advanced Math",
-          percentage: 35,
-          subdomains: [
-            "Equivalent expressions",
-            "Nonlinear equations in 1 variable and systems of equations in 2 variables",
-            "Nonlinear functions"
-          ]
-        },
-        "problem-solving-data": {
-          name: "Problem-Solving and Data Analysis",
-          percentage: 15,
-          subdomains: [
-            "Ratios, rates, proportional relationships, and units",
-            "Percentages",
-            "One-variable data: distributions and measures of center and spread",
-            "Two-variable data: models and scatterplots",
-            "Probability and conditional probability",
-            "Inference from sample statistics and margin of error",
-            "Evaluating statistical claims: observational studies and experiments"
-          ]
-        },
-        "geometry-trigonometry": {
-          name: "Geometry and Trigonometry",
-          percentage: 15,
-          subdomains: [
-            "Area and volume formulas",
-            "Lines, angles, and triangles",
-            "Right triangles and trigonometry",
-            "Circles"
-          ]
-        }
-      }
-    }
-  };
-
-  const recommendedSessions = [
+  // SAT Reading and Writing domains
+  const readingWritingDomains = [
     {
-      title: "Advanced Math Focus",
-      description: "Your weakest area - time to improve",
-      section: "Math",
-      domain: "Advanced Math",
-      difficulty: "Medium",
-      questions: 25,
-      time: "35 min",
-      priority: "high"
+      name: "Information and Ideas",
+      percentage: 26,
+      description: "Central ideas, evidence, and inference",
+      subdomains: [
+        "Central Ideas and Details",
+        "Command of Evidence: Quantitative",
+        "Command of Evidence: Textual",
+        "Inference"
+      ],
+      color: "bg-blue-500/10 border-blue-500/20 hover:bg-blue-500/20",
+      textColor: "text-blue-700"
     },
     {
-      title: "Craft and Structure Practice",
-      description: "Reading & Writing improvement focus",
-      section: "Reading and Writing", 
-      domain: "Craft and Structure",
-      difficulty: "Medium",
-      questions: 20,
-      time: "30 min",
-      priority: "high"
+      name: "Craft and Structure",
+      percentage: 28,
+      description: "Text connections, structure, and vocabulary",
+      subdomains: [
+        "Cross-Text Connections",
+        "Text Structure and Purpose",
+        "Words in Context"
+      ],
+      color: "bg-purple-500/10 border-purple-500/20 hover:bg-purple-500/20",
+      textColor: "text-purple-700"
     },
     {
-      title: "Mixed Practice Session",
-      description: "Balanced practice across all topics",
-      section: "All Sections",
-      domain: "Mixed",
-      difficulty: "Adaptive",
-      questions: 20,
-      time: "30 min",
-      priority: "medium"
+      name: "Expression of Ideas",
+      percentage: 20,
+      description: "Rhetorical synthesis and transitions",
+      subdomains: [
+        "Rhetorical Synthesis",
+        "Transitions"
+      ],
+      color: "bg-green-500/10 border-green-500/20 hover:bg-green-500/20",
+      textColor: "text-green-700"
+    },
+    {
+      name: "Standard English Conventions",
+      percentage: 26,
+      description: "Grammar, punctuation, and structure",
+      subdomains: [
+        "Boundaries",
+        "Form, Structure, Sense"
+      ],
+      color: "bg-orange-500/10 border-orange-500/20 hover:bg-orange-500/20",
+      textColor: "text-orange-700"
     }
   ];
 
-  const getSelectedDomains = () => {
-    if (!selectedSection || selectedSection === "all") return [];
-    return Object.entries(satStructure[selectedSection as keyof typeof satStructure]?.domains || {});
-  };
-
-  const getSelectedSubdomains = () => {
-    if (!selectedSection || !selectedDomain || selectedSection === "all" || selectedDomain === "all") return [];
-    const section = satStructure[selectedSection as keyof typeof satStructure];
-    if (!section || !section.domains) return [];
-    const domains = section.domains as any;
-    const domain = domains[selectedDomain];
-    return domain?.subdomains || [];
-  };
+  // SAT Math domains
+  const mathDomains = [
+    {
+      name: "Algebra",
+      percentage: 35,
+      description: "Linear equations, functions, and inequalities",
+      subdomains: [
+        "Linear equations in 1 variable",
+        "Linear equations in 2 variables",
+        "Linear functions",
+        "Systems of 2 linear equations in 2 variables",
+        "Linear inequalities in 1 or 2 variables"
+      ],
+      color: "bg-emerald-500/10 border-emerald-500/20 hover:bg-emerald-500/20",
+      textColor: "text-emerald-700"
+    },
+    {
+      name: "Advanced Math",
+      percentage: 35,
+      description: "Nonlinear equations and functions",
+      subdomains: [
+        "Equivalent expressions",
+        "Nonlinear equations in 1 variable and systems of equations in 2 variables",
+        "Nonlinear functions"
+      ],
+      color: "bg-red-500/10 border-red-500/20 hover:bg-red-500/20",
+      textColor: "text-red-700"
+    },
+    {
+      name: "Problem-Solving and Data Analysis",
+      percentage: 15,
+      description: "Statistics, probability, and data interpretation",
+      subdomains: [
+        "Ratios, rates, proportional relationships, and units",
+        "Percentages",
+        "One-variable data: distributions and measures of center and spread",
+        "Two-variable data: models and scatterplots",
+        "Probability and conditional probability",
+        "Inference from sample statistics and margin of error",
+        "Evaluating statistical claims: observational studies and experiments"
+      ],
+      color: "bg-indigo-500/10 border-indigo-500/20 hover:bg-indigo-500/20",
+      textColor: "text-indigo-700"
+    },
+    {
+      name: "Geometry and Trigonometry",
+      percentage: 15,
+      description: "Shapes, angles, and trigonometric functions",
+      subdomains: [
+        "Area and volume formulas",
+        "Lines, angles, and triangles",
+        "Right triangles and trigonometry",
+        "Circles"
+      ],
+      color: "bg-teal-500/10 border-teal-500/20 hover:bg-teal-500/20",
+      textColor: "text-teal-700"
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-background bg-mesh">
@@ -213,238 +168,229 @@ const Practice = () => {
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-display font-bold mb-2">SAT Practice Session</h1>
-          <p className="text-muted-foreground">
-            Choose your SAT section, domain, and subdomain to start targeted practice
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold mb-3">SAT Practice</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Choose a section to start your targeted practice. Each domain is designed to strengthen specific skills.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Practice Settings */}
-          <div className="lg:col-span-1">
-            <Card className="question-card">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Settings className="h-5 w-5 mr-2" />
-                  Practice Settings
-                </CardTitle>
-                <CardDescription>Customize your SAT practice session</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="section">SAT Section</Label>
-                  <Select value={selectedSection} onValueChange={(value) => {
-                    setSelectedSection(value);
-                    setSelectedDomain("");
-                    setSelectedSubdomain("");
-                  }}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select section" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Sections</SelectItem>
-                      <SelectItem value="reading-writing">Reading and Writing</SelectItem>
-                      <SelectItem value="math">Math</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {selectedSection && selectedSection !== "all" && (
-                  <div className="space-y-2">
-                    <Label htmlFor="domain">Domain</Label>
-                    <Select value={selectedDomain} onValueChange={(value) => {
-                      setSelectedDomain(value);
-                      setSelectedSubdomain("");
-                    }}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select domain" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Domains</SelectItem>
-                        {getSelectedDomains().map(([key, domain]) => (
-                          <SelectItem key={key} value={key}>
-                            {domain.name} ({domain.percentage}%)
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+        {/* Section Selection */}
+        {!selectedSection && (
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Reading and Writing Section */}
+            <Card 
+              className="cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20"
+              onClick={() => setSelectedSection("reading-writing")}
+            >
+              <CardContent className="p-8">
+                <div className="text-center space-y-4">
+                  <div className="p-4 bg-blue-500/20 rounded-full w-20 h-20 mx-auto flex items-center justify-center">
+                    <BookOpen className="h-10 w-10 text-blue-600" />
                   </div>
-                )}
-
-                {selectedDomain && selectedDomain !== "all" && (
-                  <div className="space-y-2">
-                    <Label htmlFor="subdomain">Subdomain</Label>
-                    <Select value={selectedSubdomain} onValueChange={setSelectedSubdomain}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select subdomain" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Subdomains</SelectItem>
-                        {getSelectedSubdomains().map((subdomain, index) => (
-                          <SelectItem key={index} value={subdomain}>
-                            {subdomain}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <div>
+                    <h2 className="text-2xl font-bold text-blue-700 mb-2">Reading and Writing</h2>
+                    <p className="text-muted-foreground mb-4">
+                      Practice reading comprehension, grammar, and writing skills
+                    </p>
+                    <Badge variant="secondary" className="text-sm">
+                      4 Domains Available
+                    </Badge>
                   </div>
-                )}
-
-                <div className="space-y-2">
-                  <Label htmlFor="difficulty">Difficulty</Label>
-                  <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select difficulty" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="adaptive">Adaptive</SelectItem>
-                      <SelectItem value="easy">Easy</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="hard">Hard</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700">
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    Start Reading & Writing Practice
+                  </Button>
                 </div>
+              </CardContent>
+            </Card>
 
-                <div className="space-y-2">
-                  <Label htmlFor="count">Number of Questions</Label>
-                  <Select value={questionCount} onValueChange={setQuestionCount}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select count" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="10">10 Questions</SelectItem>
-                      <SelectItem value="20">20 Questions</SelectItem>
-                      <SelectItem value="30">30 Questions</SelectItem>
-                      <SelectItem value="50">50 Questions</SelectItem>
-                    </SelectContent>
-                  </Select>
+            {/* Math Section */}
+            <Card 
+              className="cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20"
+              onClick={() => setSelectedSection("math")}
+            >
+              <CardContent className="p-8">
+                <div className="text-center space-y-4">
+                  <div className="p-4 bg-emerald-500/20 rounded-full w-20 h-20 mx-auto flex items-center justify-center">
+                    <Calculator className="h-10 w-10 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-emerald-700 mb-2">Math</h2>
+                    <p className="text-muted-foreground mb-4">
+                      Practice algebra, advanced math, geometry, and data analysis
+                    </p>
+                    <Badge variant="secondary" className="text-sm">
+                      4 Domains Available
+                    </Badge>
+                  </div>
+                  <Button size="lg" className="w-full bg-emerald-600 hover:bg-emerald-700">
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    Start Math Practice
+                  </Button>
                 </div>
-
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    id="feedback"
-                    checked={instantFeedback}
-                    onCheckedChange={setInstantFeedback}
-                  />
-                  <Label htmlFor="feedback">Instant feedback</Label>
-                </div>
-
-                <Button className="w-full" size="lg">
-                  <PlayCircle className="h-4 w-4 mr-2" />
-                  Start Practice
-                </Button>
               </CardContent>
             </Card>
           </div>
+        )}
 
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Recommended Sessions */}
+        {/* Domain Selection - Reading and Writing */}
+        {selectedSection === "reading-writing" && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-500/20 rounded-lg">
+                  <BookOpen className="h-6 w-6 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Reading and Writing</h2>
+                  <p className="text-muted-foreground">Practice the section with AI-powered support.</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button 
+                  size="lg" 
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Launch AI Practice
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setSelectedSection(null)}
+                >
+                  Back to Sections
+                </Button>
+              </div>
+            </div>
+
             <div>
-              <h2 className="text-xl font-display font-semibold mb-4 flex items-center">
-                <Target className="h-5 w-5 mr-2" />
-                Recommended for You
-              </h2>
-              <div className="grid gap-4">
-                {recommendedSessions.map((session, index) => (
-                  <Card key={index} className="question-card hover:shadow-lg transition-all">
+              <h3 className="text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                {readingWritingDomains.map((domain, index) => (
+                  <Card key={index} className={`transition-all duration-200 ${domain.color}`}>
                     <CardContent className="p-6">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <h3 className="font-semibold">{session.title}</h3>
-                            <Badge 
-                              variant={session.priority === 'high' ? 'destructive' : 
-                                      session.priority === 'medium' ? 'default' : 'secondary'}
-                              className="text-xs"
-                            >
-                              {session.priority}
-                            </Badge>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className={`text-lg font-semibold ${domain.textColor}`}>{domain.name}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              This domain is {domain.percentage}% of the R&W section.
+                            </p>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {domain.description}
+                            </p>
                           </div>
-                          <p className="text-sm text-muted-foreground mb-3">{session.description}</p>
-                          <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                            <span className="flex items-center">
-                              <BookOpen className="h-4 w-4 mr-1" />
-                              {session.questions} questions
-                            </span>
-                            <span className="flex items-center">
-                              <Clock className="h-4 w-4 mr-1" />
-                              {session.time}
-                            </span>
-                            <Badge variant="outline">
-                              {session.section} - {session.domain}
-                            </Badge>
+                          <Badge variant="secondary" className="text-xs">
+                            {domain.percentage}%
+                          </Badge>
+                        </div>
+                        
+                        <Button variant="outline" className="w-full" size="sm">
+                          <Target className="h-4 w-4 mr-2" />
+                          Practice This Domain
+                        </Button>
+                        
+                        <div className="border-t pt-3">
+                          <p className="text-sm font-medium text-muted-foreground mb-2">Practice a subdomain:</p>
+                          <div className="space-y-1">
+                            {domain.subdomains.map((subdomain, subIndex) => (
+                              <button
+                                key={subIndex}
+                                className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
+                              >
+                                {subdomain}
+                              </button>
+                            ))}
                           </div>
                         </div>
-                        <Button size="sm">
-                          <PlayCircle className="h-4 w-4 mr-2" />
-                          Start
-                        </Button>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
             </div>
+          </div>
+        )}
 
-            {/* SAT Sections Overview */}
+        {/* Domain Selection - Math */}
+        {selectedSection === "math" && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-emerald-500/20 rounded-lg">
+                  <Calculator className="h-6 w-6 text-emerald-600" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Math</h2>
+                  <p className="text-muted-foreground">Practice the section with AI-powered support.</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button 
+                  size="lg" 
+                  className="bg-emerald-600 hover:bg-emerald-700"
+                >
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Launch AI Practice
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setSelectedSection(null)}
+                >
+                  Back to Sections
+                </Button>
+              </div>
+            </div>
+
             <div>
-              <h2 className="text-xl font-display font-semibold mb-4 flex items-center">
-                <Filter className="h-5 w-5 mr-2" />
-                Practice by SAT Section
-              </h2>
-              <div className="grid gap-4">
-                {Object.entries(satStructure).map(([sectionKey, section]) => {
-                  const IconComponent = section.icon;
-                  return (
-                    <Card key={sectionKey} className="question-card">
-                      <CardContent className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className={`p-2 bg-${section.color}-500/20 rounded-lg`}>
-                              <IconComponent className={`h-5 w-5 text-${section.color}-600`} />
-                            </div>
-                            <div>
-                              <h3 className="font-semibold text-lg">{section.name}</h3>
-                              <p className="text-sm text-muted-foreground">
-                                {Object.keys(section.domains).length} domains available
-                              </p>
-                            </div>
+              <h3 className="text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                {mathDomains.map((domain, index) => (
+                  <Card key={index} className={`transition-all duration-200 ${domain.color}`}>
+                    <CardContent className="p-6">
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className={`text-lg font-semibold ${domain.textColor}`}>{domain.name}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              This domain is {domain.percentage}% of the Math section.
+                            </p>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {domain.description}
+                            </p>
                           </div>
-                          <Button 
-                            variant="outline" 
-                            onClick={() => setSelectedSection(sectionKey)}
-                          >
-                            <ChevronRight className="h-4 w-4 mr-1" />
-                            Select
-                          </Button>
+                          <Badge variant="secondary" className="text-xs">
+                            {domain.percentage}%
+                          </Badge>
                         </div>
                         
-                        {/* Domain breakdown */}
-                        <div className="grid md:grid-cols-2 gap-3">
-                          {Object.entries(section.domains).map(([domainKey, domain]) => (
-                            <div key={domainKey} className="p-3 bg-muted/50 rounded-lg">
-                              <div className="flex justify-between items-center">
-                                <span className="text-sm font-medium">{domain.name}</span>
-                                <Badge variant="secondary" className="text-xs">
-                                  {domain.percentage}%
-                                </Badge>
-                              </div>
-                              <p className="text-xs text-muted-foreground mt-1">
-                                {domain.subdomains.length} subdomains
-                              </p>
-                            </div>
-                          ))}
+                        <Button variant="outline" className="w-full" size="sm">
+                          <Target className="h-4 w-4 mr-2" />
+                          Practice This Domain
+                        </Button>
+                        
+                        <div className="border-t pt-3">
+                          <p className="text-sm font-medium text-muted-foreground mb-2">Practice a subdomain:</p>
+                          <div className="space-y-1">
+                            {domain.subdomains.map((subdomain, subIndex) => (
+                              <button
+                                key={subIndex}
+                                className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
+                              >
+                                {subdomain}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
