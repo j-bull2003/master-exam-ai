@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserProfile } from "@/hooks/useUserProfile";
 import { 
   User, 
   Mail, 
@@ -22,49 +23,36 @@ import {
   Settings
 } from "lucide-react";
 
-interface ProfileData {
-  full_name: string;
-  email: string;
-  exam_type: string;
-  exam_date: string | null;
-  target_university: string;
-}
-
 const UserProfile = () => {
   const { user } = useAuth();
   const { toast } = useToast();
-  const [profile, setProfile] = useState<ProfileData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { profileData, isLoading, updateProfile } = useUserProfile();
   const [isEditing, setIsEditing] = useState(false);
-  const [editForm, setEditForm] = useState<ProfileData>({
+  const [editForm, setEditForm] = useState({
     full_name: "",
     email: "",
     exam_type: "",
-    exam_date: null,
+    exam_date: null as string | null,
     target_university: ""
   });
 
   useEffect(() => {
-    if (user) {
-      const userMetadata = (user as any).user_metadata || {};
-      const profileData: ProfileData = {
-        full_name: userMetadata.full_name || userMetadata.first_name || user.email?.split('@')[0] || 'User',
-        email: user.email || '',
-        exam_type: 'SAT',
-        exam_date: null,
-        target_university: 'Harvard University'
-      };
-      setProfile(profileData);
-      setEditForm(profileData);
-      setIsLoading(false);
+    if (profileData) {
+      setEditForm({
+        full_name: profileData.full_name,
+        email: profileData.email,
+        exam_type: profileData.exam_type,
+        exam_date: profileData.exam_date,
+        target_university: profileData.target_university
+      });
     }
-  }, [user]);
+  }, [profileData]);
 
   const handleSave = async () => {
     try {
       if (!user) return;
       
-      setProfile(editForm);
+      updateProfile(editForm);
       setIsEditing(false);
       
       toast({
@@ -82,8 +70,14 @@ const UserProfile = () => {
   };
 
   const handleCancel = () => {
-    if (profile) {
-      setEditForm(profile);
+    if (profileData) {
+      setEditForm({
+        full_name: profileData.full_name,
+        email: profileData.email,
+        exam_type: profileData.exam_type,
+        exam_date: profileData.exam_date,
+        target_university: profileData.target_university
+      });
     }
     setIsEditing(false);
   };
@@ -98,7 +92,7 @@ const UserProfile = () => {
     );
   }
 
-  if (!profile) {
+  if (!profileData) {
     return (
       <Card>
         <CardContent className="flex items-center justify-center h-64">
@@ -116,25 +110,25 @@ const UserProfile = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Avatar className="h-20 w-20">
-                <AvatarImage src="" alt={profile.full_name} />
+                <AvatarImage src="" alt={profileData.full_name} />
                 <AvatarFallback className="text-lg font-semibold bg-primary text-primary-foreground">
-                  {profile.full_name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                  {profileData.full_name.split(' ').map(n => n[0]).join('').toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <div className="space-y-2">
-                <CardTitle className="text-2xl">{profile.full_name}</CardTitle>
+                <CardTitle className="text-2xl">{profileData.full_name}</CardTitle>
                 <CardDescription className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  {profile.email}
+                  {profileData.email}
                 </CardDescription>
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary" className="font-medium bg-blue-100 text-blue-700 border-blue-300">
                     <BookOpen className="w-3 h-3 mr-1" />
-                    {profile.exam_type} Student
+                    {profileData.exam_type} Student
                   </Badge>
                   <Badge variant="outline" className="font-medium">
                     <GraduationCap className="w-3 h-3 mr-1" />
-                    {profile.target_university}
+                    {profileData.target_university}
                   </Badge>
                 </div>
               </div>
@@ -196,11 +190,11 @@ const UserProfile = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-muted-foreground">Full Name</Label>
-                <p className="font-medium">{profile.full_name}</p>
+                <p className="font-medium">{profileData.full_name}</p>
               </div>
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-muted-foreground">Email Address</Label>
-                <p className="font-medium">{profile.email}</p>
+                <p className="font-medium">{profileData.email}</p>
               </div>
             </div>
           )}
@@ -261,19 +255,19 @@ const UserProfile = () => {
                 <Label className="text-sm font-medium text-muted-foreground">Exam Type</Label>
                 <div className="flex items-center gap-2">
                   <Badge className="font-medium bg-blue-600 text-white">
-                    {profile.exam_type}
+                    {profileData.exam_type}
                   </Badge>
                 </div>
               </div>
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-muted-foreground">Target University</Label>
-                <p className="font-medium">{profile.target_university}</p>
+                <p className="font-medium">{profileData.target_university}</p>
               </div>
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-muted-foreground">Exam Date</Label>
                 <p className="font-medium flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  {profile.exam_date ? new Date(profile.exam_date).toLocaleDateString() : 'Not set'}
+                  {profileData.exam_date ? new Date(profileData.exam_date).toLocaleDateString() : 'Not set'}
                 </p>
               </div>
             </div>

@@ -5,9 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-// Removed Supabase import - using Django backend
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserProfile } from "@/hooks/useUserProfile";
 import {
   Calendar,
   Target,
@@ -35,10 +35,10 @@ import {
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDenseMode, setIsDenseMode] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const { toast } = useToast();
   const { user, loading: authLoading, signOut } = useAuth();
+  const { profileData, updateExamDate } = useUserProfile();
   
   // Auth state is managed by AuthContext
   const hasAccess = !authLoading && user !== null;
@@ -49,26 +49,10 @@ const Dashboard = () => {
 
   // Load user data when auth state changes
   useEffect(() => {
-    if (!authLoading && hasAccess) {
-      // Initialize with default values - will be updated with real data as user interacts
-      setUserData({
-        name: userEmail.split('@')[0] || "Student",
-        stats: {
-          overall_accuracy: 0,
-          weekly_progress: 0,
-          study_streak: 0,
-          total_questions: 0,
-          correct_answers: 0,
-          total_time: 0,
-          sessions_completed: 0
-        },
-        target_universities: ["Harvard", "MIT", "Stanford"],
-        exam_date: null,
-        target_score: 1500
-      });
+    if (!authLoading && hasAccess && profileData) {
       setIsLoading(false);
     }
-  }, [authLoading, hasAccess, userEmail]);
+  }, [authLoading, hasAccess, profileData]);
 
   // Empty arrays - no mock data, starts at 0 for everything
   const recentSessions = [];
@@ -122,9 +106,9 @@ const Dashboard = () => {
   };
 
   const getExamCountdown = () => {
-    if (!userData?.exam_date) return null;
+    if (!profileData?.exam_date) return null;
     
-    const examDate = new Date(userData.exam_date);
+    const examDate = new Date(profileData.exam_date);
     const today = new Date();
     const timeDiff = examDate.getTime() - today.getTime();
     return Math.ceil(timeDiff / (1000 * 3600 * 24));
@@ -132,11 +116,7 @@ const Dashboard = () => {
 
   const handleUpdateExamDate = async (newDate: Date) => {
     try {
-      // Update local state immediately for better UX
-      setUserData(prev => ({
-        ...prev,
-        exam_date: newDate.toISOString().split('T')[0]
-      }));
+      updateExamDate(newDate.toISOString().split('T')[0]);
       
       toast({
         title: "Exam date updated",
@@ -264,7 +244,7 @@ const Dashboard = () => {
         {/* Page Header */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold mb-3">
-            Welcome back, {userData?.name || 'User'}! 👋
+            Welcome back, {profileData?.full_name || 'User'}! 👋
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Ready to continue your SAT preparation?
@@ -277,52 +257,52 @@ const Dashboard = () => {
             <div className="lg:col-span-3 space-y-6">
               {/* Stats Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card className="card-interactive">
+                <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20 hover:shadow-lg transition-all">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Overall Accuracy</CardTitle>
-                    <Target className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
+                    <Target className="h-4 w-4 text-emerald-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{userData?.stats?.overall_accuracy || 0}%</div>
+                    <div className="text-3xl font-bold text-emerald-700">0%</div>
                     <p className="text-xs text-muted-foreground">
                       Start practicing to see your accuracy
                     </p>
                   </CardContent>
                 </Card>
 
-                <Card className="card-interactive">
+                <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20 hover:shadow-lg transition-all">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Weekly Progress</CardTitle>
-                    <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium text-blue-700">Weekly Progress</CardTitle>
+                    <TrendingUp className="h-4 w-4 text-blue-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{userData?.stats?.weekly_progress || 0}%</div>
+                    <div className="text-3xl font-bold text-blue-700">0%</div>
                     <p className="text-xs text-muted-foreground">
                       Complete sessions to track progress
                     </p>
                   </CardContent>
                 </Card>
 
-                <Card className="card-interactive">
+                <Card className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border-purple-500/20 hover:shadow-lg transition-all">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Study Streak</CardTitle>
-                    <Zap className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium text-purple-700">Study Streak</CardTitle>
+                    <Zap className="h-4 w-4 text-purple-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{userData?.stats?.study_streak || 0} days</div>
+                    <div className="text-3xl font-bold text-purple-700">0 days</div>
                     <p className="text-xs text-muted-foreground">
                       Practice daily to build your streak
                     </p>
                   </CardContent>
                 </Card>
 
-                <Card className="card-interactive">
+                <Card className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border-orange-500/20 hover:shadow-lg transition-all">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Total Questions</CardTitle>
-                    <BookOpen className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium text-orange-700">Total Questions</CardTitle>
+                    <BookOpen className="h-4 w-4 text-orange-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{userData?.stats?.total_questions || 0}</div>
+                    <div className="text-3xl font-bold text-orange-700">0</div>
                     <p className="text-xs text-muted-foreground">
                       Questions attempted
                     </p>
@@ -331,9 +311,9 @@ const Dashboard = () => {
               </div>
 
               {/* Study Plan */}
-              <Card>
+              <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-slate-200 hover:shadow-lg transition-all">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-slate-700">
                     <Calendar className="w-5 h-5" />
                     Study Plan
                   </CardTitle>
@@ -417,9 +397,9 @@ const Dashboard = () => {
               </Card>
 
               {/* Recent Practice Sessions */}
-              <Card>
+              <Card className="bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200 hover:shadow-lg transition-all">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-indigo-700">
                     <Clock className="w-5 h-5" />
                     Recent Practice Sessions
                   </CardTitle>
@@ -504,12 +484,12 @@ const Dashboard = () => {
             {/* Right sidebar - Timeline and Universities (1/4 width) */}
             <div className="lg:col-span-1 space-y-6">
               {/* Your Timeline */}
-              <Card>
+              <Card className="bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 hover:shadow-lg transition-all">
                 <CardHeader>
-                  <CardTitle className="text-sm font-medium">Your Timeline</CardTitle>
+                  <CardTitle className="text-sm font-medium text-amber-700">Your Timeline</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {userData?.exam_date ? (
+                  {profileData?.exam_date ? (
                     <>
                       <div className="text-center">
                         <div className="text-2xl font-bold text-primary">
@@ -522,12 +502,12 @@ const Dashboard = () => {
                       <div className="text-xs text-center">
                         <div className="font-medium">SAT Exam</div>
                         <div className="text-muted-foreground">
-                          {new Date(userData.exam_date).toLocaleDateString()}
+                          {new Date(profileData.exam_date).toLocaleDateString()}
                         </div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold">
-                          {userData?.target_score || 1500}
+                          {profileData?.target_score || 1500}
                         </div>
                         <div className="text-xs text-muted-foreground">target score</div>
                       </div>
@@ -557,13 +537,13 @@ const Dashboard = () => {
               </Card>
 
               {/* Target Universities */}
-              <Card>
+              <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border-teal-200 hover:shadow-lg transition-all">
                 <CardHeader>
-                  <CardTitle className="text-sm font-medium">Target Universities</CardTitle>
+                  <CardTitle className="text-sm font-medium text-teal-700">Target Universities</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {userData?.target_universities?.slice(0, 3).map((university, index) => (
+                    {profileData?.target_universities?.slice(0, 3).map((university, index) => (
                       <div
                         key={index}
                         className="text-xs py-1.5 px-2 bg-muted rounded text-center"
