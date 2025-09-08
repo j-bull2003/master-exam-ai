@@ -28,7 +28,8 @@ import {
   Clipboard,
   RotateCcw,
   ChevronRight,
-  AlertTriangle
+  AlertTriangle,
+  Calculator
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -64,7 +65,7 @@ const Dashboard = () => {
       // For Django users, use user data directly
       const userName = `${user.first_name} ${user.last_name}`.trim() || user.email?.split('@')[0] || 'User';
       
-      // Simulate onboarding data - in real app this would come from backend
+      // Simulate onboarding data with SAT-specific sections
       const mockOnboardingData = {
         examType: "SAT",
         examDate: new Date('2025-03-15'), // Future exam date
@@ -72,8 +73,25 @@ const Dashboard = () => {
         targetScore: "1550",
         studyWeeksRemaining: 12,
         currentLevel: "Intermediate",
-        weakestAreas: ["Advanced Math", "Reading Comprehension"],
-        strongestAreas: ["Basic Math", "Grammar"]
+        // SAT-specific section progress
+        sections: {
+          readingWriting: {
+            name: "Reading and Writing",
+            currentScore: 670,
+            targetScore: 780,
+            progress: 86, // percentage
+            weakAreas: ["Reading Comprehension", "Grammar Rules"],
+            strongAreas: ["Vocabulary", "Writing Style"]
+          },
+          math: {
+            name: "Math",
+            currentScore: 680,
+            targetScore: 770,
+            progress: 88, // percentage
+            weakAreas: ["Advanced Math", "Geometry"],
+            strongAreas: ["Algebra", "Problem Solving"]
+          }
+        }
       };
       
       // Create userData object with onboarding data
@@ -84,8 +102,7 @@ const Dashboard = () => {
         dreamUniversities: mockOnboardingData.targetUniversities,
         targetScore: mockOnboardingData.targetScore,
         currentLevel: mockOnboardingData.currentLevel,
-        weakestAreas: mockOnboardingData.weakestAreas,
-        strongestAreas: mockOnboardingData.strongestAreas,
+        sections: mockOnboardingData.sections,
         studyWeeksRemaining: mockOnboardingData.studyWeeksRemaining,
         totalQuestions: 847,
         correctAnswers: 623,
@@ -93,7 +110,7 @@ const Dashboard = () => {
         weeklyTarget: 100,
         completedThisWeek: 67,
         streakDays: 12,
-        nextSession: "Math Practice Session"
+        nextSession: "Reading & Writing Practice"
       };
 
       console.log('Setting user data:', userData);
@@ -108,8 +125,24 @@ const Dashboard = () => {
         dreamUniversities: ["Harvard University", "MIT", "Stanford University"],
         targetScore: "1550",
         currentLevel: "Intermediate",
-        weakestAreas: ["Advanced Math", "Reading Comprehension"],
-        strongestAreas: ["Basic Math", "Grammar"],
+        sections: {
+          readingWriting: {
+            name: "Reading and Writing",
+            currentScore: 670,
+            targetScore: 780,
+            progress: 86,
+            weakAreas: ["Reading Comprehension", "Grammar Rules"],
+            strongAreas: ["Vocabulary", "Writing Style"]
+          },
+          math: {
+            name: "Math",
+            currentScore: 680,
+            targetScore: 770,
+            progress: 88,
+            weakAreas: ["Advanced Math", "Geometry"],
+            strongAreas: ["Algebra", "Problem Solving"]
+          }
+        },
         studyWeeksRemaining: 12,
         totalQuestions: 0,
         correctAnswers: 0,
@@ -261,16 +294,35 @@ const Dashboard = () => {
               Welcome back, {userData?.name || 'User'}! 👋
             </h1>
             <p className="text-lg text-muted-foreground">
-              Ready to excel in your SAT exam and get into your dream university?
+              Your dream universities are within reach! Stay focused on your SAT journey.
             </p>
-            {userData?.dreamUniversities && (
-              <div className="flex flex-wrap gap-2 justify-center">
-                <span className="text-sm text-muted-foreground mr-2">Dream Universities:</span>
-                {userData.dreamUniversities.slice(0, 3).map((uni, index) => (
-                  <Badge key={index} variant="secondary" className="text-xs">
-                    {uni}
-                  </Badge>
-                ))}
+            {/* Motivational Dream Universities with Countdown */}
+            {userData?.dreamUniversities && userData?.examDate && (
+              <div className="relative bg-gradient-to-r from-primary/20 via-primary-variant/20 to-primary/20 rounded-xl p-4 border border-primary/30">
+                <div className="text-center space-y-2">
+                  <div className="flex items-center justify-center gap-2 text-primary font-semibold">
+                    <Trophy className="h-4 w-4" />
+                    <span className="text-sm">Your Dream Awaits</span>
+                    <Trophy className="h-4 w-4" />
+                  </div>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {userData.dreamUniversities.slice(0, 3).map((uni, index) => (
+                      <Badge key={index} variant="secondary" className="text-sm bg-white/80 text-primary border-primary/20">
+                        {uni}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-center gap-4 mt-3">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">{examCountdown || 0}</div>
+                      <p className="text-xs text-muted-foreground">days to go</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">{userData?.targetScore}</div>
+                      <p className="text-xs text-muted-foreground">target score</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -279,89 +331,87 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column - Main content */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Compact SAT Info & Quick Actions */}
+              {/* SAT Section Progress Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Compact SAT Exam Info */}
-                <Card className="bg-gradient-to-r from-primary/10 to-primary-variant/10 border-primary/20">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-primary/20 rounded-lg">
-                        <Trophy className="h-4 w-4 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-primary">SAT Exam</h3>
-                        <p className="text-xs text-muted-foreground">Target: {userData?.targetScore}</p>
-                      </div>
-                    </div>
-                    {userData?.examDate && (
-                      <div className="space-y-2">
-                        <div className="text-center p-2 bg-white/50 rounded-lg">
-                          <div className="text-2xl font-bold text-primary">
-                            {examCountdown || 0}
-                          </div>
-                          <p className="text-xs text-muted-foreground">days remaining</p>
-                        </div>
-                        <p className="text-xs text-center text-muted-foreground">
-                          {new Date(userData.examDate).toLocaleDateString('en-US', {
-                            month: 'long',
-                            day: 'numeric',
-                            year: 'numeric'
-                          })}
-                        </p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-
-                {/* Next Session */}
-                <Card className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 border-blue-500/20">
+                {/* Reading and Writing Section */}
+                <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border-blue-500/20">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="p-2 bg-blue-500/20 rounded-lg">
-                        <Clock className="h-4 w-4 text-blue-600" />
+                        <BookOpen className="h-4 w-4 text-blue-600" />
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-blue-700">Next Session</h3>
-                        <p className="text-xs text-muted-foreground">{userData?.nextSession}</p>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-blue-700">Reading & Writing</h3>
+                        <p className="text-xs text-muted-foreground">
+                          {userData?.sections?.readingWriting?.currentScore || 670}/800
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-medium text-blue-600">
+                          {userData?.sections?.readingWriting?.progress || 86}%
+                        </div>
                       </div>
                     </div>
-                    <Link to="/practice">
-                      <Button size="sm" className="w-full">
-                        Start Now
-                      </Button>
-                    </Link>
+                    <div className="space-y-2">
+                      <div className="w-full bg-blue-200/50 rounded-full h-2 overflow-hidden">
+                        <div 
+                          className="h-full bg-blue-600 transition-all duration-500"
+                          style={{ width: `${userData?.sections?.readingWriting?.progress || 86}%` }}
+                        />
+                      </div>
+                      <div className="text-xs text-center text-muted-foreground">
+                        Target: {userData?.sections?.readingWriting?.targetScore || 780}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Math Section */}
+                <Card className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border-emerald-500/20">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-emerald-500/20 rounded-lg">
+                        <Calculator className="h-4 w-4 text-emerald-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-emerald-700">Math</h3>
+                        <p className="text-xs text-muted-foreground">
+                          {userData?.sections?.math?.currentScore || 680}/800
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-medium text-emerald-600">
+                          {userData?.sections?.math?.progress || 88}%
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="w-full bg-emerald-200/50 rounded-full h-2 overflow-hidden">
+                        <div 
+                          className="h-full bg-emerald-600 transition-all duration-500"
+                          style={{ width: `${userData?.sections?.math?.progress || 88}%` }}
+                        />
+                      </div>
+                      <div className="text-xs text-center text-muted-foreground">
+                        Target: {userData?.sections?.math?.targetScore || 770}
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Quick Actions Grid */}
               <div className="grid grid-cols-3 gap-3">
-                <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+                <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-blue-500/5 to-blue-500/10 border-blue-500/20">
                   <CardContent className="p-3">
                     <Link to="/practice" className="block">
                       <div className="flex flex-col items-center text-center space-y-2">
-                        <div className="p-2 bg-primary/20 rounded-lg group-hover:bg-primary/30 transition-colors">
-                          <BookOpen className="h-4 w-4 text-primary" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-sm">Practice</h3>
-                          <p className="text-xs text-muted-foreground">Daily questions</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </CardContent>
-                </Card>
-
-                <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-blue-500/5 to-blue-500/10 border-blue-500/20">
-                  <CardContent className="p-3">
-                    <Link to="/mocks" className="block">
-                      <div className="flex flex-col items-center text-center space-y-2">
                         <div className="p-2 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30 transition-colors">
-                          <Clipboard className="h-4 w-4 text-blue-600" />
+                          <BookOpen className="h-4 w-4 text-blue-600" />
                         </div>
                         <div>
-                          <h3 className="font-medium text-sm">Mock Tests</h3>
-                          <p className="text-xs text-muted-foreground">Full practice</p>
+                          <h3 className="font-medium text-sm">Reading & Writing</h3>
+                          <p className="text-xs text-muted-foreground">Practice now</p>
                         </div>
                       </div>
                     </Link>
@@ -370,14 +420,30 @@ const Dashboard = () => {
 
                 <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-emerald-500/5 to-emerald-500/10 border-emerald-500/20">
                   <CardContent className="p-3">
-                    <Link to="/analytics" className="block">
+                    <Link to="/practice" className="block">
                       <div className="flex flex-col items-center text-center space-y-2">
                         <div className="p-2 bg-emerald-500/20 rounded-lg group-hover:bg-emerald-500/30 transition-colors">
-                          <BarChart3 className="h-4 w-4 text-emerald-600" />
+                          <Calculator className="h-4 w-4 text-emerald-600" />
                         </div>
                         <div>
-                          <h3 className="font-medium text-sm">Analytics</h3>
-                          <p className="text-xs text-muted-foreground">View progress</p>
+                          <h3 className="font-medium text-sm">Math</h3>
+                          <p className="text-xs text-muted-foreground">Practice now</p>
+                        </div>
+                      </div>
+                    </Link>
+                  </CardContent>
+                </Card>
+
+                <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-purple-500/5 to-purple-500/10 border-purple-500/20">
+                  <CardContent className="p-3">
+                    <Link to="/mocks" className="block">
+                      <div className="flex flex-col items-center text-center space-y-2">
+                        <div className="p-2 bg-purple-500/20 rounded-lg group-hover:bg-purple-500/30 transition-colors">
+                          <Clipboard className="h-4 w-4 text-purple-600" />
+                        </div>
+                        <div>
+                          <h3 className="font-medium text-sm">Full Test</h3>
+                          <p className="text-xs text-muted-foreground">Mock exam</p>
                         </div>
                       </div>
                     </Link>
@@ -438,7 +504,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Right Column - Study Plan Sidebar */}
+            {/* Right Column - Enhanced Study Plan Sidebar */}
             <div className="lg:col-span-1">
               <Card className="h-fit sticky top-6">
                 <CardHeader className="pb-3">
@@ -447,56 +513,87 @@ const Dashboard = () => {
                     <CardTitle className="text-lg">Study Plan</CardTitle>
                   </div>
                   <CardDescription className="text-sm">
-                    {userData?.studyWeeksRemaining || 12} weeks to target score
+                    {userData?.studyWeeksRemaining || 12} weeks to reach {userData?.targetScore}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {/* Current Level */}
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-sm text-muted-foreground">Current Level</h4>
-                    <Badge variant="secondary" className="w-fit text-xs">
-                      {userData?.currentLevel || 'Intermediate'}
-                    </Badge>
-                  </div>
-
-                  {/* Focus Areas */}
+                  {/* Section Focus Areas */}
                   <div className="space-y-3">
-                    <div>
-                      <h4 className="font-medium text-sm text-destructive mb-2">Areas to Improve</h4>
-                      <div className="space-y-1">
-                        {(userData?.weakestAreas || ['Advanced Math', 'Reading Comprehension']).map((area, index) => (
-                          <Badge key={index} variant="destructive" className="text-xs mr-1 mb-1">
-                            {area}
-                          </Badge>
-                        ))}
+                    {/* Reading & Writing Focus */}
+                    <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                      <div className="flex items-center gap-2 mb-2">
+                        <BookOpen className="h-3 w-3 text-blue-600" />
+                        <h4 className="font-medium text-sm text-blue-700">Reading & Writing</h4>
+                      </div>
+                      <div className="space-y-2">
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Weak Areas:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {(userData?.sections?.readingWriting?.weakAreas || ['Reading Comprehension', 'Grammar Rules']).map((area, index) => (
+                              <Badge key={index} variant="destructive" className="text-xs">
+                                {area}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Strong Areas:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {(userData?.sections?.readingWriting?.strongAreas || ['Vocabulary', 'Writing Style']).map((area, index) => (
+                              <Badge key={index} variant="secondary" className="text-xs bg-blue-100 text-blue-700">
+                                {area}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <h4 className="font-medium text-sm text-primary mb-2">Strong Areas</h4>
-                      <div className="space-y-1">
-                        {(userData?.strongestAreas || ['Basic Math', 'Grammar']).map((area, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs mr-1 mb-1 bg-primary/10 text-primary">
-                            {area}
-                          </Badge>
-                        ))}
+
+                    {/* Math Focus */}
+                    <div className="p-3 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Calculator className="h-3 w-3 text-emerald-600" />
+                        <h4 className="font-medium text-sm text-emerald-700">Math</h4>
+                      </div>
+                      <div className="space-y-2">
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Weak Areas:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {(userData?.sections?.math?.weakAreas || ['Advanced Math', 'Geometry']).map((area, index) => (
+                              <Badge key={index} variant="destructive" className="text-xs">
+                                {area}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Strong Areas:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {(userData?.sections?.math?.strongAreas || ['Algebra', 'Problem Solving']).map((area, index) => (
+                              <Badge key={index} variant="secondary" className="text-xs bg-emerald-100 text-emerald-700">
+                                {area}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Weekly Plan */}
                   <div className="border rounded-lg p-3 bg-muted/30">
-                    <h4 className="font-medium text-sm mb-2">This Week</h4>
+                    <h4 className="font-medium text-sm mb-2">This Week's Focus</h4>
                     <div className="space-y-2 text-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs">Reading & Writing</span>
+                        <Badge variant="outline" className="text-xs">3x</Badge>
+                      </div>
                       <div className="flex justify-between items-center">
                         <span className="text-xs">Math Practice</span>
                         <Badge variant="outline" className="text-xs">3x</Badge>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-xs">Reading Comp</span>
-                        <Badge variant="outline" className="text-xs">2x</Badge>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs">Full Test</span>
+                        <span className="text-xs">Full Practice Test</span>
                         <Badge variant="outline" className="text-xs">1x</Badge>
                       </div>
                     </div>
