@@ -25,53 +25,26 @@ const SATPrograms = () => {
     }
   };
 
-  const programs = [
-    {
-      title: "1:1 SAT Tutoring",
-      description: "Personalized one-on-one SAT coaching with expert tutors",
-      icon: Users,
-      features: [
-        "Customized study plan based on diagnostic",
-        "Weekly 1-hour sessions with SAT expert",
-        "Unlimited practice test reviews",
-        "24/7 WhatsApp support",
-        "Target score guarantee"
-      ],
-      duration: "8-16 weeks",
-      price: "Starting at $150/session",
-      badge: "Most Popular"
-    },
-    {
-      title: "Group SAT Programs",
-      description: "Small group SAT preparation with peer motivation",
-      icon: BookOpen,
-      features: [
-        "Groups of 4-6 students maximum",
-        "Weekly 2-hour intensive sessions",
-        "Collaborative learning environment",
-        "Shared progress tracking",
-        "Group competitions & rewards"
-      ],
-      duration: "10-12 weeks",
-      price: "Starting at $80/session",
-      badge: null
-    },
-    {
-      title: "Admissions Guidance",
-      description: "Complete college admissions strategy and support",
-      icon: GraduationCap,
-      features: [
-        "College selection strategy",
-        "Application essay review",
-        "Interview preparation",
-        "Scholarship guidance",
-        "Timeline management"
-      ],
-      duration: "6-12 months",
-      price: "Starting at $200/hour",
-      badge: "Premium"
-    }
-  ];
+  const program = {
+    title: "1:1 SAT Booster Program",
+    description: "Complete SAT mastery with dedicated expert guidance and guaranteed results",
+    icon: Target,
+    features: [
+      "20 personalized 1-on-1 sessions with SAT expert",
+      "Customized study plan based on diagnostic assessment",
+      "24/7 support via WhatsApp for instant help",
+      "Target score guarantee or 100% money back",
+      "Detailed takeaway feedback after every session",
+      "Weekly homework assignments & progress tracking",
+      "Practice test analysis & strategy refinement",
+      "College admissions timeline guidance"
+    ],
+    duration: "12-16 weeks",
+    price: "$2,499",
+    originalPrice: "$4,999",
+    badge: "Limited Time Offer",
+    guarantee: "Target Score Guarantee or Money Back"
+  };
 
   const successStories = [
     {
@@ -172,56 +145,68 @@ const SATPrograms = () => {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-                Choose Your SAT Program
+                Transform Your SAT Score
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                From personalized 1:1 tutoring to comprehensive admissions guidance, we have the perfect program to help you achieve your SAT goals.
+                Join hundreds of students who have achieved their dream SAT scores with our proven 1:1 coaching program.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {programs.map((program, index) => (
-                <Card key={index} className="relative h-full bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-2xl group">
-                  {program.badge && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                      <Badge className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2">
-                        {program.badge}
-                      </Badge>
-                    </div>
-                  )}
+            <div className="max-w-2xl mx-auto">
+              <Card className="relative bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-2xl group">
+                {program.badge && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                    <Badge className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 text-sm font-medium">
+                      {program.badge}
+                    </Badge>
+                  </div>
+                )}
+                
+                <CardHeader className="text-center pb-6">
+                  <div className="mx-auto mb-6 p-6 rounded-3xl bg-gradient-to-br from-primary/10 to-primary-variant/10 w-fit group-hover:from-primary/20 group-hover:to-primary-variant/20 transition-colors">
+                    <program.icon className="w-12 h-12 text-primary" />
+                  </div>
+                  <CardTitle className="text-3xl font-bold mb-4">{program.title}</CardTitle>
+                  <p className="text-lg text-muted-foreground mb-6">{program.description}</p>
                   
-                  <CardHeader className="text-center pb-4">
-                    <div className="mx-auto mb-4 p-4 rounded-2xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors">
-                      <program.icon className="w-8 h-8 text-primary" />
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-center gap-3">
+                      <span className="text-4xl font-bold text-primary">{program.price}</span>
+                      <div className="text-left">
+                        <div className="text-lg text-muted-foreground line-through">{program.originalPrice}</div>
+                        <div className="text-sm text-success font-medium">Save 50%</div>
+                      </div>
                     </div>
-                    <CardTitle className="text-2xl font-bold mb-2">{program.title}</CardTitle>
-                    <p className="text-muted-foreground mb-4">{program.description}</p>
-                    
-                    <div className="space-y-2">
-                      <div className="text-2xl font-bold text-primary">{program.price}</div>
-                      <div className="text-sm text-muted-foreground">{program.duration}</div>
+                    <div className="text-muted-foreground">{program.duration}</div>
+                    <div className="inline-block bg-success/10 text-success px-4 py-2 rounded-full text-sm font-medium border border-success/20">
+                      {program.guarantee}
                     </div>
-                  </CardHeader>
+                  </div>
+                </CardHeader>
 
-                  <CardContent className="pt-0">
-                    <div className="space-y-3 mb-6">
-                      {program.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                          <span className="text-sm">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
+                <CardContent className="pt-0 px-8 pb-8">
+                  <div className="space-y-4 mb-8">
+                    {program.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-4">
+                        <CheckCircle className="w-6 h-6 text-success flex-shrink-0 mt-0.5" />
+                        <span className="text-base">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
 
-                    <Link to="/auth/register" className="block">
-                      <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
-                        Get Started
-                        <ArrowRight className="w-4 h-4 ml-2" />
+                  <div className="space-y-4">
+                    <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer" className="block">
+                      <Button size="lg" className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-lg py-4">
+                        Book Free Strategy Call
+                        <Calendar className="w-5 h-5 ml-2" />
                       </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              ))}
+                    </a>
+                    <p className="text-center text-sm text-muted-foreground">
+                      Start with a free 30-minute strategy session to create your personalized SAT roadmap
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
