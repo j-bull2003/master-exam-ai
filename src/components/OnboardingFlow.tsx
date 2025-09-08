@@ -189,9 +189,9 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-variant/5 rounded-full blur-3xl"></div>
       
-      <div className="w-full max-w-3xl relative z-10 mt-4">
+      <div className="w-full max-w-3xl relative z-10 mt-2">
         {/* Enhanced Logo */}
-        <div className="text-center mb-3">
+        <div className="text-center mb-2">
           <Link to="/" className="inline-flex flex-col items-center justify-center group">
             <div className="relative mb-1">
               <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-2xl group-hover:bg-primary/30 transition-all duration-500"></div>
@@ -207,7 +207,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         </div>
 
         {/* Enhanced Progress Indicator */}
-        <div className="flex justify-center mb-3">
+        <div className="flex justify-center mb-2">
           <div className="flex items-center space-x-6">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
@@ -250,7 +250,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="space-y-8 px-8 pb-8">
+          <CardContent className="space-y-6 px-8 pb-6">
             {/* Step 1: Account Creation */}
             {currentStep === 1 && (
               <div className="space-y-6">
