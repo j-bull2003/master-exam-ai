@@ -70,14 +70,9 @@ const Dashboard = () => {
     }
   }, [authLoading, hasAccess, userEmail]);
 
-  // Mock data that starts at 0 and will be updated with real usage
-  const recentSessions = [
-    // Empty by default - will populate as user practices
-  ];
-  
-  const studyPlan = [
-    // Empty by default - will populate after diagnostic test
-  ];
+  // Empty arrays - no mock data, starts at 0 for everything
+  const recentSessions = [];
+  const studyPlan = [];
 
   // Helper functions
   const getStatusBadge = (status: string) => {
