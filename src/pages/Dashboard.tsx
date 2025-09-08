@@ -65,7 +65,7 @@ const Dashboard = () => {
       // For Django users, use user data directly
       const userName = `${user.first_name} ${user.last_name}`.trim() || user.email?.split('@')[0] || 'User';
       
-      // Simulate onboarding data with SAT-specific sections
+      // Simulate onboarding data with actual SAT sections and domains
       const mockOnboardingData = {
         examType: "SAT",
         examDate: new Date('2025-03-15'), // Future exam date
@@ -73,23 +73,44 @@ const Dashboard = () => {
         targetScore: "1550",
         studyWeeksRemaining: 12,
         currentLevel: "Intermediate",
-        // SAT-specific section progress
+        // Actual SAT section progress with real domains
         sections: {
           readingWriting: {
             name: "Reading and Writing",
             currentScore: 670,
             targetScore: 780,
-            progress: 86, // percentage
-            weakAreas: ["Reading Comprehension", "Grammar Rules"],
-            strongAreas: ["Vocabulary", "Writing Style"]
+            progress: 72, // percentage
+            weakAreas: ["Craft and Structure", "Standard English Conventions"],
+            strongAreas: ["Information and Ideas", "Expression of Ideas"],
+            specificWeaknesses: [
+              "Cross-Text Connections",
+              "Words in Context", 
+              "Boundaries",
+              "Form, Structure, Sense"
+            ],
+            recommendations: [
+              "Focus on Text Structure and Purpose passages",
+              "Practice grammar rules for boundaries and punctuation",
+              "Review transition words and rhetorical synthesis"
+            ]
           },
           math: {
             name: "Math",
             currentScore: 680,
             targetScore: 770,
-            progress: 88, // percentage
-            weakAreas: ["Advanced Math", "Geometry"],
-            strongAreas: ["Algebra", "Problem Solving"]
+            progress: 65, // percentage
+            weakAreas: ["Advanced Math", "Geometry and Trigonometry"],
+            strongAreas: ["Algebra", "Problem-Solving and Data Analysis"],
+            specificWeaknesses: [
+              "Nonlinear equations in 1 variable and systems of equations in 2 variables",
+              "Right triangles and trigonometry",
+              "Circles"
+            ],
+            recommendations: [
+              "Master quadratic equations and polynomial operations",
+              "Practice trigonometric ratios and unit circle",
+              "Review circle theorems and arc length formulas"
+            ]
           }
         }
       };
@@ -130,17 +151,38 @@ const Dashboard = () => {
             name: "Reading and Writing",
             currentScore: 670,
             targetScore: 780,
-            progress: 86,
-            weakAreas: ["Reading Comprehension", "Grammar Rules"],
-            strongAreas: ["Vocabulary", "Writing Style"]
+            progress: 72,
+            weakAreas: ["Craft and Structure", "Standard English Conventions"],
+            strongAreas: ["Information and Ideas", "Expression of Ideas"],
+            specificWeaknesses: [
+              "Cross-Text Connections",
+              "Words in Context", 
+              "Boundaries",
+              "Form, Structure, Sense"
+            ],
+            recommendations: [
+              "Focus on Text Structure and Purpose passages",
+              "Practice grammar rules for boundaries and punctuation",
+              "Review transition words and rhetorical synthesis"
+            ]
           },
           math: {
             name: "Math",
             currentScore: 680,
             targetScore: 770,
-            progress: 88,
-            weakAreas: ["Advanced Math", "Geometry"],
-            strongAreas: ["Algebra", "Problem Solving"]
+            progress: 65,
+            weakAreas: ["Advanced Math", "Geometry and Trigonometry"],
+            strongAreas: ["Algebra", "Problem-Solving and Data Analysis"],
+            specificWeaknesses: [
+              "Nonlinear equations in 1 variable and systems of equations in 2 variables",
+              "Right triangles and trigonometry",
+              "Circles"
+            ],
+            recommendations: [
+              "Master quadratic equations and polynomial operations",
+              "Practice trigonometric ratios and unit circle",
+              "Review circle theorems and arc length formulas"
+            ]
           }
         },
         studyWeeksRemaining: 12,
@@ -565,9 +607,9 @@ const Dashboard = () => {
                       </div>
                       <div className="space-y-2">
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Weak Areas:</p>
+                          <p className="text-xs text-muted-foreground mb-1">Priority Domains:</p>
                           <div className="flex flex-wrap gap-1">
-                            {(userData?.sections?.readingWriting?.weakAreas || ['Reading Comprehension', 'Grammar Rules']).map((area, index) => (
+                            {(userData?.sections?.readingWriting?.weakAreas || ['Craft and Structure', 'Standard English Conventions']).map((area, index) => (
                               <Badge key={index} variant="destructive" className="text-xs">
                                 {area}
                               </Badge>
@@ -575,12 +617,15 @@ const Dashboard = () => {
                           </div>
                         </div>
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Strong Areas:</p>
-                          <div className="flex flex-wrap gap-1">
-                            {(userData?.sections?.readingWriting?.strongAreas || ['Vocabulary', 'Writing Style']).map((area, index) => (
-                              <Badge key={index} variant="secondary" className="text-xs bg-blue-100 text-blue-700">
-                                {area}
-                              </Badge>
+                          <p className="text-xs text-muted-foreground mb-1">Specific Focus:</p>
+                          <div className="space-y-1">
+                            {(userData?.sections?.readingWriting?.specificWeaknesses || [
+                              'Cross-Text Connections',
+                              'Words in Context'
+                            ]).slice(0, 2).map((weakness, index) => (
+                              <div key={index} className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded">
+                                {weakness}
+                              </div>
                             ))}
                           </div>
                         </div>
@@ -595,9 +640,9 @@ const Dashboard = () => {
                       </div>
                       <div className="space-y-2">
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Weak Areas:</p>
+                          <p className="text-xs text-muted-foreground mb-1">Priority Domains:</p>
                           <div className="flex flex-wrap gap-1">
-                            {(userData?.sections?.math?.weakAreas || ['Advanced Math', 'Geometry']).map((area, index) => (
+                            {(userData?.sections?.math?.weakAreas || ['Advanced Math', 'Geometry and Trigonometry']).map((area, index) => (
                               <Badge key={index} variant="destructive" className="text-xs">
                                 {area}
                               </Badge>
@@ -605,12 +650,15 @@ const Dashboard = () => {
                           </div>
                         </div>
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Strong Areas:</p>
-                          <div className="flex flex-wrap gap-1">
-                            {(userData?.sections?.math?.strongAreas || ['Algebra', 'Problem Solving']).map((area, index) => (
-                              <Badge key={index} variant="secondary" className="text-xs bg-emerald-100 text-emerald-700">
-                                {area}
-                              </Badge>
+                          <p className="text-xs text-muted-foreground mb-1">Specific Focus:</p>
+                          <div className="space-y-1">
+                            {(userData?.sections?.math?.specificWeaknesses || [
+                              'Nonlinear equations and systems',
+                              'Right triangles and trigonometry'
+                            ]).slice(0, 2).map((weakness, index) => (
+                              <div key={index} className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded">
+                                {weakness}
+                              </div>
                             ))}
                           </div>
                         </div>
@@ -618,21 +666,37 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  {/* Weekly Plan */}
+                  {/* Expert Study Recommendations */}
+                  <div className="border rounded-lg p-3 bg-gradient-to-r from-primary/5 to-primary/10">
+                    <h4 className="font-medium text-sm mb-2 text-primary">Expert Recommendations</h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="p-2 bg-white/70 rounded">
+                        <strong className="text-blue-700">R&W Strategy:</strong> Practice 15 Cross-Text Connection passages this week - focus on identifying relationships between paired passages
+                      </div>
+                      <div className="p-2 bg-white/70 rounded">
+                        <strong className="text-emerald-700">Math Strategy:</strong> Complete 20 quadratic equation problems daily, then move to systems of nonlinear equations
+                      </div>
+                      <div className="p-2 bg-white/70 rounded">
+                        <strong className="text-purple-700">Test Prep:</strong> Take one timed section practice (35 min R&W, 70 min Math) every 3 days
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Weekly Schedule */}
                   <div className="border rounded-lg p-3 bg-muted/30">
-                    <h4 className="font-medium text-sm mb-2">This Week's Focus</h4>
+                    <h4 className="font-medium text-sm mb-2">This Week's Schedule</h4>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between items-center">
-                        <span className="text-xs">Reading & Writing</span>
-                        <Badge variant="outline" className="text-xs">3x</Badge>
+                        <span className="text-xs">Craft and Structure practice</span>
+                        <Badge variant="outline" className="text-xs">Mon, Wed, Fri</Badge>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-xs">Math Practice</span>
-                        <Badge variant="outline" className="text-xs">3x</Badge>
+                        <span className="text-xs">Advanced Math drills</span>
+                        <Badge variant="outline" className="text-xs">Tue, Thu, Sat</Badge>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-xs">Full Practice Test</span>
-                        <Badge variant="outline" className="text-xs">1x</Badge>
+                        <span className="text-xs">Full practice test</span>
+                        <Badge variant="outline" className="text-xs">Sunday</Badge>
                       </div>
                     </div>
                   </div>
