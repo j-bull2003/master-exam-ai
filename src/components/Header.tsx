@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CommandPalette } from "@/components/CommandPalette";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
-import { Search, Keyboard } from "lucide-react";
+import { Search, Menu, X } from "lucide-react";
 import { Instagram, Linkedin } from "lucide-react";
 
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
@@ -12,6 +12,7 @@ const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 export const Header = () => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useKeyboardShortcuts({
     onCommandPaletteOpen: () => setCommandPaletteOpen(true),
@@ -107,7 +108,7 @@ export const Header = () => {
           </div>
 
           {/* Command Palette Button & CTA Buttons */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Command Palette Trigger */}
             <Button
               variant="ghost"
@@ -122,12 +123,12 @@ export const Header = () => {
               </div>
             </Button>
             
-            <Link to="/auth/login">
+            <Link to="/auth/login" className="hidden md:block">
               <Button variant="ghost" size="sm" className="font-medium hover:bg-primary/5 hover:text-primary border-hairline">
                 Sign In
               </Button>
             </Link>
-            <Link to="/auth/register">
+            <Link to="/auth/register" className="hidden md:block">
               <Button 
                 size="sm" 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
@@ -135,10 +136,129 @@ export const Header = () => {
                 Start Free Trial
               </Button>
             </Link>
+            
+            {/* Mobile CTA Buttons */}
+            <Link to="/auth/register" className="md:hidden">
+              <Button 
+                size="sm" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-3 border border-primary/20 text-xs"
+              >
+                Trial
+              </Button>
+            </Link>
+            
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden p-2"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
           </div>
         </div>
       </nav>
     </header>
+
+    {/* Mobile Navigation Menu */}
+    {mobileMenuOpen && (
+      <div className="fixed inset-0 z-40 md:hidden">
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+        <div className="fixed top-16 right-0 h-[calc(100vh-4rem)] w-80 bg-background border-l border-border shadow-xl">
+          <div className="flex flex-col h-full">
+            {/* Navigation Links */}
+            <div className="flex-1 p-6 space-y-6">
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Navigation</h3>
+                <div className="space-y-3">
+                  <Link 
+                    to="/features" 
+                    className="block text-base font-medium text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Features
+                  </Link>
+                  <Link 
+                    to="/pricing" 
+                    className="block text-base font-medium text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Pricing
+                  </Link>
+                  <Link 
+                    to="/about" 
+                    className="block text-base font-medium text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    About
+                  </Link>
+                  <Link
+                    to="/consulting"
+                    className="block text-base font-medium text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    SAT Programs
+                  </Link>
+                </div>
+              </div>
+              
+              {/* Search */}
+              <div className="pt-4 border-t border-border">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start gap-2 text-muted-foreground hover:text-foreground"
+                  onClick={() => {
+                    setCommandPaletteOpen(true);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <Search className="w-4 h-4" />
+                  Search
+                </Button>
+              </div>
+              
+              {/* Social Links */}
+              <div className="pt-4 border-t border-border">
+                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">Follow Us</h3>
+                <div className="flex gap-4">
+                  <a
+                    href="https://instagram.com/unihackai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <Instagram className="w-5 h-5" />
+                  </a>
+                  <a
+                    href="https://linkedin.com/company/yourorg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <Linkedin className="w-5 h-5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            {/* Bottom CTA */}
+            <div className="p-6 border-t border-border space-y-3">
+              <Link to="/auth/login" className="block" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="outline" className="w-full">
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="/auth/register" className="block" onClick={() => setMobileMenuOpen(false)}>
+                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                  Start Free Trial
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
 
     {/* Command Palette */}
     <CommandPalette 
