@@ -123,10 +123,9 @@ const SATPrograms = () => {
             </div>
 
             {/* Prestigious metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto">
               {[
                 { number: "500+", label: "Elite Students Coached" },
-                { number: "1580", label: "Average Achievement" },
                 { number: "98%", label: "Success Rate" },
                 { number: "+210", label: "Average Improvement" }
               ].map((metric, idx) => (
