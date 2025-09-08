@@ -242,14 +242,14 @@ const SATPrograms = () => {
 
             <div className="grid gap-6 sm:gap-8 md:grid-cols-3 px-4">
               {successStories.map((story, index) => (
-                <div key={index} className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group">
-                  <div className="flex items-center justify-between mb-8">
-                    <div>
+                <div key={index} className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group">
+                  <div className="flex items-start justify-between mb-8">
+                    <div className="flex-1">
                       <h3 className="font-serif font-bold text-xl text-slate-900 mb-1">{story.name}</h3>
                       <p className="text-sm text-slate-600 font-medium">{story.college}</p>
                     </div>
-                    <span className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-medium">
-                      1:1 Booster Program
+                    <span className="bg-slate-100 text-slate-700 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ml-2 flex-shrink-0">
+                      1:1 Booster
                     </span>
                   </div>
                   
