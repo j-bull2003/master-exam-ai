@@ -64,18 +64,26 @@ const Dashboard = () => {
       // For Django users, use user data directly
       const userName = `${user.first_name} ${user.last_name}`.trim() || user.email?.split('@')[0] || 'User';
       
-      // Create userData object with Django user data
+      // Default SAT exam date (3 months from now)
+      const defaultExamDate = new Date();
+      defaultExamDate.setMonth(defaultExamDate.getMonth() + 3);
+      
+      // Mock dream universities for motivation
+      const dreamUniversities = ["Harvard", "Stanford", "MIT", "Yale", "Princeton"];
+      
+      // Create userData object with SAT-focused data
       const userData = {
         name: userName,
-        exam: "No exam selected", // TODO: Store in Django profile model
-        examDate: null, // TODO: Store in Django profile model
-        totalQuestions: 0, // These could come from Django analytics
+        exam: "SAT",
+        examDate: defaultExamDate,
+        dreamUniversities: dreamUniversities,
+        totalQuestions: 0,
         correctAnswers: 0,
         accuracy: 0,
         weeklyTarget: 100,
         completedThisWeek: 0,
         streakDays: 0,
-        nextSession: "Select your exam to start"
+        nextSession: "Start your SAT practice"
       };
 
       console.log('Setting user data:', userData);
@@ -83,17 +91,21 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error loading profile data:', error);
       // Still set some default data for authenticated user
+      const defaultExamDate = new Date();
+      defaultExamDate.setMonth(defaultExamDate.getMonth() + 3);
+      
       setUserData({
         name: `${user.first_name} ${user.last_name}`.trim() || "User",
-        exam: "No exam selected",
-        examDate: null,
+        exam: "SAT",
+        examDate: defaultExamDate,
+        dreamUniversities: ["Harvard", "Stanford", "MIT"],
         totalQuestions: 0,
         correctAnswers: 0,
         accuracy: 0,
         weeklyTarget: 100,
         completedThisWeek: 0,
         streakDays: 0,
-        nextSession: "Select your exam to start"
+        nextSession: "Start your SAT practice"
       });
     } finally {
       setIsLoading(false);
@@ -237,43 +249,68 @@ const Dashboard = () => {
               Welcome back, {userData?.name || 'User'}! 👋
             </h1>
             <p className="text-xl text-muted-foreground">
-              Ready to excel in your {userData?.exam ? `${userData.exam} exam` : 'upcoming exam'}?
+              Ready to excel in your SAT exam and get into your dream university?
             </p>
+            {userData?.dreamUniversities && (
+              <div className="flex flex-wrap gap-2 justify-center mt-4">
+                <span className="text-sm text-muted-foreground mr-2">Dream Universities:</span>
+                {userData.dreamUniversities.slice(0, 5).map((uni, index) => (
+                  <Badge key={index} variant="secondary" className="text-sm">
+                    {uni}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
 
-        {/* Exam Info Card */}
-        <Card className="relative overflow-hidden">
+        {/* SAT Exam Info Card */}
+        <Card className="relative overflow-hidden bg-gradient-to-r from-primary/5 to-primary-variant/5 border-primary/20">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-2xl">
-                  {userData?.exam || 'No Exam Selected'}
-                </CardTitle>
-                {userData?.examDate && (
-                  <CardDescription className="text-lg mt-2">
-                    {isExamPassed ? (
-                      <span className="text-destructive font-medium">
-                        Exam Date Passed
-                      </span>
-                    ) : (
-                      examCountdown !== null && (
-                        <span className="text-primary font-medium">
-                          {examCountdown} days remaining
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Trophy className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-2xl text-primary">
+                    SAT Exam Preparation
+                  </CardTitle>
+                  {userData?.examDate && (
+                    <CardDescription className="text-lg mt-2">
+                      {isExamPassed ? (
+                        <span className="text-destructive font-medium">
+                          Exam Date Passed
                         </span>
-                      )
-                    )}
-                  </CardDescription>
-                )}
+                      ) : (
+                        examCountdown !== null && (
+                          <span className="text-primary font-medium">
+                            {examCountdown} days remaining
+                          </span>
+                        )
+                      )}
+                    </CardDescription>
+                  )}
+                </div>
               </div>
               <div className="text-right">
                 {userData?.examDate ? (
-                  <Badge variant="secondary" className="text-lg px-4 py-2">
-                    {new Date(userData.examDate).toLocaleDateString('en-US', {
-                      month: 'long',
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
-                  </Badge>
+                  <div className="space-y-2">
+                    <Badge variant="secondary" className="text-lg px-4 py-2">
+                      {new Date(userData.examDate).toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                      })}
+                    </Badge>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setIsDateModalOpen(true)}
+                      className="block ml-auto"
+                    >
+                      Update Date
+                    </Button>
+                  </div>
                 ) : (
                   <Badge variant="outline" className="text-lg px-4 py-2">
                     Date not set
@@ -301,25 +338,16 @@ const Dashboard = () => {
                 </Alert>
               )}
               
-              {!userData?.exam || userData?.exam === "No exam selected" && (
-                <Alert>
-                  <AlertDescription>
-                    <div className="flex items-center justify-between">
-                      <span>Get started by selecting your exam type and target date.</span>
-                      <Link to="/exam-picker">
-                        <Button size="sm">
-                          Choose Exam
-                        </Button>
-                      </Link>
-                    </div>
-                  </AlertDescription>
-                </Alert>
-              )}
-              
               {userData?.examDate && !isExamPassed && (
-                <p className="text-muted-foreground">
-                  Keep up the great work! You're making steady progress toward your SAT exam.
-                </p>
+                <div className="space-y-3">
+                  <p className="text-muted-foreground">
+                    Keep up the great work! You're making steady progress toward your SAT exam.
+                  </p>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Star className="h-4 w-4" />
+                    <span>Your dream universities await - stay focused and consistent!</span>
+                  </div>
+                </div>
               )}
             </div>
           </CardContent>
