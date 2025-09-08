@@ -155,13 +155,13 @@ const Index = () => {
 
             {/* Enhanced pricing info with layered cards */}
             {isLoaded ? (
-              <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors card-layered">
                   <CheckCircle className="w-4 h-4 text-success" />
                   <span className="text-success font-semibold">7-day free trial</span>
                 </div>
-                <div className="text-muted-foreground font-medium">From $39.99/month</div>
-                <div className="text-muted-foreground">Cancel anytime</div>
+                <div className="text-muted-foreground font-medium">From $39.99/month (annual)</div>
+                <div className="text-muted-foreground">No setup fees • Cancel anytime</div>
               </div>
             ) : (
               <Skeleton className="h-6 w-96 mx-auto mb-8" />
