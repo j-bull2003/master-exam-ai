@@ -248,8 +248,8 @@ const SATPrograms = () => {
                       <h3 className="font-serif font-bold text-xl text-slate-900 mb-1">{story.name}</h3>
                       <p className="text-sm text-slate-600 font-medium">{story.college}</p>
                     </div>
-                    <span className="bg-slate-100 text-slate-700 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ml-2 flex-shrink-0">
-                      1:1 Booster
+                    <span className="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap ml-2 flex-shrink-0">
+                      1:1 Booster Student
                     </span>
                   </div>
                   
