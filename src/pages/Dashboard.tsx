@@ -135,8 +135,8 @@ const Dashboard = () => {
     }
   };
 
-  // Show loading state
-  if (authLoading || profileLoading || isLoading) {
+  // Show loading state only if auth is loading or if we have a user but profile is loading
+  if (authLoading || (user && profileLoading)) {
     return (
       <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
         <div className="text-center">
