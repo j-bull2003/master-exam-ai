@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
@@ -19,9 +18,8 @@ import {
   Save, 
   X,
   Calendar,
-  MapPin,
-  Trophy,
-  BookOpen
+  BookOpen,
+  Settings
 } from "lucide-react";
 
 interface ProfileData {
@@ -29,6 +27,7 @@ interface ProfileData {
   email: string;
   exam_type: string;
   exam_date: string | null;
+  target_university: string;
 }
 
 const UserProfile = () => {
@@ -41,54 +40,19 @@ const UserProfile = () => {
     full_name: "",
     email: "",
     exam_type: "",
-    exam_date: null
+    exam_date: null,
+    target_university: ""
   });
-
-  // Exam configurations
-  const examConfig = {
-    SAT: {
-      university: "Harvard University",
-      color: "#C8102E",
-      studyGoal: "Achieve 1500+ for Ivy League admission",
-      preferredUnis: ["Harvard", "Stanford", "MIT", "Yale"],
-      scoringSystem: "1600 Point Scale",
-      sections: ["Reading", "Writing & Language", "Math (No Calculator)", "Math (Calculator)"]
-    },
-    ACT: {
-      university: "Stanford University", 
-      color: "#8C1515",
-      studyGoal: "Score 32+ for top-tier universities",
-      preferredUnis: ["Stanford", "Northwestern", "University of Chicago", "Duke"],
-      scoringSystem: "36 Point Scale",
-      sections: ["English", "Math", "Reading", "Science"]
-    },
-    STEP: {
-      university: "University of Cambridge",
-      color: "#A3C1DA",
-      studyGoal: "Achieve Grade S for Cambridge entry",
-      preferredUnis: ["Cambridge", "Oxford"],
-      scoringSystem: "Grades 1-S Scale",
-      sections: ["STEP 2", "STEP 3", "Mathematics"]
-    },
-    UCAT: {
-      university: "University of Oxford",
-      color: "#002147",
-      studyGoal: "Score 2700+ for medical school",
-      preferredUnis: ["Oxford Medical", "Cambridge Medical", "Imperial"],
-      scoringSystem: "3600 Point Scale", 
-      sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning"]
-    }
-  };
 
   useEffect(() => {
     if (user) {
-      // Use Supabase user data
       const userMetadata = (user as any).user_metadata || {};
       const profileData: ProfileData = {
         full_name: userMetadata.full_name || userMetadata.first_name || user.email?.split('@')[0] || 'User',
         email: user.email || '',
-        exam_type: 'SAT', // Default for now - you might want to store this in user profile
-        exam_date: null // Default for now - you might want to store this in user profile
+        exam_type: 'SAT',
+        exam_date: null,
+        target_university: 'Harvard University'
       };
       setProfile(profileData);
       setEditForm(profileData);
@@ -99,10 +63,6 @@ const UserProfile = () => {
   const handleSave = async () => {
     try {
       if (!user) return;
-
-      // For now, we'll just update the local state
-      // In a full implementation, you'd want to update the Django user model
-      // or create a separate profile model in Django
       
       setProfile(editForm);
       setIsEditing(false);
@@ -148,78 +108,66 @@ const UserProfile = () => {
     );
   }
 
-  const currentExam = profile.exam_type as keyof typeof examConfig;
-  const config = examConfig[currentExam] || examConfig.SAT;
-
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Profile</h1>
-          <p className="text-muted-foreground">Manage your account and exam preferences</p>
-        </div>
-        <Button
-          variant={isEditing ? "outline" : "default"}
-          onClick={() => setIsEditing(!isEditing)}
-          className="flex items-center gap-2"
-        >
-          {isEditing ? (
-            <>
-              <X className="w-4 h-4" />
-              Cancel
-            </>
-          ) : (
-            <>
-              <Edit3 className="w-4 h-4" />
-              Edit Profile
-            </>
-          )}
-        </Button>
-      </div>
-
       {/* Profile Overview Card */}
-      <Card>
+      <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-slate-200 hover:shadow-lg transition-all">
         <CardHeader>
-          <div className="flex items-center space-x-4">
-            <Avatar className="h-20 w-20">
-              <AvatarImage src="" alt={profile.full_name} />
-              <AvatarFallback className="text-lg font-semibold">
-                {profile.full_name.split(' ').map(n => n[0]).join('').toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <div className="space-y-1">
-              <CardTitle className="text-2xl">{profile.full_name}</CardTitle>
-              <CardDescription className="flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                {profile.email}
-              </CardDescription>
-              <div className="flex items-center gap-2">
-                <Badge 
-                  variant="secondary" 
-                  className="font-medium"
-                  style={{ backgroundColor: `${config.color}20`, color: config.color }}
-                >
-                  <BookOpen className="w-3 h-3 mr-1" />
-                  {profile.exam_type} Student
-                </Badge>
-                <Badge variant="outline" className="font-medium">
-                  <GraduationCap className="w-3 h-3 mr-1" />
-                  {config.university}
-                </Badge>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <Avatar className="h-20 w-20">
+                <AvatarImage src="" alt={profile.full_name} />
+                <AvatarFallback className="text-lg font-semibold bg-primary text-primary-foreground">
+                  {profile.full_name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              <div className="space-y-2">
+                <CardTitle className="text-2xl">{profile.full_name}</CardTitle>
+                <CardDescription className="flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  {profile.email}
+                </CardDescription>
+                <div className="flex items-center gap-2">
+                  <Badge variant="secondary" className="font-medium bg-blue-100 text-blue-700 border-blue-300">
+                    <BookOpen className="w-3 h-3 mr-1" />
+                    {profile.exam_type} Student
+                  </Badge>
+                  <Badge variant="outline" className="font-medium">
+                    <GraduationCap className="w-3 h-3 mr-1" />
+                    {profile.target_university}
+                  </Badge>
+                </div>
               </div>
             </div>
+            <Button
+              variant={isEditing ? "outline" : "default"}
+              onClick={() => setIsEditing(!isEditing)}
+              className="flex items-center gap-2"
+            >
+              {isEditing ? (
+                <>
+                  <X className="w-4 h-4" />
+                  Cancel
+                </>
+              ) : (
+                <>
+                  <Edit3 className="w-4 h-4" />
+                  Edit Profile
+                </>
+              )}
+            </Button>
           </div>
         </CardHeader>
       </Card>
 
       {/* Personal Information */}
-      <Card>
+      <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 hover:shadow-lg transition-all">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-emerald-700">
             <User className="w-5 h-5" />
             Personal Information
           </CardTitle>
+          <CardDescription>Your basic account details</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {isEditing ? (
@@ -259,20 +207,18 @@ const UserProfile = () => {
         </CardContent>
       </Card>
 
-      {/* Exam Information */}
-      <Card>
+      {/* Study Preferences */}
+      <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-all">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-blue-700">
             <Target className="w-5 h-5" />
-            Exam Information
+            Study Preferences
           </CardTitle>
-          <CardDescription>
-            Your exam type and target goals
-          </CardDescription>
+          <CardDescription>Your exam type and study goals</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {isEditing ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="examType">Exam Type</Label>
                 <Select
@@ -283,12 +229,21 @@ const UserProfile = () => {
                     <SelectValue placeholder="Select exam type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="SAT">SAT - Scholastic Assessment Test</SelectItem>
-                    <SelectItem value="ACT">ACT - American College Testing</SelectItem>
-                    <SelectItem value="STEP">STEP - Sixth Term Examination Paper</SelectItem>
-                    <SelectItem value="UCAT">UCAT - University Clinical Aptitude Test</SelectItem>
+                    <SelectItem value="SAT">SAT</SelectItem>
+                    <SelectItem value="ACT">ACT</SelectItem>
+                    <SelectItem value="STEP">STEP</SelectItem>
+                    <SelectItem value="UCAT">UCAT</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="targetUniversity">Target University</Label>
+                <Input
+                  id="targetUniversity"
+                  value={editForm.target_university}
+                  onChange={(e) => setEditForm(prev => ({ ...prev, target_university: e.target.value }))}
+                  placeholder="Enter target university"
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="examDate">Exam Date</Label>
@@ -301,67 +256,25 @@ const UserProfile = () => {
               </div>
             </div>
           ) : (
-            <div className="space-y-6">
-              {/* Exam Overview */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">Current Exam</Label>
-                  <div className="flex items-center gap-2">
-                    <Badge 
-                      style={{ backgroundColor: config.color, color: 'white' }}
-                      className="font-medium"
-                    >
-                      {profile.exam_type}
-                    </Badge>
-                    <span className="font-medium">{config.scoringSystem}</span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">Target University</Label>
-                  <p className="font-medium">{config.university}</p>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-muted-foreground">Exam Date</Label>
-                  <p className="font-medium">
-                    {profile.exam_date ? new Date(profile.exam_date).toLocaleDateString() : 'Not set'}
-                  </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-muted-foreground">Exam Type</Label>
+                <div className="flex items-center gap-2">
+                  <Badge className="font-medium bg-blue-600 text-white">
+                    {profile.exam_type}
+                  </Badge>
                 </div>
               </div>
-
-              <Separator />
-
-              {/* Study Goals */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium text-muted-foreground">Study Goals</Label>
-                <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                  <Trophy className="w-5 h-5 text-amber-500" />
-                  <span className="font-medium">{config.studyGoal}</span>
-                </div>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-muted-foreground">Target University</Label>
+                <p className="font-medium">{profile.target_university}</p>
               </div>
-
-              {/* Preferred Universities */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium text-muted-foreground">Preferred Universities</Label>
-                <div className="flex flex-wrap gap-2">
-                  {config.preferredUnis.map((uni) => (
-                    <Badge key={uni} variant="outline" className="font-medium">
-                      <GraduationCap className="w-3 h-3 mr-1" />
-                      {uni}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              {/* Exam Sections */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium text-muted-foreground">Exam Sections</Label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  {config.sections.map((section) => (
-                    <div key={section} className="p-2 bg-muted/50 rounded text-sm font-medium text-center">
-                      {section}
-                    </div>
-                  ))}
-                </div>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-muted-foreground">Exam Date</Label>
+                <p className="font-medium flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  {profile.exam_date ? new Date(profile.exam_date).toLocaleDateString() : 'Not set'}
+                </p>
               </div>
             </div>
           )}
@@ -378,6 +291,42 @@ const UserProfile = () => {
               </Button>
             </div>
           )}
+        </CardContent>
+      </Card>
+
+      {/* Account Settings */}
+      <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-all">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-purple-700">
+            <Settings className="w-5 h-5" />
+            Account Settings
+          </CardTitle>
+          <CardDescription>Manage your account preferences</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 border rounded-lg bg-white/50">
+              <div>
+                <h4 className="font-medium">Email Notifications</h4>
+                <p className="text-sm text-muted-foreground">Receive updates about your progress and new features</p>
+              </div>
+              <Badge variant="secondary">Enabled</Badge>
+            </div>
+            <div className="flex items-center justify-between p-4 border rounded-lg bg-white/50">
+              <div>
+                <h4 className="font-medium">Study Reminders</h4>
+                <p className="text-sm text-muted-foreground">Get reminded about your daily study goals</p>
+              </div>
+              <Badge variant="secondary">Enabled</Badge>
+            </div>
+            <div className="flex items-center justify-between p-4 border rounded-lg bg-white/50">
+              <div>
+                <h4 className="font-medium">Performance Analytics</h4>
+                <p className="text-sm text-muted-foreground">Track your progress and improvement over time</p>
+              </div>
+              <Badge variant="secondary">Enabled</Badge>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>
