@@ -49,245 +49,179 @@ const Dashboard = () => {
 
   // Load user data when auth state changes
   useEffect(() => {
-    if (!authLoading && user) {
-      console.log('Auth state changed, loading profile for user:', user.id);
-      loadProfileData(user);
-    } else if (!authLoading && !user) {
-      setUserData(null);
-      setIsLoading(false);
-    }
-  }, [user, authLoading]);
-
-  const loadProfileData = async (user: any) => {
-    try {
-      console.log('Loading profile data for user:', user.id);
-      
-      // For Django users, use user data directly
-      const userName = `${user.first_name} ${user.last_name}`.trim() || user.email?.split('@')[0] || 'User';
-      
-      // Simulate onboarding data with actual SAT sections and domains
-      const mockOnboardingData = {
-        examType: "SAT",
-        examDate: new Date('2025-03-15'), // Future exam date
-        targetUniversities: ["Harvard University", "MIT", "Stanford University"],
-        targetScore: "1550",
-        studyWeeksRemaining: 12,
-        currentLevel: "Intermediate",
-        // Actual SAT section progress with real domains
-        sections: {
-          readingWriting: {
-            name: "Reading and Writing",
-            currentScore: 670,
-            targetScore: 780,
-            progress: 72, // percentage
-            weakAreas: ["Craft and Structure", "Standard English Conventions"],
-            strongAreas: ["Information and Ideas", "Expression of Ideas"],
-            specificWeaknesses: [
-              "Cross-Text Connections",
-              "Words in Context", 
-              "Boundaries",
-              "Form, Structure, Sense"
-            ],
-            recommendations: [
-              "Focus on Text Structure and Purpose passages",
-              "Practice grammar rules for boundaries and punctuation",
-              "Review transition words and rhetorical synthesis"
-            ]
-          },
-          math: {
-            name: "Math",
-            currentScore: 680,
-            targetScore: 770,
-            progress: 65, // percentage
-            weakAreas: ["Advanced Math", "Geometry and Trigonometry"],
-            strongAreas: ["Algebra", "Problem-Solving and Data Analysis"],
-            specificWeaknesses: [
-              "Nonlinear equations in 1 variable and systems of equations in 2 variables",
-              "Right triangles and trigonometry",
-              "Circles"
-            ],
-            recommendations: [
-              "Master quadratic equations and polynomial operations",
-              "Practice trigonometric ratios and unit circle",
-              "Review circle theorems and arc length formulas"
-            ]
-          }
-        }
-      };
-      
-      // Create userData object with onboarding data
-      const userData = {
-        name: userName,
-        exam: mockOnboardingData.examType,
-        examDate: mockOnboardingData.examDate,
-        dreamUniversities: mockOnboardingData.targetUniversities,
-        targetScore: mockOnboardingData.targetScore,
-        currentLevel: mockOnboardingData.currentLevel,
-        sections: mockOnboardingData.sections,
-        studyWeeksRemaining: mockOnboardingData.studyWeeksRemaining,
-        totalQuestions: 0,
-        correctAnswers: 0,
-        accuracy: 0,
-        weeklyTarget: 100,
-        completedThisWeek: 0,
-        streakDays: 0,
-        nextSession: "Start your SAT practice"
-      };
-
-      console.log('Setting user data:', userData);
-      setUserData(userData);
-    } catch (error) {
-      console.error('Error loading profile data:', error);
-      // Still set some default data for authenticated user
+    if (!authLoading && hasAccess) {
+      // Initialize with default values - will be updated with real data as user interacts
       setUserData({
-        name: `${user.first_name} ${user.last_name}`.trim() || "User",
-        exam: "SAT",
-        examDate: new Date('2025-03-15'),
-        dreamUniversities: ["Harvard University", "MIT", "Stanford University"],
-        targetScore: "1550",
-        currentLevel: "Intermediate",
-        sections: {
-          readingWriting: {
-            name: "Reading and Writing",
-            currentScore: 670,
-            targetScore: 780,
-            progress: 72,
-            weakAreas: ["Craft and Structure", "Standard English Conventions"],
-            strongAreas: ["Information and Ideas", "Expression of Ideas"],
-            specificWeaknesses: [
-              "Cross-Text Connections",
-              "Words in Context", 
-              "Boundaries",
-              "Form, Structure, Sense"
-            ],
-            recommendations: [
-              "Focus on Text Structure and Purpose passages",
-              "Practice grammar rules for boundaries and punctuation",
-              "Review transition words and rhetorical synthesis"
-            ]
-          },
-          math: {
-            name: "Math",
-            currentScore: 680,
-            targetScore: 770,
-            progress: 65,
-            weakAreas: ["Advanced Math", "Geometry and Trigonometry"],
-            strongAreas: ["Algebra", "Problem-Solving and Data Analysis"],
-            specificWeaknesses: [
-              "Nonlinear equations in 1 variable and systems of equations in 2 variables",
-              "Right triangles and trigonometry",
-              "Circles"
-            ],
-            recommendations: [
-              "Master quadratic equations and polynomial operations",
-              "Practice trigonometric ratios and unit circle",
-              "Review circle theorems and arc length formulas"
-            ]
-          }
+        name: userEmail.split('@')[0] || "Student",
+        stats: {
+          overall_accuracy: 0,
+          weekly_progress: 0,
+          study_streak: 0,
+          total_questions: 0,
+          correct_answers: 0,
+          total_time: 0,
+          sessions_completed: 0
         },
-        studyWeeksRemaining: 12,
-        totalQuestions: 0,
-        correctAnswers: 0,
-        accuracy: 0,
-        weeklyTarget: 100,
-        completedThisWeek: 0,
-        streakDays: 0,
-        nextSession: "Start your SAT practice"
+        target_universities: ["Harvard", "MIT", "Stanford"],
+        exam_date: null,
+        target_score: 1500
       });
-    } finally {
       setIsLoading(false);
     }
+  }, [authLoading, hasAccess, userEmail]);
+
+  // Mock data that starts at 0 and will be updated with real usage
+  const recentSessions = [];
+  const studyPlan = [];
+
+  // Helper functions
+  const getStatusBadge = (status: string) => {
+    const variants: Record<string, "default" | "destructive" | "secondary" | "outline"> = {
+      "In Progress": "default",
+      "Completed": "secondary",
+      "Due": "destructive",
+      "Upcoming": "outline",
+    };
+    return (
+      <Badge variant={variants[status] || "default"}>
+        {status}
+      </Badge>
+    );
+  };
+
+  const getPriorityBadge = (priority: string) => {
+    const variants: Record<string, "default" | "destructive" | "secondary" | "outline"> = {
+      "High": "destructive",
+      "Medium": "default",
+      "Low": "secondary",
+    };
+    return (
+      <Badge variant={variants[priority] || "default"}>
+        {priority}
+      </Badge>
+    );
+  };
+
+  const getDifficultyBadge = (difficulty: string) => {
+    const variants: Record<string, "default" | "destructive" | "secondary" | "outline"> = {
+      "Hard": "destructive",
+      "Medium": "default",
+      "Easy": "secondary",
+    };
+    return (
+      <Badge variant={variants[difficulty] || "default"}>
+        {difficulty}
+      </Badge>
+    );
+  };
+
+  const getTrendIcon = (trend: string) => {
+    if (trend === "up") return <TrendingUp className="w-4 h-4 text-green-500" />;
+    if (trend === "down") return <RotateCcw className="w-4 h-4 text-red-500" />;
+    return <Target className="w-4 h-4 text-muted-foreground" />;
+  };
+
+  const getExamCountdown = () => {
+    if (!userData?.exam_date) return null;
+    
+    const examDate = new Date(userData.exam_date);
+    const today = new Date();
+    const timeDiff = examDate.getTime() - today.getTime();
+    return Math.ceil(timeDiff / (1000 * 3600 * 24));
   };
 
   const handleUpdateExamDate = async (newDate: Date) => {
     try {
-      console.log('Updating exam date. Current user:', user?.id);
-      
-      if (!user?.id) {
-        toast({
-          title: "Authentication Required",
-          description: "Please refresh the page and try again. You may need to log in.",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      // TODO: Implement Django API endpoint for updating exam date
-      console.log('Would update exam date to:', newDate);
-
-      // Update local state for now
-      setUserData(prev => ({ ...prev, examDate: newDate }));
+      // Update local state immediately for better UX
+      setUserData(prev => ({
+        ...prev,
+        exam_date: newDate.toISOString().split('T')[0]
+      }));
       
       toast({
-        title: "Success",
-        description: "Exam date updated successfully!",
+        title: "Exam date updated",
+        description: `Your SAT exam is scheduled for ${newDate.toLocaleDateString()}`,
       });
     } catch (error) {
       console.error('Error updating exam date:', error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred. Please try again.",
-        variant: "destructive"
+        description: "Failed to update exam date. Please try again.",
+        variant: "destructive",
       });
     }
   };
 
-  // Show loading state while auth is loading
-  if (authLoading) {
+  // Show loading state
+  if (isLoading || authLoading) {
     return (
       <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-          <p className="text-muted-foreground">Checking authentication...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Show login prompt if not authenticated
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
-        <div className="text-center space-y-6 max-w-md mx-auto p-6">
-          <h2 className="text-2xl font-bold">Please Log In</h2>
-          <p className="text-muted-foreground">
-            You need to be logged in to access your dashboard.
-          </p>
-          <Button onClick={() => window.location.href = '/auth/login'} size="lg">
-            Go to Login
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  // Show loading state while data is loading
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-muted-foreground">Loading your dashboard...</p>
         </div>
       </div>
     );
   }
 
-  // Calculate exam countdown
-  const getExamCountdown = () => {
-    if (!userData?.examDate) return null;
-    
-    const now = new Date();
-    const examDate = new Date(userData.examDate);
-    
-    // Set exam date to end of day to avoid "passed" issues
-    examDate.setHours(23, 59, 59, 999);
-    
-    const diffTime = examDate.getTime() - now.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    return diffDays;
-  };
+  // Redirect to login if not authenticated
+  if (!hasAccess) {
+    return (
+      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
+        <Card className="w-[400px]">
+          <CardHeader className="text-center">
+            <CardTitle>Access Required</CardTitle>
+            <CardDescription>
+              Please log in to access your dashboard
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-center">
+            <Link to="/auth/login">
+              <Button>Go to Login</Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Show email verification requirement
+  if (!isEmailConfirmed) {
+    return (
+      <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
+        <Card className="w-[500px]">
+          <CardHeader className="text-center">
+            <AlertTriangle className="w-12 h-12 text-amber-500 mx-auto mb-4" />
+            <CardTitle>Email Verification Required</CardTitle>
+            <CardDescription>
+              Please check your email and click the verification link to access your dashboard.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Verification email sent to: <strong>{userEmail}</strong>
+            </p>
+            <div className="space-y-2">
+              <Button 
+                onClick={() => {
+                  toast({
+                    title: "Verification email sent",
+                    description: "Please check your inbox and spam folder.",
+                  });
+                }}
+                className="w-full"
+              >
+                Resend Verification Email
+              </Button>
+              <Button variant="outline" onClick={signOut} className="w-full">
+                Sign Out
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const examCountdown = getExamCountdown();
   const isExamPassed = examCountdown !== null && examCountdown < 0;
@@ -295,7 +229,6 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background bg-mesh">
       {/* Django users don't need email verification */}
-
       <div className="container mx-auto px-4 space-y-8">
         {/* Header */}
         <header className="border-b border-border bg-background/95 backdrop-blur">
@@ -338,232 +271,289 @@ const Dashboard = () => {
             <p className="text-muted-foreground">Ready to continue your SAT preparation?</p>
           </div>
 
-          {/* Main Dashboard Layout */}
-          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-            {/* Left Column - Timeline & Goals */}
-            <div className="xl:col-span-1 order-1 xl:order-2">
-              {userData?.dreamUniversities && userData?.examDate && (
-                <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 sticky top-6">
-                  <CardContent className="p-4 space-y-4">
-                    {/* Timeline Section */}
-                    <div>
-                      <h3 className="font-semibold text-sm text-primary mb-2 flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        Your Timeline
-                      </h3>
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs text-muted-foreground">Exam Date</span>
-                          <span className="text-xs font-medium">
-                            {userData.examDate.toLocaleDateString()}
-                          </span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs text-muted-foreground">Days Remaining</span>
-                          <Badge variant="secondary" className="text-xs bg-primary/20 text-primary">
-                            {examCountdown || 0} days
-                          </Badge>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs text-muted-foreground">Target Score</span>
-                          <span className="text-sm font-bold text-primary">{userData.targetScore}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Separator />
-
-                    {/* Target Universities Section */}
-                    <div>
-                      <h3 className="font-semibold text-sm text-primary mb-2 flex items-center gap-1">
-                        <Trophy className="h-3 w-3" />
-                        Target Universities
-                      </h3>
-                      <div className="space-y-1">
-                        {userData.dreamUniversities.slice(0, 3).map((uni, index) => (
-                          <div key={index} className="text-xs p-2 bg-white/50 rounded border border-primary/10">
-                            {uni}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+          {/* Main content grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Left side - Stats and Actions (3/4 width) */}
+            <div className="lg:col-span-3 space-y-6">
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Card className="card-interactive">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Overall Accuracy</CardTitle>
+                    <Target className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{userData?.stats?.overall_accuracy || 0}%</div>
+                    <p className="text-xs text-muted-foreground">
+                      Start practicing to see your accuracy
+                    </p>
                   </CardContent>
                 </Card>
-              )}
+
+                <Card className="card-interactive">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Weekly Progress</CardTitle>
+                    <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{userData?.stats?.weekly_progress || 0}%</div>
+                    <p className="text-xs text-muted-foreground">
+                      Complete sessions to track progress
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="card-interactive">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Study Streak</CardTitle>
+                    <Zap className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{userData?.stats?.study_streak || 0} days</div>
+                    <p className="text-xs text-muted-foreground">
+                      Practice daily to build your streak
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="card-interactive">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Total Questions</CardTitle>
+                    <BookOpen className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{userData?.stats?.total_questions || 0}</div>
+                    <p className="text-xs text-muted-foreground">
+                      Questions attempted
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Study Plan */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Calendar className="w-5 h-5" />
+                    Study Plan
+                  </CardTitle>
+                  <CardDescription>
+                    Your personalized study schedule
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {studyPlan.length === 0 ? (
+                    <div className="text-center py-8">
+                      <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold mb-2">No Study Plan Yet</h3>
+                      <p className="text-muted-foreground mb-4">
+                        Complete your diagnostic test to get a personalized study plan
+                      </p>
+                      <Link to="/diagnostic">
+                        <Button>
+                          <Brain className="w-4 h-4 mr-2" />
+                          Take Diagnostic Test
+                        </Button>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {studyPlan.map((task, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between p-3 border rounded-lg"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <div className="text-sm">
+                              <div className="font-medium">{task.title}</div>
+                              <div className="text-muted-foreground">{task.description}</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            {getPriorityBadge(task.priority)}
+                            {getStatusBadge(task.status)}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Recent Practice Sessions */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Clock className="w-5 h-5" />
+                    Recent Practice Sessions
+                  </CardTitle>
+                  <CardDescription>
+                    Your latest study activity
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {recentSessions.length === 0 ? (
+                    <div className="text-center py-8">
+                      <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold mb-2">No Practice Sessions Yet</h3>
+                      <p className="text-muted-foreground mb-4">
+                        Start practicing to see your session history here
+                      </p>
+                      <Link to="/practice">
+                        <Button>
+                          <BookOpen className="w-4 h-4 mr-2" />
+                          Start Practicing
+                        </Button>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {recentSessions.map((session, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between p-3 border rounded-lg"
+                        >
+                          <div className="flex items-center space-x-3">
+                            {getTrendIcon(session.trend)}
+                            <div className="text-sm">
+                              <div className="font-medium">{session.subject}</div>
+                              <div className="text-muted-foreground">{session.date}</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <div className="text-sm">
+                              <div className="font-medium">{session.score}%</div>
+                              <div className="text-muted-foreground">{session.questions} questions</div>
+                            </div>
+                            {getDifficultyBadge(session.difficulty)}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Quick Actions */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Quick Actions</CardTitle>
+                  <CardDescription>Jump into your study activities</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Link to="/practice">
+                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2">
+                        <BookOpen className="w-6 h-6" />
+                        <span>Practice Questions</span>
+                      </Button>
+                    </Link>
+                    <Link to="/mocks">
+                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2">
+                        <Clipboard className="w-6 h-6" />
+                        <span>Mock Tests</span>
+                      </Button>
+                    </Link>
+                    <Link to="/analytics">
+                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2">
+                        <BarChart3 className="w-6 h-6" />
+                        <span>View Analytics</span>
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
-            {/* Right Column - Main Content */}
-            <div className="xl:col-span-3 order-2 xl:order-1 space-y-6">
-            {/* Left Column - Main content */}
-            <div className="space-y-6">
-              {/* SAT Section Progress Cards with Exact Domains */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Reading and Writing Section */}
-                <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border-blue-500/20">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-blue-500/20 rounded-lg">
-                        <BookOpen className="h-4 w-4 text-blue-600" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-blue-700">Reading & Writing</h3>
-                        <p className="text-xs text-muted-foreground">
-                          {userData?.sections?.readingWriting?.currentScore || 670}/800
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm font-medium text-blue-600">
-                          {userData?.sections?.readingWriting?.progress || 86}%
+            {/* Right sidebar - Timeline and Universities (1/4 width) */}
+            <div className="lg:col-span-1 space-y-6">
+              {/* Your Timeline */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm font-medium">Your Timeline</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {userData?.exam_date ? (
+                    <>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-primary">
+                          {isExamPassed ? 'Past' : examCountdown}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {isExamPassed ? 'Exam Date Passed' : 'days until exam'}
                         </div>
                       </div>
+                      <div className="text-xs text-center">
+                        <div className="font-medium">SAT Exam</div>
+                        <div className="text-muted-foreground">
+                          {new Date(userData.exam_date).toLocaleDateString()}
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg font-bold">
+                          {userData?.target_score || 1500}
+                        </div>
+                        <div className="text-xs text-muted-foreground">target score</div>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => setIsDateModalOpen(true)}
+                        className="w-full text-xs"
+                      >
+                        Update Date
+                      </Button>
+                    </>
+                  ) : (
+                    <div className="text-center space-y-3">
+                      <div className="text-sm text-muted-foreground">No exam date set</div>
+                      <Button 
+                        size="sm" 
+                        onClick={() => setIsDateModalOpen(true)}
+                        className="w-full text-xs"
+                      >
+                        <Calendar className="w-3 h-3 mr-1" />
+                        Set Exam Date
+                      </Button>
                     </div>
-                    <div className="space-y-2">
-                      <div className="w-full bg-blue-200/50 rounded-full h-2 overflow-hidden">
-                        <div 
-                          className="h-full bg-blue-600 transition-all duration-500"
-                          style={{ width: `${userData?.sections?.readingWriting?.progress || 86}%` }}
-                        />
-                      </div>
-                      <div className="text-xs text-center text-muted-foreground mb-2">
-                        Target: {userData?.sections?.readingWriting?.targetScore || 780}
-                      </div>
-                      {/* Exact SAT R&W Domains */}
-                      <div className="space-y-1 text-xs">
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Information and Ideas (26%)</span>
-                          <span className="text-green-600 font-medium">Strong</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Craft and Structure (28%)</span>
-                          <span className="text-orange-600 font-medium">Needs Work</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Expression of Ideas (20%)</span>
-                          <span className="text-green-600 font-medium">Strong</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Standard English Conventions (26%)</span>
-                          <span className="text-blue-600 font-medium">Good</span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                  )}
+                </CardContent>
+              </Card>
 
-                {/* Math Section */}
-                <Card className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border-emerald-500/20">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-emerald-500/20 rounded-lg">
-                        <Calculator className="h-4 w-4 text-emerald-600" />
+              {/* Target Universities */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm font-medium">Target Universities</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    {userData?.target_universities?.slice(0, 3).map((university, index) => (
+                      <div
+                        key={index}
+                        className="text-xs py-1.5 px-2 bg-muted rounded text-center"
+                      >
+                        {university}
                       </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-emerald-700">Math</h3>
-                        <p className="text-xs text-muted-foreground">
-                          {userData?.sections?.math?.currentScore || 680}/800
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm font-medium text-emerald-600">
-                          {userData?.sections?.math?.progress || 88}%
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="w-full bg-emerald-200/50 rounded-full h-2 overflow-hidden">
-                        <div 
-                          className="h-full bg-emerald-600 transition-all duration-500"
-                          style={{ width: `${userData?.sections?.math?.progress || 88}%` }}
-                        />
-                      </div>
-                      <div className="text-xs text-center text-muted-foreground mb-2">
-                        Target: {userData?.sections?.math?.targetScore || 770}
-                      </div>
-                      {/* Exact SAT Math Domains */}
-                      <div className="space-y-1 text-xs">
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Algebra (35%)</span>
-                          <span className="text-green-600 font-medium">Strong</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Advanced Math (35%)</span>
-                          <span className="text-orange-600 font-medium">Needs Work</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Problem-Solving & Data Analysis (15%)</span>
-                          <span className="text-blue-600 font-medium">Good</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Geometry and Trigonometry (15%)</span>
-                          <span className="text-orange-600 font-medium">Needs Work</span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Quick Actions Grid */}
-              <div className="grid grid-cols-3 gap-3">
-                <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-blue-500/5 to-blue-500/10 border-blue-500/20">
-                  <CardContent className="p-3">
-                    <Link to="/practice" className="block">
-                      <div className="flex flex-col items-center text-center space-y-2">
-                        <div className="p-2 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30 transition-colors">
-                          <BookOpen className="h-4 w-4 text-blue-600" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-sm">Reading & Writing</h3>
-                          <p className="text-xs text-muted-foreground">Practice now</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </CardContent>
-                </Card>
-
-                <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-emerald-500/5 to-emerald-500/10 border-emerald-500/20">
-                  <CardContent className="p-3">
-                    <Link to="/practice" className="block">
-                      <div className="flex flex-col items-center text-center space-y-2">
-                        <div className="p-2 bg-emerald-500/20 rounded-lg group-hover:bg-emerald-500/30 transition-colors">
-                          <Calculator className="h-4 w-4 text-emerald-600" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-sm">Math</h3>
-                          <p className="text-xs text-muted-foreground">Practice now</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </CardContent>
-                </Card>
-
-                <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-purple-500/5 to-purple-500/10 border-purple-500/20">
-                  <CardContent className="p-3">
-                    <Link to="/mocks" className="block">
-                      <div className="flex flex-col items-center text-center space-y-2">
-                        <div className="p-2 bg-purple-500/20 rounded-lg group-hover:bg-purple-500/30 transition-colors">
-                          <Clipboard className="h-4 w-4 text-purple-600" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-sm">Full Test</h3>
-                          <p className="text-xs text-muted-foreground">Mock exam</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
+                    ))}
+                  </div>
+                  <Link to="/profile">
+                    <Button variant="outline" size="sm" className="w-full mt-3 text-xs">
+                      Manage List
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
             </div>
           </div>
 
-          {/* Exam Date Update Modal */}
+          {/* Exam Date Modal */}
           {isDateModalOpen && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-              <Card className="w-full max-w-md m-4">
+              <Card className="w-[400px]">
                 <CardHeader>
-                  <CardTitle>Update Exam Date</CardTitle>
+                  <CardTitle>Set Your SAT Exam Date</CardTitle>
                   <CardDescription>
-                    Choose your new target exam date
+                    Choose your target exam date to get personalized study plans
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -593,6 +583,7 @@ const Dashboard = () => {
           )}
         </div>
       </div>
+    </div>
   );
 };
 
