@@ -126,12 +126,12 @@ const SATPrograms = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link to="/auth/register">
+              <a href="https://calendly.com/etonstone-education/1-hour-consultation" target="_blank" rel="noopener noreferrer">
                 <Button size="lg" className="px-8 py-4 text-lg bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
                   Book Free Consultation
                   <Calendar className="w-5 h-5 ml-2" />
                 </Button>
-              </Link>
+              </a>
               <Button 
                 variant="outline" 
                 size="lg" 
@@ -293,12 +293,12 @@ const SATPrograms = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/auth/register">
+              <a href="https://calendly.com/etonstone-education/1-hour-consultation" target="_blank" rel="noopener noreferrer">
                 <Button size="lg" className="px-12 py-4 text-lg bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
                   Book Free Consultation
                   <Calendar className="w-5 h-5 ml-2" />
                 </Button>
-              </Link>
+              </a>
               <Link to="/pricing">
                 <Button variant="outline" size="lg" className="px-12 py-4 text-lg">
                   View Pricing
