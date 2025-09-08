@@ -189,18 +189,6 @@ const Index = () => {
                       </Button>
                     </MagneticButton>
                   </Link>
-                  
-                  {/* Mobile Quick Access Button */}
-                  <div className="block sm:hidden w-full">
-                    <Button 
-                      variant="outline" 
-                      onClick={() => setIsMobileMenuOpen(true)}
-                      className="w-full border-primary/30 text-primary hover:bg-primary/10"
-                    >
-                      <BookOpen className="w-4 h-4 mr-2" />
-                      Browse SAT Program
-                    </Button>
-                  </div>
                 </div>
               </div>
             ) : (
