@@ -197,7 +197,7 @@ const SATPrograms = () => {
                   Your Exclusive Benefits
                 </h4>
                 
-                <div className="grid md:grid-cols-2 gap-x-4 gap-y-2 mb-6">
+                <div className="grid md:grid-cols-2 gap-x-4 gap-y-1 mb-6">
                   {program.features.map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-2 group">
                       <div className="w-4 h-4 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
