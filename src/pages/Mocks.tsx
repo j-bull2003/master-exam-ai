@@ -110,7 +110,7 @@ const Mocks = () => {
     <div className="min-h-screen bg-background bg-mesh">
       {/* Header */}
       <header className="border-b border-border bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-2 sm:px-4 h-14 sm:h-16 flex items-center justify-between">
           <Link
             to="/dashboard"
             className="flex items-center hover:opacity-80 transition-opacity group"
@@ -118,11 +118,13 @@ const Mocks = () => {
             <img
               src={uniHackLogo}
               alt="UniHack.ai Logo"
-              className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+              className="h-20 sm:h-24 md:h-32 lg:h-36 max-h-[80px] sm:max-h-[96px] md:max-h-[128px] lg:max-h-[144px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
               style={{ backgroundColor: "transparent" }}
             />
           </Link>
-          <nav className="flex items-center space-x-6">
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-6">
             <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Home className="w-4 h-4" />Dashboard</Link>
             <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
             <Link to="/mocks" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
@@ -138,26 +140,67 @@ const Mocks = () => {
               </Button>
             </Link>
           </nav>
+
+          {/* Mobile Navigation */}
+          <div className="lg:hidden flex items-center gap-2">
+            <Link to="/">
+              <Button 
+                size="sm" 
+                variant="outline"
+                className="px-3"
+              >
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+        
+        {/* Mobile Bottom Navigation */}
+        <div className="lg:hidden border-t border-border bg-background/95">
+          <div className="container mx-auto px-2">
+            <nav className="flex items-center justify-around py-2">
+              <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <Home className="w-4 h-4" />
+                <span className="text-xs">Dashboard</span>
+              </Link>
+              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <BookOpen className="w-4 h-4" />
+                <span className="text-xs">Practice</span>
+              </Link>
+              <Link to="/mocks" className="text-primary font-medium flex flex-col items-center gap-1 py-2 px-3">
+                <Clipboard className="w-4 h-4" />
+                <span className="text-xs">Mocks</span>
+              </Link>
+              <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <BarChart3 className="w-4 h-4" />
+                <span className="text-xs">Analytics</span>
+              </Link>
+              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <User className="w-4 h-4" />
+                <span className="text-xs">Profile</span>
+              </Link>
+            </nav>
+          </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 lg:py-8">
         {/* Page Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold mb-3">SAT Mock Tests</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        <div className="mb-4 sm:mb-6 lg:mb-8 text-center px-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">SAT Mock Tests</h1>
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
             Practice with full-length SAT mock tests to track your progress and prepare for test day
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {/* Available Mocks */}
-          <div className="lg:col-span-2">
-            <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-              <PlayCircle className="h-6 w-6 text-primary" />
+          <div className="xl:col-span-2">
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 flex items-center gap-2">
+              <PlayCircle className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               Available Mock Tests
             </h2>
-            <div className="space-y-6 mb-8">
+            <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
               {availableMocks.map((mock) => (
                 <Card 
                   key={mock.id} 
@@ -166,13 +209,13 @@ const Mocks = () => {
                   }`}
                   onClick={() => setSelectedMock(selectedMock === mock.id ? null : mock.id)}
                 >
-                  <CardContent className="p-8">
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold mb-2">{mock.name}</h3>
-                        <p className="text-muted-foreground mb-4">{mock.description}</p>
+                  <CardContent className="p-4 sm:p-6 lg:p-8">
+                    <div className="flex flex-col lg:flex-row items-start justify-between gap-4 lg:gap-6 mb-4 lg:mb-6">
+                      <div className="flex-1 w-full lg:w-auto">
+                        <h3 className="text-lg sm:text-xl font-bold mb-2">{mock.name}</h3>
+                        <p className="text-sm sm:text-base text-muted-foreground mb-4">{mock.description}</p>
                         
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 text-sm">
                           <div className="flex items-center gap-2 p-3 bg-blue-500/10 rounded-lg">
                             <Clock className="h-4 w-4 text-blue-600" />
                             <span className="font-medium">{mock.duration}</span>
@@ -208,10 +251,11 @@ const Mocks = () => {
                       
                       <Button 
                         size={selectedMock === mock.id ? "lg" : "default"}
-                        className={`ml-6 ${selectedMock === mock.id ? 'bg-primary hover:bg-primary/90' : ''}`}
+                        className={`w-full lg:w-auto lg:ml-6 ${selectedMock === mock.id ? 'bg-primary hover:bg-primary/90' : ''}`}
                       >
                         <PlayCircle className="h-4 w-4 mr-2" />
-                        {selectedMock === mock.id ? "Start Mock Test" : "Select Test"}
+                        <span className="hidden sm:inline">{selectedMock === mock.id ? "Start Mock Test" : "Select Test"}</span>
+                        <span className="sm:hidden">{selectedMock === mock.id ? "Start" : "Select"}</span>
                       </Button>
                     </div>
                   </CardContent>
@@ -253,9 +297,9 @@ const Mocks = () => {
           </div>
 
           {/* Completed Mocks Sidebar */}
-          <div className="lg:col-span-1">
-            <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-              <BarChart3 className="h-6 w-6 text-primary" />
+          <div className="xl:col-span-1">
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 flex items-center gap-2">
+              <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               Your Results
             </h2>
             <div className="space-y-4">

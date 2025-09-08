@@ -56,7 +56,7 @@ const Analytics = () => {
     <div className="min-h-screen bg-background bg-mesh">
       {/* Header */}
       <header className="border-b border-border bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-2 sm:px-4 h-14 sm:h-16 flex items-center justify-between">
           <Link
             to="/dashboard"
             className="flex items-center hover:opacity-80 transition-opacity group"
@@ -64,16 +64,18 @@ const Analytics = () => {
             <img
               src={uniHackLogo}
               alt="UniHack.ai Logo"
-              className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+              className="h-20 sm:h-24 md:h-32 lg:h-36 max-h-[80px] sm:max-h-[96px] md:max-h-[128px] lg:max-h-[144px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
               style={{ backgroundColor: "transparent" }}
             />
           </Link>
-          <nav className="flex items-center space-x-6">
-          <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Home className="w-4 h-4" />Dashboard</Link>
-              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
-              <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
-              <Link to="/analytics" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
-              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-6">
+            <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Home className="w-4 h-4" />Dashboard</Link>
+            <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
+            <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
+            <Link to="/analytics" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
+            <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
             <Link to="/">
               <Button 
                 size="sm" 
@@ -84,19 +86,60 @@ const Analytics = () => {
               </Button>
             </Link>
           </nav>
+
+          {/* Mobile Navigation */}
+          <div className="lg:hidden flex items-center gap-2">
+            <Link to="/">
+              <Button 
+                size="sm" 
+                variant="outline"
+                className="px-3"
+              >
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+        
+        {/* Mobile Bottom Navigation */}
+        <div className="lg:hidden border-t border-border bg-background/95">
+          <div className="container mx-auto px-2">
+            <nav className="flex items-center justify-around py-2">
+              <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <Home className="w-4 h-4" />
+                <span className="text-xs">Dashboard</span>
+              </Link>
+              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <BookOpen className="w-4 h-4" />
+                <span className="text-xs">Practice</span>
+              </Link>
+              <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <Clipboard className="w-4 h-4" />
+                <span className="text-xs">Mocks</span>
+              </Link>
+              <Link to="/analytics" className="text-primary font-medium flex flex-col items-center gap-1 py-2 px-3">
+                <BarChart3 className="w-4 h-4" />
+                <span className="text-xs">Analytics</span>
+              </Link>
+              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <User className="w-4 h-4" />
+                <span className="text-xs">Profile</span>
+              </Link>
+            </nav>
+          </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 lg:py-8">
         {/* Page Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold mb-3">Performance Analytics</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        <div className="mb-4 sm:mb-6 lg:mb-8 text-center px-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">Performance Analytics</h1>
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
             Track your SAT progress and identify areas for improvement with detailed insights
           </p>
-          <div className="flex items-center justify-center space-x-4 mt-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 mt-4 sm:mt-6">
             <Select defaultValue="30">
-              <SelectTrigger className="w-40">
+              <SelectTrigger className="w-full sm:w-40">
                 <SelectValue placeholder="Time period" />
               </SelectTrigger>
               <SelectContent>
@@ -106,7 +149,7 @@ const Analytics = () => {
                 <SelectItem value="all">All time</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline">
+            <Button variant="outline" className="w-full sm:w-auto">
               <Download className="h-4 w-4 mr-2" />
               Export Report
             </Button>
@@ -114,30 +157,30 @@ const Analytics = () => {
         </div>
 
         {/* Overview Stats */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8">
           <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20 hover:shadow-lg transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
-              <Target className="h-4 w-4 text-emerald-600" />
+              <CardTitle className="text-xs sm:text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
+              <Target className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-emerald-700">{overallStats.accuracy}%</div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-emerald-700">{overallStats.accuracy}%</div>
               <p className="text-xs text-muted-foreground">
                 {overallStats.correctAnswers}/{overallStats.totalQuestions} correct
               </p>
-              <Progress value={overallStats.accuracy} className="mt-3 h-2" />
+              <Progress value={overallStats.accuracy} className="mt-2 sm:mt-3 h-1.5 sm:h-2" />
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20 hover:shadow-lg transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-blue-700">Average Time</CardTitle>
-              <Clock className="h-4 w-4 text-blue-600" />
+              <CardTitle className="text-xs sm:text-sm font-medium text-blue-700">Average Time</CardTitle>
+              <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-blue-700">{overallStats.averageTime}s</div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">{overallStats.averageTime}s</div>
               <p className="text-xs text-muted-foreground">per question</p>
-              <div className="flex items-center space-x-1 mt-3">
+              <div className="flex items-center space-x-1 mt-2 sm:mt-3">
                 <span className="text-xs text-muted-foreground font-medium">Start practicing to see data</span>
               </div>
             </CardContent>
@@ -145,13 +188,13 @@ const Analytics = () => {
 
           <Card className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border-purple-500/20 hover:shadow-lg transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-purple-700">Study Days</CardTitle>
-              <Calendar className="h-4 w-4 text-purple-600" />
+              <CardTitle className="text-xs sm:text-sm font-medium text-purple-700">Study Days</CardTitle>
+              <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-purple-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-purple-700">{overallStats.studyDays}</div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-700">{overallStats.studyDays}</div>
               <p className="text-xs text-muted-foreground">total active days</p>
-              <div className="flex items-center space-x-1 mt-3">
+              <div className="flex items-center space-x-1 mt-2 sm:mt-3">
                 <span className="text-xs text-muted-foreground font-medium">{overallStats.streakDays} day streak</span>
               </div>
             </CardContent>
@@ -159,20 +202,20 @@ const Analytics = () => {
 
           <Card className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border-orange-500/20 hover:shadow-lg transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-orange-700">Questions Answered</CardTitle>
-              <BarChart3 className="h-4 w-4 text-orange-600" />
+              <CardTitle className="text-xs sm:text-sm font-medium text-orange-700">Questions Answered</CardTitle>
+              <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4 text-orange-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-orange-700">{overallStats.totalQuestions}</div>
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-700">{overallStats.totalQuestions}</div>
               <p className="text-xs text-muted-foreground">across all topics</p>
-              <div className="flex items-center space-x-1 mt-3">
+              <div className="flex items-center space-x-1 mt-2 sm:mt-3">
                 <span className="text-xs text-muted-foreground font-medium">Begin practicing to track progress</span>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8">
           {/* Topic Performance */}
           <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-slate-200 hover:shadow-lg transition-all">
             <CardHeader>
@@ -281,7 +324,7 @@ const Analytics = () => {
             <CardDescription>How you perform across easy, medium, and hard questions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {overallStats.totalQuestions === 0 ? (
                 <div className="col-span-3 text-center py-12">
                   <BarChart3 className="h-16 w-16 mx-auto text-muted-foreground/50 mb-4" />
