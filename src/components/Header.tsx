@@ -123,6 +123,7 @@ export const Header = () => {
               </div>
             </Button>
             
+            {/* Desktop CTA Buttons */}
             <Link to="/auth/login" className="hidden md:block">
               <Button variant="ghost" size="sm" className="font-medium hover:bg-primary/5 hover:text-primary border-hairline">
                 Sign In
@@ -138,12 +139,17 @@ export const Header = () => {
             </Link>
             
             {/* Mobile CTA Buttons */}
+            <Link to="/auth/login" className="md:hidden">
+              <Button variant="ghost" size="sm" className="font-medium text-xs px-2 py-1 h-8">
+                Sign In
+              </Button>
+            </Link>
             <Link to="/auth/register" className="md:hidden">
               <Button 
                 size="sm" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-3 border border-primary/20 text-xs"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-2 py-1 h-8 text-xs"
               >
-                Trial
+                Free Trial
               </Button>
             </Link>
             
@@ -151,10 +157,10 @@ export const Header = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden p-2"
+              className="md:hidden p-1 h-8 w-8"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </Button>
           </div>
         </div>
@@ -244,16 +250,17 @@ export const Header = () => {
             
             {/* Bottom CTA */}
             <div className="p-6 border-t border-border space-y-3">
-              <Link to="/auth/login" className="block" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full">
-                  Sign In
-                </Button>
-              </Link>
-              <Link to="/auth/register" className="block" onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                  Start Free Trial
-                </Button>
-              </Link>
+              <Button
+                variant="ghost"
+                className="w-full justify-start gap-2 text-muted-foreground hover:text-foreground"
+                onClick={() => {
+                  setCommandPaletteOpen(true);
+                  setMobileMenuOpen(false);
+                }}
+              >
+                <Search className="w-4 h-4" />
+                Search
+              </Button>
             </div>
           </div>
         </div>
