@@ -1,364 +1,331 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { 
   Users, 
-  Trophy, 
+  Calendar, 
   Target, 
-  BookOpen, 
-  MessageSquare, 
-  Calendar,
+  Star,
   CheckCircle,
+  ArrowRight,
   GraduationCap,
-  Globe,
-  Clock
+  BookOpen,
+  TrendingUp,
+  Award
 } from "lucide-react";
 
-export const Consulting = () => {
-  console.log('Consulting component rendering');
+const SATPrograms = () => {
+  const scrollToSuccessStories = () => {
+    const element = document.getElementById('success-stories');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-  const programmes = [
+  const programs = [
     {
-      title: "US University Admissions",
-      description: "Comprehensive support for Ivy League and top-tier US universities",
+      title: "1:1 SAT Tutoring",
+      description: "Personalized one-on-one SAT coaching with expert tutors",
+      icon: Users,
       features: [
-        "SAT/ACT preparation and strategy",
-        "Application essay coaching",
-        "Extracurricular planning",
+        "Customized study plan based on diagnostic",
+        "Weekly 1-hour sessions with SAT expert",
+        "Unlimited practice test reviews",
+        "24/7 WhatsApp support",
+        "Target score guarantee"
+      ],
+      duration: "8-16 weeks",
+      price: "Starting at $150/session",
+      badge: "Most Popular"
+    },
+    {
+      title: "Group SAT Programs",
+      description: "Small group SAT preparation with peer motivation",
+      icon: BookOpen,
+      features: [
+        "Groups of 4-6 students maximum",
+        "Weekly 2-hour intensive sessions",
+        "Collaborative learning environment",
+        "Shared progress tracking",
+        "Group competitions & rewards"
+      ],
+      duration: "10-12 weeks",
+      price: "Starting at $80/session",
+      badge: null
+    },
+    {
+      title: "Admissions Guidance",
+      description: "Complete college admissions strategy and support",
+      icon: GraduationCap,
+      features: [
+        "College selection strategy",
+        "Application essay review",
         "Interview preparation",
-        "Financial aid guidance"
+        "Scholarship guidance",
+        "Timeline management"
       ],
-      duration: "12-18 months",
-      icon: <Globe className="w-6 h-6" />,
-      highlight: "Most Popular"
-    },
-    {
-      title: "UK University Admissions", 
-      description: "Expert guidance for Oxford, Cambridge, and Russell Group universities",
-      features: [
-        "UCAT/MAT/TMUA preparation",
-        "Personal statement crafting",
-        "Interview training",
-        "Course selection strategy",
-        "UCAS application support"
-      ],
-      duration: "8-12 months",
-      icon: <GraduationCap className="w-6 h-6" />,
-      highlight: "Premium"
-    },
-    {
-      title: "Test Prep Plus",
-      description: "Intensive exam preparation with personalized tutoring",
-      features: [
-        "1-on-1 tutoring sessions",
-        "Custom study plans",
-        "Practice test analysis",
-        "Weakness targeting",
-        "Progress tracking"
-      ],
-      duration: "3-6 months",
-      icon: <Target className="w-6 h-6" />,
-      highlight: "Results Focused"
+      duration: "6-12 months",
+      price: "Starting at $200/hour",
+      badge: "Premium"
     }
   ];
 
-  const services = [
+  const successStories = [
     {
-      icon: <BookOpen className="w-8 h-8 text-primary" />,
-      title: "Academic Planning",
-      description: "Strategic course selection and academic timeline development"
+      name: "Sarah Chen",
+      before: "1240",
+      after: "1580",
+      improvement: "+340",
+      college: "Stanford University",
+      quote: "The personalized approach helped me identify my weak areas and turn them into strengths. I couldn't have achieved my dream score without this program.",
+      program: "1:1 Tutoring"
     },
     {
-      icon: <MessageSquare className="w-8 h-8 text-primary" />,
-      title: "Essay Coaching",
-      description: "Expert guidance on personal statements and application essays"
+      name: "Marcus Williams", 
+      before: "1180",
+      after: "1520",
+      improvement: "+340",
+      college: "MIT",
+      quote: "The group program was perfect - I learned from my peers while getting expert guidance. The collaborative environment kept me motivated throughout.",
+      program: "Group Program"
     },
     {
-      icon: <Users className="w-8 h-8 text-primary" />,
-      title: "Interview Training",
-      description: "Mock interviews and personalized feedback for admissions success"
-    },
-    {
-      icon: <Trophy className="w-8 h-8 text-primary" />,
-      title: "Test Strategy",
-      description: "Customized preparation plans for standardized tests"
+      name: "Priya Patel",
+      before: "1300",
+      after: "1560",
+      improvement: "+260", 
+      college: "Harvard University",
+      quote: "Beyond just SAT prep, the admissions guidance helped me craft a compelling application that stood out. The comprehensive support made all the difference.",
+      program: "Premium Package"
     }
-  ];
-
-  const stats = [
-    { number: "95%", label: "Success Rate", description: "Students accepted to top-choice universities" },
-    { number: "200+", label: "Students Placed", description: "At Ivy League and Russell Group universities" },
-    { number: "15", label: "Years Experience", description: "In elite university admissions" },
-    { number: "24/7", label: "Support", description: "Dedicated advisor access" }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="min-h-screen bg-background">
       <Header />
+      <AnimatedBackground className="opacity-60" />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="container mx-auto text-center">
-          <Badge variant="outline" className="mb-6 px-4 py-2 text-sm font-medium">
-            Elite University Consulting
-          </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-            Your Path to Elite Universities
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Expert consulting services for students aspiring to study at the world's most competitive universities. 
-            From test prep to application strategy, we guide you every step of the way.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg"
-              onClick={() => window.open('https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-e', '_blank')}
-            >
-              <Calendar className="w-5 h-5 mr-2" />
-              Book Strategy Call
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="px-8 py-3 text-lg"
-              onClick={() => document.getElementById('success-stories')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              View Success Stories
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 px-6 bg-background/50 backdrop-blur-sm">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.number}</div>
-                <div className="text-lg font-semibold mb-1">{stat.label}</div>
-                <div className="text-sm text-muted-foreground">{stat.description}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Programmes Section */}
-      <section className="py-20 px-6">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Consulting Programmes</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive support tailored to your university goals
+      <section className="pt-32 pb-20 bg-mesh relative">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <Badge variant="secondary" className="mb-6 text-sm font-medium px-4 py-2">
+              Premium SAT Preparation
+            </Badge>
+            <h1 className="text-5xl md:text-7xl font-display font-bold mb-8 leading-tight">
+              <span className="text-foreground">Elite</span>{" "}
+              <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
+                SAT Programs
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+              Personalized SAT preparation programs designed to maximize your score potential with expert tutors and proven methodologies.
             </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <Link to="/auth/register">
+                <Button size="lg" className="px-8 py-4 text-lg bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                  Book Free Consultation
+                  <Calendar className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="px-8 py-4 text-lg"
+                onClick={scrollToSuccessStories}
+              >
+                View Success Stories
+                <Star className="w-5 h-5 ml-2" />
+              </Button>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">500+</div>
+                <div className="text-sm text-muted-foreground">Students Tutored</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">1580</div>
+                <div className="text-sm text-muted-foreground">Average Score</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">98%</div>
+                <div className="text-sm text-muted-foreground">Success Rate</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">+340</div>
+                <div className="text-sm text-muted-foreground">Avg Improvement</div>
+              </div>
+            </div>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {programmes.map((programme, index) => (
-              <Card key={index} className="card-layered hover:shadow-xl transition-all duration-300 border-hairline relative">
-                {programme.highlight && (
-                  <Badge className="absolute -top-3 left-6 bg-primary text-primary-foreground">
-                    {programme.highlight}
-                  </Badge>
-                )}
-                <CardHeader className="text-center pb-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    {programme.icon}
-                  </div>
-                  <CardTitle className="text-xl mb-2">{programme.title}</CardTitle>
-                  <CardDescription className="text-base">{programme.description}</CardDescription>
-                  <div className="flex items-center justify-center gap-2 mt-4">
-                    <Clock className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">{programme.duration}</span>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3 mb-6">
-                    {programme.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button 
-                    className="w-full"
-                    variant={programme.highlight === "Most Popular" ? "default" : "outline"}
-                    onClick={() => window.open('https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-e', '_blank')}
-                  >
-                    Learn More
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+        </div>
+      </section>
+
+      {/* Programs Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+                Choose Your SAT Program
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                From personalized 1:1 tutoring to comprehensive admissions guidance, we have the perfect program to help you achieve your SAT goals.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {programs.map((program, index) => (
+                <Card key={index} className="relative h-full bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-2xl group">
+                  {program.badge && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                      <Badge className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2">
+                        {program.badge}
+                      </Badge>
+                    </div>
+                  )}
+                  
+                  <CardHeader className="text-center pb-4">
+                    <div className="mx-auto mb-4 p-4 rounded-2xl bg-primary/10 w-fit group-hover:bg-primary/20 transition-colors">
+                      <program.icon className="w-8 h-8 text-primary" />
+                    </div>
+                    <CardTitle className="text-2xl font-bold mb-2">{program.title}</CardTitle>
+                    <p className="text-muted-foreground mb-4">{program.description}</p>
+                    
+                    <div className="space-y-2">
+                      <div className="text-2xl font-bold text-primary">{program.price}</div>
+                      <div className="text-sm text-muted-foreground">{program.duration}</div>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="pt-0">
+                    <div className="space-y-3 mb-6">
+                      {program.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                          <span className="text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <Link to="/auth/register" className="block">
+                      <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                        Get Started
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Success Stories Section */}
-      <section id="success-stories" className="py-20 px-6 bg-background/50 backdrop-blur-sm">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Success Stories</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Real results from students who trusted us with their university journey
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="card-layered p-8 text-center">
-              <div className="mb-6">
-                <div className="w-16 h-16 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <GraduationCap className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">Sarah M.</h3>
-                <p className="text-muted-foreground text-sm mb-4">SAT: 1480 → 1560</p>
-              </div>
-              <blockquote className="text-muted-foreground mb-4 italic">
-                "The personalized SAT prep strategy helped me improve by 80 points. Now I'm studying Computer Science at MIT!"
-              </blockquote>
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
-                MIT - Class of 2028
-              </Badge>
-            </Card>
-
-            <Card className="card-layered p-8 text-center">
-              <div className="mb-6">
-                <div className="w-16 h-16 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Trophy className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">James L.</h3>
-                <p className="text-muted-foreground text-sm mb-4">UCAT: 2640</p>
-              </div>
-              <blockquote className="text-muted-foreground mb-4 italic">
-                "The interview preparation was incredible. I felt confident and prepared for my Oxford Medicine interviews."
-              </blockquote>
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
-                Oxford Medicine - 2024
-              </Badge>
-            </Card>
-
-            <Card className="card-layered p-8 text-center">
-              <div className="mb-6">
-                <div className="w-16 h-16 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Target className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">Emma R.</h3>
-                <p className="text-muted-foreground text-sm mb-4">TMUA: 7.8/9.0</p>
-              </div>
-              <blockquote className="text-muted-foreground mb-4 italic">
-                "The TMUA preparation was exactly what I needed. The practice questions were spot-on for the actual exam."
-              </blockquote>
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
-                Cambridge Mathematics - 2024
-              </Badge>
-            </Card>
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-lg text-muted-foreground mb-6">
-              Join 200+ students who achieved their dream university placements
-            </p>
-            <Button 
-              size="lg"
-              onClick={() => window.open('https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-e', '_blank')}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
-            >
-              Start Your Success Story
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-20 px-6">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Services</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive support across every aspect of university admissions
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => (
-              <Card key={index} className="card-layered text-center p-8 hover:shadow-lg transition-all duration-300">
-                <div className="mb-4">{service.icon}</div>
-                <h3 className="text-lg font-semibold mb-3">{service.title}</h3>
-                <p className="text-muted-foreground text-sm">{service.description}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section className="py-20 px-6 bg-background/50 backdrop-blur-sm">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              A proven process that has helped hundreds of students reach their dream universities
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-primary">1</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Initial Consultation</h3>
-              <p className="text-muted-foreground">
-                We begin with a personal consultation to understand your academic background, goals, and target universities.
+      <section id="success-stories" className="py-20">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+                Student Success Stories
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Real students, real results. See how our SAT programs have helped students achieve their dream scores and get into top universities.
               </p>
             </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-primary">2</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Personalized Strategy</h3>
-              <p className="text-muted-foreground">
-                Once enrolled, we create a tailored admissions strategy and guide you through our platform and timeline.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-primary">3</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Guided Execution</h3>
-              <p className="text-muted-foreground">
-                From test prep to essay coaching and interview training, we support you every step of the way to admission success.
-              </p>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {successStories.map((story, index) => (
+                <Card key={index} className="bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-xl">
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h3 className="font-bold text-lg">{story.name}</h3>
+                        <p className="text-sm text-muted-foreground">{story.college}</p>
+                      </div>
+                      <Badge variant="secondary">{story.program}</Badge>
+                    </div>
+                    
+                    <div className="flex items-center justify-center gap-4 py-4 bg-gradient-to-r from-success/10 to-success/5 rounded-xl border border-success/20">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-muted-foreground">{story.before}</div>
+                        <div className="text-xs text-muted-foreground">Before</div>
+                      </div>
+                      <ArrowRight className="w-6 h-6 text-success" />
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-primary">{story.after}</div>
+                        <div className="text-xs text-muted-foreground">After</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-success">{story.improvement}</div>
+                        <div className="text-xs text-muted-foreground">Improvement</div>
+                      </div>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent>
+                    <blockquote className="text-sm text-muted-foreground italic">
+                      "{story.quote}"
+                    </blockquote>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 bg-gradient-primary">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            Ready to Begin Your Journey?
-          </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Join our next cohort starting September 2025. Limited spots available for our elite university preparation programme.
-          </p>
-          <Button 
-            size="lg" 
-            variant="secondary"
-            className="bg-white text-primary hover:bg-white/90 px-8 py-3 text-lg"
-            onClick={() => window.open('https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-e', '_blank')}
-          >
-            <Calendar className="w-5 h-5 mr-2" />
-            Schedule Your Strategy Call
-          </Button>
+      <section className="py-20 bg-gradient-to-r from-primary/5 to-primary-variant/5">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+              Ready to Achieve Your Target SAT Score?
+            </h2>
+            <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+              Book a free consultation to discuss your SAT goals and find the perfect program for your needs.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/auth/register">
+                <Button size="lg" className="px-12 py-4 text-lg bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                  Book Free Consultation
+                  <Calendar className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+              <Link to="/pricing">
+                <Button variant="outline" size="lg" className="px-12 py-4 text-lg">
+                  View Pricing
+                  <TrendingUp className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+            </div>
+
+            <div className="mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Award className="w-4 h-4" />
+                <span>Expert SAT Tutors</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Target className="w-4 h-4" />
+                <span>Score Guarantee</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4" />
+                <span>Proven Results</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
   );
 };
+
+export default SATPrograms;

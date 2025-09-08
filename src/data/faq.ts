@@ -10,13 +10,13 @@ export const faq: FAQItem[] = [
   {
     question: "What are your pricing plans?",
     keywords: ["pricing", "cost", "price", "plans", "subscription", "payment"],
-    answer: "We offer a Lifetime Access plan for $299 (one-time payment) that includes unlimited practice questions, mock tests, performance analytics, and all supported exams. This gives you lifetime access with no recurring fees.",
+    answer: "We offer 4 SAT preparation plans: Annual ($39.99/mo - BEST VALUE), 6-Month ($54.99/mo), 3-Month ($79.99/mo), and Monthly ($159.99/mo). All plans include unlimited SAT practice questions, mock tests, and performance analytics.",
     category: "pricing"
   },
   {
     question: "Is there a free trial?",
     keywords: ["free", "trial", "demo", "test"],
-    answer: "Yes! You can start with our free tier which includes limited practice questions and basic features to get familiar with the platform.",
+    answer: "Yes! All plans include a 7-day free trial. You get limited free access initially, then upgrade for the complete SAT preparation experience.",
     category: "pricing"
   },
   {
@@ -29,20 +29,20 @@ export const faq: FAQItem[] = [
   // Exams Supported
   {
     question: "What exams do you support?",
-    keywords: ["exams", "tests", "sat", "ucat", "step", "gmat", "supported"],
-    answer: "We currently support SAT, UCAT, STEP, GMAT, and several other standardized tests. Each exam includes thousands of practice questions, mock tests, and detailed analytics.",
+    keywords: ["exams", "tests", "sat", "supported"],
+    answer: "We specialize exclusively in SAT preparation to provide the most comprehensive and focused study experience. Our platform includes thousands of SAT practice questions, full-length mock tests, and detailed analytics.",
     category: "exams"
   },
   {
-    question: "How many practice questions are available?",
-    keywords: ["questions", "practice", "how many", "number"],
-    answer: "Our platform includes thousands of practice questions across all supported exams, with new questions added regularly. Each question comes with detailed explanations and performance tracking.",
+    question: "How many SAT practice questions are available?",
+    keywords: ["questions", "practice", "how many", "number", "sat"],
+    answer: "Our platform includes thousands of SAT practice questions covering all sections, with new questions added regularly. Each question comes with detailed explanations and performance tracking.",
     category: "exams"
   },
   {
-    question: "Are the questions similar to real exam questions?",
-    keywords: ["real", "actual", "similar", "authentic", "quality"],
-    answer: "Yes! Our questions are designed to closely match the format, difficulty, and style of actual exam questions. They're created by experts familiar with each exam format.",
+    question: "Are the questions similar to real SAT questions?",
+    keywords: ["real", "actual", "similar", "authentic", "quality", "sat"],
+    answer: "Yes! Our SAT questions are designed to closely match the format, difficulty, and style of actual SAT questions. They're created by SAT experts and specialists familiar with the current exam format.",
     category: "exams"
   },
 
@@ -88,9 +88,9 @@ export const faq: FAQItem[] = [
 
   // General
   {
-    question: "How do I get started?",
-    keywords: ["start", "begin", "onboarding", "first time"],
-    answer: "After creating your account, select your target exam, set your exam date, and complete the diagnostic test. This helps us create a personalized study plan for you.",
+    question: "How do I get started with SAT prep?",
+    keywords: ["start", "begin", "onboarding", "first time", "sat"],
+    answer: "After creating your account, set your SAT exam date and complete the diagnostic test. This helps us create a personalized SAT study plan tailored to your strengths and weaknesses.",
     category: "general"
   },
   {
