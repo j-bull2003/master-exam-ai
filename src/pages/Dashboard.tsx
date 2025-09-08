@@ -213,7 +213,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-background bg-mesh">
       {/* Header */}
       <header className="border-b border-border bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-2 sm:px-4 h-14 sm:h-16 flex items-center justify-between">
           <Link
             to="/dashboard"
             className="flex items-center hover:opacity-80 transition-opacity group"
@@ -221,11 +221,13 @@ const Dashboard = () => {
             <img
               src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
               alt="UniHack.ai Logo"
-              className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+              className="h-20 sm:h-24 md:h-32 lg:h-36 max-h-[80px] sm:max-h-[96px] md:max-h-[128px] lg:max-h-[144px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
               style={{ backgroundColor: "transparent" }}
             />
           </Link>
-          <nav className="flex items-center space-x-6">
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-6">
             <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
             <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
             <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
@@ -240,33 +242,73 @@ const Dashboard = () => {
               Logout
             </Button>
           </nav>
+
+          {/* Mobile Navigation */}
+          <div className="lg:hidden flex items-center gap-2">
+            <Button 
+              onClick={signOut}
+              size="sm" 
+              variant="outline"
+              className="px-3"
+            >
+              <LogOut className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+        
+        {/* Mobile Bottom Navigation */}
+        <div className="lg:hidden border-t border-border bg-background/95">
+          <div className="container mx-auto px-2">
+            <nav className="flex items-center justify-around py-2">
+              <Link to="/dashboard" className="text-primary font-medium flex flex-col items-center gap-1 py-2 px-3">
+                <Target className="w-4 h-4" />
+                <span className="text-xs">Dashboard</span>
+              </Link>
+              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <BookOpen className="w-4 h-4" />
+                <span className="text-xs">Practice</span>
+              </Link>
+              <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <Clipboard className="w-4 h-4" />
+                <span className="text-xs">Mocks</span>
+              </Link>
+              <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <BarChart3 className="w-4 h-4" />
+                <span className="text-xs">Analytics</span>
+              </Link>
+              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-1 py-2 px-3">
+                <User className="w-4 h-4" />
+                <span className="text-xs">Profile</span>
+              </Link>
+            </nav>
+          </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 lg:py-8">
         {/* Page Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold mb-3">
+        <div className="mb-4 sm:mb-6 lg:mb-8 text-center px-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">
             Welcome back, {profileData?.full_name || 'User'}! 👋
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
             Ready to continue your SAT preparation?
           </p>
         </div>
 
         {/* Main content grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 sm:gap-6">
             {/* Left side - Stats and Actions (3/4 width) */}
-            <div className="lg:col-span-3 space-y-6">
+            <div className="xl:col-span-3 space-y-4 sm:space-y-6">
               {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
                 <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20 hover:shadow-lg transition-all">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
-                    <Target className="h-4 w-4 text-emerald-600" />
+                    <CardTitle className="text-xs sm:text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
+                    <Target className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold text-emerald-700">0%</div>
+                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-emerald-700">0%</div>
                     <p className="text-xs text-muted-foreground">
                       Start practicing to see your accuracy
                     </p>
@@ -275,11 +317,11 @@ const Dashboard = () => {
 
                 <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20 hover:shadow-lg transition-all">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-blue-700">Weekly Progress</CardTitle>
-                    <TrendingUp className="h-4 w-4 text-blue-600" />
+                    <CardTitle className="text-xs sm:text-sm font-medium text-blue-700">Weekly Progress</CardTitle>
+                    <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold text-blue-700">0%</div>
+                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">0%</div>
                     <p className="text-xs text-muted-foreground">
                       Complete sessions to track progress
                     </p>
@@ -288,11 +330,11 @@ const Dashboard = () => {
 
                 <Card className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border-purple-500/20 hover:shadow-lg transition-all">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-purple-700">Study Streak</CardTitle>
-                    <Zap className="h-4 w-4 text-purple-600" />
+                    <CardTitle className="text-xs sm:text-sm font-medium text-purple-700">Study Streak</CardTitle>
+                    <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-purple-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold text-purple-700">0 days</div>
+                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-700">0 days</div>
                     <p className="text-xs text-muted-foreground">
                       Practice daily to build your streak
                     </p>
@@ -301,11 +343,11 @@ const Dashboard = () => {
 
                 <Card className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border-orange-500/20 hover:shadow-lg transition-all">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-orange-700">Total Questions</CardTitle>
-                    <BookOpen className="h-4 w-4 text-orange-600" />
+                    <CardTitle className="text-xs sm:text-sm font-medium text-orange-700">Total Questions</CardTitle>
+                    <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-orange-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold text-orange-700">0</div>
+                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-700">0</div>
                     <p className="text-xs text-muted-foreground">
                       Questions attempted
                     </p>
@@ -460,23 +502,23 @@ const Dashboard = () => {
                   <CardDescription>Jump into your study activities</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                     <Link to="/practice">
-                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
-                        <BookOpen className="w-6 h-6" />
-                        <span>Practice Questions</span>
+                      <Button variant="outline" className="w-full h-16 sm:h-20 flex flex-col gap-1 sm:gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
+                        <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
+                        <span className="text-xs sm:text-sm">Practice Questions</span>
                       </Button>
                     </Link>
                     <Link to="/mocks">
-                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
-                        <Clipboard className="w-6 h-6" />
-                        <span>Mock Tests</span>
+                      <Button variant="outline" className="w-full h-16 sm:h-20 flex flex-col gap-1 sm:gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
+                        <Clipboard className="w-5 h-5 sm:w-6 sm:h-6" />
+                        <span className="text-xs sm:text-sm">Mock Tests</span>
                       </Button>
                     </Link>
                     <Link to="/analytics">
-                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
-                        <BarChart3 className="w-6 h-6" />
-                        <span>View Analytics</span>
+                      <Button variant="outline" className="w-full h-16 sm:h-20 flex flex-col gap-1 sm:gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
+                        <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6" />
+                        <span className="text-xs sm:text-sm">View Analytics</span>
                       </Button>
                     </Link>
                   </div>
@@ -486,7 +528,7 @@ const Dashboard = () => {
             </div>
 
             {/* Right sidebar - Timeline and Universities (1/4 width) */}
-            <div className="lg:col-span-1 space-y-6">
+            <div className="xl:col-span-1 space-y-4 sm:space-y-6">
               {/* Your Timeline */}
               <Card className="bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 hover:shadow-lg transition-all">
                 <CardHeader>
@@ -620,11 +662,11 @@ const Dashboard = () => {
 
           {/* Exam Date Modal */}
           {isDateModalOpen && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-              <Card className="w-[400px]">
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+              <Card className="w-full max-w-[400px] mx-auto">
                 <CardHeader>
-                  <CardTitle>Set Your SAT Exam Date</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-lg sm:text-xl">Set Your SAT Exam Date</CardTitle>
+                  <CardDescription className="text-sm">
                     Choose your target exam date to get personalized study plans
                   </CardDescription>
                 </CardHeader>
@@ -633,7 +675,7 @@ const Dashboard = () => {
                     type="date"
                     min={new Date().toISOString().split('T')[0]}
                     max={new Date(Date.now() + 2 * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
-                    className="w-full p-2 border rounded"
+                    className="w-full p-3 border rounded text-base"
                     onChange={async (e) => {
                       const newDate = new Date(e.target.value);
                       await handleUpdateExamDate(newDate);
