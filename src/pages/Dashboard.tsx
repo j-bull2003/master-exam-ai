@@ -331,7 +331,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column - Main content */}
             <div className="lg:col-span-2 space-y-6">
-              {/* SAT Section Progress Cards */}
+              {/* SAT Section Progress Cards with Exact Domains */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Reading and Writing Section */}
                 <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border-blue-500/20">
@@ -359,8 +359,27 @@ const Dashboard = () => {
                           style={{ width: `${userData?.sections?.readingWriting?.progress || 86}%` }}
                         />
                       </div>
-                      <div className="text-xs text-center text-muted-foreground">
+                      <div className="text-xs text-center text-muted-foreground mb-2">
                         Target: {userData?.sections?.readingWriting?.targetScore || 780}
+                      </div>
+                      {/* Exact SAT R&W Domains */}
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Information and Ideas (26%)</span>
+                          <span className="text-green-600 font-medium">Strong</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Craft and Structure (28%)</span>
+                          <span className="text-orange-600 font-medium">Needs Work</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Expression of Ideas (20%)</span>
+                          <span className="text-green-600 font-medium">Strong</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Standard English Conventions (26%)</span>
+                          <span className="text-blue-600 font-medium">Good</span>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -392,8 +411,27 @@ const Dashboard = () => {
                           style={{ width: `${userData?.sections?.math?.progress || 88}%` }}
                         />
                       </div>
-                      <div className="text-xs text-center text-muted-foreground">
+                      <div className="text-xs text-center text-muted-foreground mb-2">
                         Target: {userData?.sections?.math?.targetScore || 770}
+                      </div>
+                      {/* Exact SAT Math Domains */}
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Algebra (35%)</span>
+                          <span className="text-green-600 font-medium">Strong</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Advanced Math (35%)</span>
+                          <span className="text-orange-600 font-medium">Needs Work</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Problem-Solving & Data Analysis (15%)</span>
+                          <span className="text-blue-600 font-medium">Good</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Geometry and Trigonometry (15%)</span>
+                          <span className="text-orange-600 font-medium">Needs Work</span>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
