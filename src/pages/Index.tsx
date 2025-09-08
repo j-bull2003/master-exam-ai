@@ -129,7 +129,7 @@ const Index = () => {
             {/* Main Headline with enhanced typography */}
             {isLoaded ? (
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <span className="text-foreground block mb-2">Ace Your Admissions Test</span>
+                <span className="text-foreground block mb-2">Ace the SAT</span>
                 <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
                   with AI-Driven Precision
                 </span>
@@ -144,7 +144,7 @@ const Index = () => {
             {/* Subtext with better contrast */}
             {isLoaded ? (
               <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                Any admission test worldwide. Personalized study plan. Adaptive quizzes & mocks. Tutor-authored content.
+                Master the SAT with AI-powered precision. Personalized study plans. Adaptive practice. Expert-authored content.
               </p>
             ) : (
               <Skeleton className="h-6 w-full max-w-xl mx-auto mb-6" />
@@ -157,7 +157,7 @@ const Index = () => {
                   <CheckCircle className="w-4 h-4 text-success" />
                   <span className="text-success font-semibold">7-day free trial</span>
                 </div>
-                <div className="text-muted-foreground font-medium">$49.99/month after</div>
+                <div className="text-muted-foreground font-medium">From $39.99/month</div>
                 <div className="text-muted-foreground">Cancel anytime</div>
               </div>
             ) : (
@@ -189,7 +189,7 @@ const Index = () => {
             {/* Enhanced exam badges with better styling */}
             {isLoaded ? (
               <div className="mb-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-                <p className="text-sm font-medium text-muted-foreground mb-4">Supports all major admissions tests</p>
+                <p className="text-sm font-medium text-muted-foreground mb-4">SAT-focused preparation platform</p>
                 <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto mb-8">
                   {EXAM_CONFIGS.map((exam, index) => {
                     const isAvailable = exam.available;
@@ -234,7 +234,7 @@ const Index = () => {
             {isLoaded ? (
               <div className=" animate-fade-in" style={{ animationDelay: '0.7s' }}>
                 <p className="text-sm font-medium text-muted-foreground mb-12">
-                  Trusted by students preparing for top universities worldwide
+                  Trusted by students preparing for top US universities
                 </p>
                 <div 
                   className="relative"
