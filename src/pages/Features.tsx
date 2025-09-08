@@ -70,11 +70,11 @@ const Features = () => {
               <span className="text-foreground">Everything You Need to</span>
               <br />
               <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
-                Excel in Any Exam
+                Excel on the SAT
               </span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Comprehensive AI-powered test preparation that adapts to your unique learning style and helps you achieve your target scores.
+              Comprehensive AI-powered SAT preparation that adapts to your unique learning style and helps you achieve your target SAT score.
             </p>
             <Link to="/auth/register">
               <Button size="lg" className="bg-gradient-to-r from-primary to-primary-variant">
@@ -119,10 +119,10 @@ const Features = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Supports Every Major Admission Test
+              Focused Exclusively on SAT Success
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              From standardized tests to university-specific assessments, we've got you covered.
+              Unlike other platforms, we specialize 100% in SAT preparation for maximum effectiveness.
             </p>
             <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-3">
               {EXAM_CONFIGS.map((exam, index) => {

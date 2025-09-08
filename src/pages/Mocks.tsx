@@ -12,7 +12,7 @@ const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 const Mocks = () => {
   const [selectedMock, setSelectedMock] = useState<string | null>(null);
-  const [userExam, setUserExam] = useState<string>("UCAT"); // Default fallback
+  const [userExam, setUserExam] = useState<string>("SAT"); // Default to SAT
   const { user } = useAuth();
 
   // Load user's exam type from profile
@@ -23,7 +23,7 @@ const Mocks = () => {
       try {
         // TODO: Implement Django API endpoint for user profile
         console.log('Would load user exam type for:', user.id);
-        // For now, keep default UCAT
+        // For now, keep default SAT
       } catch (error) {
         console.error('Error loading user exam:', error);
       }
@@ -35,29 +35,14 @@ const Mocks = () => {
   // Generate mock tests based on user's exam
   const getMockTestsForExam = (examType: string) => {
     const examConfigs: { [key: string]: any } = {
-      UCAT: {
-        sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning", "Situational Judgement"],
-        duration: "2 hours",
-        totalQuestions: 233
-      },
-      STEP: {
-        sections: ["Mathematics Paper 1", "Mathematics Paper 2", "Mathematics Paper 3"],
-        duration: "3 hours",
-        totalQuestions: 12
-      },
       SAT: {
-        sections: ["Reading", "Writing and Language", "Math (No Calculator)", "Math (Calculator)"],
+        sections: ["Reading and Writing", "Math"],
         duration: "3 hours",
         totalQuestions: 154
-      },
-      ACT: {
-        sections: ["English", "Mathematics", "Reading", "Science"],
-        duration: "2 hours 55 minutes",
-        totalQuestions: 215
       }
     };
 
-    const config = examConfigs[examType] || examConfigs.UCAT;
+    const config = examConfigs[examType] || examConfigs.SAT;
     
     return [
       {
@@ -108,31 +93,26 @@ const Mocks = () => {
       totalQuestions: 12
     },
     SAT: {
-      sections: ["Reading", "Writing and Language", "Math (No Calculator)", "Math (Calculator)"],
+      sections: ["Reading and Writing", "Math"],
       duration: "3 hours",
       totalQuestions: 154
-    },
-    ACT: {
-      sections: ["English", "Mathematics", "Reading", "Science"],
-      duration: "2 hours 55 minutes",
-      totalQuestions: 215
     }
   };
 
-  const config = examConfigs[userExam] || examConfigs.UCAT;
+  const config = examConfigs[userExam] || examConfigs.SAT;
 
   const completedMocks = [
     {
       id: "completed-1",
-      name: `${userExam} Mock Test 1`,
+      name: `SAT Mock Test 1`,
       completedAt: "2024-01-15",
-      score: userExam === "STEP" ? 85 : userExam === "SAT" ? 1480 : 2580,
-      maxScore: userExam === "STEP" ? 100 : userExam === "SAT" ? 1600 : 3600,
+      score: 1480,
+      maxScore: 1600,
       percentile: 85,
-      timeSpent: "1h 54m",
+      timeSpent: "2h 54m",
       sections: [
-        { name: config.sections[0] || "Section 1", score: userExam === "STEP" ? 85 : 520, percentile: 68 },
-        { name: config.sections[1] || "Section 2", score: userExam === "STEP" ? 78 : 580, percentile: 82 }
+        { name: "Reading and Writing", score: 720, percentile: 68 },
+        { name: "Math", score: 760, percentile: 82 }
       ]
     }
   ];

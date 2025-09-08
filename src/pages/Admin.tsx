@@ -31,7 +31,7 @@ const Admin = () => {
   const pendingApprovals = [
     {
       id: "approval-1",
-      packName: "Advanced UCAT Mathematics",
+      packName: "Advanced SAT Mathematics",
       tutor: "Dr. Sarah Wilson",
       questions: 89,
       submittedAt: "2024-01-20",
@@ -39,7 +39,7 @@ const Admin = () => {
     },
     {
       id: "approval-2",
-      packName: "Verbal Reasoning Essentials",
+      packName: "SAT Reading Comprehension",
       tutor: "Prof. Michael Chen",
       questions: 156,
       submittedAt: "2024-01-19",
@@ -47,7 +47,7 @@ const Admin = () => {
     },
     {
       id: "approval-3",
-      packName: "Decision Making Practice",
+      packName: "SAT Writing Practice",
       tutor: "Dr. Emily Rodriguez",
       questions: 67,
       submittedAt: "2024-01-18",
@@ -85,14 +85,6 @@ const Admin = () => {
 
   // Mock exam catalog
   const examCatalog = [
-    {
-      id: "ucat",
-      name: "UCAT",
-      fullName: "University Clinical Aptitude Test",
-      region: "UK",
-      sections: ["Verbal Reasoning", "Decision Making", "Quantitative Reasoning", "Abstract Reasoning"],
-      status: "active"
-    },
     {
       id: "sat",
       name: "SAT",

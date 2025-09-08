@@ -32,7 +32,7 @@ const TutorStudio = () => {
   const contentPacks = [
     {
       id: "pack-1",
-      name: "UCAT Verbal Reasoning Advanced",
+      name: "SAT Reading and Writing Advanced",
       status: "published",
       version: "2.1",
       questions: 156,

@@ -15,10 +15,10 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const About = () => {
   const stats = [
-    { number: "5K+", label: "Questions Created by Top Scorers" },
-    { number: "50+", label: "Universities Represented" },
-    { number: "95%", label: "Score Improvement" },
-    { number: "25+", label: "Exam Types Supported" }
+    { number: "8K+", label: "SAT Practice Questions" },
+    { number: "15+", label: "Top US Universities" },
+    { number: "240+", label: "Average Score Improvement" },
+    { number: "1", label: "SAT Focus - No Distractions" }
   ];
 
   const values = [
@@ -46,18 +46,18 @@ const About = () => {
 
   const team = [
     {
-      name: "Expert Tutors",
-      description: "PhDs and graduates from Cambridge, Oxford, Harvard, MIT and other top universities worldwide.",
+      name: "Expert SAT Tutors",
+      description: "PhDs and graduates from Harvard, MIT, Stanford and other top US universities with proven SAT expertise.",
       icon: GraduationCap
     },
     {
       name: "AI Engineers", 
-      description: "Machine learning specialists focused on adaptive learning and personalization algorithms.",
+      description: "Machine learning specialists focused on SAT-specific adaptive learning and personalization algorithms.",
       icon: Brain
     },
     {
-      name: "Education Specialists",
-      description: "Former admissions officers and test prep experts with decades of combined experience.",
+      name: "SAT Specialists",
+      description: "Former College Board advisors and SAT prep experts with decades of combined SAT experience.",
       icon: Award
     }
   ];
@@ -75,11 +75,11 @@ const About = () => {
               <span className="text-foreground ">Empowering Students with</span>
               <br />
               <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
-                AI-Driven Excellence
+                SAT Mastery
               </span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              UniHack.ai was born from a simple belief: every student deserves access to world-class test preparation, regardless of their background or location.
+              UniHack.ai was born from a simple belief: every student deserves access to world-class SAT preparation, regardless of their background or location.
             </p>
           </div>
         </div>
@@ -109,30 +109,30 @@ const About = () => {
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Mission</h2>
                 <p className="text-lg text-muted-foreground mb-6">
-                  We're democratizing access to premium test preparation by combining the expertise of world-class tutors with cutting-edge AI technology.
+                  We're democratizing access to premium SAT preparation by combining the expertise of world-class tutors with cutting-edge AI technology.
                 </p>
                 <p className="text-lg text-muted-foreground mb-8">
-                  Our platform doesn't just help students practice—it learns from their unique patterns, adapts to their needs, and guides them toward their target scores with unprecedented precision.
+                  Our platform doesn't just help students practice SAT questions—it learns from their unique patterns, adapts to their needs, and guides them toward their target SAT scores with unprecedented precision.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-success" />
-                    <span>Real questions from real tutors, not AI-generated content</span>
+                    <span>Real SAT questions from expert tutors, not AI-generated content</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-success" />
-                    <span>Personalized learning paths that adapt to your progress</span>
+                    <span>Personalized SAT study paths that adapt to your progress</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-success" />
-                    <span>Comprehensive support for any admission test worldwide</span>
+                    <span>Comprehensive SAT preparation with expert explanations</span>
                   </div>
                 </div>
               </div>
               <div className="bg-card rounded-2xl p-8 border border-border/50">
                 <h3 className="text-2xl font-semibold mb-4 text-primary">Our Promise</h3>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  We're committed to helping every student achieve their academic dreams through personalized, effective, and accessible test preparation. Our platform combines expert-created content with intelligent technology to deliver results that matter.
+                  We're committed to helping every student achieve their SAT goals through personalized, effective, and accessible SAT preparation. Our platform combines expert-created content with intelligent technology to deliver the score improvements that matter.
                 </p>
               </div>
             </div>
@@ -191,16 +191,16 @@ const About = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Trusted by Students Worldwide
+              Trusted by SAT Students Nationwide
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              From SAT prep in Silicon Valley to UCAT preparation in London, students trust UniHack.ai to help them achieve their academic goals.
+              From California to New York, students trust UniHack.ai to help them achieve their SAT goals and get into their dream colleges.
             </p>
             <div className="bg-card rounded-2xl p-8 border border-border/50">
               <blockquote className="text-lg italic text-muted-foreground mb-4">
-                "The questions created by top scorers really challenged me and exposed my weak areas. My STEP scores improved by 40% in just 6 weeks."
+                "The AI-powered SAT questions really challenged me and exposed my weak areas. My SAT score improved by 240 points in just 8 weeks."
               </blockquote>
-              <div className="text-sm font-semibold">Sarah M., Cambridge Applicant</div>
+              <div className="text-sm font-semibold">Sarah M., Harvard Admitted Student</div>
             </div>
           </div>
         </div>
@@ -214,7 +214,7 @@ const About = () => {
               Ready to Start Your Journey?
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Join thousands of students who are already improving their scores with our AI-powered platform.
+              Join thousands of students who are already improving their SAT scores with our AI-powered platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth/register">

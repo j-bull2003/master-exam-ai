@@ -33,10 +33,10 @@ const Analytics = () => {
   };
 
   const topicPerformance = [
-    { name: "Verbal Reasoning", questions: 345, correct: 268, accuracy: 77.7, trend: "up", improvement: "+5.2%" },
-    { name: "Decision Making", questions: 298, correct: 216, accuracy: 72.5, trend: "up", improvement: "+3.1%" },
-    { name: "Quantitative Reasoning", questions: 312, correct: 198, accuracy: 63.5, trend: "down", improvement: "-2.4%" },
-    { name: "Abstract Reasoning", questions: 292, correct: 210, accuracy: 71.9, trend: "up", improvement: "+1.8%" }
+    { name: "Reading and Writing", questions: 345, correct: 268, accuracy: 77.7, trend: "up", improvement: "+5.2%" },
+    { name: "Heart of Algebra", questions: 298, correct: 216, accuracy: 72.5, trend: "up", improvement: "+3.1%" },
+    { name: "Problem Solving & Data Analysis", questions: 312, correct: 198, accuracy: 63.5, trend: "down", improvement: "-2.4%" },
+    { name: "Passport to Advanced Math", questions: 292, correct: 210, accuracy: 71.9, trend: "up", improvement: "+1.8%" }
   ];
 
   const weeklyProgress = [

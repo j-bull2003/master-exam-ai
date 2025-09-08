@@ -316,15 +316,15 @@ const Diagnostic = () => {
             <h3 className="font-semibold">Your Strengths & Areas for Improvement:</h3>
             <div className="space-y-2">
               <div className="flex items-center justify-between p-3 bg-green-100 border border-green-200 rounded-lg">
-                <span className="text-sm font-medium text-green-900">Verbal Reasoning</span>
+                <span className="text-sm font-medium text-green-900">Reading and Writing</span>
                 <span className="text-sm text-green-800 font-bold">Strong</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-orange-100 border border-orange-200 rounded-lg">
-                <span className="text-sm font-medium text-orange-900">Quantitative Reasoning</span>
+                <span className="text-sm font-medium text-orange-900">Math</span>
                 <span className="text-sm text-orange-800 font-bold">Needs Work</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-green-100 border border-green-200 rounded-lg">
-                <span className="text-sm font-medium text-green-900">Decision Making</span>
+                <span className="text-sm font-medium text-green-900">Problem Solving</span>
                 <span className="text-sm text-green-800 font-bold">Strong</span>
               </div>
             </div>

@@ -318,7 +318,7 @@ const Dashboard = () => {
               
               {userData?.examDate && !isExamPassed && (
                 <p className="text-muted-foreground">
-                  Keep up the great work! You're making steady progress toward your {userData.exam} exam.
+                  Keep up the great work! You're making steady progress toward your SAT exam.
                 </p>
               )}
             </div>
