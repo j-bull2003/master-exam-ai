@@ -168,14 +168,14 @@ const SATPrograms = () => {
                   <Target className="w-6 h-6 text-slate-700" />
                 </div>
                 
-                <h3 className="font-serif text-2xl font-bold mb-3 text-slate-900">{program.title}</h3>
+                <h3 className="font-serif text-4xl font-bold mb-4 text-slate-900">{program.title}</h3>
                 <p className="text-base text-slate-600 mb-4 max-w-xl mx-auto font-light">
                   {program.description}
                 </p>
                 
                 <div className="flex items-center justify-center gap-3 mb-3">
                   <div className="text-center">
-                    <span className="font-serif text-2xl font-bold text-slate-900">{program.price}</span>
+                    <span className="font-serif text-4xl font-bold text-slate-900">{program.price}</span>
                   </div>
                   <div className="text-left">
                     <div className="text-sm text-slate-400 line-through font-light">{program.originalPrice}</div>
@@ -186,7 +186,7 @@ const SATPrograms = () => {
                 </div>
                 
                 <div className="text-slate-600 mb-3 font-medium text-xs">{program.duration}</div>
-                <div className="inline-block bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 px-4 py-2 rounded-lg font-medium border border-emerald-200/50 text-sm">
+                <div className="inline-block bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 px-4 py-2 rounded-lg font-medium border border-emerald-200/50 text-xs">
                   {program.guarantee}
                 </div>
               </div>
