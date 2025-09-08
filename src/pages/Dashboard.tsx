@@ -228,51 +228,51 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background bg-mesh">
-      {/* Django users don't need email verification */}
-      <div className="container mx-auto px-4 space-y-8">
-        {/* Header */}
-        <header className="border-b border-border bg-background/95 backdrop-blur">
-          <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-            <Link
-              to="/dashboard"
-              className="flex items-center hover:opacity-80 transition-opacity group"
+      {/* Header */}
+      <header className="border-b border-border bg-background/95 backdrop-blur">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <Link
+            to="/dashboard"
+            className="flex items-center hover:opacity-80 transition-opacity group"
+          >
+            <img
+              src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
+              alt="UniHack.ai Logo"
+              className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+              style={{ backgroundColor: "transparent" }}
+            />
+          </Link>
+          <nav className="flex items-center space-x-6">
+            <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
+            <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
+            <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
+            <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
+            <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
+            <Button 
+              onClick={signOut}
+              size="sm" 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
             >
-              <img
-                src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png"
-                alt="UniHack.ai Logo"
-                className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
-                style={{ backgroundColor: "transparent" }}
-              />
-            </Link>
-            <nav className="flex items-center space-x-6">
-              <Link to="/dashboard" className="text-primary font-medium border-b-2 border-primary flex items-center gap-2"><Target className="w-4 h-4" />Dashboard</Link>
-              <Link to="/practice" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BookOpen className="w-4 h-4" />Practice</Link>
-              <Link to="/mocks" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><Clipboard className="w-4 h-4" />Mocks</Link>
-              <Link to="/analytics" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><BarChart3 className="w-4 h-4" />Analytics</Link>
-              <Link to="/profile" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"><User className="w-4 h-4" />Profile</Link>
-              <Button 
-                onClick={signOut}
-                size="sm" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 border border-primary/20 card-layered hover:shadow-lg hover:border-primary/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                Logout
-              </Button>
-            </nav>
-          </div>
-        </header>
+              <LogOut className="w-4 h-4" />
+              Logout
+            </Button>
+          </nav>
+        </div>
+      </header>
 
-        <div className="py-6 space-y-6">
-          {/* Simple Welcome */}
-          <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold">
-              Welcome back, {userData?.name || 'User'}! 👋
-            </h1>
-            <p className="text-muted-foreground">Ready to continue your SAT preparation?</p>
-          </div>
+      <div className="container mx-auto px-4 py-8">
+        {/* Page Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold mb-3">
+            Welcome back, {userData?.name || 'User'}! 👋
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Ready to continue your SAT preparation?
+          </p>
+        </div>
 
-          {/* Main content grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Main content grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Left side - Stats and Actions (3/4 width) */}
             <div className="lg:col-span-3 space-y-6">
               {/* Stats Grid */}
@@ -618,7 +618,6 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 };
