@@ -129,9 +129,9 @@ const SATPrograms = () => {
                 { number: "98%", label: "Success Rate" },
                 { number: "+210", label: "Average Improvement" }
               ].map((metric, idx) => (
-                <div key={idx} className="text-center group">
-                  <div className="text-xl sm:text-3xl font-bold text-slate-900 mb-2 font-serif group-hover:scale-110 transition-transform duration-300">{metric.number}</div>
-                  <div className="text-xs sm:text-sm text-slate-600 font-medium tracking-wide uppercase">{metric.label}</div>
+                <div key={idx} className="text-center group flex flex-col items-center">
+                  <div className="text-xl sm:text-3xl font-bold text-slate-900 mb-2 font-serif group-hover:scale-110 transition-transform duration-300 h-8 sm:h-12 flex items-center justify-center">{metric.number}</div>
+                  <div className="text-xs sm:text-sm text-slate-600 font-medium tracking-wide uppercase min-h-[2rem] flex items-center text-center">{metric.label}</div>
                 </div>
               ))}
             </div>
