@@ -16,7 +16,8 @@ import {
   Eye,
   EyeOff,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,6 +49,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [universitySearch, setUniversitySearch] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -74,6 +76,20 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     universities: exam.universities || [],
     scoreRange: exam.scoreRange || 'N/A'
   }));
+
+  const allUniversities = [
+    "Harvard University", "MIT", "Stanford University", "Princeton University", 
+    "Yale University", "Columbia University", "Cornell University", "University of Pennsylvania",
+    "Brown University", "Dartmouth College", "Duke University", "University of Chicago",
+    "Northwestern University", "Johns Hopkins University", "Washington University in St. Louis",
+    "Vanderbilt University", "Rice University", "University of Notre Dame", "Georgetown University",
+    "Carnegie Mellon University", "University of California, Berkeley", "UCLA", 
+    "University of Southern California", "New York University", "Boston University"
+  ];
+
+  const filteredUniversities = allUniversities.filter(uni =>
+    uni.toLowerCase().includes(universitySearch.toLowerCase())
+  );
 
   const validateStep1 = () => {
     const newErrors: { [key: string]: string } = {};
@@ -250,7 +266,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="space-y-4 px-6 pb-4">
+          <CardContent className="space-y-4 px-6 pb-4 relative">
             {/* Step 1: Account Creation */}
             {currentStep === 1 && (
               <div className="space-y-6">
@@ -499,27 +515,73 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 {/* Target Universities */}
                 <div className="space-y-3">
                   <Label className="text-base font-semibold">Which universities are you targeting?</Label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {["Harvard", "MIT", "Stanford", "Princeton", "Yale", "Columbia", "Cornell", "UPenn"].map((uni) => (
-                      <Button
-                        key={uni}
-                        variant={formData.targetUniversities.includes(uni) ? "default" : "outline"}
-                        className={`h-12 text-sm transition-all duration-200 ${
-                          formData.targetUniversities.includes(uni) 
-                            ? "bg-gradient-to-r from-primary to-primary-variant shadow-lg scale-105" 
-                            : "hover:scale-105"
-                        }`}
-                        onClick={() => {
-                          const unis = formData.targetUniversities.includes(uni)
-                            ? formData.targetUniversities.filter(u => u !== uni)
-                            : [...formData.targetUniversities, uni];
-                          setFormData(prev => ({ ...prev, targetUniversities: unis }));
-                        }}
-                      >
-                        {uni}
-                      </Button>
-                    ))}
+                  
+                  {/* Search Input */}
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search universities..."
+                      value={universitySearch}
+                      onChange={(e) => setUniversitySearch(e.target.value)}
+                      className="pl-10 h-12"
+                    />
                   </div>
+
+                  {/* Selected Universities */}
+                  {formData.targetUniversities.length > 0 && (
+                    <div className="flex flex-wrap gap-2 p-3 bg-muted/30 rounded-lg border border-border/50">
+                      {formData.targetUniversities.map((uni) => (
+                        <div
+                          key={uni}
+                          className="flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm border border-primary/20"
+                        >
+                          {uni}
+                          <button
+                            onClick={() => {
+                              const unis = formData.targetUniversities.filter(u => u !== uni);
+                              setFormData(prev => ({ ...prev, targetUniversities: unis }));
+                            }}
+                            className="hover:text-destructive transition-colors"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* University Dropdown */}
+                  {universitySearch && filteredUniversities.length > 0 && (
+                    <div className="relative">
+                      <div className="absolute top-0 left-0 right-0 bg-background border border-border/50 rounded-lg shadow-xl z-50 max-h-48 overflow-y-auto">
+                        {filteredUniversities.slice(0, 8).map((uni) => (
+                          <button
+                            key={uni}
+                            onClick={() => {
+                              if (!formData.targetUniversities.includes(uni)) {
+                                setFormData(prev => ({ 
+                                  ...prev, 
+                                  targetUniversities: [...prev.targetUniversities, uni] 
+                                }));
+                              }
+                              setUniversitySearch("");
+                            }}
+                            disabled={formData.targetUniversities.includes(uni)}
+                            className={`w-full text-left px-4 py-3 hover:bg-muted/80 transition-colors text-sm border-b border-border/30 last:border-b-0 ${
+                              formData.targetUniversities.includes(uni) 
+                                ? 'text-muted-foreground bg-muted/50 cursor-not-allowed' 
+                                : 'text-foreground hover:text-primary'
+                            }`}
+                          >
+                            {uni}
+                            {formData.targetUniversities.includes(uni) && (
+                              <span className="ml-2 text-xs text-success">✓ Selected</span>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Motivation Message */}
