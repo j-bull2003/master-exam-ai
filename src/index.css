@@ -866,6 +866,21 @@
     animation: fade-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   .animate-float {
     animation: gentle-float 3s ease-in-out infinite;
   }
