@@ -42,7 +42,7 @@ const SATPrograms = () => {
     price: "$2,499",
     originalPrice: "$4,999",
     badge: "Limited Time Offer",
-    guarantee: "Target Score Guarantee or Money Back"
+    guarantee: "200+ SCORE INCREASE OR MONEY BACK"
   };
 
   const successStories = [
