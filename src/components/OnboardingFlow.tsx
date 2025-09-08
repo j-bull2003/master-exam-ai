@@ -183,7 +183,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background flex items-center justify-center p-4 pt-8 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-mesh opacity-40"></div>
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
@@ -191,7 +191,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       
       <div className="w-full max-w-3xl relative z-10">
         {/* Enhanced Logo */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <Link to="/" className="inline-flex flex-col items-center justify-center group">
             <div className="relative mb-3">
               <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-2xl group-hover:bg-primary/30 transition-all duration-500"></div>
@@ -210,7 +210,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         </div>
 
         {/* Enhanced Progress Indicator */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-6">
           <div className="flex items-center space-x-6">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
