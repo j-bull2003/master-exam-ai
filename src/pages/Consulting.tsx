@@ -203,7 +203,7 @@ const SATPrograms = () => {
                       <div className="w-4 h-4 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                         <CheckCircle className="w-3 h-3 text-white" />
                       </div>
-                      <span className="text-slate-700 text-sm leading-snug">{feature}</span>
+                      <span className="text-slate-700 text-sm leading-[1.3]">{feature}</span>
                     </div>
                   ))}
                 </div>
