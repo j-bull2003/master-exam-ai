@@ -80,20 +80,20 @@ const SATPrograms = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-40 pb-32 relative overflow-hidden">
+      <section className="pt-24 pb-16 relative overflow-hidden">
         {/* Elegant background pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/5 via-transparent to-slate-900/5"></div>
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-amber-100/20 to-rose-100/20 rounded-full blur-3xl"></div>
         
-        <div className="container mx-auto px-8 relative">
+        <div className="container mx-auto px-6 relative">
           <div className="max-w-6xl mx-auto text-center">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-slate-900/10 to-slate-700/10 backdrop-blur-sm rounded-full text-sm font-medium text-slate-700 mb-12 border border-slate-200/50">
+            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slate-900/10 to-slate-700/10 backdrop-blur-sm rounded-full text-sm font-medium text-slate-700 mb-8 border border-slate-200/50">
               <div className="w-2 h-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mr-3 animate-pulse"></div>
               Exclusive SAT Mastery Program
             </div>
             
-            <h1 className="font-serif text-6xl md:text-8xl font-bold mb-8 leading-[0.9] text-slate-900 tracking-tight">
+            <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6 leading-[0.9] text-slate-900 tracking-tight">
               Elite SAT
               <br />
               <span className="bg-gradient-to-r from-slate-600 via-slate-800 to-slate-900 bg-clip-text text-transparent">
@@ -101,21 +101,21 @@ const SATPrograms = () => {
               </span>
             </h1>
             
-            <p className="text-2xl md:text-3xl text-slate-600 mb-16 max-w-4xl mx-auto leading-relaxed font-light">
+            <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-4xl mx-auto leading-relaxed font-light">
               Transform your SAT performance with our 
               <em className="font-serif text-slate-800"> bespoke </em>
               1:1 coaching program. Where excellence meets personalization.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-8 justify-center mb-20">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
               <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer">
-                <button className="group px-12 py-5 bg-slate-900 text-white rounded-xl text-lg font-semibold hover:bg-slate-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden">
+                <button className="group px-8 py-4 bg-slate-900 text-white rounded-xl text-lg font-semibold hover:bg-slate-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                   <span className="relative">Reserve Your Consultation</span>
                 </button>
               </a>
               <button 
-                className="px-12 py-5 border-2 border-slate-300 text-slate-700 rounded-xl text-lg font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
+                className="px-8 py-4 border-2 border-slate-300 text-slate-700 rounded-xl text-lg font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
                 onClick={scrollToSuccessStories}
               >
                 Explore Success Stories
@@ -123,7 +123,7 @@ const SATPrograms = () => {
             </div>
 
             {/* Prestigious metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
               {[
                 { number: "500+", label: "Elite Students Coached" },
                 { number: "1580", label: "Average Achievement" },
@@ -131,7 +131,7 @@ const SATPrograms = () => {
                 { number: "+340", label: "Average Improvement" }
               ].map((metric, idx) => (
                 <div key={idx} className="text-center group">
-                  <div className="text-4xl font-bold text-slate-900 mb-3 font-serif group-hover:scale-110 transition-transform duration-300">{metric.number}</div>
+                  <div className="text-3xl font-bold text-slate-900 mb-2 font-serif group-hover:scale-110 transition-transform duration-300">{metric.number}</div>
                   <div className="text-sm text-slate-600 font-medium tracking-wide uppercase">{metric.label}</div>
                 </div>
               ))}
@@ -141,11 +141,11 @@ const SATPrograms = () => {
       </section>
 
       {/* Program Section */}
-      <section className="py-32 relative">
-        <div className="container mx-auto px-8">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="font-serif text-5xl md:text-6xl font-bold mb-8 text-slate-900 leading-tight">
+      <section className="py-20 relative">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-slate-900 leading-tight">
                 The SAT Booster
                 <br />
                 <span className="text-slate-600">Experience</span>
@@ -156,7 +156,7 @@ const SATPrograms = () => {
               </p>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/50 overflow-hidden relative">
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/50 overflow-hidden relative">
               {/* Premium badge */}
               <div className="absolute top-8 right-8 z-10">
                 <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg">
@@ -167,23 +167,23 @@ const SATPrograms = () => {
               {/* Elegant divider */}
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
               
-              <div className="p-16 text-center border-b border-slate-100/50">
-                <div className="w-24 h-24 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
-                  <Target className="w-12 h-12 text-slate-700" />
+              <div className="p-10 text-center border-b border-slate-100/50">
+                <div className="w-16 h-16 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <Target className="w-8 h-8 text-slate-700" />
                 </div>
                 
-                <h3 className="font-serif text-4xl font-bold mb-6 text-slate-900">{program.title}</h3>
-                <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+                <h3 className="font-serif text-3xl font-bold mb-4 text-slate-900">{program.title}</h3>
+                <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
                   {program.description}
                 </p>
                 
-                <div className="flex items-center justify-center gap-6 mb-8">
+                <div className="flex items-center justify-center gap-4 mb-6">
                   <div className="text-center">
-                    <span className="font-serif text-6xl font-bold text-slate-900">{program.price}</span>
+                    <span className="font-serif text-5xl font-bold text-slate-900">{program.price}</span>
                     <div className="text-slate-500 mt-2">Investment</div>
                   </div>
                   <div className="text-left">
-                    <div className="text-2xl text-slate-400 line-through font-light">{program.originalPrice}</div>
+                    <div className="text-xl text-slate-400 line-through font-light">{program.originalPrice}</div>
                     <div className="text-sm text-emerald-700 font-semibold bg-emerald-50 px-3 py-1 rounded-full inline-block">
                       Limited Time: 50% Savings
                     </div>
@@ -196,7 +196,7 @@ const SATPrograms = () => {
                 </div>
               </div>
 
-              <div className="p-16">
+              <div className="p-10">
                 <h4 className="font-serif text-2xl font-bold mb-12 text-center text-slate-900">
                   Your Exclusive Benefits
                 </h4>
@@ -214,7 +214,7 @@ const SATPrograms = () => {
 
                 <div className="text-center space-y-6">
                   <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer" className="block">
-                    <button className="group w-full max-w-lg mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-6 px-10 rounded-2xl text-xl font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden">
+                    <button className="group w-full max-w-lg mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-4 px-8 rounded-xl text-lg font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                       <span className="relative">Begin Your Transformation</span>
                     </button>
@@ -230,11 +230,11 @@ const SATPrograms = () => {
       </section>
 
       {/* Success Stories Section */}
-      <section id="success-stories" className="py-32 bg-gradient-to-br from-slate-50 to-white relative">
-        <div className="container mx-auto px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="font-serif text-5xl md:text-6xl font-bold mb-8 text-slate-900">
+      <section id="success-stories" className="py-20 bg-gradient-to-br from-slate-50 to-white relative">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-slate-900">
                 Extraordinary
                 <br />
                 <span className="text-slate-600">Achievements</span>
@@ -245,9 +245,9 @@ const SATPrograms = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-10">
+            <div className="grid md:grid-cols-3 gap-8">
               {successStories.map((story, index) => (
-                <div key={index} className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
+                <div key={index} className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group">
                   <div className="flex items-center justify-between mb-8">
                     <div>
                       <h3 className="font-serif font-bold text-xl text-slate-900 mb-1">{story.name}</h3>
@@ -285,9 +285,9 @@ const SATPrograms = () => {
       </section>
 
       {/* Elegant CTA Section */}
-      <section className="py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05),transparent)]"></div>
-        <div className="container mx-auto px-8 relative">
+        <div className="container mx-auto px-6 relative">
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="font-serif text-5xl md:text-6xl font-bold mb-8 text-white leading-tight">
               Your Excellence
