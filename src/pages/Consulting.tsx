@@ -49,8 +49,8 @@ const SATPrograms = () => {
     {
       name: "Sarah Chen",
       before: "1240",
-      after: "1580",
-      improvement: "+340",
+      after: "1450",
+      improvement: "+210",
       college: "Stanford University",
       quote: "The personalized approach helped me identify my weak areas and turn them into strengths. I couldn't have achieved my dream score without this program.",
       program: "1:1 Booster Program"
@@ -58,8 +58,8 @@ const SATPrograms = () => {
     {
       name: "Marcus Williams", 
       before: "1180",
-      after: "1520",
-      improvement: "+340",
+      after: "1420",
+      improvement: "+240",
       college: "MIT",
       quote: "The 1:1 coaching was perfect - I got expert guidance tailored specifically to my needs. The personalized attention kept me motivated throughout.",
       program: "1:1 Booster Program"
@@ -177,20 +177,20 @@ const SATPrograms = () => {
                   {program.description}
                 </p>
                 
-                <div className="flex items-center justify-center gap-4 mb-6">
+                <div className="flex items-center justify-center gap-3 mb-4">
                   <div className="text-center">
-                    <span className="font-serif text-4xl font-bold text-slate-900">{program.price}</span>
-                    <div className="text-slate-500 mt-1 text-sm">Investment</div>
+                    <span className="font-serif text-3xl font-bold text-slate-900">{program.price}</span>
+                    <div className="text-slate-500 mt-1 text-xs">Investment</div>
                   </div>
                   <div className="text-left">
-                    <div className="text-lg text-slate-400 line-through font-light">{program.originalPrice}</div>
-                    <div className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-1 rounded-full inline-block">
-                      Limited Time: 50% Savings
+                    <div className="text-base text-slate-400 line-through font-light">{program.originalPrice}</div>
+                    <div className="text-xs text-emerald-700 font-medium bg-emerald-50 px-2 py-1 rounded-full inline-block">
+                      Save 50%
                     </div>
                   </div>
                 </div>
                 
-                <div className="text-slate-600 mb-4 font-medium text-sm">{program.duration} Intensive Program</div>
+                <div className="text-slate-600 mb-4 font-medium text-xs">{program.duration} Program</div>
                 <div className="inline-block bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 px-8 py-4 rounded-2xl font-semibold border border-emerald-200/50 shadow-sm">
                   {program.guarantee}
                 </div>
@@ -253,8 +253,8 @@ const SATPrograms = () => {
                       <h3 className="font-serif font-bold text-xl text-slate-900 mb-1">{story.name}</h3>
                       <p className="text-sm text-slate-600 font-medium">{story.college}</p>
                     </div>
-                    <span className="bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-semibold tracking-wide uppercase">
-                      {story.program}
+                    <span className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-medium">
+                      1:1 Booster Program
                     </span>
                   </div>
                   
