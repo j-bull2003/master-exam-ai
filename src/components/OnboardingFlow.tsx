@@ -17,7 +17,9 @@ import {
   EyeOff,
   AlertCircle,
   CheckCircle2,
-  X
+  X,
+  BarChart3,
+  BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -627,13 +629,44 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                       Welcome to UniHack.ai!
                     </h3>
                     <p className="text-lg text-muted-foreground max-w-md mx-auto">
-                      Your AI-powered SAT preparation journey is about to begin. Get ready to achieve your dream score!
+                      Your account is ready! Choose how you'd like to begin your SAT preparation journey.
                     </p>
+                  </div>
+
+                  {/* Action Options */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                    <button 
+                      onClick={() => onComplete?.()} 
+                      className="bg-primary/10 hover:bg-primary/20 border-2 border-primary/30 hover:border-primary/50 rounded-2xl p-6 transition-all duration-200 hover:scale-105 group"
+                    >
+                      <div className="w-12 h-12 mx-auto bg-primary/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/30 transition-colors">
+                        <BarChart3 className="w-6 h-6 text-primary" />
+                      </div>
+                      <h4 className="font-semibold mb-2 text-foreground">Take Diagnostic Test</h4>
+                      <p className="text-sm text-muted-foreground mb-3">Get personalized insights and create a custom study plan</p>
+                      <div className="inline-block px-3 py-1 bg-primary/20 text-primary text-xs font-medium rounded-full">
+                        Recommended • 15 mins
+                      </div>
+                    </button>
+                    
+                    <button 
+                      onClick={() => window.location.href = '/dashboard'} 
+                      className="bg-muted/30 hover:bg-muted/50 border-2 border-muted hover:border-border rounded-2xl p-6 transition-all duration-200 hover:scale-105 group"
+                    >
+                      <div className="w-12 h-12 mx-auto bg-muted/50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-muted/70 transition-colors">
+                        <BookOpen className="w-6 h-6 text-muted-foreground" />
+                      </div>
+                      <h4 className="font-semibold mb-2 text-foreground">Skip to Dashboard</h4>
+                      <p className="text-sm text-muted-foreground mb-3">Start exploring practice questions right away</p>
+                      <div className="inline-block px-3 py-1 bg-muted/50 text-muted-foreground text-xs font-medium rounded-full">
+                        Skip diagnostic
+                      </div>
+                    </button>
                   </div>
 
                   {/* Summary Card */}
                   <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6 text-left max-w-md mx-auto">
-                    <h4 className="font-semibold mb-4 text-center">Your Journey Summary</h4>
+                    <h4 className="font-semibold mb-4 text-center">Your Profile Summary</h4>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Name:</span>
