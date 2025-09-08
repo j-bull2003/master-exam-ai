@@ -50,10 +50,12 @@ const Dashboard = () => {
 
   // Load user data when auth state changes
   useEffect(() => {
+    console.log('Dashboard loading states:', { authLoading, profileLoading, hasAccess, user: !!user });
     if (!authLoading && !profileLoading) {
+      console.log('Setting dashboard loading to false');
       setIsLoading(false);
     }
-  }, [authLoading, profileLoading]);
+  }, [authLoading, profileLoading, hasAccess, user]);
 
   // Empty arrays - no mock data, starts at 0 for everything
   const recentSessions = [];
@@ -134,7 +136,7 @@ const Dashboard = () => {
   };
 
   // Show loading state
-  if (isLoading || authLoading) {
+  if (authLoading || profileLoading || isLoading) {
     return (
       <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
         <div className="text-center">
