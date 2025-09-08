@@ -198,7 +198,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <img 
                 src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
                 alt="UniHack.ai Logo" 
-                className="relative h-24 md:h-32 w-auto object-contain transition-all duration-500 group-hover:scale-110"
+                className="relative h-40 md:h-56 w-auto object-contain transition-all duration-500 group-hover:scale-110"
                 style={{ backgroundColor: 'transparent' }}
               />
             </div>
