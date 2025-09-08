@@ -48,8 +48,8 @@ const SATPrograms = () => {
   const successStories = [
     {
       name: "Sarah Chen",
-      before: "1240",
-      after: "1450",
+      before: "1340",
+      after: "1550",
       improvement: "+210",
       college: "Stanford University",
       quote: "The personalized approach helped me identify my weak areas and turn them into strengths. I couldn't have achieved my dream score without this program.",
@@ -57,8 +57,8 @@ const SATPrograms = () => {
     },
     {
       name: "Marcus Williams", 
-      before: "1180",
-      after: "1420",
+      before: "1310",
+      after: "1550",
       improvement: "+240",
       college: "MIT",
       quote: "The 1:1 coaching was perfect - I got expert guidance tailored specifically to my needs. The personalized attention kept me motivated throughout.",
