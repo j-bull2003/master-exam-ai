@@ -125,13 +125,13 @@ const Dashboard = () => {
         currentLevel: mockOnboardingData.currentLevel,
         sections: mockOnboardingData.sections,
         studyWeeksRemaining: mockOnboardingData.studyWeeksRemaining,
-        totalQuestions: 847,
-        correctAnswers: 623,
-        accuracy: 74,
+        totalQuestions: 0,
+        correctAnswers: 0,
+        accuracy: 0,
         weeklyTarget: 100,
-        completedThisWeek: 67,
-        streakDays: 12,
-        nextSession: "Reading & Writing Practice"
+        completedThisWeek: 0,
+        streakDays: 0,
+        nextSession: "Start your SAT practice"
       };
 
       console.log('Setting user data:', userData);
@@ -537,9 +537,9 @@ const Dashboard = () => {
                   <CardContent className="p-3">
                     <div className="flex items-center justify-between mb-1">
                       <Target className="h-4 w-4 text-primary" />
-                      <Badge variant="secondary" className="text-xs">+12</Badge>
+                      <Badge variant="secondary" className="text-xs">+0</Badge>
                     </div>
-                    <div className="text-xl font-bold">{userData?.totalQuestions || 847}</div>
+                    <div className="text-xl font-bold">{userData?.totalQuestions || 0}</div>
                     <p className="text-xs text-muted-foreground">Questions</p>
                   </CardContent>
                 </Card>
@@ -548,9 +548,9 @@ const Dashboard = () => {
                   <CardContent className="p-3">
                     <div className="flex items-center justify-between mb-1">
                       <TrendingUp className="h-4 w-4 text-emerald-600" />
-                      <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 text-xs">+3%</Badge>
+                      <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 text-xs">+0%</Badge>
                     </div>
-                    <div className="text-xl font-bold">{userData?.accuracy || 74}%</div>
+                    <div className="text-xl font-bold">{userData?.accuracy || 0}%</div>
                     <p className="text-xs text-muted-foreground">Accuracy</p>
                   </CardContent>
                 </Card>
@@ -561,7 +561,7 @@ const Dashboard = () => {
                       <Zap className="h-4 w-4 text-orange-600" />
                       <Badge variant="secondary" className="bg-orange-100 text-orange-700 text-xs">🔥</Badge>
                     </div>
-                    <div className="text-xl font-bold">{userData?.streakDays || 12}</div>
+                    <div className="text-xl font-bold">{userData?.streakDays || 0}</div>
                     <p className="text-xs text-muted-foreground">Day Streak</p>
                   </CardContent>
                 </Card>
@@ -573,11 +573,11 @@ const Dashboard = () => {
                       <div className="w-6 h-1 bg-blue-200 rounded-full overflow-hidden">
                         <div 
                           className="h-full bg-blue-600 transition-all duration-300"
-                          style={{ width: `${((userData?.completedThisWeek || 67) / (userData?.weeklyTarget || 100)) * 100}%` }}
+                          style={{ width: `${((userData?.completedThisWeek || 0) / (userData?.weeklyTarget || 100)) * 100}%` }}
                         />
                       </div>
                     </div>
-                    <div className="text-xl font-bold">{userData?.completedThisWeek || 67}/{userData?.weeklyTarget || 100}</div>
+                    <div className="text-xl font-bold">{userData?.completedThisWeek || 0}/{userData?.weeklyTarget || 100}</div>
                     <p className="text-xs text-muted-foreground">Weekly Goal</p>
                   </CardContent>
                 </Card>
