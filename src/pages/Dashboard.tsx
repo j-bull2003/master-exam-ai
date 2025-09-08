@@ -29,7 +29,8 @@ import {
   RotateCcw,
   ChevronRight,
   AlertTriangle,
-  Calculator
+  Calculator,
+  Home
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -451,31 +452,99 @@ const Dashboard = () => {
               </Card>
 
               {/* Quick Actions */}
-              <Card>
+              <Card className="bg-gradient-to-br from-violet-50 to-violet-100 border-violet-200 hover:shadow-lg transition-all">
                 <CardHeader>
-                  <CardTitle>Quick Actions</CardTitle>
+                  <CardTitle className="text-violet-700">Quick Actions</CardTitle>
                   <CardDescription>Jump into your study activities</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Link to="/practice">
-                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2">
+                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
                         <BookOpen className="w-6 h-6" />
                         <span>Practice Questions</span>
                       </Button>
                     </Link>
                     <Link to="/mocks">
-                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2">
+                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
                         <Clipboard className="w-6 h-6" />
                         <span>Mock Tests</span>
                       </Button>
                     </Link>
                     <Link to="/analytics">
-                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2">
+                      <Button variant="outline" className="w-full h-20 flex flex-col gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
                         <BarChart3 className="w-6 h-6" />
                         <span>View Analytics</span>
                       </Button>
                     </Link>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Personalized Study Widget */}
+              <Card className="bg-gradient-to-br from-rose-50 to-rose-100 border-rose-200 hover:shadow-lg transition-all">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-rose-700">
+                    <Brain className="w-5 h-5" />
+                    Personalized Study Plan
+                  </CardTitle>
+                  <CardDescription>
+                    AI-powered recommendations based on your progress
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {/* Study Recommendations */}
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3 p-3 bg-white/60 border border-rose-200 rounded-lg">
+                        <div className="w-2 h-2 rounded-full bg-rose-500 mt-2"></div>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-sm text-rose-800">Focus on Math - Algebra</h4>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Based on your diagnostic, spending 30 min daily on algebra will boost your score by 50-80 points
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-3 p-3 bg-white/60 border border-rose-200 rounded-lg">
+                        <div className="w-2 h-2 rounded-full bg-amber-500 mt-2"></div>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-sm text-rose-800">Reading Comprehension</h4>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Practice passage analysis for 20 minutes to improve critical reading skills
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-3 p-3 bg-white/60 border border-rose-200 rounded-lg">
+                        <div className="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-sm text-rose-800">Writing & Language</h4>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            You're performing well! Keep practicing grammar rules to maintain momentum
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Study Session Suggestions */}
+                    <div className="border-t border-rose-200 pt-4">
+                      <h4 className="font-medium text-sm text-rose-800 mb-3">Today's Study Session</h4>
+                      <div className="space-y-2">
+                        <Link to="/practice">
+                          <Button variant="outline" className="w-full text-sm border-rose-300 text-rose-700 hover:bg-rose-50">
+                            <Target className="w-4 h-4 mr-2" />
+                            Start Focused Practice (45 min)
+                          </Button>
+                        </Link>
+                        <Link to="/mocks">
+                          <Button variant="outline" className="w-full text-sm border-rose-300 text-rose-700 hover:bg-rose-50">
+                            <Clock className="w-4 h-4 mr-2" />
+                            Take Practice Test (3 hours)
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -542,19 +611,19 @@ const Dashboard = () => {
                   <CardTitle className="text-sm font-medium text-teal-700">Target Universities</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {profileData?.target_universities?.slice(0, 3).map((university, index) => (
                       <div
                         key={index}
-                        className="text-xs py-1.5 px-2 bg-muted rounded text-center"
+                        className="text-sm py-3 px-4 bg-white border-2 border-teal-200 rounded-lg text-center font-medium text-teal-800 shadow-sm hover:shadow-md transition-all"
                       >
                         {university}
                       </div>
                     ))}
                   </div>
                   <Link to="/profile">
-                    <Button variant="outline" size="sm" className="w-full mt-3 text-xs">
-                      Manage List
+                    <Button variant="outline" size="sm" className="w-full mt-4 text-sm border-teal-300 text-teal-700 hover:bg-teal-50">
+                      Manage Universities
                     </Button>
                   </Link>
                 </CardContent>
