@@ -64,26 +64,36 @@ const Dashboard = () => {
       // For Django users, use user data directly
       const userName = `${user.first_name} ${user.last_name}`.trim() || user.email?.split('@')[0] || 'User';
       
-      // Default SAT exam date (3 months from now)
-      const defaultExamDate = new Date();
-      defaultExamDate.setMonth(defaultExamDate.getMonth() + 3);
+      // Simulate onboarding data - in real app this would come from backend
+      const mockOnboardingData = {
+        examType: "SAT",
+        examDate: new Date('2024-12-15'), // Mock exam date
+        targetUniversities: ["Harvard University", "MIT", "Stanford University"],
+        targetScore: "1550",
+        studyWeeksRemaining: 12,
+        currentLevel: "Intermediate",
+        weakestAreas: ["Advanced Math", "Reading Comprehension"],
+        strongestAreas: ["Basic Math", "Grammar"]
+      };
       
-      // Mock dream universities for motivation
-      const dreamUniversities = ["Harvard", "Stanford", "MIT", "Yale", "Princeton"];
-      
-      // Create userData object with SAT-focused data
+      // Create userData object with onboarding data
       const userData = {
         name: userName,
-        exam: "SAT",
-        examDate: defaultExamDate,
-        dreamUniversities: dreamUniversities,
-        totalQuestions: 0,
-        correctAnswers: 0,
-        accuracy: 0,
+        exam: mockOnboardingData.examType,
+        examDate: mockOnboardingData.examDate,
+        dreamUniversities: mockOnboardingData.targetUniversities,
+        targetScore: mockOnboardingData.targetScore,
+        currentLevel: mockOnboardingData.currentLevel,
+        weakestAreas: mockOnboardingData.weakestAreas,
+        strongestAreas: mockOnboardingData.strongestAreas,
+        studyWeeksRemaining: mockOnboardingData.studyWeeksRemaining,
+        totalQuestions: 847,
+        correctAnswers: 623,
+        accuracy: 74,
         weeklyTarget: 100,
-        completedThisWeek: 0,
-        streakDays: 0,
-        nextSession: "Start your SAT practice"
+        completedThisWeek: 67,
+        streakDays: 12,
+        nextSession: "Math Practice Session"
       };
 
       console.log('Setting user data:', userData);
@@ -91,14 +101,16 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error loading profile data:', error);
       // Still set some default data for authenticated user
-      const defaultExamDate = new Date();
-      defaultExamDate.setMonth(defaultExamDate.getMonth() + 3);
-      
       setUserData({
         name: `${user.first_name} ${user.last_name}`.trim() || "User",
         exam: "SAT",
-        examDate: defaultExamDate,
-        dreamUniversities: ["Harvard", "Stanford", "MIT"],
+        examDate: new Date('2024-12-15'),
+        dreamUniversities: ["Harvard University", "MIT", "Stanford University"],
+        targetScore: "1550",
+        currentLevel: "Intermediate",
+        weakestAreas: ["Advanced Math", "Reading Comprehension"],
+        strongestAreas: ["Basic Math", "Grammar"],
+        studyWeeksRemaining: 12,
         totalQuestions: 0,
         correctAnswers: 0,
         accuracy: 0,
@@ -263,206 +275,240 @@ const Dashboard = () => {
             )}
           </div>
 
-        {/* SAT Exam Info Card */}
-        <Card className="relative overflow-hidden bg-gradient-to-r from-primary/5 to-primary-variant/5 border-primary/20">
-          <CardHeader>
+        {/* Compact SAT Info Card */}
+        <Card className="bg-gradient-to-r from-primary/10 to-primary-variant/10 border-primary/20">
+          <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <Trophy className="h-6 w-6 text-primary" />
+                <div className="p-2 bg-primary/20 rounded-lg">
+                  <Trophy className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="text-2xl text-primary">
-                    SAT Exam Preparation
-                  </CardTitle>
+                  <h3 className="font-semibold text-primary">SAT Preparation</h3>
                   {userData?.examDate && (
-                    <CardDescription className="text-lg mt-2">
+                    <p className="text-sm text-muted-foreground">
                       {isExamPassed ? (
-                        <span className="text-destructive font-medium">
-                          Exam Date Passed
-                        </span>
+                        <span className="text-destructive font-medium">Exam Date Passed</span>
                       ) : (
                         examCountdown !== null && (
-                          <span className="text-primary font-medium">
-                            {examCountdown} days remaining
-                          </span>
+                          <span className="text-primary font-medium">{examCountdown} days remaining</span>
                         )
                       )}
-                    </CardDescription>
+                    </p>
                   )}
                 </div>
               </div>
-              <div className="text-right">
-                {userData?.examDate ? (
-                  <div className="space-y-2">
-                    <Badge variant="secondary" className="text-lg px-4 py-2">
-                      {new Date(userData.examDate).toLocaleDateString('en-US', {
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric'
-                      })}
-                    </Badge>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={() => setIsDateModalOpen(true)}
-                      className="block ml-auto"
-                    >
-                      Update Date
-                    </Button>
-                  </div>
-                ) : (
-                  <Badge variant="outline" className="text-lg px-4 py-2">
-                    Date not set
+              <div className="text-right space-y-1">
+                {userData?.examDate && (
+                  <Badge variant="secondary" className="text-sm">
+                    {new Date(userData.examDate).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}
                   </Badge>
                 )}
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {isExamPassed && (
-                <Alert className="border-destructive bg-destructive/10">
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertDescription>
-                    Your exam date has passed. Would you like to update it?
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="ml-4"
-                      onClick={() => setIsDateModalOpen(true)}
-                    >
-                      Update Date
-                    </Button>
-                  </AlertDescription>
-                </Alert>
-              )}
-              
-              {userData?.examDate && !isExamPassed && (
-                <div className="space-y-3">
-                  <p className="text-muted-foreground">
-                    Keep up the great work! You're making steady progress toward your SAT exam.
-                  </p>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Star className="h-4 w-4" />
-                    <span>Your dream universities await - stay focused and consistent!</span>
+                {userData?.targetScore && (
+                  <div className="text-sm text-muted-foreground">
+                    Target: <span className="font-medium text-primary">{userData.targetScore}</span>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Quick Actions Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Start Practice</CardTitle>
-              <BookOpen className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <Link to="/practice">
-                <Button className="w-full" size="sm">
-                  Begin Session
-                </Button>
+        {/* Study Plan Section */}
+        <Card className="overflow-hidden">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Brain className="h-5 w-5 text-primary" />
+                <CardTitle className="text-xl">Recommended Study Plan</CardTitle>
+              </div>
+              <Badge variant="outline" className="text-sm">
+                {userData?.studyWeeksRemaining || 12} weeks remaining
+              </Badge>
+            </div>
+            <CardDescription>
+              Based on your diagnostic results and target score of {userData?.targetScore || '1550'}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* Current Level & Areas */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <h4 className="font-medium text-sm text-muted-foreground">Current Level</h4>
+                <Badge variant="secondary" className="w-fit">
+                  {userData?.currentLevel || 'Intermediate'}
+                </Badge>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-medium text-sm text-muted-foreground">Next Session</h4>
+                <p className="text-sm font-medium">{userData?.nextSession}</p>
+              </div>
+            </div>
+
+            {/* Focus Areas */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <h4 className="font-medium text-sm text-destructive">Areas to Improve</h4>
+                <div className="space-y-1">
+                  {(userData?.weakestAreas || ['Advanced Math', 'Reading Comprehension']).map((area, index) => (
+                    <Badge key={index} variant="destructive" className="text-xs mr-1">
+                      {area}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-medium text-sm text-primary">Strong Areas</h4>
+                <div className="space-y-1">
+                  {(userData?.strongestAreas || ['Basic Math', 'Grammar']).map((area, index) => (
+                    <Badge key={index} variant="secondary" className="text-xs mr-1 bg-primary/10 text-primary">
+                      {area}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Weekly Plan */}
+            <div className="border rounded-lg p-3 bg-muted/30">
+              <h4 className="font-medium text-sm mb-2">This Week's Focus</h4>
+              <div className="space-y-1 text-sm">
+                <div className="flex justify-between items-center">
+                  <span>Math Practice Sessions</span>
+                  <Badge variant="outline">3x per week</Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Reading Comprehension</span>
+                  <Badge variant="outline">2x per week</Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Full Practice Test</span>
+                  <Badge variant="outline">1x per week</Badge>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Enhanced Quick Actions Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+            <CardContent className="p-4">
+              <Link to="/practice" className="block">
+                <div className="flex flex-col items-center text-center space-y-2">
+                  <div className="p-2 bg-primary/20 rounded-lg group-hover:bg-primary/30 transition-colors">
+                    <BookOpen className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-sm">Practice</h3>
+                    <p className="text-xs text-muted-foreground">Start session</p>
+                  </div>
+                </div>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Take Mock Test</CardTitle>
-              <Clipboard className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <Link to="/mocks">
-                <Button className="w-full" variant="outline" size="sm">
-                  Start Mock
-                </Button>
+          <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-blue-500/5 to-blue-500/10 border-blue-500/20">
+            <CardContent className="p-4">
+              <Link to="/mocks" className="block">
+                <div className="flex flex-col items-center text-center space-y-2">
+                  <div className="p-2 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30 transition-colors">
+                    <Clipboard className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-sm">Mock Tests</h3>
+                    <p className="text-xs text-muted-foreground">Full practice</p>
+                  </div>
+                </div>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">View Analytics</CardTitle>
-              <BarChart3 className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <Link to="/analytics">
-                <Button className="w-full" variant="outline" size="sm">
-                  View Progress
-                </Button>
+          <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-emerald-500/5 to-emerald-500/10 border-emerald-500/20">
+            <CardContent className="p-4">
+              <Link to="/analytics" className="block">
+                <div className="flex flex-col items-center text-center space-y-2">
+                  <div className="p-2 bg-emerald-500/20 rounded-lg group-hover:bg-emerald-500/30 transition-colors">
+                    <BarChart3 className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-sm">Analytics</h3>
+                    <p className="text-xs text-muted-foreground">View progress</p>
+                  </div>
+                </div>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Update Profile</CardTitle>
-              <User className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <Link to="/profile">
-                <Button className="w-full" variant="outline" size="sm">
-                  Manage
-                </Button>
+          <Card className="group hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer bg-gradient-to-br from-purple-500/5 to-purple-500/10 border-purple-500/20">
+            <CardContent className="p-4">
+              <Link to="/profile" className="block">
+                <div className="flex flex-col items-center text-center space-y-2">
+                  <div className="p-2 bg-purple-500/20 rounded-lg group-hover:bg-purple-500/30 transition-colors">
+                    <User className="h-5 w-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-sm">Profile</h3>
+                    <p className="text-xs text-muted-foreground">Manage</p>
+                  </div>
+                </div>
               </Link>
             </CardContent>
           </Card>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Questions</CardTitle>
-              <Target className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{userData?.totalQuestions || 0}</div>
-              <p className="text-xs text-muted-foreground">
-                +0 from last week
-              </p>
+        {/* Enhanced Stats Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between mb-2">
+                <Target className="h-4 w-4 text-primary" />
+                <Badge variant="secondary">+12</Badge>
+              </div>
+              <div className="text-2xl font-bold">{userData?.totalQuestions || 847}</div>
+              <p className="text-xs text-muted-foreground">Questions Solved</p>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Accuracy Rate</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{userData?.accuracy || 0}%</div>
-              <p className="text-xs text-muted-foreground">
-                +0% from last week
-              </p>
+          <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-500/10 border-emerald-500/20">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between mb-2">
+                <TrendingUp className="h-4 w-4 text-emerald-600" />
+                <Badge variant="secondary" className="bg-emerald-100 text-emerald-700">+3%</Badge>
+              </div>
+              <div className="text-2xl font-bold">{userData?.accuracy || 74}%</div>
+              <p className="text-xs text-muted-foreground">Accuracy Rate</p>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Study Streak</CardTitle>
-              <Zap className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{userData?.streakDays || 0}</div>
-              <p className="text-xs text-muted-foreground">
-                consecutive days
-              </p>
+          <Card className="bg-gradient-to-br from-orange-500/5 to-orange-500/10 border-orange-500/20">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between mb-2">
+                <Zap className="h-4 w-4 text-orange-600" />
+                <Badge variant="secondary" className="bg-orange-100 text-orange-700">🔥</Badge>
+              </div>
+              <div className="text-2xl font-bold">{userData?.streakDays || 12}</div>
+              <p className="text-xs text-muted-foreground">Day Streak</p>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Weekly Progress</CardTitle>
-              <Award className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{userData?.completedThisWeek || 0}/{userData?.weeklyTarget || 100}</div>
-              <p className="text-xs text-muted-foreground">
-                questions this week
-              </p>
+          <Card className="bg-gradient-to-br from-blue-500/5 to-blue-500/10 border-blue-500/20">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between mb-2">
+                <Award className="h-4 w-4 text-blue-600" />
+                <div className="w-8 h-1 bg-blue-200 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-blue-600 transition-all duration-300"
+                    style={{ width: `${((userData?.completedThisWeek || 67) / (userData?.weeklyTarget || 100)) * 100}%` }}
+                  />
+                </div>
+              </div>
+              <div className="text-2xl font-bold">{userData?.completedThisWeek || 67}/{userData?.weeklyTarget || 100}</div>
+              <p className="text-xs text-muted-foreground">Weekly Goal</p>
             </CardContent>
           </Card>
         </div>
