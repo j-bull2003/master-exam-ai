@@ -39,7 +39,7 @@ export const Header = () => {
       <nav className="container mx-auto px-6 h-full flex items-center">
       <div className="relative flex items-center justify-between w-full">
           {/* Logo */}
-          <div className="flex ">
+          <div className="flex md:flex-1">
   <Link
     to="/"
     className="flex items-center hover:opacity-80 transition-opacity group"
@@ -47,7 +47,7 @@ export const Header = () => {
     <img
       src={uniHackLogo}
       alt="UniHack.ai Logo"
-      className="h-36 md:h-44 max-h-[144px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200"
+      className="h-32 md:h-44 max-h-[128px] md:max-h-[176px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen group-hover:scale-105 transition-transform duration-200 -ml-4 md:ml-0"
       style={{ backgroundColor: "transparent" }}
     />
   </Link>
