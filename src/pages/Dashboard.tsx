@@ -481,73 +481,6 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
 
-              {/* Personalized Study Widget */}
-              <Card className="bg-gradient-to-br from-rose-50 to-rose-100 border-rose-200 hover:shadow-lg transition-all">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-rose-700">
-                    <Brain className="w-5 h-5" />
-                    Personalized Study Plan
-                  </CardTitle>
-                  <CardDescription>
-                    AI-powered recommendations based on your progress
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {/* Study Recommendations */}
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3 p-3 bg-white/60 border border-rose-200 rounded-lg">
-                        <div className="w-2 h-2 rounded-full bg-rose-500 mt-2"></div>
-                        <div className="flex-1">
-                          <h4 className="font-medium text-sm text-rose-800">Focus on Math - Algebra</h4>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            Based on your diagnostic, spending 30 min daily on algebra will boost your score by 50-80 points
-                          </p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start gap-3 p-3 bg-white/60 border border-rose-200 rounded-lg">
-                        <div className="w-2 h-2 rounded-full bg-amber-500 mt-2"></div>
-                        <div className="flex-1">
-                          <h4 className="font-medium text-sm text-rose-800">Reading Comprehension</h4>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            Practice passage analysis for 20 minutes to improve critical reading skills
-                          </p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start gap-3 p-3 bg-white/60 border border-rose-200 rounded-lg">
-                        <div className="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
-                        <div className="flex-1">
-                          <h4 className="font-medium text-sm text-rose-800">Writing & Language</h4>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            You're performing well! Keep practicing grammar rules to maintain momentum
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Study Session Suggestions */}
-                    <div className="border-t border-rose-200 pt-4">
-                      <h4 className="font-medium text-sm text-rose-800 mb-3">Today's Study Session</h4>
-                      <div className="space-y-2">
-                        <Link to="/practice">
-                          <Button variant="outline" className="w-full text-sm border-rose-300 text-rose-700 hover:bg-rose-50">
-                            <Target className="w-4 h-4 mr-2" />
-                            Start Focused Practice (45 min)
-                          </Button>
-                        </Link>
-                        <Link to="/mocks">
-                          <Button variant="outline" className="w-full text-sm border-rose-300 text-rose-700 hover:bg-rose-50">
-                            <Clock className="w-4 h-4 mr-2" />
-                            Take Practice Test (3 hours)
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
 
             {/* Right sidebar - Timeline and Universities (1/4 width) */}
@@ -626,6 +559,58 @@ const Dashboard = () => {
                       Manage Universities
                     </Button>
                   </Link>
+                </CardContent>
+              </Card>
+
+              {/* Study Focus - Compact Widget */}
+              <Card className="bg-gradient-to-br from-rose-50 to-rose-100 border-rose-200 hover:shadow-lg transition-all">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-rose-700 flex items-center gap-2">
+                    <Brain className="w-4 h-4" />
+                    Study Focus
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {/* Priority Domains */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-rose-800">Math - Algebra</span>
+                      <span className="text-red-600 font-bold">35%</span>
+                    </div>
+                    <div className="w-full bg-red-100 rounded-full h-1.5">
+                      <div className="bg-red-500 h-1.5 rounded-full w-[35%]"></div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-rose-800">Information & Ideas</span>
+                      <span className="text-blue-600 font-bold">26%</span>
+                    </div>
+                    <div className="w-full bg-blue-100 rounded-full h-1.5">
+                      <div className="bg-blue-500 h-1.5 rounded-full w-[26%]"></div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-rose-800">Advanced Math</span>
+                      <span className="text-indigo-600 font-bold">35%</span>
+                    </div>
+                    <div className="w-full bg-indigo-100 rounded-full h-1.5">
+                      <div className="bg-indigo-500 h-1.5 rounded-full w-[35%]"></div>
+                    </div>
+                  </div>
+
+                  {/* Quick Practice Link */}
+                  <div className="pt-2 border-t border-rose-200">
+                    <Link to="/practice">
+                      <Button variant="outline" size="sm" className="w-full text-xs border-rose-300 text-rose-700 hover:bg-rose-50">
+                        <Target className="w-3 h-3 mr-1" />
+                        Quick Practice
+                      </Button>
+                    </Link>
+                  </div>
                 </CardContent>
               </Card>
             </div>
