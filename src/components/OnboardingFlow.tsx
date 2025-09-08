@@ -201,7 +201,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background flex items-start justify-center p-4 pt-2 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background flex items-start justify-center p-2 sm:p-4 pt-2 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-mesh opacity-40"></div>
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
@@ -209,40 +209,40 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       
       <div className="w-full max-w-3xl relative z-10 mt-1">
         {/* Enhanced Logo */}
-        <div className="text-center mb-1">
+        <div className="text-center mb-2 sm:mb-4">
           <Link to="/" className="inline-flex flex-col items-center justify-center group">
             <div className="relative mb-1">
               <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-2xl group-hover:bg-primary/30 transition-all duration-500"></div>
               <img 
                 src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
                 alt="UniHack.ai Logo" 
-                className="relative h-32 md:h-40 w-auto object-contain transition-all duration-500 group-hover:scale-110"
+                className="relative h-20 sm:h-24 md:h-32 w-auto object-contain transition-all duration-500 group-hover:scale-110"
                 style={{ backgroundColor: 'transparent' }}
               />
             </div>
-            <p className="text-base text-muted-foreground">Your AI-powered SAT preparation journey starts here</p>
+            <p className="text-sm sm:text-base text-muted-foreground px-4 text-center">Your AI-powered SAT preparation journey starts here</p>
           </Link>
         </div>
 
         {/* Enhanced Progress Indicator */}
-        <div className="flex justify-center mb-3">
-          <div className="flex items-center space-x-6">
+        <div className="flex justify-center mb-3 sm:mb-6">
+          <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
-                <div className={`relative w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-bold transition-all duration-500 ${
+                <div className={`relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-500 ${
                   step < currentStep 
                     ? 'bg-gradient-to-r from-primary to-primary-variant text-white shadow-lg scale-110' 
                     : step === currentStep 
                     ? 'bg-gradient-to-r from-primary to-primary-variant text-white shadow-xl shadow-primary/40 scale-125' 
                     : 'bg-muted/70 text-muted-foreground backdrop-blur-sm'
                 }`}>
-                  {step < currentStep ? <CheckCircle className="w-6 h-6" /> : step}
+                  {step < currentStep ? <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-6 md:h-6" /> : step}
                   {step === currentStep && (
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary to-primary-variant animate-pulse"></div>
+                    <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-primary to-primary-variant animate-pulse"></div>
                   )}
                 </div>
                 {step < 4 && (
-                  <div className={`w-16 h-1 rounded-full transition-all duration-500 ${
+                  <div className={`w-8 sm:w-12 md:w-16 h-1 rounded-full transition-all duration-500 ${
                     step < currentStep ? 'bg-gradient-to-r from-primary to-primary-variant' : 'bg-muted/50'
                   }`} />
                 )}
@@ -252,15 +252,15 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         </div>
 
         {/* Enhanced Step Content */}
-        <Card className="backdrop-blur-xl bg-background/80 border-border/50 shadow-2xl shadow-primary/10">
-          <CardHeader className="text-center pb-2">
-            <CardTitle className="text-4xl font-display font-bold bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent mb-2">
+        <Card className="backdrop-blur-xl bg-background/80 border-border/50 shadow-2xl shadow-primary/10 mx-2 sm:mx-0">
+          <CardHeader className="text-center pb-2 px-4 sm:px-6">
+            <CardTitle className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent mb-2">
               {currentStep === 1 && "Create Your Account"}
               {currentStep === 2 && "Choose Your SAT Exam"}
               {currentStep === 3 && "Set Your Goals"}
               {currentStep === 4 && "Ready to Begin!"}
             </CardTitle>
-            <CardDescription className="text-lg text-muted-foreground">
+            <CardDescription className="text-sm sm:text-base md:text-lg text-muted-foreground px-2">
               {currentStep === 1 && "Let's get you set up with a secure account"}
               {currentStep === 2 && "Select your SAT test details"}
               {currentStep === 3 && "Set your target score and universities for motivation"}
@@ -268,7 +268,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="space-y-4 px-6 pb-4 relative">
+          <CardContent className="space-y-4 px-4 sm:px-6 pb-4 relative">
             {/* Step 1: Account Creation */}
             {currentStep === 1 && (
               <div className="space-y-6">
@@ -695,25 +695,25 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             )}
 
             {/* Enhanced Navigation */}
-            <div className="flex justify-between items-center pt-8 border-t border-border/50">
+            <div className="flex flex-col sm:flex-row justify-between items-center pt-6 sm:pt-8 border-t border-border/50 gap-4 sm:gap-0">
               <Button
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="flex items-center gap-2 h-12 px-6"
+                className="flex items-center gap-2 h-10 sm:h-12 px-4 sm:px-6 w-full sm:w-auto order-2 sm:order-1"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back
               </Button>
 
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground order-1 sm:order-2">
                 Step {currentStep} of 4
               </div>
 
               {currentStep < 4 ? (
                 <Button
                   onClick={nextStep}
-                  className="flex items-center gap-2 h-12 px-6 bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-200"
+                  className="flex items-center gap-2 h-10 sm:h-12 px-4 sm:px-6 bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-200 w-full sm:w-auto order-3"
                 >
                   Continue
                   <ArrowRight className="w-4 h-4" />
@@ -722,16 +722,18 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 <Button
                   onClick={handleSubmit}
                   disabled={isLoading}
-                  className="flex items-center gap-2 h-12 px-8 bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-200 shadow-lg"
+                  className="flex items-center gap-2 h-10 sm:h-12 px-4 sm:px-8 bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-200 shadow-lg w-full sm:w-auto order-3"
                 >
                   {isLoading ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Creating Account...
+                      <span className="hidden sm:inline">Creating Account...</span>
+                      <span className="sm:hidden">Creating...</span>
                     </>
                   ) : (
                     <>
-                      Start My Journey
+                      <span className="hidden sm:inline">Start My Journey</span>
+                      <span className="sm:hidden">Start Journey</span>
                       <Sparkles className="w-4 h-4" />
                     </>
                   )}
@@ -742,18 +744,18 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         </Card>
 
         {/* Trust Indicators */}
-        <div className="mt-12 text-center">
-          <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
+        <div className="mt-6 sm:mt-8 md:mt-12 text-center px-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 text-xs sm:text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4" />
+              <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
               <span>Secure & Private</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle className="w-4 h-4" />
+              <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
               <span>7-Day Free Trial</span>
             </div>
             <div className="flex items-center gap-2">
-              <CreditCard className="w-4 h-4" />
+              <CreditCard className="w-3 h-3 sm:w-4 sm:h-4" />
               <span>Cancel Anytime</span>
             </div>
           </div>
