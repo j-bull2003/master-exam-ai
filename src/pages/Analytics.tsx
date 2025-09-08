@@ -24,32 +24,32 @@ import {
 
 const Analytics = () => {
   const overallStats = {
-    totalQuestions: 1247,
-    correctAnswers: 892,
-    accuracy: 71.5,
-    averageTime: 54, // seconds per question
-    studyDays: 23,
-    streakDays: 7
+    totalQuestions: 0,
+    correctAnswers: 0,
+    accuracy: 0,
+    averageTime: 0, // seconds per question
+    studyDays: 0,
+    streakDays: 0
   };
 
   const topicPerformance = [
-    { name: "Reading and Writing", questions: 345, correct: 268, accuracy: 77.7, trend: "up", improvement: "+5.2%" },
-    { name: "Heart of Algebra", questions: 298, correct: 216, accuracy: 72.5, trend: "up", improvement: "+3.1%" },
-    { name: "Problem Solving & Data Analysis", questions: 312, correct: 198, accuracy: 63.5, trend: "down", improvement: "-2.4%" },
-    { name: "Passport to Advanced Math", questions: 292, correct: 210, accuracy: 71.9, trend: "up", improvement: "+1.8%" }
+    { name: "Reading and Writing", questions: 0, correct: 0, accuracy: 0, trend: "neutral", improvement: "+0%" },
+    { name: "Heart of Algebra", questions: 0, correct: 0, accuracy: 0, trend: "neutral", improvement: "+0%" },
+    { name: "Problem Solving & Data Analysis", questions: 0, correct: 0, accuracy: 0, trend: "neutral", improvement: "+0%" },
+    { name: "Passport to Advanced Math", questions: 0, correct: 0, accuracy: 0, trend: "neutral", improvement: "+0%" }
   ];
 
   const weeklyProgress = [
-    { week: "Week 1", accuracy: 58, questions: 156 },
-    { week: "Week 2", accuracy: 64, questions: 198 },
-    { week: "Week 3", accuracy: 69, questions: 234 },
-    { week: "Current", accuracy: 71.5, questions: 189 }
+    { week: "Week 1", accuracy: 0, questions: 0 },
+    { week: "Week 2", accuracy: 0, questions: 0 },
+    { week: "Week 3", accuracy: 0, questions: 0 },
+    { week: "Current", accuracy: 0, questions: 0 }
   ];
 
   const difficultyBreakdown = [
-    { level: "Easy", attempted: 412, correct: 356, accuracy: 86.4 },
-    { level: "Medium", attempted: 598, correct: 398, accuracy: 66.6 },
-    { level: "Hard", attempted: 237, correct: 138, accuracy: 58.2 }
+    { level: "Easy", attempted: 0, correct: 0, accuracy: 0 },
+    { level: "Medium", attempted: 0, correct: 0, accuracy: 0 },
+    { level: "Hard", attempted: 0, correct: 0, accuracy: 0 }
   ];
 
   return (
@@ -138,8 +138,7 @@ const Analytics = () => {
               <div className="text-3xl font-bold text-blue-700">{overallStats.averageTime}s</div>
               <p className="text-xs text-muted-foreground">per question</p>
               <div className="flex items-center space-x-1 mt-3">
-                <TrendingDown className="h-3 w-3 text-green-600" />
-                <span className="text-xs text-green-600 font-medium">-3s from last week</span>
+                <span className="text-xs text-muted-foreground font-medium">Start practicing to see data</span>
               </div>
             </CardContent>
           </Card>
@@ -153,8 +152,7 @@ const Analytics = () => {
               <div className="text-3xl font-bold text-purple-700">{overallStats.studyDays}</div>
               <p className="text-xs text-muted-foreground">total active days</p>
               <div className="flex items-center space-x-1 mt-3">
-                <Activity className="h-3 w-3 text-purple-600" />
-                <span className="text-xs text-purple-600 font-medium">{overallStats.streakDays} day streak</span>
+                <span className="text-xs text-muted-foreground font-medium">{overallStats.streakDays} day streak</span>
               </div>
             </CardContent>
           </Card>
@@ -168,8 +166,7 @@ const Analytics = () => {
               <div className="text-3xl font-bold text-orange-700">{overallStats.totalQuestions}</div>
               <p className="text-xs text-muted-foreground">across all topics</p>
               <div className="flex items-center space-x-1 mt-3">
-                <TrendingUp className="h-3 w-3 text-green-600" />
-                <span className="text-xs text-green-600 font-medium">+15% this week</span>
+                <span className="text-xs text-muted-foreground font-medium">Begin practicing to track progress</span>
               </div>
             </CardContent>
           </Card>
@@ -187,31 +184,44 @@ const Analytics = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {topicPerformance.map((topic, index) => (
-                  <div key={topic.name} className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-sm">{topic.name}</span>
-                      <div className="flex items-center space-x-3">
-                        <span className="text-lg font-bold">{topic.accuracy}%</span>
-                        <div className="flex items-center space-x-1">
-                          {topic.trend === 'up' ? 
-                            <TrendingUp className="h-4 w-4 text-green-600" /> :
-                            <TrendingDown className="h-4 w-4 text-red-600" />
-                          }
-                          <span className={`text-sm font-medium ${topic.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
-                            {topic.improvement}
-                          </span>
+                {overallStats.totalQuestions === 0 ? (
+                  <div className="text-center py-8">
+                    <PieChart className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
+                    <p className="text-muted-foreground">No practice data yet</p>
+                    <p className="text-sm text-muted-foreground mt-1">Start practicing to see your performance breakdown</p>
+                  </div>
+                ) : (
+                  topicPerformance.map((topic, index) => (
+                    <div key={topic.name} className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-sm">{topic.name}</span>
+                        <div className="flex items-center space-x-3">
+                          <span className="text-lg font-bold">{topic.accuracy}%</span>
+                          <div className="flex items-center space-x-1">
+                            {topic.trend === 'up' ? 
+                              <TrendingUp className="h-4 w-4 text-green-600" /> :
+                              topic.trend === 'down' ?
+                              <TrendingDown className="h-4 w-4 text-red-600" /> :
+                              null
+                            }
+                            <span className={`text-sm font-medium ${
+                              topic.trend === 'up' ? 'text-green-600' : 
+                              topic.trend === 'down' ? 'text-red-600' : 'text-muted-foreground'
+                            }`}>
+                              {topic.improvement}
+                            </span>
+                          </div>
                         </div>
                       </div>
+                      <div className="space-y-2">
+                        <Progress value={topic.accuracy} className="h-3" />
+                        <p className="text-xs text-muted-foreground text-center">
+                          {topic.correct}/{topic.questions} questions correct
+                        </p>
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <Progress value={topic.accuracy} className="h-3" />
-                      <p className="text-xs text-muted-foreground text-center">
-                        {topic.correct}/{topic.questions} questions correct
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
@@ -227,27 +237,35 @@ const Analytics = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {weeklyProgress.map((week, index) => (
-                  <div key={week.week} className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-sm">{week.week}</span>
-                      <div className="flex items-center space-x-3">
-                        <span className="text-lg font-bold">{week.accuracy}%</span>
-                        {index > 0 && (
-                          <Badge variant="secondary" className="bg-green-100 text-green-700 border-green-300">
-                            +{(week.accuracy - weeklyProgress[index - 1].accuracy).toFixed(1)}%
-                          </Badge>
-                        )}
+                {overallStats.totalQuestions === 0 ? (
+                  <div className="text-center py-8">
+                    <TrendingUp className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
+                    <p className="text-muted-foreground">No weekly data yet</p>
+                    <p className="text-sm text-muted-foreground mt-1">Complete practice sessions to track your progress</p>
+                  </div>
+                ) : (
+                  weeklyProgress.map((week, index) => (
+                    <div key={week.week} className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-sm">{week.week}</span>
+                        <div className="flex items-center space-x-3">
+                          <span className="text-lg font-bold">{week.accuracy}%</span>
+                          {index > 0 && week.accuracy > 0 && (
+                            <Badge variant="secondary" className="bg-green-100 text-green-700 border-green-300">
+                              +{(week.accuracy - weeklyProgress[index - 1].accuracy).toFixed(1)}%
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Progress value={week.accuracy} className="h-3" />
+                        <p className="text-xs text-muted-foreground text-center">
+                          {week.questions} questions practiced
+                        </p>
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <Progress value={week.accuracy} className="h-3" />
-                      <p className="text-xs text-muted-foreground text-center">
-                        {week.questions} questions practiced
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
@@ -264,32 +282,40 @@ const Analytics = () => {
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-8">
-              {difficultyBreakdown.map((level, index) => (
-                <div key={level.level} className="text-center space-y-4">
-                  <div className={`p-6 rounded-xl ${
-                    index === 0 ? 'bg-green-100 border-2 border-green-300' :
-                    index === 1 ? 'bg-yellow-100 border-2 border-yellow-300' :
-                    'bg-red-100 border-2 border-red-300'
-                  }`}>
-                    <h3 className={`font-semibold text-lg mb-2 ${
-                      index === 0 ? 'text-green-700' :
-                      index === 1 ? 'text-yellow-700' :
-                      'text-red-700'
-                    }`}>{level.level}</h3>
-                    <div className={`text-4xl font-bold ${
-                      index === 0 ? 'text-green-700' :
-                      index === 1 ? 'text-yellow-700' :
-                      'text-red-700'
-                    }`}>{level.accuracy}%</div>
-                  </div>
-                  <div className="space-y-3">
-                    <p className="text-sm text-muted-foreground font-medium">
-                      {level.correct}/{level.attempted} questions correct
-                    </p>
-                    <Progress value={level.accuracy} className="h-2" />
-                  </div>
+              {overallStats.totalQuestions === 0 ? (
+                <div className="col-span-3 text-center py-12">
+                  <BarChart3 className="h-16 w-16 mx-auto text-muted-foreground/50 mb-4" />
+                  <p className="text-lg text-muted-foreground">No difficulty data available</p>
+                  <p className="text-sm text-muted-foreground mt-2">Practice questions at different difficulty levels to see your performance breakdown</p>
                 </div>
-              ))}
+              ) : (
+                difficultyBreakdown.map((level, index) => (
+                  <div key={level.level} className="text-center space-y-4">
+                    <div className={`p-6 rounded-xl ${
+                      index === 0 ? 'bg-green-100 border-2 border-green-300' :
+                      index === 1 ? 'bg-yellow-100 border-2 border-yellow-300' :
+                      'bg-red-100 border-2 border-red-300'
+                    }`}>
+                      <h3 className={`font-semibold text-lg mb-2 ${
+                        index === 0 ? 'text-green-700' :
+                        index === 1 ? 'text-yellow-700' :
+                        'text-red-700'
+                      }`}>{level.level}</h3>
+                      <div className={`text-4xl font-bold ${
+                        index === 0 ? 'text-green-700' :
+                        index === 1 ? 'text-yellow-700' :
+                        'text-red-700'
+                      }`}>{level.accuracy}%</div>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-sm text-muted-foreground font-medium">
+                        {level.correct}/{level.attempted} questions correct
+                      </p>
+                      <Progress value={level.accuracy} className="h-2" />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </CardContent>
         </Card>

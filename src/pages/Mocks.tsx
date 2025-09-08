@@ -102,19 +102,8 @@ const Mocks = () => {
   const config = examConfigs[userExam] || examConfigs.SAT;
 
   const completedMocks = [
-    {
-      id: "completed-1",
-      name: `SAT Mock Test 1`,
-      completedAt: "2024-01-15",
-      score: 1480,
-      maxScore: 1600,
-      percentile: 85,
-      timeSpent: "2h 54m",
-      sections: [
-        { name: "Reading and Writing", score: 720, percentile: 68 },
-        { name: "Math", score: 760, percentile: 82 }
-      ]
-    }
+    // Empty array - no completed mocks by default
+    // Results will be added here when users actually complete mock tests
   ];
 
   return (
