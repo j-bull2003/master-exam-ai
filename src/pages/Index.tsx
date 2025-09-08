@@ -56,50 +56,53 @@ const Index = () => {
   const features = [
     {
       icon: Brain,
-      title: "AI-Driven Precision",
-      description: "Adaptive learning that adjusts to your pace and identifies weak spots instantly."
+      title: "AI-Powered SAT Mastery",
+      description: "Smart algorithms analyze your SAT performance patterns and create personalized study paths for maximum score improvement."
     },
     {
       icon: Target,
-      title: "Diagnostic Excellence",
-      description: "Pinpoint your strengths and weaknesses with our comprehensive baseline assessment."
+      title: "SAT Weakness Detection",
+      description: "Instantly identify which SAT topics need work with our comprehensive diagnostic that maps to real test sections."
     },
     {
       icon: Zap,
-      title: "Instant Feedback",
-      description: "Get detailed explanations and similar questions to master every concept."
+      title: "Real-Time SAT Explanations",
+      description: "Get expert explanations for every SAT question with step-by-step solutions and similar practice problems."
     },
     {
       icon: Clock,
-      title: "Timed Practice",
-      description: "Train under real exam conditions with our advanced timing system."
+      title: "Official SAT Timing",
+      description: "Practice with authentic SAT time constraints and pacing strategies to eliminate test day anxiety."
     }
   ];
 
   const testimonials = [
     {
-      name: "Sarah",
+      name: "Sarah Chen",
       university: "MIT",
       exam: "SAT",
       score: "1580",
-      quote: "UniHack's AI identified exactly where I was struggling and helped me improve my score by 200 points!",
+      improvement: "+240 points",
+      quote: "UniHack's AI pinpointed my exact weaknesses and turned them into strengths. 240 point increase in just 3 months!",
       avatar: "S"
     },
     {
-      name: "James",
-      university: "Oxford",
-      exam: "STEP",
-      score: "7.2/9",
-      quote: "The adaptive practice was game-changing. I felt completely prepared on exam day.",
-      avatar: "J"
+      name: "Marcus Johnson",
+      university: "Stanford",
+      exam: "SAT", 
+      score: "1560",
+      improvement: "+200 points",
+      quote: "The bite-sized daily practice sessions fit perfectly into my schedule. Never felt more confident on test day.",
+      avatar: "M"
     },
     {
-      name: "Maria",
-      university: "Stanford",
-      exam: "ACT",
-      score: "35",
-      quote: "The personalized study plan saved me months of preparation time. Absolutely brilliant!",
-      avatar: "M"
+      name: "Elena Rodriguez",
+      university: "Harvard",
+      exam: "SAT",
+      score: "1590",
+      improvement: "+180 points",
+      quote: "The AI explanations were like having a personal tutor 24/7. Every mistake became a learning opportunity.",
+      avatar: "E"
     }
   ];
 
@@ -119,7 +122,7 @@ const Index = () => {
               <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
                 <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
-                  Join the beta program - exclusive early access
+                  Master the SAT in just 10 minutes daily
                 </span>
               </div>
             ) : (
@@ -261,9 +264,9 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Built with Cutting-Edge Technology
+              Proven SAT Success
             </h2>
-            <p className="text-muted-foreground">Powered by advanced AI and machine learning algorithms</p>
+            <p className="text-muted-foreground">Join thousands of students who've achieved their dream SAT scores</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -273,7 +276,7 @@ const Index = () => {
                 <div className="text-4xl font-bold text-foreground mb-2">
                   {statsCounter.students.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium">Beta Users</div>
+                <div className="text-muted-foreground font-medium">SAT Students</div>
               </div>
             </div>
             
@@ -283,7 +286,7 @@ const Index = () => {
                 <div className="text-4xl font-bold text-foreground mb-2">
                   {statsCounter.questions.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium">AI Training Data Points</div>
+                <div className="text-muted-foreground font-medium">SAT Practice Questions</div>
               </div>
             </div>
             
@@ -293,7 +296,7 @@ const Index = () => {
                 <div className="text-4xl font-bold text-foreground mb-2">
                   {statsCounter.accuracy}%
                 </div>
-                <div className="text-muted-foreground font-medium">Prediction Accuracy</div>
+                <div className="text-muted-foreground font-medium">Score Improvement Rate</div>
               </div>
             </div>
           </div>
@@ -305,10 +308,10 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              Powered by Advanced AI
+              Why Students Choose UniHack for SAT Prep
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Our intelligent platform learns from your performance to create a personalized study experience.
+              Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
             </p>
           </div>
 
@@ -339,10 +342,10 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              Success Stories
+              Real SAT Score Improvements
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              See how our AI-powered platform helped students achieve their dream scores
+              Students are achieving 200+ point improvements with our AI-powered SAT preparation
             </p>
           </div>
 
@@ -375,9 +378,15 @@ const Index = () => {
                 </div>
                 
                 {/* Score Badge */}
-                <div className="mt-4 inline-flex items-center gap-2 bg-success/10 border border-success/20 rounded-full px-3 py-1 group-hover:bg-success/15 transition-colors">
-                  <Star className="w-4 h-4 text-success group-hover:rotate-12 transition-transform" />
-                  <span className="text-sm font-semibold text-success">{testimonial.exam}: {testimonial.score}</span>
+                <div className="mt-4 flex gap-2">
+                  <div className="inline-flex items-center gap-2 bg-success/10 border border-success/20 rounded-full px-3 py-1 group-hover:bg-success/15 transition-colors">
+                    <Star className="w-4 h-4 text-success group-hover:rotate-12 transition-transform" />
+                    <span className="text-sm font-semibold text-success">SAT: {testimonial.score}</span>
+                  </div>
+                  <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-3 py-1">
+                    <TrendingUp className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-semibold text-primary">{testimonial.improvement}</span>
+                  </div>
                 </div>
                 </div>
               </InteractiveCard>
