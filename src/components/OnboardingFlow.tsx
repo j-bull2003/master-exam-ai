@@ -191,9 +191,9 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       
       <div className="w-full max-w-3xl relative z-10 mt-4">
         {/* Enhanced Logo */}
-        <div className="text-center mb-4">
+        <div className="text-center mb-3">
           <Link to="/" className="inline-flex flex-col items-center justify-center group">
-            <div className="relative mb-2">
+            <div className="relative mb-1">
               <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-2xl group-hover:bg-primary/30 transition-all duration-500"></div>
               <img 
                 src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
@@ -202,15 +202,12 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 style={{ backgroundColor: 'transparent' }}
               />
             </div>
-            <h1 className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
-              Welcome to UniHack.ai
-            </h1>
-            <p className="text-base text-muted-foreground mt-1">Your AI-powered SAT preparation journey starts here</p>
+            <p className="text-base text-muted-foreground">Your AI-powered SAT preparation journey starts here</p>
           </Link>
         </div>
 
         {/* Enhanced Progress Indicator */}
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-3">
           <div className="flex items-center space-x-6">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
