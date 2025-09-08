@@ -36,8 +36,7 @@ const SATPrograms = () => {
       "Target score guarantee or 100% money back",
       "Detailed takeaway feedback after every session",
       "Weekly homework assignments & progress tracking",
-      "Practice test analysis & strategy refinement",
-      "College admissions timeline guidance"
+      "Practice test analysis & strategy refinement"
     ],
     duration: "12-16 weeks",
     price: "$2,499",
@@ -77,189 +76,172 @@ const SATPrograms = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-slate-50">
       <Header />
-      <AnimatedBackground className="opacity-60" />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-mesh relative">
+      <section className="pt-32 pb-20 bg-white">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="secondary" className="mb-6 text-sm font-medium px-4 py-2">
+          <div className="max-w-5xl mx-auto text-center">
+            <div className="inline-flex items-center px-4 py-2 bg-slate-100 rounded-full text-sm font-medium text-slate-700 mb-8">
               Premium SAT Preparation
-            </Badge>
-            <h1 className="text-5xl md:text-7xl font-display font-bold mb-8 leading-tight">
-              <span className="text-foreground">Elite</span>{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
-                SAT Programs
-              </span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight text-slate-900">
+              Elite SAT Program
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-              Personalized SAT preparation programs designed to maximize your score potential with expert tutors and proven methodologies.
+            <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+              Achieve your target SAT score with our comprehensive 1:1 coaching program. 
+              Personalized instruction, guaranteed results, and expert guidance every step of the way.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
               <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="px-8 py-4 text-lg bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
-                  Book Free Consultation
-                  <Calendar className="w-5 h-5 ml-2" />
-                </Button>
+                <button className="px-8 py-4 bg-slate-900 text-white rounded-lg text-lg font-semibold hover:bg-slate-800 transition-colors shadow-lg">
+                  Schedule Consultation
+                </button>
               </a>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="px-8 py-4 text-lg"
+              <button 
+                className="px-8 py-4 border-2 border-slate-900 text-slate-900 rounded-lg text-lg font-semibold hover:bg-slate-900 hover:text-white transition-colors"
                 onClick={scrollToSuccessStories}
               >
                 View Success Stories
-                <Star className="w-5 h-5 ml-2" />
-              </Button>
+              </button>
             </div>
 
             {/* Trust Indicators */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">500+</div>
-                <div className="text-sm text-muted-foreground">Students Tutored</div>
+                <div className="text-3xl font-bold text-slate-900 mb-2">500+</div>
+                <div className="text-sm text-slate-600">Students Coached</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">1580</div>
-                <div className="text-sm text-muted-foreground">Average Score</div>
+                <div className="text-3xl font-bold text-slate-900 mb-2">1580</div>
+                <div className="text-sm text-slate-600">Average Score</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">98%</div>
-                <div className="text-sm text-muted-foreground">Success Rate</div>
+                <div className="text-3xl font-bold text-slate-900 mb-2">98%</div>
+                <div className="text-sm text-slate-600">Success Rate</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">+340</div>
-                <div className="text-sm text-muted-foreground">Avg Improvement</div>
+                <div className="text-3xl font-bold text-slate-900 mb-2">+340</div>
+                <div className="text-sm text-slate-600">Avg Improvement</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Programs Section */}
-      <section className="py-20 bg-muted/30">
+      {/* Program Section */}
+      <section className="py-20 bg-slate-50">
         <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-                Transform Your SAT Score
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
+                SAT Booster Program
               </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Join hundreds of students who have achieved their dream SAT scores with our proven 1:1 coaching program.
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                Our flagship 1:1 coaching program designed to maximize your SAT performance with personalized instruction and guaranteed results.
               </p>
             </div>
 
-            <div className="max-w-2xl mx-auto">
-              <Card className="relative bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-2xl group">
-                {program.badge && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                    <Badge className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 text-sm font-medium">
-                      {program.badge}
-                    </Badge>
-                  </div>
-                )}
+            <div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+              <div className="relative">
+                <div className="absolute top-6 right-6 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  Limited Time: 50% Off
+                </div>
                 
-                <CardHeader className="text-center pb-6">
-                  <div className="mx-auto mb-6 p-6 rounded-3xl bg-gradient-to-br from-primary/10 to-primary-variant/10 w-fit group-hover:from-primary/20 group-hover:to-primary-variant/20 transition-colors">
-                    <program.icon className="w-12 h-12 text-primary" />
+                <div className="p-12 text-center border-b border-slate-100">
+                  <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Target className="w-10 h-10 text-slate-700" />
                   </div>
-                  <CardTitle className="text-3xl font-bold mb-4">{program.title}</CardTitle>
-                  <p className="text-lg text-muted-foreground mb-6">{program.description}</p>
+                  <h3 className="text-3xl font-bold mb-4 text-slate-900">{program.title}</h3>
+                  <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">{program.description}</p>
                   
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-center gap-3">
-                      <span className="text-4xl font-bold text-primary">{program.price}</span>
-                      <div className="text-left">
-                        <div className="text-lg text-muted-foreground line-through">{program.originalPrice}</div>
-                        <div className="text-sm text-success font-medium">Save 50%</div>
-                      </div>
-                    </div>
-                    <div className="text-muted-foreground">{program.duration}</div>
-                    <div className="inline-block bg-success/10 text-success px-4 py-2 rounded-full text-sm font-medium border border-success/20">
-                      {program.guarantee}
+                  <div className="flex items-center justify-center gap-4 mb-6">
+                    <span className="text-5xl font-bold text-slate-900">{program.price}</span>
+                    <div className="text-left">
+                      <div className="text-xl text-slate-400 line-through">{program.originalPrice}</div>
+                      <div className="text-sm text-red-600 font-semibold">Save $2,500</div>
                     </div>
                   </div>
-                </CardHeader>
+                  <div className="text-slate-600 mb-4">{program.duration}</div>
+                  <div className="inline-block bg-green-50 text-green-700 px-6 py-3 rounded-full font-semibold border border-green-200">
+                    {program.guarantee}
+                  </div>
+                </div>
 
-                <CardContent className="pt-0 px-8 pb-8">
-                  <div className="space-y-4 mb-8">
+                <div className="p-12">
+                  <h4 className="text-xl font-bold mb-8 text-center text-slate-900">What's Included</h4>
+                  <div className="grid md:grid-cols-2 gap-6 mb-12">
                     {program.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start gap-4">
-                        <CheckCircle className="w-6 h-6 text-success flex-shrink-0 mt-0.5" />
-                        <span className="text-base">{feature}</span>
+                        <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                        <span className="text-slate-700 text-lg">{feature}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="text-center space-y-4">
                     <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer" className="block">
-                      <Button size="lg" className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-lg py-4">
-                        Book Free Strategy Call
-                        <Calendar className="w-5 h-5 ml-2" />
-                      </Button>
+                      <button className="w-full max-w-md mx-auto bg-slate-900 text-white py-4 px-8 rounded-lg text-lg font-semibold hover:bg-slate-800 transition-colors shadow-lg">
+                        Schedule Free Strategy Session
+                      </button>
                     </a>
-                    <p className="text-center text-sm text-muted-foreground">
-                      Start with a free 30-minute strategy session to create your personalized SAT roadmap
+                    <p className="text-slate-600">
+                      Start with a complimentary 30-minute consultation to assess your needs and create your personalized SAT roadmap
                     </p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Success Stories Section */}
-      <section id="success-stories" className="py-20">
+      <section id="success-stories" className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
                 Student Success Stories
               </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Real students, real results. See how our SAT programs have helped students achieve their dream scores and get into top universities.
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                Real students, real results. See how our SAT program has helped students achieve their dream scores and gain admission to top universities.
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
               {successStories.map((story, index) => (
-                <Card key={index} className="bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-xl">
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <h3 className="font-bold text-lg">{story.name}</h3>
-                        <p className="text-sm text-muted-foreground">{story.college}</p>
-                      </div>
-                      <Badge variant="secondary">{story.program}</Badge>
+                <div key={index} className="bg-white border border-slate-200 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="font-bold text-lg text-slate-900">{story.name}</h3>
+                      <p className="text-sm text-slate-600">{story.college}</p>
                     </div>
-                    
-                    <div className="flex items-center justify-center gap-4 py-4 bg-gradient-to-r from-success/10 to-success/5 rounded-xl border border-success/20">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-muted-foreground">{story.before}</div>
-                        <div className="text-xs text-muted-foreground">Before</div>
-                      </div>
-                      <ArrowRight className="w-6 h-6 text-success" />
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-primary">{story.after}</div>
-                        <div className="text-xs text-muted-foreground">After</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-success">{story.improvement}</div>
-                        <div className="text-xs text-muted-foreground">Improvement</div>
-                      </div>
+                    <span className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm font-medium">{story.program}</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-center gap-4 py-6 bg-slate-50 rounded-xl border border-slate-100 mb-6">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-slate-600">{story.before}</div>
+                      <div className="text-xs text-slate-500">Before</div>
                     </div>
-                  </CardHeader>
+                    <ArrowRight className="w-6 h-6 text-slate-400" />
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-slate-900">{story.after}</div>
+                      <div className="text-xs text-slate-500">After</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-green-600">{story.improvement}</div>
+                      <div className="text-xs text-slate-500">Improvement</div>
+                    </div>
+                  </div>
 
-                  <CardContent>
-                    <blockquote className="text-sm text-muted-foreground italic">
-                      "{story.quote}"
-                    </blockquote>
-                  </CardContent>
-                </Card>
+                  <blockquote className="text-slate-700 italic leading-relaxed">
+                    "{story.quote}"
+                  </blockquote>
+                </div>
               ))}
             </div>
           </div>
@@ -267,35 +249,33 @@ const SATPrograms = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/5 to-primary-variant/5">
+      <section className="py-20 bg-slate-900">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
               Ready to Achieve Your Target SAT Score?
             </h2>
-            <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-              Book a free consultation to discuss your SAT goals and find the perfect program for your needs.
+            <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto">
+              Schedule a free consultation to discuss your SAT goals and learn how our program can help you succeed.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
               <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="px-12 py-4 text-lg bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
-                  Book Free Consultation
-                  <Calendar className="w-5 h-5 ml-2" />
-                </Button>
+                <button className="px-12 py-4 bg-white text-slate-900 rounded-lg text-lg font-semibold hover:bg-slate-100 transition-colors shadow-lg">
+                  Schedule Consultation
+                </button>
               </a>
               <Link to="/pricing">
-                <Button variant="outline" size="lg" className="px-12 py-4 text-lg">
+                <button className="px-12 py-4 border-2 border-white text-white rounded-lg text-lg font-semibold hover:bg-white hover:text-slate-900 transition-colors">
                   View Pricing
-                  <TrendingUp className="w-5 h-5 ml-2" />
-                </Button>
+                </button>
               </Link>
             </div>
 
-            <div className="mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground">
+            <div className="flex items-center justify-center gap-8 text-slate-400">
               <div className="flex items-center gap-2">
                 <Award className="w-4 h-4" />
-                <span>Expert SAT Tutors</span>
+                <span>Expert SAT Coaches</span>
               </div>
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4" />
