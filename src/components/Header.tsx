@@ -102,7 +102,7 @@ export const Header = () => {
               to="/consulting"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
             >
-              SAT Programs
+              SAT Program
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
           </div>
@@ -204,7 +204,7 @@ export const Header = () => {
                     className="block text-base font-medium text-foreground hover:text-primary transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    SAT Programs
+                    SAT Program
                   </Link>
                 </div>
               </div>
