@@ -38,6 +38,8 @@ interface FormData {
   password: string;
   examType: string;
   examDate: Date | null;
+  targetUniversities: string[];
+  targetScore: string;
 }
 
 const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
@@ -56,6 +58,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     password: "",
     examType: "",
     examDate: null,
+    targetUniversities: [],
+    targetScore: "",
   });
 
   // Focus name input on mount
@@ -116,9 +120,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       isValid = validateStep1();
     } else if (currentStep === 2) {
       isValid = validateStep2();
+    } else {
+      isValid = true; // No validation for step 3
     }
     
-    if (isValid && currentStep < 3) {
+    if (isValid && currentStep < 4) {
       setCurrentStep(currentStep + 1);
       setErrors({});
     }
@@ -168,7 +174,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !isLoading) {
-      if (currentStep < 3) {
+      if (currentStep < 4) {
         nextStep();
       } else {
         handleSubmit();
@@ -177,39 +183,52 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   return (
-    <div className="min-h-screen ai-hero-section flex items-center justify-center p-4">
-      <div className="ai-floating-elements"></div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-mesh opacity-40"></div>
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-variant/5 rounded-full blur-3xl"></div>
       
-      <div className="w-full max-w-2xl relative z-10">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center justify-center group">
-            <img 
-              src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
-              alt="UniHack.ai Logo" 
-              className="h-20 md:h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-              style={{ backgroundColor: 'transparent' }}
-            />
+      <div className="w-full max-w-3xl relative z-10">
+        {/* Enhanced Logo */}
+        <div className="text-center mb-12">
+          <Link to="/" className="inline-flex flex-col items-center justify-center group">
+            <div className="relative mb-4">
+              <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-2xl group-hover:bg-primary/30 transition-all duration-500"></div>
+              <img 
+                src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
+                alt="UniHack.ai Logo" 
+                className="relative h-24 md:h-32 w-auto object-contain transition-all duration-500 group-hover:scale-110"
+                style={{ backgroundColor: 'transparent' }}
+              />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-display font-bold bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
+              Welcome to UniHack.ai
+            </h1>
+            <p className="text-lg text-muted-foreground mt-2">Your AI-powered SAT preparation journey starts here</p>
           </Link>
         </div>
 
-        {/* Progress Indicator */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center space-x-4">
-            {[1, 2, 3].map((step) => (
+        {/* Enhanced Progress Indicator */}
+        <div className="flex justify-center mb-12">
+          <div className="flex items-center space-x-6">
+            {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
+                <div className={`relative w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-bold transition-all duration-500 ${
                   step < currentStep 
-                    ? 'bg-primary text-primary-foreground' 
+                    ? 'bg-gradient-to-r from-primary to-primary-variant text-white shadow-lg scale-110' 
                     : step === currentStep 
-                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30' 
-                    : 'bg-muted text-muted-foreground'
+                    ? 'bg-gradient-to-r from-primary to-primary-variant text-white shadow-xl shadow-primary/40 scale-125' 
+                    : 'bg-muted/70 text-muted-foreground backdrop-blur-sm'
                 }`}>
-                  {step < currentStep ? <CheckCircle className="w-5 h-5" /> : step}
+                  {step < currentStep ? <CheckCircle className="w-6 h-6" /> : step}
+                  {step === currentStep && (
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary to-primary-variant animate-pulse"></div>
+                  )}
                 </div>
-                {step < 3 && (
-                  <div className={`w-12 h-0.5 transition-colors duration-300 ${
-                    step < currentStep ? 'bg-primary' : 'bg-muted'
+                {step < 4 && (
+                  <div className={`w-16 h-1 rounded-full transition-all duration-500 ${
+                    step < currentStep ? 'bg-gradient-to-r from-primary to-primary-variant' : 'bg-muted/50'
                   }`} />
                 )}
               </div>
@@ -217,22 +236,24 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           </div>
         </div>
 
-        {/* Step Content */}
-        <Card className="ai-glass-card backdrop-blur-xl">
-          <CardHeader>
-            <CardTitle className="text-3xl font-bold text-center bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+        {/* Enhanced Step Content */}
+        <Card className="backdrop-blur-xl bg-background/80 border-border/50 shadow-2xl shadow-primary/10">
+          <CardHeader className="text-center pb-2">
+            <CardTitle className="text-4xl font-display font-bold bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent mb-2">
               {currentStep === 1 && "Create Your Account"}
-              {currentStep === 2 && "Choose Your Exam"}
-              {currentStep === 3 && "Ready to Start!"}
+              {currentStep === 2 && "Choose Your SAT Exam"}
+              {currentStep === 3 && "Set Your Goals"}
+              {currentStep === 4 && "Ready to Begin!"}
             </CardTitle>
-            <CardDescription className="text-center text-lg">
+            <CardDescription className="text-lg text-muted-foreground">
               {currentStep === 1 && "Let's get you set up with a secure account"}
-              {currentStep === 2 && "Select the exam you're preparing for"}
-              {currentStep === 3 && "You're all set! Time to begin your journey"}
+              {currentStep === 2 && "Select your SAT test details"}
+              {currentStep === 3 && "Set your target score and universities for motivation"}
+              {currentStep === 4 && "You're all set! Time to start your SAT journey"}
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-8 px-8 pb-8">
             {/* Step 1: Account Creation */}
             {currentStep === 1 && (
               <div className="space-y-6">
@@ -354,7 +375,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <div className="space-y-6">
                 <div className="text-center space-y-2">
                   <p className="text-muted-foreground">
-                    Choose the exam you're preparing for to get personalized practice content
+                    Choose the SAT exam you're preparing for to get personalized practice content
                   </p>
                   <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg px-3 py-2">
                     Currently available: {ONBOARDING_EXAMS.map(e => e.name).join(', ')}
@@ -413,68 +434,203 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               </div>
             )}
 
-            {/* Step 3: Confirmation */}
+            {/* Step 3: Goal Setting */}
             {currentStep === 3 && (
-              <div className="space-y-6 text-center">
-                <div className="space-y-4">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                    <Sparkles className="w-8 h-8 text-primary" />
+              <div className="space-y-8">
+                <div className="text-center space-y-3">
+                  <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary-variant/20 rounded-2xl flex items-center justify-center mx-auto">
+                    <Calendar className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold">Set Your SAT Goals</h3>
+                  <p className="text-muted-foreground">Let's create a personalized plan to keep you motivated and on track</p>
+                </div>
+
+                {/* Exam Date */}
+                <div className="space-y-3">
+                  <Label className="text-base font-semibold">When is your SAT exam?</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={`w-full h-12 justify-start text-left font-normal ${
+                          !formData.examDate ? "text-muted-foreground" : ""
+                        }`}
+                      >
+                        <CalendarIcon className="mr-3 h-5 w-5" />
+                        {formData.examDate ? (
+                          formData.examDate.toLocaleDateString()
+                        ) : (
+                          <span>Select your exam date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <input
+                        type="date"
+                        className="p-3 border rounded-lg w-full"
+                        onChange={(e) => {
+                          const date = e.target.value ? new Date(e.target.value) : null;
+                          setFormData(prev => ({ ...prev, examDate: date }));
+                        }}
+                        min={new Date().toISOString().split('T')[0]}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+
+                {/* Target Score */}
+                <div className="space-y-3">
+                  <Label className="text-base font-semibold">What's your target SAT score?</Label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {["1400+", "1500+", "1600"].map((score) => (
+                      <Button
+                        key={score}
+                        variant={formData.targetScore === score ? "default" : "outline"}
+                        className={`h-12 text-center transition-all duration-200 ${
+                          formData.targetScore === score 
+                            ? "bg-gradient-to-r from-primary to-primary-variant shadow-lg scale-105" 
+                            : "hover:scale-105"
+                        }`}
+                        onClick={() => setFormData(prev => ({ ...prev, targetScore: score }))}
+                      >
+                        {score}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Target Universities */}
+                <div className="space-y-3">
+                  <Label className="text-base font-semibold">Which universities are you targeting?</Label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {["Harvard", "MIT", "Stanford", "Princeton", "Yale", "Columbia", "Cornell", "UPenn"].map((uni) => (
+                      <Button
+                        key={uni}
+                        variant={formData.targetUniversities.includes(uni) ? "default" : "outline"}
+                        className={`h-12 text-sm transition-all duration-200 ${
+                          formData.targetUniversities.includes(uni) 
+                            ? "bg-gradient-to-r from-primary to-primary-variant shadow-lg scale-105" 
+                            : "hover:scale-105"
+                        }`}
+                        onClick={() => {
+                          const unis = formData.targetUniversities.includes(uni)
+                            ? formData.targetUniversities.filter(u => u !== uni)
+                            : [...formData.targetUniversities, uni];
+                          setFormData(prev => ({ ...prev, targetUniversities: unis }));
+                        }}
+                      >
+                        {uni}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Motivation Message */}
+                {(formData.examDate || formData.targetScore || formData.targetUniversities.length > 0) && (
+                  <div className="p-6 bg-gradient-to-r from-primary/10 to-primary-variant/10 rounded-2xl border border-primary/20">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Sparkles className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-primary">Your Personalized Plan</h4>
+                        <div className="space-y-1 text-sm text-muted-foreground">
+                          {formData.examDate && (
+                            <p>📅 Exam Date: {formData.examDate.toLocaleDateString()}</p>
+                          )}
+                          {formData.targetScore && (
+                            <p>🎯 Target Score: {formData.targetScore}</p>
+                          )}
+                          {formData.targetUniversities.length > 0 && (
+                            <p>🏛️ Dream Universities: {formData.targetUniversities.join(", ")}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 4: Confirmation */}
+            {currentStep === 4 && (
+              <div className="space-y-8 text-center">
+                <div className="space-y-6">
+                  <div className="relative">
+                    <div className="w-20 h-20 bg-gradient-to-r from-primary/20 to-primary-variant/20 rounded-3xl flex items-center justify-center mx-auto">
+                      <Sparkles className="w-10 h-10 text-primary" />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary-variant/20 rounded-3xl blur-xl animate-pulse"></div>
                   </div>
                   
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Welcome to UniHack.ai!</h3>
-                    <p className="text-muted-foreground">
-                      You're all set to start your {examTypes.find(e => e.id === formData.examType)?.name} preparation journey.
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent">
+                      Welcome to UniHack.ai!
+                    </h3>
+                    <p className="text-lg text-muted-foreground max-w-md mx-auto">
+                      Your AI-powered SAT preparation journey is about to begin. Get ready to achieve your dream score!
                     </p>
                   </div>
 
-                  <div className="bg-muted/50 rounded-lg p-4 space-y-2">
-                    <div className="flex justify-between">
-                      <span className="font-medium">Name:</span>
-                      <span>{formData.name}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Email:</span>
-                      <span>{formData.email}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Exam:</span>
-                      <span>{examTypes.find(e => e.id === formData.examType)?.name}</span>
+                  {/* Summary Card */}
+                  <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6 text-left max-w-md mx-auto">
+                    <h4 className="font-semibold mb-4 text-center">Your Journey Summary</h4>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Name:</span>
+                        <span className="font-medium">{formData.name}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Exam:</span>
+                        <span className="font-medium">{formData.examType}</span>
+                      </div>
+                      {formData.examDate && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Exam Date:</span>
+                          <span className="font-medium">{formData.examDate.toLocaleDateString()}</span>
+                        </div>
+                      )}
+                      {formData.targetScore && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Target Score:</span>
+                          <span className="font-medium">{formData.targetScore}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Navigation Buttons */}
-            <div className="flex justify-between pt-6">
+            {/* Enhanced Navigation */}
+            <div className="flex justify-between items-center pt-8 border-t border-border/50">
               <Button
-                type="button"
                 variant="outline"
                 onClick={prevStep}
-                disabled={currentStep === 1 || isLoading}
-                className="flex items-center gap-2"
+                disabled={currentStep === 1}
+                className="flex items-center gap-2 h-12 px-6"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back
               </Button>
 
-              {currentStep < 3 ? (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                Step {currentStep} of 4
+              </div>
+
+              {currentStep < 4 ? (
                 <Button
-                  type="button"
                   onClick={nextStep}
-                  disabled={isLoading}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 h-12 px-6 bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-200"
                 >
-                  Next Step
+                  Continue
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               ) : (
                 <Button
-                  type="button"
                   onClick={handleSubmit}
                   disabled={isLoading}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 h-12 px-8 bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-200 shadow-lg"
                 >
                   {isLoading ? (
                     <>
@@ -483,8 +639,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     </>
                   ) : (
                     <>
-                      Start Learning
-                      <ArrowRight className="w-4 h-4" />
+                      Start My Journey
+                      <Sparkles className="w-4 h-4" />
                     </>
                   )}
                 </Button>
@@ -493,30 +649,22 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           </CardContent>
         </Card>
 
-        {/* Footer */}
-        <div className="text-center mt-8">
-          <p className="text-sm text-muted-foreground">
-            Already have an account?{" "}
-            <Link 
-              to="/auth/login" 
-              className="text-primary hover:text-primary/80 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 rounded px-1"
-            >
-              Sign in here
-            </Link>
-          </p>
-        </div>
-
-        {/* Trust Signals */}
-        <div className="text-center mt-6 space-y-2">
-          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-            <Shield className="w-4 h-4 text-success" />
-            <span>256-bit SSL encryption</span>
-            <span>•</span>
-            <span>GDPR compliant</span>
+        {/* Trust Indicators */}
+        <div className="mt-12 text-center">
+          <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              <span>Secure & Private</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4" />
+              <span>7-Day Free Trial</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CreditCard className="w-4 h-4" />
+              <span>Cancel Anytime</span>
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Join 10,000+ students achieving their dream scores
-          </p>
         </div>
       </div>
     </div>
