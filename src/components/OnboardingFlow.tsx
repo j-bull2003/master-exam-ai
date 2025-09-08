@@ -207,7 +207,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         </div>
 
         {/* Enhanced Progress Indicator */}
-        <div className="flex justify-center mb-1">
+        <div className="flex justify-center mb-3">
           <div className="flex items-center space-x-6">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
