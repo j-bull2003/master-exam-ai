@@ -330,39 +330,34 @@ const Dashboard = () => {
         </header>
 
         <div className="py-6 space-y-6">
-          {/* Welcome Section */}
-          <div className="text-center space-y-3">
+          {/* Compact Welcome Section */}
+          <div className="text-center space-y-4">
             <h1 className="text-3xl font-bold">
               Welcome back, {userData?.name || 'User'}! 👋
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Your dream universities are within reach! Stay focused on your SAT journey.
-            </p>
-            {/* Motivational Dream Universities with Countdown */}
+            
+            {/* Compact Dream Universities Bar */}
             {userData?.dreamUniversities && userData?.examDate && (
-              <div className="relative bg-gradient-to-r from-primary/20 via-primary-variant/20 to-primary/20 rounded-xl p-4 border border-primary/30">
-                <div className="text-center space-y-2">
-                  <div className="flex items-center justify-center gap-2 text-primary font-semibold">
-                    <Trophy className="h-4 w-4" />
-                    <span className="text-sm">Your Dream Awaits</span>
-                    <Trophy className="h-4 w-4" />
-                  </div>
-                  <div className="flex flex-wrap gap-2 justify-center">
+              <div className="flex items-center justify-center gap-6 p-3 bg-gradient-to-r from-primary/10 via-primary-variant/10 to-primary/10 rounded-lg border border-primary/20 max-w-4xl mx-auto">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">Target:</span>
+                  <div className="flex gap-1">
                     {userData.dreamUniversities.slice(0, 3).map((uni, index) => (
-                      <Badge key={index} variant="secondary" className="text-sm bg-white/80 text-primary border-primary/20">
-                        {uni}
+                      <Badge key={index} variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/30">
+                        {uni.split(' ')[0]} {/* Show just first word like "Harvard", "MIT" */}
                       </Badge>
                     ))}
                   </div>
-                  <div className="flex items-center justify-center gap-4 mt-3">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary">{examCountdown || 0}</div>
-                      <p className="text-xs text-muted-foreground">days to go</p>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary">{userData?.targetScore}</div>
-                      <p className="text-xs text-muted-foreground">target score</p>
-                    </div>
+                </div>
+                <div className="h-4 w-px bg-border"></div>
+                <div className="flex items-center gap-4">
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-primary">{examCountdown || 0}</div>
+                    <p className="text-xs text-muted-foreground">days left</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-primary">{userData?.targetScore}</div>
+                    <p className="text-xs text-muted-foreground">goal</p>
                   </div>
                 </div>
               </div>
