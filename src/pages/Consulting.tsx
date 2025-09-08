@@ -33,7 +33,7 @@ const SATPrograms = () => {
       "20 personalized 1-on-1 sessions with SAT expert",
       "Customized study plan based on diagnostic assessment",
       "24/7 support for instant help",
-      "Target score guarantee or 100% money back",
+      "200+ score increase guarantee or 100% money back",
       "Detailed takeaway feedback after every session",
       "Weekly homework assignments & progress tracking",
       "Practice test analysis & strategy refinement"
@@ -293,18 +293,13 @@ const SATPrograms = () => {
               Reserve your place in our exclusive program and begin your journey toward SAT mastery.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-8 justify-center mb-16">
+            <div className="flex justify-center mb-16">
               <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer">
                 <button className="group px-16 py-6 bg-white text-slate-900 rounded-2xl text-xl font-semibold hover:bg-slate-100 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-1 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-100/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                   <span className="relative">Schedule Private Consultation</span>
                 </button>
               </a>
-              <Link to="/pricing">
-                <button className="px-16 py-6 border-2 border-slate-400 text-slate-300 rounded-2xl text-xl font-semibold hover:border-white hover:text-white transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
-                  Investment Details
-                </button>
-              </Link>
             </div>
 
             <div className="flex items-center justify-center gap-12 text-slate-400">
