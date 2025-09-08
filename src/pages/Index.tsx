@@ -435,8 +435,8 @@ const Index = () => {
               
               {/* Annual Plan - Best Value */}
               <div className="relative p-6 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-lg">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-6 py-2 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
                     BEST VALUE
                   </span>
                 </div>
