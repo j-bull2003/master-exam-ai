@@ -156,71 +156,67 @@ const SATPrograms = () => {
               </p>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/50 overflow-hidden relative">
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/50 overflow-hidden relative max-w-3xl mx-auto">
               {/* Premium badge */}
-              <div className="absolute top-8 right-8 z-10">
-                <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg">
+              <div className="absolute top-4 right-4 z-10">
+                <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg">
                   Limited Availability
                 </div>
               </div>
               
-              {/* Elegant divider */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
-              
-              <div className="p-10 text-center border-b border-slate-100/50">
-                <div className="w-16 h-16 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <Target className="w-8 h-8 text-slate-700" />
+              <div className="p-6 text-center border-b border-slate-100/50">
+                <div className="w-12 h-12 bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <Target className="w-6 h-6 text-slate-700" />
                 </div>
                 
-                <h3 className="font-serif text-3xl font-bold mb-4 text-slate-900">{program.title}</h3>
-                <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+                <h3 className="font-serif text-2xl font-bold mb-3 text-slate-900">{program.title}</h3>
+                <p className="text-base text-slate-600 mb-4 max-w-xl mx-auto font-light">
                   {program.description}
                 </p>
                 
-                <div className="flex items-center justify-center gap-3 mb-4">
+                <div className="flex items-center justify-center gap-3 mb-3">
                   <div className="text-center">
-                    <span className="font-serif text-3xl font-bold text-slate-900">{program.price}</span>
-                    <div className="text-slate-500 mt-1 text-xs">Investment</div>
+                    <span className="font-serif text-2xl font-bold text-slate-900">{program.price}</span>
                   </div>
                   <div className="text-left">
-                    <div className="text-base text-slate-400 line-through font-light">{program.originalPrice}</div>
-                    <div className="text-xs text-emerald-700 font-medium bg-emerald-50 px-2 py-1 rounded-full inline-block">
+                    <div className="text-sm text-slate-400 line-through font-light">{program.originalPrice}</div>
+                    <div className="text-xs text-emerald-700 font-medium bg-emerald-50 px-2 py-1 rounded-full">
                       Save 50%
                     </div>
                   </div>
                 </div>
                 
-                <div className="text-slate-600 mb-4 font-medium text-xs">{program.duration} Program</div>
-                <div className="inline-block bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 px-8 py-4 rounded-2xl font-semibold border border-emerald-200/50 shadow-sm">
+                <div className="text-slate-600 mb-3 font-medium text-xs">{program.duration}</div>
+                <div className="inline-block bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 px-4 py-2 rounded-lg font-medium border border-emerald-200/50 text-sm">
                   {program.guarantee}
                 </div>
               </div>
 
-              <div className="p-10">
-                <h4 className="font-serif text-2xl font-bold mb-12 text-center text-slate-900">
+              <div className="p-6">
+                <h4 className="font-serif text-lg font-bold mb-4 text-center text-slate-900">
                   Your Exclusive Benefits
                 </h4>
                 
-                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                <div className="grid md:grid-cols-2 gap-3 mb-6">
                   {program.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-start gap-6 group">
-                      <div className="w-6 h-6 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300">
-                        <CheckCircle className="w-4 h-4 text-white" />
+                    <div key={idx} className="flex items-start gap-3 group">
+                      <div className="w-4 h-4 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <CheckCircle className="w-3 h-3 text-white" />
                       </div>
-                      <span className="text-slate-700 text-lg font-medium leading-relaxed">{feature}</span>
+                      <span className="text-slate-700 text-sm leading-relaxed">{feature}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="text-center space-y-6">
+                <div className="text-center space-y-3">
                   <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer" className="block">
-                    <button className="group w-full max-w-lg mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-4 px-8 rounded-xl text-lg font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden">
+                    <button className="group w-full max-w-sm mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-3 px-6 rounded-lg text-base font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                       <span className="relative">Begin Your Transformation</span>
                     </button>
                   </a>
-                  <p className="text-slate-600 font-light max-w-md mx-auto">
-                    Start with a complimentary strategic consultation to design your personalized roadmap to SAT excellence
+                  <p className="text-slate-600 font-light text-sm max-w-sm mx-auto">
+                    Start with a complimentary consultation to design your personalized roadmap
                   </p>
                 </div>
               </div>
