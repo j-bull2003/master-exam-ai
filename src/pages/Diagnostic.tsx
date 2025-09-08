@@ -168,9 +168,19 @@ const Diagnostic = () => {
               </ul>
             </div>
 
-            <Button onClick={startDiagnostic} size="lg" className="w-full">
-              Start 30-min Diagnostic
-            </Button>
+            <div className="space-y-3">
+              <Button onClick={startDiagnostic} size="lg" className="w-full">
+                Start 30-min Diagnostic
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={proceedToDashboard} 
+                size="lg" 
+                className="w-full"
+              >
+                Skip to Dashboard
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
