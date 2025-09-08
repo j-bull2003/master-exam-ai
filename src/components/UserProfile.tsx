@@ -103,32 +103,32 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Profile Overview Card */}
       <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-slate-200 hover:shadow-lg transition-all">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Avatar className="h-20 w-20">
+        <CardHeader className="p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+              <Avatar className="h-16 w-16 sm:h-20 sm:w-20 mx-auto sm:mx-0">
                 <AvatarImage src="" alt={profileData.full_name} />
-                <AvatarFallback className="text-lg font-semibold bg-primary text-primary-foreground">
+                <AvatarFallback className="text-base sm:text-lg font-semibold bg-primary text-primary-foreground">
                   {profileData.full_name.split(' ').map(n => n[0]).join('').toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div className="space-y-2">
-                <CardTitle className="text-2xl">{profileData.full_name}</CardTitle>
-                <CardDescription className="flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  {profileData.email}
+              <div className="space-y-2 text-center sm:text-left w-full sm:w-auto">
+                <CardTitle className="text-xl sm:text-2xl">{profileData.full_name}</CardTitle>
+                <CardDescription className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-sm">
+                  <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="break-all">{profileData.email}</span>
                 </CardDescription>
-                <div className="flex items-center gap-2">
-                  <Badge variant="secondary" className="font-medium bg-blue-100 text-blue-700 border-blue-300">
+                <div className="flex flex-col sm:flex-row items-center gap-2">
+                  <Badge variant="secondary" className="font-medium bg-blue-100 text-blue-700 border-blue-300 text-xs sm:text-sm">
                     <BookOpen className="w-3 h-3 mr-1" />
                     {profileData.exam_type} Student
                   </Badge>
-                  <Badge variant="outline" className="font-medium">
+                  <Badge variant="outline" className="font-medium text-xs sm:text-sm">
                     <GraduationCap className="w-3 h-3 mr-1" />
-                    {profileData.target_university}
+                    <span className="truncate max-w-[200px]">{profileData.target_university}</span>
                   </Badge>
                 </div>
               </div>
@@ -136,17 +136,19 @@ const UserProfile = () => {
             <Button
               variant={isEditing ? "outline" : "default"}
               onClick={() => setIsEditing(!isEditing)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 w-full sm:w-auto"
+              size="sm"
             >
               {isEditing ? (
                 <>
                   <X className="w-4 h-4" />
-                  Cancel
+                  <span className="hidden sm:inline">Cancel</span>
                 </>
               ) : (
                 <>
                   <Edit3 className="w-4 h-4" />
-                  Edit Profile
+                  <span className="hidden sm:inline">Edit Profile</span>
+                  <span className="sm:hidden">Edit</span>
                 </>
               )}
             </Button>
@@ -156,45 +158,47 @@ const UserProfile = () => {
 
       {/* Personal Information */}
       <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 hover:shadow-lg transition-all">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-emerald-700">
-            <User className="w-5 h-5" />
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-emerald-700 text-lg sm:text-xl">
+            <User className="w-4 h-4 sm:w-5 sm:h-5" />
             Personal Information
           </CardTitle>
-          <CardDescription>Your basic account details</CardDescription>
+          <CardDescription className="text-sm sm:text-base">Your basic account details</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-4 sm:p-6 pt-0">
           {isEditing ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
+                <Label htmlFor="fullName" className="text-sm font-medium">Full Name</Label>
                 <Input
                   id="fullName"
                   value={editForm.full_name}
                   onChange={(e) => setEditForm(prev => ({ ...prev, full_name: e.target.value }))}
                   placeholder="Enter your full name"
+                  className="text-base"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
                 <Input
                   id="email"
                   type="email"
                   value={editForm.email}
                   onChange={(e) => setEditForm(prev => ({ ...prev, email: e.target.value }))}
                   placeholder="Enter your email"
+                  className="text-base"
                 />
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-muted-foreground">Full Name</Label>
-                <p className="font-medium">{profileData.full_name}</p>
+                <Label className="text-xs sm:text-sm font-medium text-muted-foreground">Full Name</Label>
+                <p className="font-medium text-sm sm:text-base">{profileData.full_name}</p>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-muted-foreground">Email Address</Label>
-                <p className="font-medium">{profileData.email}</p>
+                <Label className="text-xs sm:text-sm font-medium text-muted-foreground">Email Address</Label>
+                <p className="font-medium text-sm sm:text-base break-all">{profileData.email}</p>
               </div>
             </div>
           )}
@@ -203,23 +207,23 @@ const UserProfile = () => {
 
       {/* Study Preferences */}
       <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-all">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-700">
-            <Target className="w-5 h-5" />
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-blue-700 text-lg sm:text-xl">
+            <Target className="w-4 h-4 sm:w-5 sm:h-5" />
             Study Preferences
           </CardTitle>
-          <CardDescription>Your exam type and study goals</CardDescription>
+          <CardDescription className="text-sm sm:text-base">Your exam type and study goals</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6 pt-0">
           {isEditing ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="examType">Exam Type</Label>
+                <Label htmlFor="examType" className="text-sm font-medium">Exam Type</Label>
                 <Select
                   value={editForm.exam_type}
                   onValueChange={(value) => setEditForm(prev => ({ ...prev, exam_type: value }))}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="text-base">
                     <SelectValue placeholder="Select exam type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -231,42 +235,44 @@ const UserProfile = () => {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="targetUniversity">Target University</Label>
+                <Label htmlFor="targetUniversity" className="text-sm font-medium">Target University</Label>
                 <Input
                   id="targetUniversity"
                   value={editForm.target_university}
                   onChange={(e) => setEditForm(prev => ({ ...prev, target_university: e.target.value }))}
                   placeholder="Enter target university"
+                  className="text-base"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="examDate">Exam Date</Label>
+                <Label htmlFor="examDate" className="text-sm font-medium">Exam Date</Label>
                 <Input
                   id="examDate"
                   type="date"
                   value={editForm.exam_date || ''}
                   onChange={(e) => setEditForm(prev => ({ ...prev, exam_date: e.target.value }))}
+                  className="text-base"
                 />
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-muted-foreground">Exam Type</Label>
+                <Label className="text-xs sm:text-sm font-medium text-muted-foreground">Exam Type</Label>
                 <div className="flex items-center gap-2">
-                  <Badge className="font-medium bg-blue-600 text-white">
+                  <Badge className="font-medium bg-blue-600 text-white text-xs sm:text-sm">
                     {profileData.exam_type}
                   </Badge>
                 </div>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-muted-foreground">Target University</Label>
-                <p className="font-medium">{profileData.target_university}</p>
+                <Label className="text-xs sm:text-sm font-medium text-muted-foreground">Target University</Label>
+                <p className="font-medium text-sm sm:text-base">{profileData.target_university}</p>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-muted-foreground">Exam Date</Label>
-                <p className="font-medium flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
+                <Label className="text-xs sm:text-sm font-medium text-muted-foreground">Exam Date</Label>
+                <p className="font-medium flex items-center gap-2 text-sm sm:text-base">
+                  <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
                   {profileData.exam_date ? new Date(profileData.exam_date).toLocaleDateString() : 'Not set'}
                 </p>
               </div>
@@ -274,12 +280,12 @@ const UserProfile = () => {
           )}
 
           {isEditing && (
-            <div className="flex justify-end gap-2 pt-4">
-              <Button variant="outline" onClick={handleCancel}>
+            <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4 border-t">
+              <Button variant="outline" onClick={handleCancel} className="w-full sm:w-auto">
                 <X className="w-4 h-4 mr-2" />
                 Cancel
               </Button>
-              <Button onClick={handleSave}>
+              <Button onClick={handleSave} className="w-full sm:w-auto">
                 <Save className="w-4 h-4 mr-2" />
                 Save Changes
               </Button>
@@ -290,35 +296,35 @@ const UserProfile = () => {
 
       {/* Account Settings */}
       <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-all">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-purple-700">
-            <Settings className="w-5 h-5" />
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-purple-700 text-lg sm:text-xl">
+            <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
             Account Settings
           </CardTitle>
-          <CardDescription>Manage your account preferences</CardDescription>
+          <CardDescription className="text-sm sm:text-base">Manage your account preferences</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 border rounded-lg bg-white/50">
-              <div>
-                <h4 className="font-medium">Email Notifications</h4>
-                <p className="text-sm text-muted-foreground">Receive updates about your progress and new features</p>
+        <CardContent className="p-4 sm:p-6 pt-0">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 border rounded-lg bg-white/50 gap-3 sm:gap-0">
+              <div className="flex-1">
+                <h4 className="font-medium text-sm sm:text-base">Email Notifications</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground">Receive updates about your progress and new features</p>
               </div>
-              <Badge variant="secondary">Enabled</Badge>
+              <Badge variant="secondary" className="text-xs">Enabled</Badge>
             </div>
-            <div className="flex items-center justify-between p-4 border rounded-lg bg-white/50">
-              <div>
-                <h4 className="font-medium">Study Reminders</h4>
-                <p className="text-sm text-muted-foreground">Get reminded about your daily study goals</p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 border rounded-lg bg-white/50 gap-3 sm:gap-0">
+              <div className="flex-1">
+                <h4 className="font-medium text-sm sm:text-base">Study Reminders</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground">Get reminded about your daily study goals</p>
               </div>
-              <Badge variant="secondary">Enabled</Badge>
+              <Badge variant="secondary" className="text-xs">Enabled</Badge>
             </div>
-            <div className="flex items-center justify-between p-4 border rounded-lg bg-white/50">
-              <div>
-                <h4 className="font-medium">Performance Analytics</h4>
-                <p className="text-sm text-muted-foreground">Track your progress and improvement over time</p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 border rounded-lg bg-white/50 gap-3 sm:gap-0">
+              <div className="flex-1">
+                <h4 className="font-medium text-sm sm:text-base">Performance Analytics</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground">Track your progress and improvement over time</p>
               </div>
-              <Badge variant="secondary">Enabled</Badge>
+              <Badge variant="secondary" className="text-xs">Enabled</Badge>
             </div>
           </div>
         </CardContent>
