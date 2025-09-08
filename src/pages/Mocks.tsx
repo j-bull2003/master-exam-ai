@@ -154,56 +154,61 @@ const Mocks = () => {
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-display font-bold mb-2">{userExam} Mock Tests</h1>
-          <p className="text-muted-foreground">
-            Practice with full-length {userExam} mock tests to improve your performance
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold mb-3">SAT Mock Tests</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Practice with full-length SAT mock tests to track your progress and prepare for test day
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Available Mocks */}
           <div className="lg:col-span-2">
-            <h2 className="text-xl font-display font-semibold mb-4">Available {userExam} Mock Tests</h2>
-            <div className="space-y-4 mb-8">
+            <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+              <PlayCircle className="h-6 w-6 text-primary" />
+              Available Mock Tests
+            </h2>
+            <div className="space-y-6 mb-8">
               {availableMocks.map((mock) => (
                 <Card 
                   key={mock.id} 
-                  className={`question-card cursor-pointer transition-all ${
-                    selectedMock === mock.id ? 'ring-2 ring-primary border-primary' : 'hover:shadow-academic-lg'
+                  className={`transition-all duration-300 hover:shadow-xl ${
+                    selectedMock === mock.id ? 'ring-2 ring-primary border-primary scale-[1.02]' : 'hover:scale-[1.01]'
                   }`}
                   onClick={() => setSelectedMock(selectedMock === mock.id ? null : mock.id)}
                 >
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
+                  <CardContent className="p-8">
+                    <div className="flex items-start justify-between mb-6">
                       <div className="flex-1">
-                        <h3 className="font-semibold text-lg mb-1">{mock.name}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">{mock.description}</p>
+                        <h3 className="text-xl font-bold mb-2">{mock.name}</h3>
+                        <p className="text-muted-foreground mb-4">{mock.description}</p>
                         
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted-foreground">
-                          <div className="flex items-center">
-                            <Clock className="h-4 w-4 mr-1" />
-                            {mock.duration}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                          <div className="flex items-center gap-2 p-3 bg-blue-500/10 rounded-lg">
+                            <Clock className="h-4 w-4 text-blue-600" />
+                            <span className="font-medium">{mock.duration}</span>
                           </div>
-                          <div>
-                            <span className="font-medium">{mock.questions}</span> questions
+                          <div className="p-3 bg-emerald-500/10 rounded-lg text-center">
+                            <div className="font-bold text-emerald-700">{mock.questions}</div>
+                            <div className="text-xs text-muted-foreground">questions</div>
                           </div>
-                          <div>
-                            <Badge variant="outline" className={`difficulty-${mock.difficulty.toLowerCase()}`}>
+                          <div className="p-3 bg-purple-500/10 rounded-lg text-center">
+                            <Badge variant="outline" className="text-purple-700 border-purple-300">
                               {mock.difficulty}
                             </Badge>
                           </div>
-                          <div>
-                            <span className="font-medium">{mock.sections.length}</span> sections
+                          <div className="p-3 bg-orange-500/10 rounded-lg text-center">
+                            <div className="font-bold text-orange-700">{mock.sections.length}</div>
+                            <div className="text-xs text-muted-foreground">sections</div>
                           </div>
                         </div>
 
                         {selectedMock === mock.id && (
-                          <div className="mt-4 p-4 bg-muted/30 rounded-lg animate-slide-up">
-                            <h4 className="font-medium mb-2">Sections included:</h4>
+                          <div className="mt-6 p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg border border-primary/20">
+                            <h4 className="font-semibold mb-3 text-primary">Sections included:</h4>
                             <div className="flex flex-wrap gap-2">
                               {mock.sections.map((section) => (
-                                <Badge key={section} variant="secondary" className="text-xs">
+                                <Badge key={section} variant="secondary" className="bg-primary/10 text-primary border-primary/30">
                                   {section}
                                 </Badge>
                               ))}
@@ -214,10 +219,10 @@ const Mocks = () => {
                       
                       <Button 
                         size={selectedMock === mock.id ? "lg" : "default"}
-                        className={selectedMock === mock.id ? "ml-4" : "ml-4"}
+                        className={`ml-6 ${selectedMock === mock.id ? 'bg-primary hover:bg-primary/90' : ''}`}
                       >
                         <PlayCircle className="h-4 w-4 mr-2" />
-                        {selectedMock === mock.id ? "Start Mock Test" : "Select"}
+                        {selectedMock === mock.id ? "Start Mock Test" : "Select Test"}
                       </Button>
                     </div>
                   </CardContent>
@@ -227,26 +232,29 @@ const Mocks = () => {
 
             {/* Instructions */}
             {selectedMock && (
-              <Card className="question-card animate-fade-in">
+              <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
                 <CardHeader>
-                  <CardTitle>Mock Test Instructions</CardTitle>
+                  <CardTitle className="text-primary flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5" />
+                    Mock Test Instructions
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3 text-sm">
-                    <div className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-success mt-0.5" />
+                  <div className="grid md:grid-cols-2 gap-4 text-sm">
+                    <div className="flex items-start space-x-3 p-3 bg-white/50 rounded-lg">
+                      <CheckCircle className="h-4 w-4 text-green-600 mt-0.5" />
                       <span>Ensure you have a quiet environment for the full duration</span>
                     </div>
-                    <div className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-success mt-0.5" />
+                    <div className="flex items-start space-x-3 p-3 bg-white/50 rounded-lg">
+                      <CheckCircle className="h-4 w-4 text-green-600 mt-0.5" />
                       <span>You cannot pause once started - plan accordingly</span>
                     </div>
-                    <div className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-success mt-0.5" />
+                    <div className="flex items-start space-x-3 p-3 bg-white/50 rounded-lg">
+                      <CheckCircle className="h-4 w-4 text-green-600 mt-0.5" />
                       <span>Review mode will be available after completion</span>
                     </div>
-                    <div className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-success mt-0.5" />
+                    <div className="flex items-start space-x-3 p-3 bg-white/50 rounded-lg">
+                      <CheckCircle className="h-4 w-4 text-green-600 mt-0.5" />
                       <span>Results will be added to your analytics automatically</span>
                     </div>
                   </div>
@@ -257,46 +265,64 @@ const Mocks = () => {
 
           {/* Completed Mocks Sidebar */}
           <div className="lg:col-span-1">
-            <h2 className="text-xl font-display font-semibold mb-4">Your {userExam} Results</h2>
+            <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+              <BarChart3 className="h-6 w-6 text-primary" />
+              Your Results
+            </h2>
             <div className="space-y-4">
               {completedMocks.map((mock) => (
-                <Card key={mock.id} className="question-card">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-base">{mock.name}</CardTitle>
-                    <CardDescription className="flex items-center text-xs">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      {new Date(mock.completedAt).toLocaleDateString()}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary">{mock.score}</div>
-                      <div className="text-sm text-muted-foreground">
-                        Best {userExam} Score ({mock.percentile}th percentile)
+                <Card key={mock.id} className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20 hover:shadow-lg transition-all">
+                  <CardContent className="p-6">
+                    <div className="text-center space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-emerald-700">{mock.name}</h3>
+                        <p className="text-xs text-muted-foreground flex items-center justify-center gap-1 mt-1">
+                          <Calendar className="h-3 w-3" />
+                          {new Date(mock.completedAt).toLocaleDateString()}
+                        </p>
                       </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      {mock.sections.map((section) => (
-                        <div key={section.name} className="flex items-center justify-between text-xs">
-                          <span className="truncate">{section.name}</span>
-                          <div className="flex items-center space-x-2">
-                            <span className="font-medium">{section.score}</span>
-                            <div className="w-12">
-                              <Progress value={section.percentile} className="h-1" />
+                      
+                      <div className="p-4 bg-emerald-500/20 rounded-lg">
+                        <div className="text-3xl font-bold text-emerald-700">{mock.score}</div>
+                        <div className="text-sm text-emerald-600 font-medium">
+                          {mock.percentile}th percentile
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        {mock.sections.map((section) => (
+                          <div key={section.name} className="flex items-center justify-between text-sm">
+                            <span className="truncate font-medium">{section.name}</span>
+                            <div className="flex items-center space-x-2">
+                              <span className="font-bold text-emerald-700">{section.score}</span>
+                              <div className="w-16">
+                                <Progress value={section.percentile} className="h-2" />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
 
-                    <Button variant="outline" size="sm" className="w-full">
-                      <Eye className="h-3 w-3 mr-2" />
-                      Review
-                    </Button>
+                      <Button variant="outline" size="sm" className="w-full">
+                        <Eye className="h-3 w-3 mr-2" />
+                        Review Results
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
+              
+              {completedMocks.length === 0 && (
+                <Card className="text-center p-8 border-dashed">
+                  <CardContent>
+                    <div className="text-muted-foreground">
+                      <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-sm">No completed mocks yet</p>
+                      <p className="text-xs mt-1">Complete your first mock test to see results here</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
         </div>

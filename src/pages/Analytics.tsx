@@ -89,14 +89,12 @@ const Analytics = () => {
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-display font-bold mb-2">Performance Analytics</h1>
-            <p className="text-muted-foreground">
-              Track your progress and identify areas for improvement
-            </p>
-          </div>
-          <div className="flex items-center space-x-4">
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold mb-3">Performance Analytics</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Track your SAT progress and identify areas for improvement with detailed insights
+          </p>
+          <div className="flex items-center justify-center space-x-4 mt-6">
             <Select defaultValue="30">
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="Time period" />
@@ -110,68 +108,68 @@ const Analytics = () => {
             </Select>
             <Button variant="outline">
               <Download className="h-4 w-4 mr-2" />
-              Export CSV
+              Export Report
             </Button>
           </div>
         </div>
 
         {/* Overview Stats */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="question-card">
+          <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20 hover:shadow-lg transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Overall Accuracy</CardTitle>
-              <Target className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
+              <Target className="h-4 w-4 text-emerald-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{overallStats.accuracy}%</div>
+              <div className="text-3xl font-bold text-emerald-700">{overallStats.accuracy}%</div>
               <p className="text-xs text-muted-foreground">
                 {overallStats.correctAnswers}/{overallStats.totalQuestions} correct
               </p>
-              <Progress value={overallStats.accuracy} className="mt-2" />
+              <Progress value={overallStats.accuracy} className="mt-3 h-2" />
             </CardContent>
           </Card>
 
-          <Card className="question-card">
+          <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20 hover:shadow-lg transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Average Time</CardTitle>
-              <Clock className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-blue-700">Average Time</CardTitle>
+              <Clock className="h-4 w-4 text-blue-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{overallStats.averageTime}s</div>
+              <div className="text-3xl font-bold text-blue-700">{overallStats.averageTime}s</div>
               <p className="text-xs text-muted-foreground">per question</p>
-              <div className="flex items-center space-x-1 mt-2">
-                <TrendingDown className="h-3 w-3 text-success" />
-                <span className="text-xs text-success">-3s from last week</span>
+              <div className="flex items-center space-x-1 mt-3">
+                <TrendingDown className="h-3 w-3 text-green-600" />
+                <span className="text-xs text-green-600 font-medium">-3s from last week</span>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="question-card">
+          <Card className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border-purple-500/20 hover:shadow-lg transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Study Days</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-purple-700">Study Days</CardTitle>
+              <Calendar className="h-4 w-4 text-purple-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{overallStats.studyDays}</div>
+              <div className="text-3xl font-bold text-purple-700">{overallStats.studyDays}</div>
               <p className="text-xs text-muted-foreground">total active days</p>
-              <div className="flex items-center space-x-1 mt-2">
-                <Activity className="h-3 w-3 text-primary" />
-                <span className="text-xs text-primary">{overallStats.streakDays} day streak</span>
+              <div className="flex items-center space-x-1 mt-3">
+                <Activity className="h-3 w-3 text-purple-600" />
+                <span className="text-xs text-purple-600 font-medium">{overallStats.streakDays} day streak</span>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="question-card">
+          <Card className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border-orange-500/20 hover:shadow-lg transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Questions Answered</CardTitle>
-              <BarChart3 className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-orange-700">Questions Answered</CardTitle>
+              <BarChart3 className="h-4 w-4 text-orange-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{overallStats.totalQuestions}</div>
+              <div className="text-3xl font-bold text-orange-700">{overallStats.totalQuestions}</div>
               <p className="text-xs text-muted-foreground">across all topics</p>
-              <div className="flex items-center space-x-1 mt-2">
-                <TrendingUp className="h-3 w-3 text-success" />
-                <span className="text-xs text-success">+15% this week</span>
+              <div className="flex items-center space-x-1 mt-3">
+                <TrendingUp className="h-3 w-3 text-green-600" />
+                <span className="text-xs text-green-600 font-medium">+15% this week</span>
               </div>
             </CardContent>
           </Card>
@@ -179,36 +177,38 @@ const Analytics = () => {
 
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
           {/* Topic Performance */}
-          <Card className="question-card">
+          <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-slate-200 hover:shadow-lg transition-all">
             <CardHeader>
-              <CardTitle className="flex items-center">
+              <CardTitle className="flex items-center text-slate-700">
                 <PieChart className="h-5 w-5 mr-2" />
-                Performance by Topic
+                SAT Section Performance
               </CardTitle>
-              <CardDescription>Your accuracy across different subject areas</CardDescription>
+              <CardDescription>Your accuracy across Reading & Writing and Math</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {topicPerformance.map((topic) => (
-                  <div key={topic.name} className="space-y-2">
+              <div className="space-y-6">
+                {topicPerformance.map((topic, index) => (
+                  <div key={topic.name} className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="font-medium text-sm">{topic.name}</span>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-sm font-bold">{topic.accuracy}%</span>
+                      <span className="font-semibold text-sm">{topic.name}</span>
+                      <div className="flex items-center space-x-3">
+                        <span className="text-lg font-bold">{topic.accuracy}%</span>
                         <div className="flex items-center space-x-1">
                           {topic.trend === 'up' ? 
-                            <TrendingUp className="h-3 w-3 text-success" /> :
-                            <TrendingDown className="h-3 w-3 text-error" />
+                            <TrendingUp className="h-4 w-4 text-green-600" /> :
+                            <TrendingDown className="h-4 w-4 text-red-600" />
                           }
-                          <span className={`text-xs ${topic.trend === 'up' ? 'text-success' : 'text-error'}`}>
+                          <span className={`text-sm font-medium ${topic.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
                             {topic.improvement}
                           </span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>{topic.correct}/{topic.questions} correct</span>
-                      <Progress value={topic.accuracy} className="w-24 h-1" />
+                    <div className="space-y-2">
+                      <Progress value={topic.accuracy} className="h-3" />
+                      <p className="text-xs text-muted-foreground text-center">
+                        {topic.correct}/{topic.questions} questions correct
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -217,32 +217,34 @@ const Analytics = () => {
           </Card>
 
           {/* Weekly Progress */}
-          <Card className="question-card">
+          <Card className="bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200 hover:shadow-lg transition-all">
             <CardHeader>
-              <CardTitle className="flex items-center">
+              <CardTitle className="flex items-center text-indigo-700">
                 <TrendingUp className="h-5 w-5 mr-2" />
                 Weekly Progress
               </CardTitle>
-              <CardDescription>Your improvement over time</CardDescription>
+              <CardDescription>Your improvement trajectory over time</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {weeklyProgress.map((week, index) => (
-                  <div key={week.week} className="space-y-2">
+                  <div key={week.week} className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="font-medium text-sm">{week.week}</span>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-sm font-bold">{week.accuracy}%</span>
+                      <span className="font-semibold text-sm">{week.week}</span>
+                      <div className="flex items-center space-x-3">
+                        <span className="text-lg font-bold">{week.accuracy}%</span>
                         {index > 0 && (
-                          <Badge variant="secondary" className="text-xs">
+                          <Badge variant="secondary" className="bg-green-100 text-green-700 border-green-300">
                             +{(week.accuracy - weeklyProgress[index - 1].accuracy).toFixed(1)}%
                           </Badge>
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>{week.questions} questions</span>
-                      <Progress value={week.accuracy} className="w-24 h-1" />
+                    <div className="space-y-2">
+                      <Progress value={week.accuracy} className="h-3" />
+                      <p className="text-xs text-muted-foreground text-center">
+                        {week.questions} questions practiced
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -252,25 +254,39 @@ const Analytics = () => {
         </div>
 
         {/* Difficulty Analysis */}
-        <Card className="question-card">
+        <Card className="bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 hover:shadow-lg transition-all">
           <CardHeader>
-            <CardTitle className="flex items-center">
+            <CardTitle className="flex items-center text-amber-700">
               <BarChart3 className="h-5 w-5 mr-2" />
-              Performance by Difficulty
+              Performance by Difficulty Level
             </CardTitle>
-            <CardDescription>How you perform across different difficulty levels</CardDescription>
+            <CardDescription>How you perform across easy, medium, and hard questions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-3 gap-6">
-              {difficultyBreakdown.map((level) => (
-                <div key={level.level} className="text-center space-y-3">
-                  <div className={`p-4 rounded-lg difficulty-${level.level.toLowerCase()}`}>
-                    <h3 className="font-semibold text-sm mb-1">{level.level}</h3>
-                    <div className="text-2xl font-bold">{level.accuracy}%</div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {difficultyBreakdown.map((level, index) => (
+                <div key={level.level} className="text-center space-y-4">
+                  <div className={`p-6 rounded-xl ${
+                    index === 0 ? 'bg-green-100 border-2 border-green-300' :
+                    index === 1 ? 'bg-yellow-100 border-2 border-yellow-300' :
+                    'bg-red-100 border-2 border-red-300'
+                  }`}>
+                    <h3 className={`font-semibold text-lg mb-2 ${
+                      index === 0 ? 'text-green-700' :
+                      index === 1 ? 'text-yellow-700' :
+                      'text-red-700'
+                    }`}>{level.level}</h3>
+                    <div className={`text-4xl font-bold ${
+                      index === 0 ? 'text-green-700' :
+                      index === 1 ? 'text-yellow-700' :
+                      'text-red-700'
+                    }`}>{level.accuracy}%</div>
                   </div>
-                  <div className="space-y-1 text-xs text-muted-foreground">
-                    <p>{level.correct}/{level.attempted} correct</p>
-                    <Progress value={level.accuracy} className="h-1" />
+                  <div className="space-y-3">
+                    <p className="text-sm text-muted-foreground font-medium">
+                      {level.correct}/{level.attempted} questions correct
+                    </p>
+                    <Progress value={level.accuracy} className="h-2" />
                   </div>
                 </div>
               ))}

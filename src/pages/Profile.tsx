@@ -41,9 +41,17 @@ const Profile = () => {
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Page Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold mb-3">Your Profile</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Manage your account settings, exam preferences, and study goals
+          </p>
+        </div>
+
         {/* Profile */}
-        <div>
-        <UserProfile />
+        <div className="max-w-4xl mx-auto">
+          <UserProfile />
         </div>
       </div>
     </div>
