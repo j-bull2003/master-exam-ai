@@ -435,19 +435,21 @@ const Index = () => {
               
               {/* Annual Plan - Best Value */}
               <div className="relative p-6 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-semibold">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-lg">
                     BEST VALUE
                   </span>
                 </div>
                 
-                <h3 className="text-xl font-bold mb-2">Annual</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$39.99</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$479.99 billed annually</span>
+                <div className="pt-4">
+                  <h3 className="text-xl font-bold mb-2">Annual</h3>
+                  <div className="mb-2">
+                    <span className="text-4xl font-black">$39.99</span>
+                    <span className="text-muted-foreground">/mo</span>
+                  </div>
+                  <div className="mb-4">
+                    <span className="text-sm text-muted-foreground">$479.99 billed annually</span>
+                  </div>
                 </div>
                 
                 <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
