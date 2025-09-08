@@ -76,121 +76,152 @@ const SATPrograms = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto text-center">
-            <div className="inline-flex items-center px-4 py-2 bg-slate-100 rounded-full text-sm font-medium text-slate-700 mb-8">
-              Premium SAT Preparation
+      <section className="pt-40 pb-32 relative overflow-hidden">
+        {/* Elegant background pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/5 via-transparent to-slate-900/5"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-amber-100/20 to-rose-100/20 rounded-full blur-3xl"></div>
+        
+        <div className="container mx-auto px-8 relative">
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-slate-900/10 to-slate-700/10 backdrop-blur-sm rounded-full text-sm font-medium text-slate-700 mb-12 border border-slate-200/50">
+              <div className="w-2 h-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mr-3 animate-pulse"></div>
+              Exclusive SAT Mastery Program
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight text-slate-900">
-              Elite SAT Program
+            
+            <h1 className="font-serif text-6xl md:text-8xl font-bold mb-8 leading-[0.9] text-slate-900 tracking-tight">
+              Elite SAT
+              <br />
+              <span className="bg-gradient-to-r from-slate-600 via-slate-800 to-slate-900 bg-clip-text text-transparent">
+                Coaching
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Achieve your target SAT score with our comprehensive 1:1 coaching program. 
-              Personalized instruction, guaranteed results, and expert guidance every step of the way.
+            
+            <p className="text-2xl md:text-3xl text-slate-600 mb-16 max-w-4xl mx-auto leading-relaxed font-light">
+              Transform your SAT performance with our 
+              <em className="font-serif text-slate-800"> bespoke </em>
+              1:1 coaching program. Where excellence meets personalization.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-8 justify-center mb-20">
               <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer">
-                <button className="px-8 py-4 bg-slate-900 text-white rounded-lg text-lg font-semibold hover:bg-slate-800 transition-colors shadow-lg">
-                  Schedule Consultation
+                <button className="group px-12 py-5 bg-slate-900 text-white rounded-xl text-lg font-semibold hover:bg-slate-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                  <span className="relative">Reserve Your Consultation</span>
                 </button>
               </a>
               <button 
-                className="px-8 py-4 border-2 border-slate-900 text-slate-900 rounded-lg text-lg font-semibold hover:bg-slate-900 hover:text-white transition-colors"
+                className="px-12 py-5 border-2 border-slate-300 text-slate-700 rounded-xl text-lg font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
                 onClick={scrollToSuccessStories}
               >
-                View Success Stories
+                Explore Success Stories
               </button>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 mb-2">500+</div>
-                <div className="text-sm text-slate-600">Students Coached</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 mb-2">1580</div>
-                <div className="text-sm text-slate-600">Average Score</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 mb-2">98%</div>
-                <div className="text-sm text-slate-600">Success Rate</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 mb-2">+340</div>
-                <div className="text-sm text-slate-600">Avg Improvement</div>
-              </div>
+            {/* Prestigious metrics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-4xl mx-auto">
+              {[
+                { number: "500+", label: "Elite Students Coached" },
+                { number: "1580", label: "Average Achievement" },
+                { number: "98%", label: "Success Rate" },
+                { number: "+340", label: "Average Improvement" }
+              ].map((metric, idx) => (
+                <div key={idx} className="text-center group">
+                  <div className="text-4xl font-bold text-slate-900 mb-3 font-serif group-hover:scale-110 transition-transform duration-300">{metric.number}</div>
+                  <div className="text-sm text-slate-600 font-medium tracking-wide uppercase">{metric.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* Program Section */}
-      <section className="py-20 bg-slate-50">
-        <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-                SAT Booster Program
+      <section className="py-32 relative">
+        <div className="container mx-auto px-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-20">
+              <h2 className="font-serif text-5xl md:text-6xl font-bold mb-8 text-slate-900 leading-tight">
+                The SAT Booster
+                <br />
+                <span className="text-slate-600">Experience</span>
               </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Our flagship 1:1 coaching program designed to maximize your SAT performance with personalized instruction and guaranteed results.
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed">
+                Our flagship program represents the pinnacle of personalized SAT preparation. 
+                Meticulously crafted for the discerning student who accepts nothing less than excellence.
               </p>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden max-w-2xl mx-auto">
-              <div className="relative">
-                <div className="absolute top-6 right-6 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  Limited Time: 50% Off
+            <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/50 overflow-hidden relative">
+              {/* Premium badge */}
+              <div className="absolute top-8 right-8 z-10">
+                <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg">
+                  Limited Availability
+                </div>
+              </div>
+              
+              {/* Elegant divider */}
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+              
+              <div className="p-16 text-center border-b border-slate-100/50">
+                <div className="w-24 h-24 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+                  <Target className="w-12 h-12 text-slate-700" />
                 </div>
                 
-                <div className="p-8 text-center border-b border-slate-100">
-                  <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Target className="w-10 h-10 text-slate-700" />
+                <h3 className="font-serif text-4xl font-bold mb-6 text-slate-900">{program.title}</h3>
+                <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+                  {program.description}
+                </p>
+                
+                <div className="flex items-center justify-center gap-6 mb-8">
+                  <div className="text-center">
+                    <span className="font-serif text-6xl font-bold text-slate-900">{program.price}</span>
+                    <div className="text-slate-500 mt-2">Investment</div>
                   </div>
-                  <h3 className="text-3xl font-bold mb-4 text-slate-900">{program.title}</h3>
-                  <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">{program.description}</p>
-                  
-                  <div className="flex items-center justify-center gap-4 mb-6">
-                    <span className="text-5xl font-bold text-slate-900">{program.price}</span>
-                    <div className="text-left">
-                      <div className="text-xl text-slate-400 line-through">{program.originalPrice}</div>
-                      <div className="text-sm text-red-600 font-semibold">Save $2,500</div>
+                  <div className="text-left">
+                    <div className="text-2xl text-slate-400 line-through font-light">{program.originalPrice}</div>
+                    <div className="text-sm text-emerald-700 font-semibold bg-emerald-50 px-3 py-1 rounded-full inline-block">
+                      Limited Time: 50% Savings
                     </div>
                   </div>
-                  <div className="text-slate-600 mb-4">{program.duration}</div>
-                  <div className="inline-block bg-green-50 text-green-700 px-6 py-3 rounded-full font-semibold border border-green-200">
-                    {program.guarantee}
-                  </div>
+                </div>
+                
+                <div className="text-slate-600 mb-6 font-medium">{program.duration} Intensive Program</div>
+                <div className="inline-block bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 px-8 py-4 rounded-2xl font-semibold border border-emerald-200/50 shadow-sm">
+                  {program.guarantee}
+                </div>
+              </div>
+
+              <div className="p-16">
+                <h4 className="font-serif text-2xl font-bold mb-12 text-center text-slate-900">
+                  Your Exclusive Benefits
+                </h4>
+                
+                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                  {program.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-start gap-6 group">
+                      <div className="w-6 h-6 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300">
+                        <CheckCircle className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="text-slate-700 text-lg font-medium leading-relaxed">{feature}</span>
+                    </div>
+                  ))}
                 </div>
 
-                <div className="p-8">
-                  <h4 className="text-xl font-bold mb-8 text-center text-slate-900">What's Included</h4>
-                  <div className="grid md:grid-cols-2 gap-6 mb-12">
-                    {program.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-4">
-                        <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                        <span className="text-slate-700 text-lg">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="text-center space-y-4">
-                    <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer" className="block">
-                      <button className="w-full max-w-md mx-auto bg-slate-900 text-white py-4 px-8 rounded-lg text-lg font-semibold hover:bg-slate-800 transition-colors shadow-lg">
-                        Schedule Free Strategy Session
-                      </button>
-                    </a>
-                    <p className="text-slate-600">
-                      Start with a complimentary 30-minute consultation to assess your needs and create your personalized SAT roadmap
-                    </p>
-                  </div>
+                <div className="text-center space-y-6">
+                  <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer" className="block">
+                    <button className="group w-full max-w-lg mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-6 px-10 rounded-2xl text-xl font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                      <span className="relative">Begin Your Transformation</span>
+                    </button>
+                  </a>
+                  <p className="text-slate-600 font-light max-w-md mx-auto">
+                    Start with a complimentary strategic consultation to design your personalized roadmap to SAT excellence
+                  </p>
                 </div>
               </div>
             </div>
@@ -199,46 +230,51 @@ const SATPrograms = () => {
       </section>
 
       {/* Success Stories Section */}
-      <section id="success-stories" className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-                Student Success Stories
+      <section id="success-stories" className="py-32 bg-gradient-to-br from-slate-50 to-white relative">
+        <div className="container mx-auto px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-20">
+              <h2 className="font-serif text-5xl md:text-6xl font-bold mb-8 text-slate-900">
+                Extraordinary
+                <br />
+                <span className="text-slate-600">Achievements</span>
               </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Real students, real results. See how our SAT program has helped students achieve their dream scores and gain admission to top universities.
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto font-light">
+                Witness the transformative journeys of our distinguished students who have 
+                achieved their dreams through our elite coaching program.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-10">
               {successStories.map((story, index) => (
-                <div key={index} className="bg-white border border-slate-200 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-center justify-between mb-6">
+                <div key={index} className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-10 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
+                  <div className="flex items-center justify-between mb-8">
                     <div>
-                      <h3 className="font-bold text-lg text-slate-900">{story.name}</h3>
-                      <p className="text-sm text-slate-600">{story.college}</p>
+                      <h3 className="font-serif font-bold text-xl text-slate-900 mb-1">{story.name}</h3>
+                      <p className="text-sm text-slate-600 font-medium">{story.college}</p>
                     </div>
-                    <span className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm font-medium">{story.program}</span>
+                    <span className="bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-semibold tracking-wide uppercase">
+                      {story.program}
+                    </span>
                   </div>
                   
-                  <div className="flex items-center justify-center gap-4 py-6 bg-slate-50 rounded-xl border border-slate-100 mb-6">
+                  <div className="flex items-center justify-center gap-6 py-8 bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-2xl border border-slate-100 mb-8 group-hover:from-slate-100 group-hover:to-slate-50 transition-all duration-500">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-slate-600">{story.before}</div>
-                      <div className="text-xs text-slate-500">Before</div>
+                      <div className="text-3xl font-bold text-slate-500 font-serif">{story.before}</div>
+                      <div className="text-xs text-slate-400 uppercase tracking-wide mt-1">Before</div>
                     </div>
-                    <ArrowRight className="w-6 h-6 text-slate-400" />
+                    <ArrowRight className="w-8 h-8 text-slate-400 group-hover:text-slate-600 transition-colors duration-300" />
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-slate-900">{story.after}</div>
-                      <div className="text-xs text-slate-500">After</div>
+                      <div className="text-3xl font-bold text-slate-900 font-serif">{story.after}</div>
+                      <div className="text-xs text-slate-400 uppercase tracking-wide mt-1">After</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-green-600">{story.improvement}</div>
-                      <div className="text-xs text-slate-500">Improvement</div>
+                      <div className="text-3xl font-bold text-emerald-700 font-serif">{story.improvement}</div>
+                      <div className="text-xs text-emerald-600 uppercase tracking-wide mt-1">Growth</div>
                     </div>
                   </div>
 
-                  <blockquote className="text-slate-700 italic leading-relaxed">
+                  <blockquote className="text-slate-700 italic leading-relaxed font-light text-lg">
                     "{story.quote}"
                   </blockquote>
                 </div>
@@ -248,43 +284,45 @@ const SATPrograms = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-slate-900">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Ready to Achieve Your Target SAT Score?
+      {/* Elegant CTA Section */}
+      <section className="py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05),transparent)]"></div>
+        <div className="container mx-auto px-8 relative">
+          <div className="max-w-5xl mx-auto text-center">
+            <h2 className="font-serif text-5xl md:text-6xl font-bold mb-8 text-white leading-tight">
+              Your Excellence
+              <br />
+              <span className="text-slate-300">Awaits</span>
             </h2>
-            <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto">
-              Schedule a free consultation to discuss your SAT goals and learn how our program can help you succeed.
+            <p className="text-2xl text-slate-300 mb-16 max-w-3xl mx-auto font-light leading-relaxed">
+              Reserve your place in our exclusive program and begin your journey toward SAT mastery.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-8 justify-center mb-16">
               <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer">
-                <button className="px-12 py-4 bg-white text-slate-900 rounded-lg text-lg font-semibold hover:bg-slate-100 transition-colors shadow-lg">
-                  Schedule Consultation
+                <button className="group px-16 py-6 bg-white text-slate-900 rounded-2xl text-xl font-semibold hover:bg-slate-100 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-1 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-100/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                  <span className="relative">Schedule Private Consultation</span>
                 </button>
               </a>
               <Link to="/pricing">
-                <button className="px-12 py-4 border-2 border-white text-white rounded-lg text-lg font-semibold hover:bg-white hover:text-slate-900 transition-colors">
-                  View Pricing
+                <button className="px-16 py-6 border-2 border-slate-400 text-slate-300 rounded-2xl text-xl font-semibold hover:border-white hover:text-white transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
+                  Investment Details
                 </button>
               </Link>
             </div>
 
-            <div className="flex items-center justify-center gap-8 text-slate-400">
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4" />
-                <span>Expert SAT Coaches</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Target className="w-4 h-4" />
-                <span>Score Guarantee</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
-                <span>Proven Results</span>
-              </div>
+            <div className="flex items-center justify-center gap-12 text-slate-400">
+              {[
+                { icon: Award, text: "Elite Coaching" },
+                { icon: Target, text: "Guaranteed Results" },
+                { icon: CheckCircle, text: "Proven Excellence" }
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-3 group hover:text-slate-300 transition-colors duration-300">
+                  <item.icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                  <span className="font-medium tracking-wide">{item.text}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
