@@ -57,23 +57,23 @@ const Index = () => {
   const features = [
     {
       icon: Brain,
-      title: "AI-Powered SAT Mastery",
-      description: "Smart algorithms analyze your SAT performance patterns and create personalized study paths for maximum score improvement."
+      title: "Expert-Crafted SAT Questions",
+      description: "Every question created by verified top SAT scorers and educators - never AI-generated. Authentic test prep from real experts."
     },
     {
       icon: Target,
-      title: "SAT Weakness Detection",
-      description: "Instantly identify which SAT topics need work with our comprehensive diagnostic that maps to real test sections."
+      title: "AI-Powered Weakness Detection",
+      description: "Smart algorithms analyze your performance to identify weak areas, while expert-crafted questions target your specific needs."
     },
     {
       icon: Zap,
-      title: "Real-Time SAT Explanations",
-      description: "Get expert explanations for every SAT question with step-by-step solutions and similar practice problems."
+      title: "Expert SAT Explanations",
+      description: "Detailed explanations written by top scorers with step-by-step solutions and strategies used by SAT masters."
     },
     {
       icon: Clock,
-      title: "Official SAT Timing",
-      description: "Practice with authentic SAT time constraints and pacing strategies to eliminate test day anxiety."
+      title: "Verified SAT Content",
+      description: "All questions reviewed by our team of verified high scorers and educators for accuracy and authenticity."
     }
   ];
 
