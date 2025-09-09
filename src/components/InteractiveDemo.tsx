@@ -35,12 +35,12 @@ interface Question {
 
 const demoQuestion: Question = {
   id: 1,
-  text: "If 3x + 5 = 17, what is the value of x?",
-  options: ["2", "4", "6", "8"],
+  text: "The equation (24x² + 25x - 47)/(ax - 2) = -8x - 3 - 53/(ax - 2) is true for all values of x ≠ 2/a, where a is a constant. What is the value of a?",
+  options: ["-16", "-3", "3", "16"],
   correct: 1,
-  explanation: "Solve for x: 3x + 5 = 17 → 3x = 12 → x = 4",
-  topic: "Algebra",
-  difficulty: "Easy"
+  explanation: "Multiply both sides by (ax - 2) to eliminate fractions: 24x² + 25x - 47 = (-8x - 3)(ax - 2) - 53. Using FOIL and comparing x² coefficients: 24 = -8a, so a = -3.",
+  topic: "Rational Equations",
+  difficulty: "Hard"
 };
 
 const aiInsights = [
@@ -57,54 +57,83 @@ const mathematicalElements = [
   { symbol: "√", delay: 3.2, x: 50, y: 40 },
   { symbol: "∞", delay: 4.0, x: 10, y: 50 },
   { symbol: "θ", delay: 4.8, x: 90, y: 35 },
-  { symbol: "λ", delay: 5.6, x: 60, y: 85 }
+  { symbol: "λ", delay: 5.6, x: 60, y: 85 },
+  { symbol: "α", delay: 6.4, x: 30, y: 25 },
+  { symbol: "β", delay: 7.2, x: 70, y: 60 },
+  { symbol: "γ", delay: 8.0, x: 45, y: 80 },
+  { symbol: "Ω", delay: 8.8, x: 80, y: 45 },
+  { symbol: "Φ", delay: 9.6, x: 20, y: 65 },
+  { symbol: "Ψ", delay: 10.4, x: 65, y: 30 },
+  { symbol: "±", delay: 11.2, x: 35, y: 55 },
+  { symbol: "≠", delay: 12.0, x: 55, y: 20 }
 ];
 
-// Sketched sphere animation component
+// Enhanced sketched sphere animation component with red theme
 const SketchedSphere = ({ delay = 0, x, y, size = 1 }: { delay?: number; x: number; y: number; size?: number }) => (
   <motion.div
     className="absolute pointer-events-none"
     style={{ left: `${x}%`, top: `${y}%` }}
     initial={{ opacity: 0, scale: 0 }}
     animate={{ 
-      opacity: [0, 0.4, 0.6, 0.3, 0.1],
-      scale: [0, size * 0.8, size * 1.2, size * 0.9, size * 1],
-      rotate: [0, 180, 360]
+      opacity: [0, 0.5, 0.7, 0.4, 0.2],
+      scale: [0, size * 0.8, size * 1.3, size * 0.9, size * 1.1],
+      rotate: [0, 180, 360],
+      x: [-5, 5, -5],
+      y: [-3, 3, -3]
     }}
     transition={{
-      duration: 8,
+      duration: 10,
       delay: delay,
       repeat: Infinity,
       ease: "easeInOut"
     }}
   >
-    <svg width={60 * size} height={60 * size} viewBox="0 0 60 60" className="text-primary/30">
+    <svg width={70 * size} height={70 * size} viewBox="0 0 70 70" className="text-red-500/40">
       <circle
-        cx="30"
-        cy="30"
-        r="25"
+        cx="35"
+        cy="35"
+        r="30"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
-        strokeDasharray="4,2"
+        strokeWidth="2.5"
+        strokeDasharray="5,3"
         className="animate-pulse"
       />
       <circle
-        cx="30"
-        cy="30"
-        r="15"
+        cx="35"
+        cy="35"
+        r="20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeDasharray="4,4"
+        className="opacity-70"
+      />
+      <circle
+        cx="35"
+        cy="35"
+        r="12"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.5"
-        strokeDasharray="3,3"
-        className="opacity-60"
+        strokeDasharray="2,2"
+        className="opacity-50"
       />
       <circle
-        cx="30"
-        cy="30"
-        r="8"
+        cx="35"
+        cy="35"
+        r="6"
         fill="currentColor"
-        className="opacity-40"
+        className="opacity-60 animate-pulse"
+      />
+      {/* Mathematical sketched lines */}
+      <path
+        d="M15,15 Q35,25 55,15 Q45,35 55,55 Q35,45 15,55 Q25,35 15,15"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeDasharray="3,2"
+        className="opacity-30"
       />
     </svg>
   </motion.div>
@@ -164,12 +193,15 @@ export const InteractiveDemo = () => {
         <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-gradient-to-l from-blue-500/15 to-emerald-500/15 rounded-full blur-3xl" />
         <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-gradient-to-t from-orange-500/10 to-pink-500/10 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2" />
         
-        {/* Sketched Spheres */}
+        {/* Sketched Spheres - Enhanced with red theme */}
         <SketchedSphere delay={0} x={20} y={15} size={0.8} />
         <SketchedSphere delay={1.2} x={80} y={25} size={1.2} />
         <SketchedSphere delay={2.4} x={15} y={70} size={0.9} />
         <SketchedSphere delay={3.6} x={85} y={80} size={1.1} />
         <SketchedSphere delay={4.8} x={60} y={60} size={0.7} />
+        <SketchedSphere delay={6.0} x={40} y={35} size={1.0} />
+        <SketchedSphere delay={7.2} x={75} y={55} size={0.6} />
+        <SketchedSphere delay={8.4} x={25} y={90} size={0.9} />
         
         {/* Floating Mathematical Symbols with enhanced animation */}
         {mathematicalElements.map((element, index) => (
@@ -433,28 +465,47 @@ export const InteractiveDemo = () => {
                 </AnimatePresence>
               </Card>
 
-              {/* Real Dashboard Preview */}
+              {/* Real Dashboard Preview - Enhanced Emphasis */}
               {showDashboard && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
                 >
-                  <Card className="p-6 border border-border/50 bg-background/95 backdrop-blur-sm">
-                    <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-                      <BarChart3 className="w-5 h-5 text-primary" />
-                      Your Actual Dashboard
-                    </h3>
-                    <div className="relative overflow-hidden rounded-lg border border-border/50">
+                  <Card className="p-6 border-2 border-primary/40 bg-gradient-to-br from-background via-primary/5 to-background backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-500">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-bold text-foreground text-lg flex items-center gap-2">
+                        <BarChart3 className="w-6 h-6 text-primary" />
+                        Your Real Dashboard
+                      </h3>
+                      <Badge variant="outline" className="border-primary text-primary font-semibold">
+                        Live Platform
+                      </Badge>
+                    </div>
+                    <motion.div 
+                      className="relative overflow-hidden rounded-lg border-2 border-primary/30 shadow-lg"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 400 }}
+                    >
                       <img
                         src={realDashboard}
-                        alt="Your actual dashboard"
-                        className="w-full h-48 object-cover object-top"
+                        alt="Your actual dashboard showing real analytics and performance data"
+                        className="w-full h-56 object-cover object-top"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
-                      <div className="absolute bottom-3 left-3 text-white">
-                        <p className="text-sm font-medium">Live data from your platform</p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute top-3 right-3">
+                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                       </div>
+                      <div className="absolute bottom-3 left-3 text-white">
+                        <p className="text-sm font-bold bg-black/50 px-2 py-1 rounded">
+                          🔴 Live Analytics • Real Student Data
+                        </p>
+                      </div>
+                    </motion.div>
+                    <div className="mt-3 text-center">
+                      <p className="text-sm text-muted-foreground">
+                        This is <span className="font-semibold text-primary">your actual dashboard</span> - not a demo!
+                      </p>
                     </div>
                   </Card>
                 </motion.div>
