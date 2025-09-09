@@ -246,9 +246,9 @@ const Diagnostic = () => {
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
 
-        {/* Compact Floating Header */}
-        <div className="fixed top-3 left-3 right-3 z-50">
-          <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-2xl shadow-slate-900/10">
+        {/* Compact Floating Header - Sticky at top of questions area */}
+        <div className="sticky top-0 z-50 px-3 pt-3 pb-2 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
+          <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-2xl shadow-slate-900/10">
             <div className="px-4 py-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -302,8 +302,8 @@ const Diagnostic = () => {
           </div>
         </div>
 
-        {/* Main Content - Increased top padding to avoid header overlap */}
-        <div className="pt-28 pb-6 px-3">
+        {/* Main Content - Proper scrollable area */}
+        <div className="px-3 pb-6">
           <div className="max-w-5xl mx-auto">
             
             {/* Question Card */}
