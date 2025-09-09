@@ -20,7 +20,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 
-// Import demo images
+// Import demo images - using placeholder for now, will be replaced with real screenshots
 import demoDashboard from "@/assets/demo-dashboard.jpg";
 import demoAnalytics from "@/assets/demo-analytics.jpg";
 import demoPractice from "@/assets/demo-practice.jpg";
@@ -77,13 +77,65 @@ const demoSteps: DemoStep[] = [
 ];
 
 const mathematicalElements = [
-  { symbol: "∑", delay: 0 },
-  { symbol: "∫", delay: 0.5 },
-  { symbol: "∆", delay: 1 },
-  { symbol: "π", delay: 1.5 },
-  { symbol: "√", delay: 2 },
-  { symbol: "∞", delay: 2.5 }
+  { symbol: "∑", delay: 0, x: 15, y: 20 },
+  { symbol: "∫", delay: 0.8, x: 75, y: 15 },
+  { symbol: "∆", delay: 1.6, x: 25, y: 70 },
+  { symbol: "π", delay: 2.4, x: 85, y: 75 },
+  { symbol: "√", delay: 3.2, x: 50, y: 40 },
+  { symbol: "∞", delay: 4.0, x: 10, y: 50 },
+  { symbol: "θ", delay: 4.8, x: 90, y: 35 },
+  { symbol: "λ", delay: 5.6, x: 60, y: 85 }
 ];
+
+// Sketched sphere animation component
+const SketchedSphere = ({ delay = 0, x, y, size = 1 }: { delay?: number; x: number; y: number; size?: number }) => (
+  <motion.div
+    className="absolute pointer-events-none"
+    style={{ left: `${x}%`, top: `${y}%` }}
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{ 
+      opacity: [0, 0.4, 0.6, 0.3, 0.1],
+      scale: [0, size * 0.8, size * 1.2, size * 0.9, size * 1],
+      rotate: [0, 180, 360]
+    }}
+    transition={{
+      duration: 8,
+      delay: delay,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  >
+    <svg width={60 * size} height={60 * size} viewBox="0 0 60 60" className="text-primary/30">
+      <circle
+        cx="30"
+        cy="30"
+        r="25"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeDasharray="4,2"
+        className="animate-pulse"
+      />
+      <circle
+        cx="30"
+        cy="30"
+        r="15"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeDasharray="3,3"
+        className="opacity-60"
+      />
+      <circle
+        cx="30"
+        cy="30"
+        r="8"
+        fill="currentColor"
+        className="opacity-40"
+      />
+    </svg>
+  </motion.div>
+);
 
 export const InteractiveDemo = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -132,27 +184,40 @@ export const InteractiveDemo = () => {
 
   return (
     <section className="py-20 bg-gradient-to-br from-background via-primary/5 to-background relative overflow-hidden">
-      {/* Mathematical Background Elements */}
+      {/* Enhanced Mathematical Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl" />
+        {/* Gradient Blobs */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/15 to-purple-500/15 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-gradient-to-l from-blue-500/15 to-emerald-500/15 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-gradient-to-t from-orange-500/10 to-pink-500/10 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2" />
         
-        {/* Floating Mathematical Symbols */}
+        {/* Sketched Spheres */}
+        <SketchedSphere delay={0} x={20} y={15} size={0.8} />
+        <SketchedSphere delay={1.2} x={80} y={25} size={1.2} />
+        <SketchedSphere delay={2.4} x={15} y={70} size={0.9} />
+        <SketchedSphere delay={3.6} x={85} y={80} size={1.1} />
+        <SketchedSphere delay={4.8} x={60} y={60} size={0.7} />
+        
+        {/* Floating Mathematical Symbols with enhanced animation */}
         {mathematicalElements.map((element, index) => (
           <motion.div
             key={index}
-            className="absolute text-primary/20 text-6xl font-bold"
+            className="absolute text-primary/25 font-bold select-none"
             style={{
-              left: `${20 + (index * 15)}%`,
-              top: `${10 + (index % 2) * 70}%`,
+              left: `${element.x}%`,
+              top: `${element.y}%`,
+              fontSize: `${3 + (index % 3)}rem`,
+              fontFamily: 'serif'
             }}
             animate={{
-              y: [-20, 20, -20],
+              y: [-30, 30, -30],
+              x: [-10, 10, -10],
               rotate: [0, 360],
-              opacity: [0.1, 0.3, 0.1]
+              opacity: [0.1, 0.4, 0.2, 0.6, 0.1],
+              scale: [0.8, 1.2, 0.9, 1.1, 1]
             }}
             transition={{
-              duration: 8,
+              duration: 12 + (index * 2),
               delay: element.delay,
               repeat: Infinity,
               ease: "easeInOut"
@@ -161,6 +226,35 @@ export const InteractiveDemo = () => {
             {element.symbol}
           </motion.div>
         ))}
+        
+        {/* Particle Lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="currentColor" stopOpacity="0.1" />
+              <stop offset="50%" stopColor="currentColor" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="currentColor" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+          {[...Array(6)].map((_, i) => (
+            <motion.path
+              key={i}
+              d={`M${i * 200},0 Q${(i + 1) * 150},${200 + i * 100} ${(i + 2) * 200},400`}
+              stroke="url(#lineGradient)"
+              strokeWidth="2"
+              fill="none"
+              className="text-primary"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.3 }}
+              transition={{
+                duration: 3,
+                delay: i * 0.5,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+            />
+          ))}
+        </svg>
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
@@ -171,15 +265,30 @@ export const InteractiveDemo = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-foreground">See Our </span>
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+          >
+            <span className="text-foreground">Experience Our </span>
+            <motion.span 
+              className="bg-gradient-to-r from-primary via-purple-600 to-blue-600 bg-clip-text text-transparent"
+              animate={{ backgroundPosition: ["0%", "100%", "0%"] }}
+              transition={{ duration: 8, repeat: Infinity }}
+            >
               AI Platform
-            </span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Experience how our AI learns from thousands of practice sessions to create personalized learning experiences
-          </p>
+            </motion.span>
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Discover how our intelligent algorithms analyze thousands of learning patterns to create your 
+            <span className="text-primary font-semibold"> personalized study experience</span>
+          </motion.p>
         </motion.div>
 
         <div className="max-w-6xl mx-auto">
@@ -192,35 +301,44 @@ export const InteractiveDemo = () => {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <Card className="p-8 border-2 border-primary/20 bg-background/95 backdrop-blur-sm shadow-2xl">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <currentDemo.icon className="w-5 h-5 text-primary" />
+              <Card className="p-8 border-2 border-primary/20 bg-background/80 backdrop-blur-xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:border-primary/30 hover:bg-background/90 hover:scale-[1.02] relative overflow-hidden">
+                {/* Card background pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5 pointer-events-none" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-purple-600" />
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <motion.div 
+                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center border border-primary/30"
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <currentDemo.icon className="w-6 h-6 text-primary" />
+                      </motion.div>
+                      <div>
+                        <h3 className="font-semibold text-foreground">{currentDemo.title}</h3>
+                        <p className="text-sm text-muted-foreground">Interactive Demo</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground">{currentDemo.title}</h3>
-                      <p className="text-sm text-muted-foreground">Interactive Demo</p>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={togglePlayback}
+                        className="border-primary/30"
+                      >
+                        {isPlaying ? (
+                          <Pause className="w-4 h-4" />
+                        ) : (
+                          <Play className="w-4 h-4" />
+                        )}
+                      </Button>
+                      <Badge variant="outline" className="border-primary/30 text-primary">
+                        Live Demo
+                      </Badge>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={togglePlayback}
-                      className="border-primary/30"
-                    >
-                      {isPlaying ? (
-                        <Pause className="w-4 h-4" />
-                      ) : (
-                        <Play className="w-4 h-4" />
-                      )}
-                    </Button>
-                    <Badge variant="outline" className="border-primary/30 text-primary">
-                      Live Demo
-                    </Badge>
-                  </div>
-                </div>
 
                 {/* Progress Bar */}
                 <div className="mb-6">
@@ -291,6 +409,7 @@ export const InteractiveDemo = () => {
                     ))}
                   </div>
                 </div>
+              </div>
               </Card>
             </motion.div>
 
