@@ -344,17 +344,17 @@ const Index = () => {
       </section>
 
       {/* Expert-Crafted Content Section */}
-      <section className="py-16 bg-background/50 relative">
+      <section className="py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 relative">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
               Questions built by a team of 
-              <span className="text-muted-foreground"> educators, tutors, </span>
+              <span className="bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent"> educators, tutors, </span>
               and 
-              <span className="text-muted-foreground"> test-prep experts.</span>
+              <span className="bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent"> test-prep experts.</span>
             </h2>
             
-            <div className="bg-card border border-border/50 rounded-2xl p-8 mb-8 shadow-lg">
+            <div className="glass border border-primary/20 rounded-2xl p-8 mb-8 shadow-lg hover:shadow-primary/20 transition-all duration-300 card-layered">
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 Our team has been working with students since 2017, and we know AI is the next step in education. 
                 We believe that combining our quality education with cutting-edge AI tools allows us to elevate 
@@ -367,7 +367,7 @@ const Index = () => {
                 questions for multiple standardized tests.
               </p>
               
-              <div className="bg-foreground text-background p-6 rounded-xl">
+              <div className="bg-gradient-to-r from-primary to-primary-variant text-white p-6 rounded-xl shadow-lg card-layered">
                 <p className="text-lg font-medium">
                   All questions, answers, hints, and explanations are reviewed by our 
                   Curriculum Team for accuracy, difficulty, and structure.
