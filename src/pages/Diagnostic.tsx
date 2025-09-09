@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Clock, CheckCircle, AlertCircle, ArrowRight, Brain, Star, Target, Trophy, BookOpen, Calculator, Menu } from "lucide-react";
+import { Clock, CheckCircle, AlertCircle, ArrowRight, Brain, Star, Target, Trophy, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Diagnostic = () => {
@@ -14,8 +13,6 @@ const Diagnostic = () => {
   const [timeRemaining, setTimeRemaining] = useState(30 * 60); // 30 minutes
   const [answers, setAnswers] = useState<string[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
-  const [calculatorInput, setCalculatorInput] = useState<string>("");
-  const [calculatorResult, setCalculatorResult] = useState<string>("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -68,23 +65,6 @@ const Diagnostic = () => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
-
-  // Calculator functions
-  const handleCalculatorInput = (value: string) => {
-    if (value === 'C') {
-      setCalculatorInput("");
-      setCalculatorResult("");
-    } else if (value === '=') {
-      try {
-        const result = eval(calculatorInput);
-        setCalculatorResult(result.toString());
-      } catch (error) {
-        setCalculatorResult("Error");
-      }
-    } else {
-      setCalculatorInput(prev => prev + value);
-    }
   };
 
   const startDiagnostic = () => {
@@ -294,47 +274,6 @@ const Diagnostic = () => {
                 </div>
                 
                 <div className="flex items-center gap-3">
-                  {/* Calculator Button */}
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" size="sm" className="h-8 px-3 bg-gradient-to-r from-white/80 to-slate-50/80 hover:from-white hover:to-slate-50 border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                        <Calculator className="h-3 w-3 mr-1.5" />
-                        <span className="text-xs">Calc</span>
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-sm">
-                      <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2 text-lg">
-                          <Calculator className="h-5 w-5 text-blue-500" />
-                          Scientific Calculator
-                        </DialogTitle>
-                      </DialogHeader>
-                      <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-700">
-                        <div className="mb-4 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 text-right font-mono shadow-inner">
-                          <div className="text-sm text-slate-500 dark:text-slate-400 min-h-[20px]">{calculatorInput || "0"}</div>
-                          <div className="text-xl font-bold text-slate-900 dark:text-slate-100 min-h-[28px]">{calculatorResult || ""}</div>
-                        </div>
-                        <div className="grid grid-cols-4 gap-1.5">
-                          {['C', '/', '*', '←', '7', '8', '9', '-', '4', '5', '6', '+', '1', '2', '3', '=', '0', '.', '(', ')'].map((btn) => (
-                            <Button
-                              key={btn}
-                              variant={btn === '=' ? "default" : "outline"}
-                              size="sm"
-                              className={`h-10 text-sm font-semibold transition-all duration-200 hover:scale-105 ${
-                                btn === '=' 
-                                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 shadow-lg' 
-                                  : 'bg-white/80 hover:bg-white border-slate-200 hover:border-slate-300 shadow-sm'
-                              }`}
-                              onClick={() => handleCalculatorInput(btn)}
-                            >
-                              {btn}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                  
                   {/* Timer */}
                   <div className="flex items-center gap-2 bg-gradient-to-r from-orange-100 via-red-100 to-pink-100 dark:from-orange-900/30 dark:via-red-900/30 dark:to-pink-900/30 px-3 py-1.5 rounded-xl border border-orange-200/50 dark:border-orange-700/50 shadow-lg">
                     <Clock className="h-3 w-3 text-orange-600 dark:text-orange-400 animate-pulse" />
@@ -363,8 +302,8 @@ const Diagnostic = () => {
           </div>
         </div>
 
-        {/* Main Content - More Compact */}
-        <div className="pt-24 pb-6 px-3">
+        {/* Main Content - Increased top padding to avoid header overlap */}
+        <div className="pt-28 pb-6 px-3">
           <div className="max-w-5xl mx-auto">
             
             {/* Question Card */}
