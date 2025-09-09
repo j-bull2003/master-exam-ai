@@ -226,9 +226,8 @@ const Index = () => {
       <section className="py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="text-foreground">Proven</span>{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">SAT Success</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+              Proven SAT Success
             </h2>
             <p className="text-muted-foreground">Join thousands of students who've achieved their dream SAT scores</p>
           </div>
@@ -271,9 +270,8 @@ const Index = () => {
       <section className="py-16 bg-background">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="text-foreground">Why Students Choose</span>{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">UniHack for SAT Prep</span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              Why Students Choose UniHack for SAT Prep
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
