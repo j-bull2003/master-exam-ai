@@ -239,162 +239,107 @@ const Diagnostic = () => {
     const progress = ((currentQuestion + 1) / diagnosticQuestions.length) * 100;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-        {/* Test Header */}
-        <div className="border-b border-border/50 bg-background/95 backdrop-blur-xl sticky top-0 z-10 shadow-sm">
-          <div className="container mx-auto px-6 py-5">
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <div className="border-b border-border bg-background sticky top-0 z-10">
+          <div className="container mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <h1 className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                  Diagnostic Assessment
-                </h1>
-                <div className="flex items-center gap-2">
-                  <Badge variant="secondary" className="text-xs">
-                    Question {currentQuestion + 1} of {diagnosticQuestions.length}
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    {question.section}
-                  </Badge>
-                </div>
+              <div>
+                <h1 className="text-lg font-semibold text-foreground">SAT Diagnostic: {question.section}</h1>
+                <p className="text-sm text-muted-foreground">Question {currentQuestion + 1} of {diagnosticQuestions.length}</p>
               </div>
-              <div className="flex items-center space-x-6">
-                <div className="flex items-center space-x-3 bg-card/50 backdrop-blur-sm px-4 py-2 rounded-full border border-border/50">
-                  <Clock className="h-4 w-4 text-primary" />
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 bg-muted/30 px-3 py-1.5 rounded-lg">
+                  <Clock className="h-4 w-4 text-muted-foreground" />
                   <span className="font-mono text-sm font-medium">{formatTime(timeRemaining)}</span>
                 </div>
               </div>
             </div>
-            <div className="mt-4">
-              <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
-                <span>Progress</span>
-                <span>{Math.round(progress)}% Complete</span>
-              </div>
-              <Progress value={progress} className="h-2 bg-muted/50" />
+            <div className="mt-3">
+              <Progress value={progress} className="h-1" />
             </div>
           </div>
         </div>
 
         {/* Question Content */}
-        <div className="container mx-auto px-6 py-8">
-          <div className="max-w-5xl mx-auto">
-            <Card className="border-0 shadow-xl bg-background/80 backdrop-blur-xl animate-fade-in">
-              <CardHeader className="pb-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center">
-                      <span className="text-primary-foreground font-bold text-sm">
-                        {currentQuestion + 1}
-                      </span>
+        <div className="container mx-auto px-6 py-12">
+          <div className="max-w-4xl mx-auto">
+            
+            {/* Question Text */}
+            <div className="mb-12">
+              <div className="prose prose-lg max-w-none">
+                <p className="text-foreground leading-relaxed mb-6 text-lg">{question.stem}</p>
+                <p className="font-semibold text-foreground text-xl leading-relaxed">{question.question}</p>
+              </div>
+            </div>
+
+            {/* Answer Choices */}
+            <div className="space-y-4 mb-12">
+              {question.choices.map((choice, index) => {
+                const optionLetter = String.fromCharCode(65 + index);
+                const isSelected = selectedAnswer === optionLetter;
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    className={`w-full p-6 text-left rounded-xl border-2 transition-all duration-200 ${
+                      isSelected
+                        ? 'border-primary bg-primary/5'
+                        : 'border-border hover:border-primary/30 hover:bg-muted/30'
+                    }`}
+                    onClick={() => handleAnswerSelect(optionLetter)}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-semibold flex-shrink-0 ${
+                        isSelected 
+                          ? 'border-primary bg-primary text-primary-foreground' 
+                          : 'border-muted-foreground/40 bg-background text-muted-foreground'
+                      }`}>
+                        {optionLetter}
+                      </div>
+                      <p className="text-base leading-relaxed pt-1">{choice}</p>
                     </div>
-                    <CardTitle className="text-2xl font-bold">{question.section}</CardTitle>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-primary">
-                      {currentQuestion + 1}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      of {diagnosticQuestions.length}
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Navigation */}
+            <div className="flex items-center justify-center gap-4">
+              {currentQuestion > 0 && (
+                <Button 
+                  variant="outline" 
+                  onClick={handlePreviousQuestion}
+                  className="px-8"
+                >
+                  Previous Question
+                </Button>
+              )}
               
-              <CardContent className="space-y-8">
-                <div className="bg-gradient-to-r from-muted/30 via-muted/10 to-muted/30 p-6 rounded-xl border border-border/30">
-                  <div className="prose prose-lg max-w-none">
-                    <p className="text-foreground leading-relaxed mb-4">{question.stem}</p>
-                    <p className="font-semibold text-foreground text-lg leading-relaxed">{question.question}</p>
-                  </div>
-                </div>
+              <Button 
+                onClick={handleNextQuestion}
+                disabled={!selectedAnswer}
+                className="px-8 bg-primary hover:bg-primary/90"
+              >
+                {currentQuestion === diagnosticQuestions.length - 1 ? 'Submit Test' : 'Next Question'}
+              </Button>
+            </div>
 
-                <div className="space-y-4">
-                  <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                    Select your answer:
-                  </h3>
-                  {question.choices.map((choice, index) => {
-                    const optionLetter = String.fromCharCode(65 + index);
-                    const isSelected = selectedAnswer === optionLetter;
-                    return (
-                      <button
-                        key={index}
-                        type="button"
-                        role="radio"
-                        aria-checked={isSelected}
-                        tabIndex={0}
-                        className={`group w-full p-5 text-left rounded-xl border-2 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/30 relative overflow-hidden ${
-                          isSelected
-                            ? 'border-primary bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 shadow-lg scale-[1.02] shadow-primary/20'
-                            : 'border-border/60 hover:border-primary/40 hover:bg-gradient-to-r hover:from-muted/30 hover:to-muted/10 hover:scale-[1.01] hover:shadow-md'
-                        }`}
-                        onClick={() => handleAnswerSelect(optionLetter)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            handleAnswerSelect(optionLetter);
-                          }
-                        }}
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="flex items-start space-x-4 relative">
-                          <div className={`w-8 h-8 border-2 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                            isSelected 
-                              ? 'border-primary bg-primary text-primary-foreground shadow-md shadow-primary/30' 
-                              : 'border-border/60 bg-background group-hover:border-primary/60 group-hover:scale-110'
-                          }`}>
-                            {isSelected ? (
-                              <CheckCircle className="w-4 h-4" />
-                            ) : (
-                              <span className="text-muted-foreground group-hover:text-primary transition-colors">
-                                {optionLetter}
-                              </span>
-                            )}
-                          </div>
-                          <p className="flex-1 text-base md:text-lg leading-relaxed group-hover:text-foreground transition-colors">
-                            {choice}
-                          </p>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="flex justify-between items-center pt-8 border-t border-border/30">
-                  <Button 
-                    variant="outline" 
-                    disabled={currentQuestion === 0}
-                    onClick={handlePreviousQuestion}
-                    className="h-11 px-6 hover:scale-105 transition-all duration-200"
-                  >
-                    <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
-                    Previous
-                  </Button>
-                  
-                  <div className="text-center">
-                    <div className="text-sm text-muted-foreground">
-                      {selectedAnswer ? 'Answer selected' : 'Select an answer to continue'}
-                    </div>
-                  </div>
-                  
-                  <Button 
-                    onClick={handleNextQuestion}
-                    disabled={!selectedAnswer}
-                    className="h-11 px-6 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 group"
-                  >
-                    {currentQuestion === diagnosticQuestions.length - 1 ? (
-                      <>
-                        <Trophy className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform" />
-                        Finish Assessment
-                      </>
-                    ) : (
-                      <>
-                        Next Question
-                        <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Question Navigation Dots */}
+            <div className="flex justify-center gap-2 mt-8">
+              {diagnosticQuestions.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    index === currentQuestion
+                      ? 'bg-primary'
+                      : index < currentQuestion || answers[index]
+                      ? 'bg-primary/40'
+                      : 'bg-muted-foreground/20'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
