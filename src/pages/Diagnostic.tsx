@@ -438,106 +438,119 @@ const Diagnostic = () => {
 
   // Results step
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full">
-        <Card className="border-0 shadow-2xl bg-background/80 backdrop-blur-xl animate-fade-in">
-          <CardHeader className="text-center pb-8">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-transparent to-green-500/20 rounded-full blur-3xl"></div>
-              <div className="relative bg-gradient-to-br from-green-500 to-green-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse shadow-lg shadow-green-500/30">
-                <Trophy className="h-10 w-10 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 flex items-center justify-center p-3">
+      {/* Animated Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-emerald-400/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/3 w-72 h-72 bg-violet-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="max-w-4xl w-full relative">
+        <Card className="border-0 shadow-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-3xl overflow-hidden">
+          {/* Compact Header */}
+          <CardHeader className="text-center pb-4 relative">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-blue-500 to-violet-500"></div>
+            
+            <div className="relative mt-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 via-blue-500 to-violet-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-emerald-500/30 animate-pulse">
+                <Trophy className="h-8 w-8 text-white" />
               </div>
             </div>
-            <CardTitle className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent mb-4">
+            
+            <CardTitle className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-600 via-blue-600 to-violet-600 bg-clip-text text-transparent mb-2">
               Assessment Complete!
             </CardTitle>
-            <CardDescription className="text-xl text-muted-foreground">
-              Your personalized SAT roadmap has been generated based on your performance
+            <CardDescription className="text-sm text-slate-600 dark:text-slate-400">
+              Your personalized SAT roadmap is ready
             </CardDescription>
           </CardHeader>
           
-          <CardContent className="space-y-8">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-500/10 to-green-600/20 p-6 border border-green-500/20">
-                <div className="absolute top-2 right-2 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-green-600 mb-2">
-                    {Math.round((2/3) * 100)}%
-                  </div>
-                  <p className="text-sm font-semibold text-green-700">Overall Score</p>
-                  <p className="text-xs text-muted-foreground mt-1">Above Average Performance</p>
-                </div>
+          <CardContent className="px-6 pb-6 space-y-6">
+            {/* Compact Score Overview */}
+            <div className="grid grid-cols-3 gap-4">
+              <div className="relative rounded-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/20 p-4 border border-emerald-500/20 text-center group hover:scale-105 transition-all duration-300">
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                <div className="text-2xl font-bold text-emerald-600 mb-1">67%</div>
+                <p className="text-xs font-medium text-emerald-700">Overall Score</p>
               </div>
               
-              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/20 p-6 border border-blue-500/20">
-                <div className="absolute top-2 right-2 w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-blue-600 mb-2">
-                    Intermediate
+              <div className="relative rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/20 p-4 border border-blue-500/20 text-center group hover:scale-105 transition-all duration-300">
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                <div className="text-2xl font-bold text-blue-600 mb-1">B+</div>
+                <p className="text-xs font-medium text-blue-700">Grade Level</p>
+              </div>
+
+              <div className="relative rounded-2xl bg-gradient-to-br from-violet-500/10 to-violet-600/20 p-4 border border-violet-500/20 text-center group hover:scale-105 transition-all duration-300">
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-violet-500 rounded-full animate-pulse"></div>
+                <div className="text-2xl font-bold text-violet-600 mb-1">1420</div>
+                <p className="text-xs font-medium text-violet-700">Est. SAT</p>
+              </div>
+            </div>
+
+            {/* Performance Breakdown */}
+            <div className="space-y-3">
+              <h3 className="text-lg font-bold text-center bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent">
+                Subject Performance
+              </h3>
+              
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 group hover:shadow-lg transition-all duration-300">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center">
+                      <CheckCircle className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="font-medium text-sm text-emerald-900 dark:text-emerald-100">Reading & Writing</span>
                   </div>
-                  <p className="text-sm font-semibold text-blue-700">Current Level</p>
-                  <p className="text-xs text-muted-foreground mt-1">Ready for Advanced Practice</p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-16 h-2 bg-emerald-200 rounded-full overflow-hidden">
+                      <div className="w-4/5 h-full bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full"></div>
+                    </div>
+                    <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white text-xs px-2 py-0.5">Strong</Badge>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-orange-500/10 to-orange-600/5 border border-orange-500/20 group hover:shadow-lg transition-all duration-300">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center">
+                      <Target className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="font-medium text-sm text-orange-900 dark:text-orange-100">Mathematics</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-16 h-2 bg-orange-200 rounded-full overflow-hidden">
+                      <div className="w-3/5 h-full bg-gradient-to-r from-orange-500 to-orange-600 rounded-full"></div>
+                    </div>
+                    <Badge className="bg-orange-500 hover:bg-orange-600 text-white text-xs px-2 py-0.5">Focus</Badge>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-blue-500/10 to-blue-600/5 border border-blue-500/20 group hover:shadow-lg transition-all duration-300">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center">
+                      <Brain className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="font-medium text-sm text-blue-900 dark:text-blue-100">Problem Solving</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-16 h-2 bg-blue-200 rounded-full overflow-hidden">
+                      <div className="w-4/5 h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"></div>
+                    </div>
+                    <Badge className="bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5">Strong</Badge>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div className="text-center">
-                <h3 className="text-2xl font-bold mb-2">Your Learning Profile</h3>
-                <p className="text-muted-foreground">Strengths and areas for focused improvement</p>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-green-500/10 to-green-600/5 p-4 border border-green-500/20 group hover:scale-[1.02] transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="flex items-center justify-between relative">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                        <CheckCircle className="w-4 h-4 text-white" />
-                      </div>
-                      <span className="font-semibold text-green-900">Reading and Writing</span>
-                    </div>
-                    <Badge className="bg-green-500 hover:bg-green-600 text-white">Strong</Badge>
-                  </div>
-                </div>
-                
-                <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-orange-500/10 to-orange-600/5 p-4 border border-orange-500/20 group hover:scale-[1.02] transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="flex items-center justify-between relative">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                        <Target className="w-4 h-4 text-white" />
-                      </div>
-                      <span className="font-semibold text-orange-900">Math</span>
-                    </div>
-                    <Badge variant="destructive" className="bg-orange-500 hover:bg-orange-600">Focus Area</Badge>
-                  </div>
-                </div>
-                
-                <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-green-500/10 to-green-600/5 p-4 border border-green-500/20 group hover:scale-[1.02] transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="flex items-center justify-between relative">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                        <Brain className="w-4 h-4 text-white" />
-                      </div>
-                      <span className="font-semibold text-green-900">Problem Solving</span>
-                    </div>
-                    <Badge className="bg-green-500 hover:bg-green-600 text-white">Strong</Badge>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-6">
+            {/* Action Button */}
+            <div className="pt-2">
               <Button 
                 onClick={proceedToDashboard} 
                 size="lg" 
-                className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300 group"
+                className="w-full h-12 text-base font-semibold bg-gradient-to-r from-emerald-500 via-blue-500 to-violet-500 hover:from-emerald-600 hover:via-blue-600 hover:to-violet-600 shadow-xl hover:shadow-2xl transition-all duration-300 group border-0"
               >
-                <Star className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform" />
-                View My Personalized Study Plan
-                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <Star className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform" />
+                View My Study Plan
+                <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </CardContent>
