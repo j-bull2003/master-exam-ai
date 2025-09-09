@@ -107,15 +107,15 @@ const SATPrograms = () => {
               1:1 coaching program. Where excellence meets personalization.
             </p>
             
-            <div className="flex flex-col gap-4 sm:gap-6 justify-center mb-8 sm:mb-12 px-4">
-              <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer" className="w-full">
-                <button className="group w-full px-6 sm:px-8 py-3 sm:py-4 bg-slate-900 text-white rounded-xl text-base sm:text-lg font-semibold hover:bg-slate-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden">
+            <div className="flex flex-col gap-3 justify-center mb-8 sm:mb-12 px-4 max-w-md mx-auto">
+              <a href="https://calendly.com/admin-etonstone/elite-university-admissions-strategy-call-etonstone" target="_blank" rel="noopener noreferrer">
+                <button className="group w-full px-4 py-2.5 bg-slate-900 text-white rounded-lg text-sm font-semibold hover:bg-slate-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                   <span className="relative">Reserve Your Consultation</span>
                 </button>
               </a>
               <button 
-                className="w-full px-6 sm:px-8 py-3 sm:py-4 border-2 border-slate-300 text-slate-700 rounded-xl text-base sm:text-lg font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
+                className="w-full px-4 py-2.5 border border-slate-300 text-slate-700 rounded-lg text-sm font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
                 onClick={scrollToSuccessStories}
               >
                 Explore Success Stories
