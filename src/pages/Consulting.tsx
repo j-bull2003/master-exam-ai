@@ -185,10 +185,11 @@ const SATPrograms = () => {
                   </div>
                 </div>
                 
-                <div className="text-slate-600 mb-3 font-medium text-xs">{program.duration}</div>
-                <div className="inline-block bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 px-4 py-2 rounded-lg font-medium border border-emerald-200/50 text-xs">
+                <div className="inline-block bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 px-4 py-2 rounded-lg font-medium border border-emerald-200/50 text-xs mb-3">
                   {program.guarantee}
                 </div>
+                
+                <div className="text-slate-600 mb-3 font-medium text-xs">{program.duration}</div>
               </div>
 
               <div className="p-6">
