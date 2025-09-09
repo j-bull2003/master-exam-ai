@@ -343,6 +343,41 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Expert-Crafted Content Section */}
+      <section className="py-16 bg-background/50 relative">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
+              Questions built by a team of 
+              <span className="text-muted-foreground"> educators, tutors, </span>
+              and 
+              <span className="text-muted-foreground"> test-prep experts.</span>
+            </h2>
+            
+            <div className="bg-card border border-border/50 rounded-2xl p-8 mb-8 shadow-lg">
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Our team has been working with students since 2017, and we know AI is the next step in education. 
+                We believe that combining our quality education with cutting-edge AI tools allows us to elevate 
+                your test prep experience and help you achieve your goal score.
+              </p>
+              
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Our content is handcrafted by curriculum team members who are assisted by AI workflows. 
+                The curriculum team consists of educators and test prep experts with experience in developing 
+                questions for multiple standardized tests.
+              </p>
+              
+              <div className="bg-foreground text-background p-6 rounded-xl">
+                <p className="text-lg font-medium">
+                  All questions, answers, hints, and explanations are reviewed by our 
+                  Curriculum Team for accuracy, difficulty, and structure.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
       <section className="py-20 bg-muted/20">
         <div className="container mx-auto px-6">
