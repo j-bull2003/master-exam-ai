@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Clock, CheckCircle, AlertCircle, ArrowRight, Brain } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Clock, CheckCircle, AlertCircle, ArrowRight, Brain, Star, Target, Trophy, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Diagnostic = () => {
@@ -130,59 +131,105 @@ const Diagnostic = () => {
 
   if (currentStep === 'intro') {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="question-card max-w-2xl">
-          <CardHeader className="text-center">
-            <Brain className="h-12 w-12 text-primary mx-auto mb-4" />
-            <CardTitle className="text-3xl font-display">Diagnostic Assessment</CardTitle>
-            <CardDescription className="text-lg">
-              Let's find your baseline to create a personalized study plan
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid md:grid-cols-3 gap-4 text-center">
-              <div className="p-4 bg-muted/30 rounded-lg">
-                <Clock className="h-8 w-8 text-primary mx-auto mb-2" />
-                <h3 className="font-semibold">30 Minutes</h3>
-                <p className="text-sm text-muted-foreground">Timed assessment</p>
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-4">
+        <div className="max-w-4xl w-full">
+          <Card className="border-0 shadow-2xl bg-background/80 backdrop-blur-xl animate-fade-in">
+            <CardHeader className="text-center pb-8">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 rounded-full blur-3xl"></div>
+                <Brain className="h-16 w-16 text-primary mx-auto mb-6 relative animate-pulse" />
               </div>
-              <div className="p-4 bg-muted/30 rounded-lg">
-                <CheckCircle className="h-8 w-8 text-primary mx-auto mb-2" />
-                <h3 className="font-semibold">Mixed Topics</h3>
-                <p className="text-sm text-muted-foreground">All exam sections</p>
+              <CardTitle className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Diagnostic Assessment
+              </CardTitle>
+              <CardDescription className="text-xl text-muted-foreground mt-4">
+                Discover your baseline and unlock your personalized SAT success roadmap
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-8">
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="group relative p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-primary rounded-full animate-pulse"></div>
+                  <Clock className="h-10 w-10 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="font-bold text-lg text-center">30 Minutes</h3>
+                  <p className="text-sm text-muted-foreground text-center">Focused assessment</p>
+                </div>
+                <div className="group relative p-6 bg-gradient-to-br from-secondary/5 to-secondary/10 rounded-xl border border-secondary/20 hover:border-secondary/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-secondary rounded-full animate-pulse"></div>
+                  <Target className="h-10 w-10 text-secondary mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="font-bold text-lg text-center">All Topics</h3>
+                  <p className="text-sm text-muted-foreground text-center">Comprehensive coverage</p>
+                </div>
+                <div className="group relative p-6 bg-gradient-to-br from-accent/20 to-accent/30 rounded-xl border border-accent/30 hover:border-accent/50 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-accent rounded-full animate-pulse"></div>
+                  <Brain className="h-10 w-10 text-accent-foreground mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="font-bold text-lg text-center">AI-Powered</h3>
+                  <p className="text-sm text-muted-foreground text-center">Adaptive insights</p>
+                </div>
               </div>
-              <div className="p-4 bg-muted/30 rounded-lg">
-                <Brain className="h-8 w-8 text-primary mx-auto mb-2" />
-                <h3 className="font-semibold">Adaptive Plan</h3>
-                <p className="text-sm text-muted-foreground">Personalized results</p>
-              </div>
-            </div>
 
-            <div className="bg-accent/50 p-4 rounded-lg">
-              <h3 className="font-semibold mb-2">What to expect:</h3>
-              <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• Questions from all exam sections</li>
-                <li>• Mixed difficulty levels</li>
-                <li>• No penalties for wrong answers</li>
-                <li>• Results used to create your study plan</li>
-              </ul>
-            </div>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent rounded-xl"></div>
+                <div className="relative bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-border/50">
+                  <div className="flex items-center gap-3 mb-4">
+                    <BookOpen className="h-5 w-5 text-primary" />
+                    <h3 className="font-bold text-lg">Assessment Overview</h3>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        <span>Reading & Writing questions</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        <span>Mathematical reasoning</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        <span>Mixed difficulty levels</span>
+                      </li>
+                    </ul>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                        <span>No penalty for wrong answers</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                        <span>Instant personalized results</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                        <span>Custom study plan generated</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
 
-            <div className="space-y-3">
-              <Button onClick={startDiagnostic} size="lg" className="w-full">
-                Start 30-min Diagnostic
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={proceedToDashboard} 
-                size="lg" 
-                className="w-full"
-              >
-                Skip to Dashboard
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+              <div className="space-y-4">
+                <Button 
+                  onClick={startDiagnostic} 
+                  size="lg" 
+                  className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300 group"
+                >
+                  <Star className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform" />
+                  Begin Your Assessment Journey
+                  <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={proceedToDashboard} 
+                  size="lg" 
+                  className="w-full h-12 border-2 hover:bg-muted/50 transition-all duration-300"
+                >
+                  Skip to Dashboard
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }
@@ -192,49 +239,80 @@ const Diagnostic = () => {
     const progress = ((currentQuestion + 1) / diagnosticQuestions.length) * 100;
 
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         {/* Test Header */}
-        <div className="border-b border-border bg-background/95 backdrop-blur sticky top-0 z-10">
-          <div className="container mx-auto px-4 py-4">
+        <div className="border-b border-border/50 bg-background/95 backdrop-blur-xl sticky top-0 z-10 shadow-sm">
+          <div className="container mx-auto px-6 py-5">
             <div className="flex items-center justify-between">
-              <div>
-                <h1 className="font-display font-bold">Diagnostic Assessment</h1>
-                <p className="text-sm text-muted-foreground">
-                  Question {currentQuestion + 1} of {diagnosticQuestions.length}
-                </p>
+              <div className="space-y-1">
+                <h1 className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                  Diagnostic Assessment
+                </h1>
+                <div className="flex items-center gap-2">
+                  <Badge variant="secondary" className="text-xs">
+                    Question {currentQuestion + 1} of {diagnosticQuestions.length}
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    {question.section}
+                  </Badge>
+                </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <Clock className="h-4 w-4 text-muted-foreground" />
-                  <span className="font-mono text-sm">{formatTime(timeRemaining)}</span>
+              <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-3 bg-card/50 backdrop-blur-sm px-4 py-2 rounded-full border border-border/50">
+                  <Clock className="h-4 w-4 text-primary" />
+                  <span className="font-mono text-sm font-medium">{formatTime(timeRemaining)}</span>
                 </div>
               </div>
             </div>
-            <Progress value={progress} className="mt-2" />
+            <div className="mt-4">
+              <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
+                <span>Progress</span>
+                <span>{Math.round(progress)}% Complete</span>
+              </div>
+              <Progress value={progress} className="h-2 bg-muted/50" />
+            </div>
           </div>
         </div>
 
         {/* Question Content */}
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto">
-            <Card className="question-card">
-              <CardHeader>
+        <div className="container mx-auto px-6 py-8">
+          <div className="max-w-5xl mx-auto">
+            <Card className="border-0 shadow-xl bg-background/80 backdrop-blur-xl animate-fade-in">
+              <CardHeader className="pb-6">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-xl">{question.section}</CardTitle>
-                  <span className="text-sm text-muted-foreground">
-                    {currentQuestion + 1}/{diagnosticQuestions.length}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center">
+                      <span className="text-primary-foreground font-bold text-sm">
+                        {currentQuestion + 1}
+                      </span>
+                    </div>
+                    <CardTitle className="text-2xl font-bold">{question.section}</CardTitle>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-primary">
+                      {currentQuestion + 1}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      of {diagnosticQuestions.length}
+                    </div>
+                  </div>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="prose prose-sm max-w-none">
-                  <p className="text-foreground">{question.stem}</p>
-                  <p className="font-medium text-foreground">{question.question}</p>
+              
+              <CardContent className="space-y-8">
+                <div className="bg-gradient-to-r from-muted/30 via-muted/10 to-muted/30 p-6 rounded-xl border border-border/30">
+                  <div className="prose prose-lg max-w-none">
+                    <p className="text-foreground leading-relaxed mb-4">{question.stem}</p>
+                    <p className="font-semibold text-foreground text-lg leading-relaxed">{question.question}</p>
+                  </div>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
+                  <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                    Select your answer:
+                  </h3>
                   {question.choices.map((choice, index) => {
-                    const optionLetter = String.fromCharCode(65 + index); // A, B, C, D
+                    const optionLetter = String.fromCharCode(65 + index);
                     const isSelected = selectedAnswer === optionLetter;
                     return (
                       <button
@@ -243,10 +321,10 @@ const Diagnostic = () => {
                         role="radio"
                         aria-checked={isSelected}
                         tabIndex={0}
-                        className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+                        className={`group w-full p-5 text-left rounded-xl border-2 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/30 relative overflow-hidden ${
                           isSelected
-                            ? 'border-primary bg-primary/10 shadow-md'
-                            : 'border-border hover:border-primary/50 hover:bg-muted/30'
+                            ? 'border-primary bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 shadow-lg scale-[1.02] shadow-primary/20'
+                            : 'border-border/60 hover:border-primary/40 hover:bg-gradient-to-r hover:from-muted/30 hover:to-muted/10 hover:scale-[1.01] hover:shadow-md'
                         }`}
                         onClick={() => handleAnswerSelect(optionLetter)}
                         onKeyDown={(e) => {
@@ -256,35 +334,63 @@ const Diagnostic = () => {
                           }
                         }}
                       >
-                        <div className="flex items-start space-x-3">
-                          <div className={`w-6 h-6 border-2 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="flex items-start space-x-4 relative">
+                          <div className={`w-8 h-8 border-2 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
                             isSelected 
-                              ? 'border-primary bg-primary text-primary-foreground' 
-                              : 'border-border bg-background'
+                              ? 'border-primary bg-primary text-primary-foreground shadow-md shadow-primary/30' 
+                              : 'border-border/60 bg-background group-hover:border-primary/60 group-hover:scale-110'
                           }`}>
-                            {isSelected ? '✓' : optionLetter}
+                            {isSelected ? (
+                              <CheckCircle className="w-4 h-4" />
+                            ) : (
+                              <span className="text-muted-foreground group-hover:text-primary transition-colors">
+                                {optionLetter}
+                              </span>
+                            )}
                           </div>
-                          <p className="flex-1 text-sm md:text-base">{choice}</p>
+                          <p className="flex-1 text-base md:text-lg leading-relaxed group-hover:text-foreground transition-colors">
+                            {choice}
+                          </p>
                         </div>
                       </button>
                     );
                   })}
                 </div>
 
-                <div className="flex justify-between pt-6">
+                <div className="flex justify-between items-center pt-8 border-t border-border/30">
                   <Button 
                     variant="outline" 
                     disabled={currentQuestion === 0}
                     onClick={handlePreviousQuestion}
+                    className="h-11 px-6 hover:scale-105 transition-all duration-200"
                   >
+                    <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
                     Previous
                   </Button>
+                  
+                  <div className="text-center">
+                    <div className="text-sm text-muted-foreground">
+                      {selectedAnswer ? 'Answer selected' : 'Select an answer to continue'}
+                    </div>
+                  </div>
+                  
                   <Button 
                     onClick={handleNextQuestion}
                     disabled={!selectedAnswer}
+                    className="h-11 px-6 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 group"
                   >
-                    {currentQuestion === diagnosticQuestions.length - 1 ? 'Finish' : 'Next'}
-                    <ArrowRight className="h-4 w-4 ml-2" />
+                    {currentQuestion === diagnosticQuestions.length - 1 ? (
+                      <>
+                        <Trophy className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform" />
+                        Finish Assessment
+                      </>
+                    ) : (
+                      <>
+                        Next Question
+                        <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
                   </Button>
                 </div>
               </CardContent>
@@ -297,55 +403,111 @@ const Diagnostic = () => {
 
   // Results step
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Card className="question-card max-w-2xl">
-        <CardHeader className="text-center">
-          <CheckCircle className="h-12 w-12 text-success mx-auto mb-4" />
-          <CardTitle className="text-3xl font-display">Assessment Complete!</CardTitle>
-          <CardDescription className="text-lg">
-            Your personalized study plan is ready
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="p-4 bg-green-100 border border-green-200 rounded-lg">
-              <div className="text-2xl font-bold text-green-800">
-                {Math.round((2/3) * 100)}%
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-4">
+      <div className="max-w-4xl w-full">
+        <Card className="border-0 shadow-2xl bg-background/80 backdrop-blur-xl animate-fade-in">
+          <CardHeader className="text-center pb-8">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-transparent to-green-500/20 rounded-full blur-3xl"></div>
+              <div className="relative bg-gradient-to-br from-green-500 to-green-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse shadow-lg shadow-green-500/30">
+                <Trophy className="h-10 w-10 text-white" />
               </div>
-              <p className="text-sm text-green-700 font-medium">Overall Score</p>
             </div>
-            <div className="p-4 bg-blue-100 border border-blue-200 rounded-lg">
-              <div className="text-2xl font-bold text-blue-800">
-                Intermediate
+            <CardTitle className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent mb-4">
+              Assessment Complete!
+            </CardTitle>
+            <CardDescription className="text-xl text-muted-foreground">
+              Your personalized SAT roadmap has been generated based on your performance
+            </CardDescription>
+          </CardHeader>
+          
+          <CardContent className="space-y-8">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-500/10 to-green-600/20 p-6 border border-green-500/20">
+                <div className="absolute top-2 right-2 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-green-600 mb-2">
+                    {Math.round((2/3) * 100)}%
+                  </div>
+                  <p className="text-sm font-semibold text-green-700">Overall Score</p>
+                  <p className="text-xs text-muted-foreground mt-1">Above Average Performance</p>
+                </div>
               </div>
-              <p className="text-sm text-blue-700 font-medium">Level Assessment</p>
+              
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/20 p-6 border border-blue-500/20">
+                <div className="absolute top-2 right-2 w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-blue-600 mb-2">
+                    Intermediate
+                  </div>
+                  <p className="text-sm font-semibold text-blue-700">Current Level</p>
+                  <p className="text-xs text-muted-foreground mt-1">Ready for Advanced Practice</p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="space-y-3">
-            <h3 className="font-semibold">Your Strengths & Areas for Improvement:</h3>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between p-3 bg-green-100 border border-green-200 rounded-lg">
-                <span className="text-sm font-medium text-green-900">Reading and Writing</span>
-                <span className="text-sm text-green-800 font-bold">Strong</span>
+            <div className="space-y-6">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-2">Your Learning Profile</h3>
+                <p className="text-muted-foreground">Strengths and areas for focused improvement</p>
               </div>
-              <div className="flex items-center justify-between p-3 bg-orange-100 border border-orange-200 rounded-lg">
-                <span className="text-sm font-medium text-orange-900">Math</span>
-                <span className="text-sm text-orange-800 font-bold">Needs Work</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-green-100 border border-green-200 rounded-lg">
-                <span className="text-sm font-medium text-green-900">Problem Solving</span>
-                <span className="text-sm text-green-800 font-bold">Strong</span>
+              
+              <div className="space-y-4">
+                <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-green-500/10 to-green-600/5 p-4 border border-green-500/20 group hover:scale-[1.02] transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="flex items-center justify-between relative">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                        <CheckCircle className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-semibold text-green-900">Reading and Writing</span>
+                    </div>
+                    <Badge className="bg-green-500 hover:bg-green-600 text-white">Strong</Badge>
+                  </div>
+                </div>
+                
+                <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-orange-500/10 to-orange-600/5 p-4 border border-orange-500/20 group hover:scale-[1.02] transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="flex items-center justify-between relative">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                        <Target className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-semibold text-orange-900">Math</span>
+                    </div>
+                    <Badge variant="destructive" className="bg-orange-500 hover:bg-orange-600">Focus Area</Badge>
+                  </div>
+                </div>
+                
+                <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-green-500/10 to-green-600/5 p-4 border border-green-500/20 group hover:scale-[1.02] transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="flex items-center justify-between relative">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                        <Brain className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-semibold text-green-900">Problem Solving</span>
+                    </div>
+                    <Badge className="bg-green-500 hover:bg-green-600 text-white">Strong</Badge>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <Button onClick={proceedToDashboard} size="lg" className="w-full">
-            View My Study Plan
-            <ArrowRight className="h-4 w-4 ml-2" />
-          </Button>
-        </CardContent>
-      </Card>
+            <div className="pt-6">
+              <Button 
+                onClick={proceedToDashboard} 
+                size="lg" 
+                className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300 group"
+              >
+                <Star className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform" />
+                View My Personalized Study Plan
+                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
