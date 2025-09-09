@@ -1,6 +1,6 @@
 import { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Text3D, OrbitControls, Sphere, Box, Environment, useTexture } from "@react-three/drei";
+import { Float, OrbitControls, Sphere, Box, Environment } from "@react-three/drei";
 import { motion } from "framer-motion";
 import * as THREE from "three";
 
@@ -52,7 +52,7 @@ function FloatingElements() {
   );
 }
 
-// Animated 3D Text Component
+// Animated 3D Text Component - Simplified without external fonts
 function AnimatedText() {
   const textRef = useRef<THREE.Mesh>(null);
   
@@ -64,14 +64,7 @@ function AnimatedText() {
 
   return (
     <Float speed={0.8} rotationIntensity={0.3} floatIntensity={0.2}>
-      <Text3D
-        ref={textRef}
-        font="/fonts/helvetiker_regular.typeface.json"
-        size={0.15}
-        height={0.02}
-        position={[0, 0, 1]}
-      >
-        AI
+      <Sphere args={[0.3]} position={[0, 0, 1]} ref={textRef}>
         <meshStandardMaterial 
           color="#3B82F6" 
           metalness={0.8} 
@@ -79,7 +72,7 @@ function AnimatedText() {
           emissive="#1E40AF"
           emissiveIntensity={0.3}
         />
-      </Text3D>
+      </Sphere>
     </Float>
   );
 }
@@ -100,7 +93,7 @@ export const Hero3D = ({ className = "" }: { className?: string }) => {
           pointerEvents: 'none'
         }}
       >
-        <Suspense fallback={null}>
+        <Suspense fallback={<div />}>
           {/* Lighting */}
           <ambientLight intensity={0.4} />
           <directionalLight 
