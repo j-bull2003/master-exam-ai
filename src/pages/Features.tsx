@@ -114,40 +114,18 @@ const Features = () => {
         </div>
       </section>
 
-      {/* Exam Types */}
-      <section className="py-16 bg-muted/30">
+      {/* SAT Focus Section */}
+      <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Focused Exclusively on SAT Success
             </h2>
-            <p className="text-xl text-muted-foreground mb-8">
-              Unlike other platforms, we specialize 100% in SAT preparation for maximum effectiveness.
+            <p className="text-xl text-muted-foreground leading-relaxed">
+              Unlike other platforms, we specialize 100% in SAT preparation for maximum effectiveness. 
+              Our entire platform, content, and methodology is designed specifically for SAT success, 
+              ensuring you get the most targeted and effective preparation possible.
             </p>
-            <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-3">
-              {EXAM_CONFIGS.map((exam, index) => {
-                const isAvailable = exam.available;
-                return (
-                  <div
-                    key={exam.name}
-                    className={`bg-background rounded-lg p-3 text-center border transition-all duration-200 min-h-[60px] flex items-center justify-center ${
-                      isAvailable
-                        ? "border-border/50 hover:border-primary/20 hover:bg-primary/5 hover:shadow-md hover:scale-105"
-                        : "border-border/30 opacity-60"
-                    }`}
-                  >
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="font-semibold text-sm">{exam.name}</span>
-                      {!isAvailable && (
-                        <span className="text-xs bg-muted text-muted-foreground px-1 py-0.5 rounded text-[10px]">
-                          Coming Soon
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
           </div>
         </div>
       </section>
