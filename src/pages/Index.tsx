@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Sparkles, Brain, Target, Shield, Clock, Zap, CheckCircle, ArrowRight, Users, TrendingUp, Award, Star, Quote, Menu, X, BookOpen, Clipboard, BarChart3, User } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Header } from "@/components/Header";
@@ -10,6 +11,8 @@ import { InteractiveCard } from "@/components/InteractiveCard";
 import { MagneticButton } from "@/components/MagneticButton";
 import { EmptyState } from "@/components/EmptyState";
 import { PageProgressBar } from "@/components/PageProgressBar";
+import { Hero3D } from "@/components/Hero3D";
+import { InteractiveDemo } from "@/components/InteractiveDemo";
 import { EXAM_CONFIGS } from "@/data/examConfig";
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
@@ -119,32 +122,62 @@ const Index = () => {
       <PageProgressBar />
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 relative overflow-hidden bg-mesh" data-bg="mesh">
+      {/* Enhanced 3D Hero Section */}
+      <section className="pt-32 pb-20 relative overflow-hidden min-h-screen flex items-center" data-bg="mesh">
+        {/* 3D Background Elements */}
+        <Hero3D className="opacity-60" />
+        
         {/* Animated background */}
-        <AnimatedBackground className="opacity-80" />
-        <div className="container mx-auto px-6 relative z-10">
+        <AnimatedBackground className="opacity-40" />
+        
+        <div className="container mx-auto px-6 relative z-20">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge with enhanced glassmorphism */}
             {isLoaded ? (
-              <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group card-layered backdrop-blur-md"
+              >
                 <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
                   Master the SAT in just 10 minutes daily
                 </span>
-              </div>
+              </motion.div>
             ) : (
               <Skeleton className="h-8 w-80 mx-auto mb-6 rounded-full" />
             )}
 
             {/* Main Headline with enhanced typography */}
             {isLoaded ? (
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <span className="text-foreground block mb-2">Ace the SAT</span>
-                <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
+              <motion.h1 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.2 }}
+                className="text-5xl md:text-6xl lg:text-8xl font-display font-bold leading-tight mb-6"
+              >
+                <motion.span 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="text-foreground block mb-2"
+                >
+                  Ace the SAT
+                </motion.span>
+                <motion.span 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="bg-gradient-to-r from-primary via-purple-600 to-blue-600 bg-clip-text text-transparent relative"
+                >
                   with AI-Driven Precision
-                </span>
-              </h1>
+                  {/* Subtle glow effect */}
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary via-purple-600 to-blue-600 bg-clip-text text-transparent blur-2xl opacity-30">
+                    with AI-Driven Precision
+                  </span>
+                </motion.span>
+              </motion.h1>
             ) : (
               <div className="space-y-4 mb-6">
                 <Skeleton className="h-16 w-full max-w-3xl mx-auto" />
@@ -154,43 +187,58 @@ const Index = () => {
 
             {/* Subtext with better contrast */}
             {isLoaded ? (
-              <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto"
+              >
                 Master the SAT with AI-powered precision. Personalized study plans. Adaptive practice. Expert-authored content.
-              </p>
+              </motion.p>
             ) : (
               <Skeleton className="h-6 w-full max-w-xl mx-auto mb-6" />
             )}
 
             {/* Enhanced pricing info with layered cards */}
             {isLoaded ? (
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1 }}
+              className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8"
+            >
                 <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors card-layered">
                   <CheckCircle className="w-4 h-4 text-success" />
                   <span className="text-success font-semibold">7-day free trial</span>
                 </div>
                 <div className="text-muted-foreground font-medium">From $39.99/month (annual)</div>
                 <div className="text-muted-foreground">No setup fees • Cancel anytime</div>
-              </div>
-            ) : (
-              <Skeleton className="h-6 w-96 mx-auto mb-8" />
-            )}
+              </motion.div>
+             ) : (
+               <Skeleton className="h-6 w-96 mx-auto mb-8" />
+             )}
 
-            {/* Enhanced CTA with magnetic button */}
-            {isLoaded ? (
-              <div className="mb-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-                  <Link to="/auth/register" className="w-full sm:w-auto">
-                    <MagneticButton className="px-8 sm:px-12 w-full sm:w-auto">
-                      {/* Enhanced shimmer effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
-                      <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
-                        Start Free Trial
-                        <ArrowRight className="w-5 h-5 ml-2" />
-                      </Button>
-                    </MagneticButton>
-                  </Link>
-                </div>
-              </div>
+             {/* Enhanced CTA with magnetic button */}
+             {isLoaded ? (
+               <motion.div 
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ duration: 0.8, delay: 1.2 }}
+                 className="mb-8"
+               >
+                 <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                   <Link to="/auth/register" className="w-full sm:w-auto">
+                     <MagneticButton className="px-8 sm:px-12 w-full sm:w-auto">
+                       {/* Enhanced shimmer effect */}
+                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
+                       <Button className="w-full bg-gradient-to-r from-primary via-purple-600 to-blue-600 hover:scale-105 transition-transform shadow-lg hover:shadow-primary/30">
+                         Start Free Trial
+                         <ArrowRight className="w-5 h-5 ml-2" />
+                       </Button>
+                     </MagneticButton>
+                   </Link>
+                 </div>
+               </motion.div>
             ) : (
               <Skeleton className="h-14 w-48 mx-auto mb-8" />
             )}
@@ -198,7 +246,11 @@ const Index = () => {
 
             {/* University Logos Carousel with enhanced presentation */}
             {isLoaded ? (
-              <div className=" animate-fade-in" style={{ animationDelay: '0.7s' }}>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.4 }}
+              >
                 <p className="text-sm font-medium text-muted-foreground mb-12">
                   Trusted by students preparing for top US universities
                 </p>
@@ -211,7 +263,7 @@ const Index = () => {
                   <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
                   <LogoMarquee />
                 </div>
-              </div>
+              </motion.div>
             ) : (
               <div className="mb-4">
                 <Skeleton className="h-4 w-64 mx-auto mb-4" />
@@ -266,17 +318,28 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Interactive Demo Section */}
+      <InteractiveDemo />
+
       {/* Features Section */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              Why Students Choose UniHack for SAT Prep
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="text-foreground">Why Students Choose </span>
+              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">UniHack</span>
+              <span className="text-foreground"> for SAT Prep</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
