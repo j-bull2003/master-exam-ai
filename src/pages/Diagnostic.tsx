@@ -259,62 +259,72 @@ const Diagnostic = () => {
     const progress = ((currentQuestion + 1) / diagnosticQuestions.length) * 100;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
-        {/* Floating Header */}
-        <div className="fixed top-4 left-4 right-4 z-50">
-          <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-2xl shadow-2xl shadow-slate-900/10">
-            <div className="px-6 py-4">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
+        {/* Compact Floating Header */}
+        <div className="fixed top-3 left-3 right-3 z-50">
+          <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-2xl shadow-slate-900/10">
+            <div className="px-4 py-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   <div className="relative">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                      <Brain className="h-5 w-5 text-white" />
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg animate-pulse">
+                      <Brain className="h-4 w-4 text-white" />
                     </div>
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                    <div className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border border-white animate-ping"></div>
                   </div>
                   <div>
-                    <h1 className="text-lg font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent">
+                    <h1 className="text-sm font-bold bg-gradient-to-r from-slate-800 via-blue-600 to-purple-600 dark:from-slate-100 dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
                       SAT Diagnostic
                     </h1>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700 border-blue-200">
+                    <div className="flex items-center gap-1.5">
+                      <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 border-0">
                         {question.section}
                       </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        {currentQuestion + 1} of {diagnosticQuestions.length}
+                      <Badge variant="outline" className="text-xs px-2 py-0.5">
+                        {currentQuestion + 1}/{diagnosticQuestions.length}
                       </Badge>
                     </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   {/* Calculator Button */}
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button variant="outline" size="sm" className="bg-white/50 hover:bg-white/80 border-slate-300 shadow-lg">
-                        <Calculator className="h-4 w-4 mr-2" />
-                        Calculator
+                      <Button variant="outline" size="sm" className="h-8 px-3 bg-gradient-to-r from-white/80 to-slate-50/80 hover:from-white hover:to-slate-50 border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                        <Calculator className="h-3 w-3 mr-1.5" />
+                        <span className="text-xs">Calc</span>
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-md">
+                    <DialogContent className="sm:max-w-sm">
                       <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2">
-                          <Calculator className="h-5 w-5" />
+                        <DialogTitle className="flex items-center gap-2 text-lg">
+                          <Calculator className="h-5 w-5 text-blue-500" />
                           Scientific Calculator
                         </DialogTitle>
                       </DialogHeader>
-                      <div className="bg-slate-100 dark:bg-slate-800 p-4 rounded-xl">
-                        <div className="mb-4 p-3 bg-white dark:bg-slate-900 rounded-lg border text-right font-mono">
-                          <div className="text-sm text-muted-foreground">{calculatorInput || "0"}</div>
-                          <div className="text-lg font-bold">{calculatorResult || ""}</div>
+                      <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-700">
+                        <div className="mb-4 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 text-right font-mono shadow-inner">
+                          <div className="text-sm text-slate-500 dark:text-slate-400 min-h-[20px]">{calculatorInput || "0"}</div>
+                          <div className="text-xl font-bold text-slate-900 dark:text-slate-100 min-h-[28px]">{calculatorResult || ""}</div>
                         </div>
-                        <div className="grid grid-cols-4 gap-2">
+                        <div className="grid grid-cols-4 gap-1.5">
                           {['C', '/', '*', '←', '7', '8', '9', '-', '4', '5', '6', '+', '1', '2', '3', '=', '0', '.', '(', ')'].map((btn) => (
                             <Button
                               key={btn}
                               variant={btn === '=' ? "default" : "outline"}
                               size="sm"
-                              className={`h-10 ${btn === '=' ? 'col-span-1 bg-blue-500 hover:bg-blue-600' : ''}`}
+                              className={`h-10 text-sm font-semibold transition-all duration-200 hover:scale-105 ${
+                                btn === '=' 
+                                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 shadow-lg' 
+                                  : 'bg-white/80 hover:bg-white border-slate-200 hover:border-slate-300 shadow-sm'
+                              }`}
                               onClick={() => handleCalculatorInput(btn)}
                             >
                               {btn}
@@ -326,65 +336,66 @@ const Diagnostic = () => {
                   </Dialog>
                   
                   {/* Timer */}
-                  <div className="flex items-center gap-2 bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 px-4 py-2 rounded-xl border border-orange-200 dark:border-orange-700/50">
-                    <Clock className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-                    <span className="font-mono text-sm font-bold text-orange-700 dark:text-orange-300">
+                  <div className="flex items-center gap-2 bg-gradient-to-r from-orange-100 via-red-100 to-pink-100 dark:from-orange-900/30 dark:via-red-900/30 dark:to-pink-900/30 px-3 py-1.5 rounded-xl border border-orange-200/50 dark:border-orange-700/50 shadow-lg">
+                    <Clock className="h-3 w-3 text-orange-600 dark:text-orange-400 animate-pulse" />
+                    <span className="font-mono text-xs font-bold text-orange-700 dark:text-orange-300">
                       {formatTime(timeRemaining)}
                     </span>
                   </div>
-                  
-                  {/* Menu */}
-                  <Button variant="ghost" size="sm" className="h-10 w-10 p-0">
-                    <Menu className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
               
-              {/* Progress Bar */}
-              <div className="mt-4">
-                <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 mb-2">
-                  <span>Progress</span>
-                  <span className="font-semibold">{Math.round(progress)}% Complete</span>
+              {/* Compact Progress Bar */}
+              <div className="mt-2">
+                <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 mb-1">
+                  <span className="font-medium">Progress</span>
+                  <span className="font-bold text-blue-600 dark:text-blue-400">{Math.round(progress)}%</span>
                 </div>
-                <div className="relative">
-                  <Progress value={progress} className="h-2 bg-slate-200 dark:bg-slate-700" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full opacity-50"></div>
+                <div className="relative h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                  <div 
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full transition-all duration-500 ease-out"
+                    style={{ width: `${progress}%` }}
+                  ></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full animate-pulse"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="pt-32 pb-8 px-4">
-          <div className="max-w-4xl mx-auto">
+        {/* Main Content - More Compact */}
+        <div className="pt-24 pb-6 px-3">
+          <div className="max-w-5xl mx-auto">
             
             {/* Question Card */}
-            <Card className="border-0 shadow-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl overflow-hidden">
+            <Card className="border-0 shadow-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-3xl overflow-hidden relative">
+              {/* Gradient Overlays */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5"></div>
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
               
-              <CardContent className="relative p-8 md:p-12">
-                {/* Question Text */}
-                <div className="mb-12">
-                  <div className="flex items-start gap-4 mb-8">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+              <CardContent className="relative p-6 md:p-8">
+                {/* Question Header */}
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="relative">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/25">
                       <span className="text-white font-bold text-lg">{currentQuestion + 1}</span>
                     </div>
-                    <div className="flex-1">
-                      <div className="prose prose-lg max-w-none">
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-lg">
-                          {question.stem}
-                        </p>
-                        <p className="font-bold text-slate-900 dark:text-slate-100 text-xl leading-relaxed">
-                          {question.question}
-                        </p>
-                      </div>
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full border-2 border-white animate-bounce"></div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="prose prose-lg max-w-none">
+                      <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4 text-base">
+                        {question.stem}
+                      </p>
+                      <p className="font-bold text-slate-900 dark:text-slate-100 text-lg leading-relaxed">
+                        {question.question}
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Answer Choices */}
-                <div className="space-y-4 mb-12">
+                {/* Answer Choices - More Compact */}
+                <div className="space-y-3 mb-8">
                   {question.choices.map((choice, index) => {
                     const optionLetter = String.fromCharCode(65 + index);
                     const isSelected = selectedAnswer === optionLetter;
@@ -392,51 +403,53 @@ const Diagnostic = () => {
                       <button
                         key={index}
                         type="button"
-                        className={`group w-full p-6 text-left rounded-2xl border-2 transition-all duration-300 transform hover:scale-[1.02] ${
+                        className={`group w-full p-4 text-left rounded-2xl border-2 transition-all duration-300 transform hover:scale-[1.01] relative overflow-hidden ${
                           isSelected
-                            ? 'border-blue-500 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 shadow-lg shadow-blue-500/20'
-                            : 'border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50/50 dark:hover:bg-blue-900/10 hover:shadow-xl'
+                            ? 'border-blue-500 bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-pink-900/20 shadow-xl shadow-blue-500/20'
+                            : 'border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-gradient-to-r hover:from-blue-50/50 hover:via-purple-50/50 hover:to-pink-50/50 dark:hover:from-blue-900/10 dark:hover:via-purple-900/10 dark:hover:to-pink-900/10 hover:shadow-lg'
                         }`}
                         onClick={() => handleAnswerSelect(optionLetter)}
                       >
-                        <div className="flex items-start gap-5">
+                        {/* Animated background for selected state */}
+                        {isSelected && (
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 animate-pulse"></div>
+                        )}
+                        
+                        <div className="flex items-start gap-4 relative">
                           <div className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center text-sm font-bold flex-shrink-0 transition-all duration-300 ${
                             isSelected 
-                              ? 'border-blue-500 bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/30' 
-                              : 'border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 group-hover:border-blue-400 dark:group-hover:border-blue-500 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20'
+                              ? 'border-blue-500 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg shadow-blue-500/30 scale-110' 
+                              : 'border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 group-hover:border-blue-400 dark:group-hover:border-blue-500 group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:to-purple-50 dark:group-hover:from-blue-900/20 dark:group-hover:to-purple-900/20'
                           }`}>
                             {isSelected && <CheckCircle className="w-5 h-5" />}
                             {!isSelected && optionLetter}
                           </div>
-                          <p className="text-base leading-relaxed pt-2 text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-slate-100 transition-colors">
+                          <p className="text-sm leading-relaxed pt-2 text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-slate-100 transition-colors">
                             {choice}
                           </p>
                         </div>
-                        
-                        {/* Subtle hover effect */}
-                        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isSelected ? 'opacity-100' : ''}`}></div>
                       </button>
                     );
                   })}
                 </div>
 
-                {/* Navigation */}
+                {/* Navigation & Status */}
                 <div className="flex items-center justify-between">
                   <Button 
                     variant="outline" 
                     disabled={currentQuestion === 0}
                     onClick={handlePreviousQuestion}
-                    className="px-8 py-3 rounded-xl border-2 hover:scale-105 transition-all duration-200 disabled:opacity-50"
+                    className="px-6 py-2 rounded-xl border-2 hover:scale-105 transition-all duration-200 disabled:opacity-50 bg-white/80 hover:bg-white"
                   >
                     <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
                     Previous
                   </Button>
                   
                   <div className="text-center">
-                    <div className={`text-sm font-medium px-4 py-2 rounded-lg ${
+                    <div className={`text-xs font-medium px-3 py-2 rounded-lg transition-all duration-300 ${
                       selectedAnswer 
-                        ? 'text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30' 
-                        : 'text-slate-500 dark:text-slate-400'
+                        ? 'text-emerald-700 dark:text-emerald-400 bg-gradient-to-r from-emerald-100 to-green-100 dark:from-emerald-900/30 dark:to-green-900/30 shadow-lg animate-pulse' 
+                        : 'text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800'
                     }`}>
                       {selectedAnswer ? '✓ Answer selected' : 'Select an answer to continue'}
                     </div>
@@ -445,32 +458,32 @@ const Diagnostic = () => {
                   <Button 
                     onClick={handleNextQuestion}
                     disabled={!selectedAnswer}
-                    className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:hover:scale-100"
+                    className="px-6 py-2 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:hover:scale-100"
                   >
                     {currentQuestion === diagnosticQuestions.length - 1 ? (
                       <>
                         <Trophy className="h-4 w-4 mr-2" />
-                        Submit Test
+                        Submit
                       </>
                     ) : (
                       <>
-                        Next Question
+                        Next
                         <ArrowRight className="h-4 w-4 ml-2" />
                       </>
                     )}
                   </Button>
                 </div>
 
-                {/* Question Navigation Dots */}
-                <div className="flex justify-center gap-3 mt-8">
+                {/* Compact Question Navigation Dots */}
+                <div className="flex justify-center gap-2 mt-6">
                   {diagnosticQuestions.map((_, index) => (
                     <div
                       key={index}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                         index === currentQuestion
-                          ? 'bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg shadow-blue-500/50'
+                          ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-lg shadow-blue-500/50 scale-125'
                           : index < currentQuestion || answers[index]
-                          ? 'bg-blue-400 dark:bg-blue-500'
+                          ? 'bg-gradient-to-r from-blue-400 to-purple-400 dark:from-blue-500 dark:to-purple-500'
                           : 'bg-slate-300 dark:bg-slate-600'
                       }`}
                     />
