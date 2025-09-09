@@ -195,49 +195,6 @@ const Index = () => {
               <Skeleton className="h-14 w-48 mx-auto mb-8" />
             )}
 
-            {/* Enhanced exam badges with better styling */}
-            {isLoaded ? (
-              <div className="mb-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-                <p className="text-sm font-medium text-muted-foreground mb-4">SAT-focused preparation platform</p>
-                <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto mb-8">
-                  {EXAM_CONFIGS.map((exam, index) => {
-                    const isAvailable = exam.available;
-                    return (
-                      <span
-                        key={exam.name}
-                        className={`glass border rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 card-layered ${
-                          isAvailable
-                            ? "border-border/50 text-foreground hover:border-primary/40 hover:bg-primary/5 hover:shadow-md hover:scale-105 cursor-default"
-                            : "border-border/30 text-muted-foreground opacity-60 cursor-not-allowed"
-                        }`}
-                        style={{ 
-                          animationDelay: `${0.6 + index * 0.05}s`,
-                          animation: 'fade-in 0.3s ease-out forwards'
-                        }}
-                      >
-                        <div className="flex items-center gap-2">
-                          {exam.name}
-                          {!isAvailable && (
-                            <span className="text-xs bg-muted text-muted-foreground px-1.5 py-0.5 rounded">
-                              Coming Soon
-                            </span>
-                          )}
-                        </div>
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            ) : (
-              <div className="mb-6">
-                <Skeleton className="h-4 w-48 mx-auto mb-4" />
-                <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto mb-8">
-                  {Array.from({ length: 10 }).map((_, index) => (
-                    <Skeleton key={index} className="h-8 w-12" />
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* University Logos Carousel with enhanced presentation */}
             {isLoaded ? (
