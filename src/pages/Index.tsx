@@ -39,7 +39,7 @@ const Index = () => {
           const easeOut = 1 - Math.pow(1 - progress, 3);
           
           setStatsCounter({
-            students: Math.floor(easeOut * 500),
+            students: Math.floor(easeOut * 12000),
             questions: Math.floor(easeOut * 8500),
             accuracy: Math.floor(easeOut * 96)
           });
