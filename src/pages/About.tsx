@@ -17,7 +17,7 @@ const About = () => {
   const stats = [
     { number: "8K+", label: "SAT Practice Questions" },
     { number: "15+", label: "Top US Universities" },
-    { number: "240+", label: "Average Score Improvement" },
+    { number: "+210", label: "Average Score Improvement" },
     { number: "1", label: "SAT Focus - No Distractions" }
   ];
 
