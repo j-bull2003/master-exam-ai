@@ -93,7 +93,7 @@ export const Hero3D = ({ className = "" }: { className?: string }) => {
           pointerEvents: 'none'
         }}
       >
-        <Suspense fallback={<div />}>
+        <Suspense fallback={null}>
           {/* Lighting */}
           <ambientLight intensity={0.4} />
           <directionalLight 
