@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { renderMath } from "@/lib/mathRenderer";
 
 // Import real dashboard screenshot
 import realDashboard from "/lovable-uploads/dc3a612f-cad4-481e-be21-d059bcdeb96e.png";
@@ -45,16 +46,16 @@ const demoQuestion: Question = {
   latex: "5 - 2(3x - 4) < 3x + 7 - 4x + 2",
   options: ["-2", "-1", "0", "1"],
   correct: 0,
-  explanation: "Simplify the inequality: 5 - 6x + 8 < -x + 9 → 13 - 6x < -x + 9 → 4 < 5x → x > 4/5. Since x > 0.8, only -2 satisfies the original inequality when tested.",
+  explanation: "$$\\begin{align} 5 - 2(3x - 4) &< 3x + 7 - 4x + 2 \\\\ 5 - 6x + 8 &< -x + 9 \\\\ 13 - 6x &< -x + 9 \\\\ 4 &< 5x \\\\ x &> \\frac{4}{5} = 0.8 \\end{align}$$ Since $x > 0.8$, only $-2$ satisfies when tested in the original inequality.",
   hint: "Start by distributing and combining like terms on both sides. Then isolate x to find the solution range.",
   topic: "Linear inequalities in 1 or 2 variables",
-  difficulty: "Hard"
+  difficulty: "Medium"
 };
 
 const aiInsights = [
-  { icon: Target, title: "Pattern Analysis", description: "Based on 10,847 similar inequality problems, you show 68% accuracy. Students who master this topic see average +180 point gains", color: "text-orange-500" },
-  { icon: Brain, title: "Learning Velocity", description: "Your response time (12s) is 40% faster than average. Optimize accuracy with systematic approach for +15% score boost", color: "text-blue-500" },
-  { icon: Zap, title: "Strategic Insight", description: "Linear inequalities appear in 31% of SAT math. Master this for guaranteed points in every test section", color: "text-green-500" },
+  { icon: Target, title: "Struggle Point Analysis", description: "You struggled with step 2 (distributing negatives). 73% of students miss this. Focus here for +25 points", color: "text-orange-500" },
+  { icon: Brain, title: "Learning Pattern", description: "Your approach matches high-scorers (systematic). Keep this strategy - you're 2x more likely to improve", color: "text-blue-500" },
+  { icon: Zap, title: "Score Prediction", description: "Master inequality distribution = +40 points. You're 85% there - one more practice session needed", color: "text-green-500" },
 ];
 
 const mathematicalElements = [
@@ -137,24 +138,21 @@ export const InteractiveDemo = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgress(prev => prev < 100 ? prev + 2 : 100);
       setTimeElapsed(prev => prev + 1);
-    }, 50);
+    }, 1000);
     return () => clearInterval(timer);
   }, []);
 
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswer(answerIndex);
     setAiAnalyzing(true);
+    setShowDashboard(true); // Show dashboard immediately
     
     setTimeout(() => {
       setAiAnalyzing(false);
       setShowExplanation(true);
-      setTimeout(() => {
-        setCurrentStep(1);
-        setShowDashboard(true);
-      }, 1000);
-    }, 2000);
+      setCurrentStep(1);
+    }, 1500); // Reduced delay
   };
 
   const resetDemo = () => {
@@ -170,78 +168,38 @@ export const InteractiveDemo = () => {
 
   return (
     <section className="py-20 bg-gradient-to-br from-background via-primary/5 to-background relative overflow-hidden">
-      {/* Enhanced Mathematical Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Gradient Blobs */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/15 to-purple-500/15 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-gradient-to-l from-blue-500/15 to-emerald-500/15 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-gradient-to-t from-orange-500/10 to-pink-500/10 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2" />
-        
-        {/* Sketched Spheres */}
-        <SketchedSphere delay={0} x={20} y={15} size={0.8} />
-        <SketchedSphere delay={1.2} x={80} y={25} size={1.2} />
-        <SketchedSphere delay={2.4} x={15} y={70} size={0.9} />
-        <SketchedSphere delay={3.6} x={85} y={80} size={1.1} />
-        <SketchedSphere delay={4.8} x={60} y={60} size={0.7} />
-        
-        {/* Floating Mathematical Symbols with enhanced animation */}
-        {mathematicalElements.map((element, index) => (
-          <motion.div
-            key={index}
-            className="absolute text-primary/25 font-bold select-none"
-            style={{
-              left: `${element.x}%`,
-              top: `${element.y}%`,
-              fontSize: `${3 + (index % 3)}rem`,
-              fontFamily: 'serif'
-            }}
-            animate={{
-              y: [-30, 30, -30],
-              x: [-10, 10, -10],
-              rotate: [0, 360],
-              opacity: [0.1, 0.4, 0.2, 0.6, 0.1],
-              scale: [0.8, 1.2, 0.9, 1.1, 1]
-            }}
-            transition={{
-              duration: 12 + (index * 2),
-              delay: element.delay,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            {element.symbol}
-          </motion.div>
-        ))}
-        
-        {/* Particle Lines */}
-        <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="currentColor" stopOpacity="0.1" />
-              <stop offset="50%" stopColor="currentColor" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="currentColor" stopOpacity="0.1" />
-            </linearGradient>
-          </defs>
-          {[...Array(6)].map((_, i) => (
-            <motion.path
-              key={i}
-              d={`M${i * 200},0 Q${(i + 1) * 150},${200 + i * 100} ${(i + 2) * 200},400`}
-              stroke="url(#lineGradient)"
-              strokeWidth="2"
-              fill="none"
-              className="text-primary"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 0.3 }}
-              transition={{
-                duration: 3,
-                delay: i * 0.5,
-                repeat: Infinity,
-                repeatType: "reverse"
+        {/* Simplified Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Simple Gradient Blobs */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/10 to-purple-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-gradient-to-l from-blue-500/10 to-emerald-500/10 rounded-full blur-3xl" />
+          
+          {/* Reduced Mathematical Symbols */}
+          {mathematicalElements.slice(0, 4).map((element, index) => (
+            <motion.div
+              key={index}
+              className="absolute text-primary/20 font-bold select-none"
+              style={{
+                left: `${element.x}%`,
+                top: `${element.y}%`,
+                fontSize: `${2 + (index % 2)}rem`,
+                fontFamily: 'serif'
               }}
-            />
+              animate={{
+                y: [-20, 20, -20],
+                opacity: [0.1, 0.3, 0.1]
+              }}
+              transition={{
+                duration: 8,
+                delay: element.delay,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              {element.symbol}
+            </motion.div>
           ))}
-        </svg>
-      </div>
+        </div>
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 
@@ -311,12 +269,12 @@ export const InteractiveDemo = () => {
                         <Timer className="w-4 h-4" />
                         00:00:{timeElapsed.toString().padStart(2, '0')}
                       </div>
-                      <Badge 
-                        variant="outline" 
-                        className={`border-red-500/30 text-red-600 ${demoQuestion.difficulty === 'Hard' ? 'bg-red-50 dark:bg-red-900/20' : ''}`}
-                      >
-                        {demoQuestion.difficulty}
-                      </Badge>
+                       <Badge 
+                         variant="outline" 
+                         className={`border-orange-500/30 text-orange-600 ${demoQuestion.difficulty === 'Medium' ? 'bg-orange-50 dark:bg-orange-900/20' : ''}`}
+                       >
+                         {demoQuestion.difficulty}
+                       </Badge>
                     </div>
                   </div>
 
@@ -324,15 +282,15 @@ export const InteractiveDemo = () => {
                     <p className="text-lg text-foreground leading-relaxed mb-4">
                       {demoQuestion.text}
                     </p>
-                    {demoQuestion.latex && (
-                      <div className="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-900/50 dark:to-blue-900/30 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
-                        <div className="text-center">
-                          <div className="text-2xl font-serif text-slate-800 dark:text-slate-200 tracking-wide">
-                            {demoQuestion.latex}
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                     {demoQuestion.latex && (
+                       <div className="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-900/50 dark:to-blue-900/30 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+                         <div className="text-center">
+                           <div className="text-2xl font-serif text-slate-800 dark:text-slate-200 tracking-wide math-display">
+                             {demoQuestion.latex}
+                           </div>
+                         </div>
+                       </div>
+                     )}
                   </div>
 
                   <div className="space-y-3 mb-6">
@@ -444,11 +402,9 @@ export const InteractiveDemo = () => {
                         className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800"
                       >
                         <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
-                          Explanation:
+                          Step-by-Step Solution:
                         </h4>
-                        <p className="text-blue-800 dark:text-blue-200">
-                          {demoQuestion.explanation}
-                        </p>
+                        <div className="text-blue-800 dark:text-blue-200 math-display" dangerouslySetInnerHTML={{ __html: renderMath(demoQuestion.explanation) }} />
                       </motion.div>
                     )}
                   </AnimatePresence>
