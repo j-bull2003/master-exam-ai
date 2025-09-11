@@ -13,7 +13,11 @@ import {
   Play,
   Pause,
   BarChart3,
-  CheckCircle
+  CheckCircle,
+  HelpCircle,
+  Timer,
+  Lightbulb,
+  Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,27 +30,31 @@ import realDashboard from "/lovable-uploads/dc3a612f-cad4-481e-be21-d059bcdeb96e
 interface Question {
   id: number;
   text: string;
+  latex?: string;
   options: string[];
   correct: number;
   explanation: string;
+  hint?: string;
   topic: string;
   difficulty: "Easy" | "Medium" | "Hard";
 }
 
 const demoQuestion: Question = {
   id: 1,
-  text: "If 3x + 5 = 17, what is the value of x?",
-  options: ["2", "4", "6", "8"],
-  correct: 1,
-  explanation: "Solve for x: 3x + 5 = 17 → 3x = 12 → x = 4",
-  topic: "Algebra",
-  difficulty: "Easy"
+  text: "Which of the following is a solution for the inequality below?",
+  latex: "5 - 2(3x - 4) < 3x + 7 - 4x + 2",
+  options: ["-2", "-1", "0", "1"],
+  correct: 0,
+  explanation: "Simplify the inequality: 5 - 6x + 8 < -x + 9 → 13 - 6x < -x + 9 → 4 < 5x → x > 4/5. Since x > 0.8, only -2 satisfies the original inequality when tested.",
+  hint: "Start by distributing and combining like terms on both sides. Then isolate x to find the solution range.",
+  topic: "Linear inequalities in 1 or 2 variables",
+  difficulty: "Hard"
 };
 
 const aiInsights = [
-  { icon: Target, title: "Pattern Analysis", description: "Based on 847 similar problems, you show 73% accuracy in algebraic manipulation", color: "text-orange-500" },
-  { icon: Brain, title: "Learning Trajectory", description: "Your improvement rate suggests +150 points potential in 8 weeks", color: "text-blue-500" },
-  { icon: Zap, title: "Adaptive Recommendation", description: "Focus on equation solving - it appears in 23% of SAT math questions", color: "text-green-500" },
+  { icon: Target, title: "Pattern Analysis", description: "Based on 10,847 similar inequality problems, you show 68% accuracy. Students who master this topic see average +180 point gains", color: "text-orange-500" },
+  { icon: Brain, title: "Learning Velocity", description: "Your response time (12s) is 40% faster than average. Optimize accuracy with systematic approach for +15% score boost", color: "text-blue-500" },
+  { icon: Zap, title: "Strategic Insight", description: "Linear inequalities appear in 31% of SAT math. Master this for guaranteed points in every test section", color: "text-green-500" },
 ];
 
 const mathematicalElements = [
@@ -114,9 +122,11 @@ export const InteractiveDemo = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [showHint, setShowHint] = useState(false);
   const [progress, setProgress] = useState(0);
   const [aiAnalyzing, setAiAnalyzing] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [timeElapsed, setTimeElapsed] = useState(10);
 
   const steps = [
     "question",
@@ -128,6 +138,7 @@ export const InteractiveDemo = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress(prev => prev < 100 ? prev + 2 : 100);
+      setTimeElapsed(prev => prev + 1);
     }, 50);
     return () => clearInterval(timer);
   }, []);
@@ -150,9 +161,11 @@ export const InteractiveDemo = () => {
     setCurrentStep(0);
     setSelectedAnswer(null);
     setShowExplanation(false);
+    setShowHint(false);
     setAiAnalyzing(false);
     setProgress(0);
     setShowDashboard(false);
+    setTimeElapsed(10);
   };
 
   return (
@@ -289,55 +302,114 @@ export const InteractiveDemo = () => {
                         <Brain className="w-6 h-6 text-primary" />
                       </motion.div>
                       <div>
-                        <h3 className="font-semibold text-foreground">Practice Question</h3>
-                        <p className="text-sm text-muted-foreground">{demoQuestion.topic} • {demoQuestion.difficulty}</p>
+                        <h3 className="font-semibold text-foreground">SAT Practice: Math</h3>
+                        <p className="text-sm text-muted-foreground">{demoQuestion.topic}</p>
                       </div>
                     </div>
-                    <Badge variant="outline" className="border-primary/30 text-primary">
-                      Live Demo
-                    </Badge>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Timer className="w-4 h-4" />
+                        00:00:{timeElapsed.toString().padStart(2, '0')}
+                      </div>
+                      <Badge 
+                        variant="outline" 
+                        className={`border-red-500/30 text-red-600 ${demoQuestion.difficulty === 'Hard' ? 'bg-red-50 dark:bg-red-900/20' : ''}`}
+                      >
+                        {demoQuestion.difficulty}
+                      </Badge>
+                    </div>
                   </div>
 
                   <div className="mb-6">
-                    <p className="text-lg text-foreground leading-relaxed">
+                    <p className="text-lg text-foreground leading-relaxed mb-4">
                       {demoQuestion.text}
                     </p>
+                    {demoQuestion.latex && (
+                      <div className="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-900/50 dark:to-blue-900/30 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+                        <div className="text-center">
+                          <div className="text-2xl font-serif text-slate-800 dark:text-slate-200 tracking-wide">
+                            {demoQuestion.latex}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-3 mb-6">
                     {demoQuestion.options.map((option, index) => (
                       <motion.button
                         key={index}
-                        className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-300 ${
+                        className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-300 group ${
                           selectedAnswer === index
                             ? index === demoQuestion.correct
-                              ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
-                              : 'border-red-500 bg-red-50 dark:bg-red-900/20'
-                            : 'border-border hover:border-primary/50 hover:bg-primary/5'
+                              ? 'border-green-500 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 shadow-lg'
+                              : 'border-red-500 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 shadow-lg'
+                            : 'border-border hover:border-primary/50 hover:bg-gradient-to-r hover:from-primary/5 hover:to-purple-500/5 hover:shadow-md'
                         }`}
                         onClick={() => handleAnswerSelect(index)}
                         disabled={selectedAnswer !== null}
-                        whileHover={{ scale: selectedAnswer === null ? 1.02 : 1 }}
+                        whileHover={{ scale: selectedAnswer === null ? 1.02 : 1, y: selectedAnswer === null ? -2 : 0 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        <div className="flex items-center gap-3">
-                          <span className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-medium ${
-                            selectedAnswer === index
-                              ? index === demoQuestion.correct
-                                ? 'border-green-500 bg-green-500 text-white'
-                                : 'border-red-500 bg-red-500 text-white'
-                              : 'border-border text-muted-foreground'
-                          }`}>
+                        <div className="flex items-center gap-4">
+                          <motion.span 
+                            className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                              selectedAnswer === index
+                                ? index === demoQuestion.correct
+                                  ? 'border-green-500 bg-green-500 text-white shadow-lg'
+                                  : 'border-red-500 bg-red-500 text-white shadow-lg'
+                                : 'border-border text-muted-foreground group-hover:border-primary group-hover:bg-primary/10'
+                            }`}
+                            whileHover={{ rotate: 5 }}
+                          >
                             {String.fromCharCode(65 + index)}
-                          </span>
-                          <span className="text-foreground">{option}</span>
+                          </motion.span>
+                          <span className="text-foreground font-medium text-lg">{option}</span>
                           {selectedAnswer === index && index === demoQuestion.correct && (
-                            <CheckCircle className="w-5 h-5 text-green-500 ml-auto" />
+                            <motion.div
+                              initial={{ scale: 0, rotate: -180 }}
+                              animate={{ scale: 1, rotate: 0 }}
+                              transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                              className="ml-auto"
+                            >
+                              <CheckCircle className="w-6 h-6 text-green-500" />
+                            </motion.div>
                           )}
                         </div>
                       </motion.button>
                     ))}
                   </div>
+
+                  {!selectedAnswer && demoQuestion.hint && (
+                    <motion.div className="mb-6">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowHint(!showHint)}
+                        className="border-orange-300 text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-all duration-300"
+                      >
+                        <Lightbulb className="w-4 h-4 mr-2" />
+                        {showHint ? 'Hide Hint' : 'Show Hint'}
+                      </Button>
+                      <AnimatePresence>
+                        {showHint && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0, y: -10 }}
+                            animate={{ opacity: 1, height: 'auto', y: 0 }}
+                            exit={{ opacity: 0, height: 0, y: -10 }}
+                            className="mt-3 p-4 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-lg border border-orange-200 dark:border-orange-800"
+                          >
+                            <div className="flex items-start gap-3">
+                              <HelpCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                              <p className="text-orange-800 dark:text-orange-200 text-sm leading-relaxed">
+                                {demoQuestion.hint}
+                              </p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  )}
 
                   {aiAnalyzing && (
                     <motion.div
@@ -346,8 +418,18 @@ export const InteractiveDemo = () => {
                       className="bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-lg p-4 mb-4 border border-primary/20"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                        <span className="text-primary font-medium">AI analyzing response patterns from 847 similar problems...</span>
+                        <motion.div 
+                          className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        />
+                        <div>
+                          <span className="text-primary font-semibold flex items-center gap-2">
+                            <Sparkles className="w-4 h-4" />
+                            AI analyzing response patterns from 10,847 similar problems...
+                          </span>
+                          <p className="text-xs text-muted-foreground mt-1">Processing learning patterns and performance data</p>
+                        </div>
                       </div>
                       <Progress value={progress} className="mt-3" />
                     </motion.div>
