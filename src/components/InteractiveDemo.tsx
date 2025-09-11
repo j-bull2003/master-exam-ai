@@ -42,20 +42,24 @@ interface Question {
 
 const demoQuestion: Question = {
   id: 1,
-  text: "Which of the following is a solution for the inequality below?",
-  latex: "5 - 2(3x - 4) < 3x + 7 - 4x + 2",
-  options: ["-2", "-1", "0", "1"],
-  correct: 0,
-  explanation: "$$\\begin{align} 5 - 2(3x - 4) &< 3x + 7 - 4x + 2 \\\\ 5 - 6x + 8 &< -x + 9 \\\\ 13 - 6x &< -x + 9 \\\\ 4 &< 5x \\\\ x &> \\frac{4}{5} = 0.8 \\end{align}$$ Since $x > 0.8$, only $-2$ satisfies when tested in the original inequality.",
-  hint: "Start by distributing and combining like terms on both sides. Then isolate x to find the solution range.",
-  topic: "Linear inequalities in 1 or 2 variables",
+  text: "Chemical engineers often need precise data on element solubility in various solvents for industrial applications. In a comprehensive study, Dr. Nadia Patel and her team measured the solubility percentages of several alkali metals in common solvents at precisely 2° Fahrenheit. Their findings showed that solubility patterns vary significantly across different elements and solvents, with water generally providing better dissolution than other solvents. One unexpected finding was that some elements showed markedly different solubility profiles depending on the solvent type. For example, whereas chlorine dissolves in salt water at a rate of 73%, the solubility rate for ______ \n\nWhich choice most effectively uses data from the table to complete the example?",
+  options: [
+    "sodium in water is 93%.",
+    "potassium in oil is 87%.", 
+    "lithium in salt water is 58%.",
+    "chlorine in alcohol is 82%."
+  ],
+  correct: 2,
+  explanation: "The passage mentions chlorine's 73% solubility in salt water as an example, then asks for a contrasting example that shows 'markedly different solubility profiles.' Lithium in salt water (58%) provides the strongest contrast to chlorine in salt water (73%) - both are the same solvent but different dissolution rates, demonstrating the point about elements having different profiles.",
+  hint: "Look for an option that creates a meaningful contrast with the chlorine/salt water example already given in the passage.",
+  topic: "Command of Evidence: Quantitative",
   difficulty: "Medium"
 };
 
 const aiInsights = [
-  { icon: Target, title: "Struggle Point Analysis", description: "You struggled with step 2 (distributing negatives). 73% of students miss this. Focus here for +25 points", color: "text-orange-500" },
-  { icon: Brain, title: "Learning Pattern", description: "Your approach matches high-scorers (systematic). Keep this strategy - you're 2x more likely to improve", color: "text-blue-500" },
-  { icon: Zap, title: "Score Prediction", description: "Master inequality distribution = +40 points. You're 85% there - one more practice session needed", color: "text-green-500" },
+  { icon: Target, title: "Reading Strategy Analysis", description: "You used systematic table scanning (optimal approach). Students using this method score 34% higher on quantitative evidence questions", color: "text-green-500" },
+  { icon: Brain, title: "Cognitive Pattern Recognition", description: "You identified the contrast pattern in 8 seconds. This cognitive speed correlates with 150+ point improvements in Reading & Writing", color: "text-blue-500" },
+  { icon: Zap, title: "Weakness Identification", description: "You initially considered option A (water vs salt water comparison). 67% of students make this same mistake. Focus on same-solvent comparisons", color: "text-orange-500" },
 ];
 
 const mathematicalElements = [
@@ -260,7 +264,7 @@ export const InteractiveDemo = () => {
                         <Brain className="w-6 h-6 text-primary" />
                       </motion.div>
                       <div>
-                        <h3 className="font-semibold text-foreground">SAT Practice: Math</h3>
+                        <h3 className="font-semibold text-foreground">SAT Practice: Reading & Writing</h3>
                         <p className="text-sm text-muted-foreground">{demoQuestion.topic}</p>
                       </div>
                     </div>
@@ -279,18 +283,61 @@ export const InteractiveDemo = () => {
                   </div>
 
                   <div className="mb-6">
-                    <p className="text-lg text-foreground leading-relaxed mb-4">
+                    <div className="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-900/50 dark:to-blue-900/30 rounded-xl p-6 border border-slate-200 dark:border-slate-700 mb-4">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm border-collapse">
+                          <thead>
+                            <tr className="border-b border-slate-300 dark:border-slate-600">
+                              <th className="text-left p-2 font-semibold">Element</th>
+                              <th className="text-center p-2 font-semibold">Water</th>
+                              <th className="text-center p-2 font-semibold">Salt Water</th>
+                              <th className="text-center p-2 font-semibold">Oil</th>
+                              <th className="text-center p-2 font-semibold">Alcohol</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="border-b border-slate-200 dark:border-slate-700">
+                              <td className="p-2 font-medium">Potassium</td>
+                              <td className="text-center p-2">99%</td>
+                              <td className="text-center p-2">90%</td>
+                              <td className="text-center p-2">87%</td>
+                              <td className="text-center p-2">88%</td>
+                            </tr>
+                            <tr className="border-b border-slate-200 dark:border-slate-700">
+                              <td className="p-2 font-medium">Chlorine</td>
+                              <td className="text-center p-2">89%</td>
+                              <td className="text-center p-2 bg-yellow-100 dark:bg-yellow-900/30 font-semibold">73%</td>
+                              <td className="text-center p-2">64%</td>
+                              <td className="text-center p-2">82%</td>
+                            </tr>
+                            <tr className="border-b border-slate-200 dark:border-slate-700">
+                              <td className="p-2 font-medium">Sodium</td>
+                              <td className="text-center p-2">93%</td>
+                              <td className="text-center p-2">71%</td>
+                              <td className="text-center p-2">79%</td>
+                              <td className="text-center p-2">76%</td>
+                            </tr>
+                            <tr className="border-b border-slate-200 dark:border-slate-700">
+                              <td className="p-2 font-medium">Lithium</td>
+                              <td className="text-center p-2">82%</td>
+                              <td className="text-center p-2 bg-green-100 dark:bg-green-900/30 font-semibold">58%</td>
+                              <td className="text-center p-2">62%</td>
+                              <td className="text-center p-2">61%</td>
+                            </tr>
+                            <tr>
+                              <td className="p-2 font-medium">Rubidium</td>
+                              <td className="text-center p-2">87%</td>
+                              <td className="text-center p-2">65%</td>
+                              <td className="text-center p-2">66%</td>
+                              <td className="text-center p-2">64%</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <p className="text-lg text-foreground leading-relaxed">
                       {demoQuestion.text}
                     </p>
-                     {demoQuestion.latex && (
-                       <div className="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-900/50 dark:to-blue-900/30 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
-                         <div className="text-center">
-                           <div className="text-2xl font-serif text-slate-800 dark:text-slate-200 tracking-wide math-display">
-                             {demoQuestion.latex}
-                           </div>
-                         </div>
-                       </div>
-                     )}
                   </div>
 
                   <div className="space-y-3 mb-6">
@@ -402,9 +449,11 @@ export const InteractiveDemo = () => {
                         className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800"
                       >
                         <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
-                          Step-by-Step Solution:
+                          Strategic Analysis:
                         </h4>
-                        <div className="text-blue-800 dark:text-blue-200 math-display" dangerouslySetInnerHTML={{ __html: renderMath(demoQuestion.explanation) }} />
+                        <p className="text-blue-800 dark:text-blue-200">
+                          {demoQuestion.explanation}
+                        </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
