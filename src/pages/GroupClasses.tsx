@@ -5,12 +5,49 @@ import { Header } from "@/components/Header";
 import { Check, Users, BookOpen, Calculator, FileText, Clock, Award, Target, Calendar, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import satReadingPassage from "@/assets/sat-reading-passage.png";
 import satReadingRationale from "@/assets/sat-reading-rationale.png";
 
 export default function GroupClasses() {
   const [showRationale, setShowRationale] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [isEnrolling, setIsEnrolling] = useState(false);
+  const { toast } = useToast();
+
+  const handleEnrollment = async () => {
+    try {
+      setIsEnrolling(true);
+      
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({
+          title: "Authentication Required",
+          description: "Please log in to enroll in group classes.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('create-checkout');
+      
+      if (error) throw error;
+      
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Enrollment error:', error);
+      toast({
+        title: "Enrollment Error",
+        description: "There was an issue starting your enrollment. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsEnrolling(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <Header />
@@ -202,12 +239,16 @@ export default function GroupClasses() {
               </div>
               
               <div className="space-y-3 mb-8">
-                <Link to="/auth/register">
-                  <button className="group w-full max-w-sm mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-3 px-6 rounded-lg text-base font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                    <span className="relative">Enroll Now - $50/week</span>
-                  </button>
-                </Link>
+                <button 
+                  onClick={handleEnrollment}
+                  disabled={isEnrolling}
+                  className="group w-full max-w-sm mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-3 px-6 rounded-lg text-base font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                  <span className="relative">
+                    {isEnrolling ? "Processing..." : "Enroll Now - $50/week"}
+                  </span>
+                </button>
                 
                 <button 
                   className="group w-full max-w-sm mx-auto border border-slate-300 text-slate-700 py-3 px-6 rounded-lg text-base font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"

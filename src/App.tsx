@@ -13,6 +13,7 @@ import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Consulting from "./pages/Consulting";
 import GroupClasses from "./pages/GroupClasses";
+import GroupClassesSuccess from "./pages/GroupClasses/Success";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/consulting" element={<Consulting />} />
           <Route path="/group-classes" element={<GroupClasses />} />
+          <Route path="/group-classes/success" element={<GroupClassesSuccess />} />
           
           {/* Authentication */}
           <Route path="/auth/login" element={<Login />} />
