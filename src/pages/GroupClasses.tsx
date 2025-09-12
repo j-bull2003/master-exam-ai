@@ -38,6 +38,11 @@ export default function GroupClasses() {
               <em className="font-serif text-slate-800"> Mathematics</em>
             </p>
             
+            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 rounded-full text-sm font-medium mb-8 border border-emerald-200/50">
+              <Calendar className="w-4 h-4 mr-2" />
+              Next Cohort Starts: October 13th, 2024
+            </div>
+            
             {/* Prestigious metrics */}
             <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto px-4 mb-12">
               {[
@@ -65,7 +70,7 @@ export default function GroupClasses() {
               <span className="text-slate-600">Structure</span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed px-4">
-              Two focused sessions per week, each targeting specific SAT sections with expert guidance and interactive learning.
+              Two focused sessions per week, each targeting specific SAT sections with expert guidance and interactive learning. Next cohort begins October 13th.
             </p>
           </div>
           
@@ -81,7 +86,7 @@ export default function GroupClasses() {
                     <h3 className="text-xl font-serif font-bold text-slate-900">
                       Reading & Writing
                     </h3>
-                    <p className="text-slate-600 text-sm">Session 1 • 75 minutes</p>
+                    <p className="text-slate-600 text-sm">Session 1 • 60 minutes</p>
                   </div>
                 </div>
                 
@@ -121,7 +126,7 @@ export default function GroupClasses() {
                     <h3 className="text-xl font-serif font-bold text-slate-900">
                       Mathematics
                     </h3>
-                    <p className="text-slate-600 text-sm">Session 2 • 75 minutes</p>
+                    <p className="text-slate-600 text-sm">Session 2 • 60 minutes</p>
                   </div>
                 </div>
                 
@@ -179,15 +184,15 @@ export default function GroupClasses() {
                   $30
                   <span className="text-xl font-normal text-slate-600">/week</span>
                 </div>
-                <p className="text-slate-600 font-light">
-                  Two 75-minute sessions • Reading & Writing + Mathematics
-                </p>
+              <p className="text-slate-600 font-light">
+                Two 60-minute sessions • Reading & Writing + Mathematics
+              </p>
               </div>
               
               <div className="grid md:grid-cols-2 gap-4 mb-8 max-w-2xl mx-auto">
                 <div className="flex items-center justify-center gap-3 p-4 rounded-lg bg-slate-50">
                   <Calendar className="w-5 h-5 text-slate-700" />
-                  <span className="font-medium text-slate-900 text-sm">2 Sessions/Week</span>
+                  <span className="font-medium text-slate-900 text-sm">Starts Oct 13th</span>
                 </div>
                 <div className="flex items-center justify-center gap-3 p-4 rounded-lg bg-slate-50">
                   <Users className="w-5 h-5 text-slate-700" />
@@ -195,12 +200,22 @@ export default function GroupClasses() {
                 </div>
               </div>
               
-              <Link to="/auth/register">
-                <button className="group w-full max-w-sm mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-3 px-6 rounded-lg text-base font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                  <span className="relative">Join Group Classes</span>
+              <div className="space-y-3 mb-8">
+                <Link to="/auth/register">
+                  <button className="group w-full max-w-sm mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-3 px-6 rounded-lg text-base font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    <span className="relative">Join Group Classes</span>
+                  </button>
+                </Link>
+                
+                <button className="group w-full max-w-sm mx-auto border border-slate-300 text-slate-700 py-3 px-6 rounded-lg text-base font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
+                  <span className="relative">Watch Demo Session</span>
                 </button>
-              </Link>
+              </div>
+              
+              <p className="text-slate-600 font-light text-sm max-w-sm mx-auto">
+                Join our free demo session to experience our teaching methodology
+              </p>
             </div>
           </div>
         </div>
@@ -314,7 +329,7 @@ export default function GroupClasses() {
                 </div>
                 <div>
                   <h4 className="font-serif font-semibold text-slate-900 mb-1">Weekly Session Structure</h4>
-                  <span className="text-slate-700 font-light">Two 75-minute sessions per week with expert instructors</span>
+                  <span className="text-slate-700 font-light">Two 60-minute sessions per week with expert instructors</span>
                 </div>
               </div>
               <div className="flex items-start gap-4">
