@@ -194,7 +194,7 @@ const Index = () => {
 
             {/* Main Headline with enhanced typography */}
             {isLoaded ? (
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
                 <span className="text-foreground block mb-2">Ace the SAT</span>
                 <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
                   with AI-Driven Precision
@@ -202,14 +202,14 @@ const Index = () => {
               </h1>
             ) : (
               <div className="space-y-4 mb-6">
-                <Skeleton className="h-16 w-full max-w-3xl mx-auto" />
-                <Skeleton className="h-16 w-full max-w-2xl mx-auto" />
+                <Skeleton className="h-12 sm:h-16 w-full max-w-3xl mx-auto" />
+                <Skeleton className="h-12 sm:h-16 w-full max-w-2xl mx-auto" />
               </div>
             )}
 
             {/* Subtext with better contrast */}
             {isLoaded ? (
-              <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
                 Master the SAT with AI-powered precision. Personalized study plans. Adaptive practice. Expert-authored content.
               </p>
             ) : (
@@ -218,13 +218,13 @@ const Index = () => {
 
             {/* Enhanced pricing info with layered cards */}
             {isLoaded ? (
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors card-layered">
                   <CheckCircle className="w-4 h-4 text-success" />
                   <span className="text-success font-semibold">3-day free trial</span>
                 </div>
-                <div className="text-muted-foreground font-medium">From $39.99/month (annual)</div>
-                <div className="text-muted-foreground">No setup fees • Cancel anytime</div>
+                <div className="text-muted-foreground font-medium text-center">From $39.99/month (annual)</div>
+                <div className="text-muted-foreground text-center">No setup fees • Cancel anytime</div>
               </div>
             ) : (
               <Skeleton className="h-6 w-96 mx-auto mb-8" />
@@ -287,34 +287,34 @@ const Index = () => {
             <p className="text-muted-foreground">Join thousands of students who've improved their SAT scores with our proven methods</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Users className="w-12 h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-4xl font-bold text-foreground mb-2">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Users className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                <div className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
                   {statsCounter.students.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium">SAT Students</div>
+                <div className="text-muted-foreground font-medium text-sm sm:text-base">SAT Students</div>
               </div>
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <TrendingUp className="w-12 h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-4xl font-bold text-foreground mb-2">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <TrendingUp className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                <div className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
                   {statsCounter.questions.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium">SAT Practice Questions</div>
+                <div className="text-muted-foreground font-medium text-sm sm:text-base">SAT Practice Questions</div>
               </div>
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Award className="w-12 h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-4xl font-bold text-foreground mb-2">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Award className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                <div className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
                   {statsCounter.accuracy}%
                 </div>
-                <div className="text-muted-foreground font-medium">Score Improvement Rate</div>
+                <div className="text-muted-foreground font-medium text-sm sm:text-base">Score Improvement Rate</div>
               </div>
             </div>
           </div>
@@ -333,7 +333,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {features.map((feature, index) => (
               <InteractiveCard
                 key={index}
@@ -342,12 +342,12 @@ const Index = () => {
                 className="text-center group hover:border-primary/20"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="p-8">
-                  <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-all duration-300 group-hover:scale-110">
-                    <feature.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
+                <div className="p-6 sm:p-8">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-all duration-300 group-hover:scale-110">
+                    <feature.icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4 text-foreground">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                  <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-foreground">{feature.title}</h3>
+                  <p className="text-sm sm:text-base text-muted-foreground">{feature.description}</p>
                 </div>
               </InteractiveCard>
             ))}
@@ -535,95 +535,95 @@ const Index = () => {
                   </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-3 sm:p-4 lg:p-6">
                   {/* SAT Subject Performance */}
-                  <div className="mb-8">
-                    <div className="flex items-center justify-between mb-6">
-                      <h4 className="text-xl font-bold text-slate-900">SAT Subject Breakdown</h4>
-                      <div className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">Real-time Analysis</div>
+                  <div className="mb-6 sm:mb-8">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-2">
+                      <h4 className="text-lg sm:text-xl font-bold text-slate-900">SAT Subject Breakdown</h4>
+                      <div className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full w-fit">Real-time Analysis</div>
                     </div>
                     
-                    <div className="space-y-5">
+                    <div className="space-y-3 sm:space-y-5">
                       {/* Reading & Writing */}
-                      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100/50 border border-emerald-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-3">
+                      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100/50 border border-emerald-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-2 sm:mb-3">
                           <div>
-                            <div className="font-bold text-slate-900 text-lg">Reading & Writing</div>
-                            <div className="text-sm text-emerald-700 font-medium">Craft & Structure</div>
+                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Reading & Writing</div>
+                            <div className="text-xs sm:text-sm text-emerald-700 font-medium">Craft & Structure</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-emerald-600 font-bold text-xl">92%</div>
+                            <div className="text-emerald-600 font-bold text-lg sm:text-xl">92%</div>
                             <div className="flex items-center gap-1">
                               <TrendingUp className="w-3 h-3 text-emerald-500" />
                               <span className="text-xs text-emerald-600 font-medium">+8%</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-emerald-200 rounded-full h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-3 rounded-full transition-all duration-700 w-[92%]"></div>
+                        <div className="w-full bg-emerald-200 rounded-full h-2 sm:h-3 overflow-hidden">
+                          <div className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[92%]"></div>
                         </div>
                         <div className="mt-2 text-xs text-emerald-700 font-medium">✓ Strength Area</div>
                       </div>
                       
                       {/* Heart of Algebra */}
-                      <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 border border-blue-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-3">
+                      <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 border border-blue-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-2 sm:mb-3">
                           <div>
-                            <div className="font-bold text-slate-900 text-lg">Heart of Algebra</div>
-                            <div className="text-sm text-blue-700 font-medium">Linear Equations</div>
+                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Heart of Algebra</div>
+                            <div className="text-xs sm:text-sm text-blue-700 font-medium">Linear Equations</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-blue-600 font-bold text-xl">84%</div>
+                            <div className="text-blue-600 font-bold text-lg sm:text-xl">84%</div>
                             <div className="flex items-center gap-1">
                               <TrendingUp className="w-3 h-3 text-blue-500" />
                               <span className="text-xs text-blue-600 font-medium">+5%</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-blue-200 rounded-full h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-blue-400 to-blue-600 h-3 rounded-full transition-all duration-700 w-[84%]"></div>
+                        <div className="w-full bg-blue-200 rounded-full h-2 sm:h-3 overflow-hidden">
+                          <div className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[84%]"></div>
                         </div>
                         <div className="mt-2 text-xs text-blue-700 font-medium">↗ Improving</div>
                       </div>
                       
                       {/* Problem Solving & Data Analysis */}
-                      <div className="bg-gradient-to-r from-red-50 to-red-100/50 border border-red-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-3">
+                      <div className="bg-gradient-to-r from-red-50 to-red-100/50 border border-red-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-2 sm:mb-3">
                           <div>
-                            <div className="font-bold text-slate-900 text-lg">Problem Solving & Data</div>
-                            <div className="text-sm text-red-700 font-medium">Statistics & Probability</div>
+                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Problem Solving & Data</div>
+                            <div className="text-xs sm:text-sm text-red-700 font-medium">Statistics & Probability</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-red-600 font-bold text-xl">68%</div>
+                            <div className="text-red-600 font-bold text-lg sm:text-xl">68%</div>
                             <div className="flex items-center gap-1">
                               <AlertCircle className="w-3 h-3 text-red-500" />
                               <span className="text-xs text-red-600 font-medium">Focus</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-red-200 rounded-full h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-red-400 to-red-600 h-3 rounded-full transition-all duration-700 w-[68%]"></div>
+                        <div className="w-full bg-red-200 rounded-full h-2 sm:h-3 overflow-hidden">
+                          <div className="bg-gradient-to-r from-red-400 to-red-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[68%]"></div>
                         </div>
                         <div className="mt-2 text-xs text-red-700 font-medium">⚡ Priority Area</div>
                       </div>
                       
                       {/* Passport to Advanced Math */}
-                      <div className="bg-gradient-to-r from-yellow-50 to-yellow-100/50 border border-yellow-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-3">
+                      <div className="bg-gradient-to-r from-yellow-50 to-yellow-100/50 border border-yellow-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-2 sm:mb-3">
                           <div>
-                            <div className="font-bold text-slate-900 text-lg">Passport to Advanced Math</div>
-                            <div className="text-sm text-yellow-700 font-medium">Quadratic Functions</div>
+                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Passport to Advanced Math</div>
+                            <div className="text-xs sm:text-sm text-yellow-700 font-medium">Quadratic Functions</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-yellow-600 font-bold text-xl">76%</div>
+                            <div className="text-yellow-600 font-bold text-lg sm:text-xl">76%</div>
                             <div className="flex items-center gap-1">
                               <TrendingUp className="w-3 h-3 text-yellow-500" />
                               <span className="text-xs text-yellow-600 font-medium">+12%</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-yellow-200 rounded-full h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-3 rounded-full transition-all duration-700 w-[76%]"></div>
+                        <div className="w-full bg-yellow-200 rounded-full h-2 sm:h-3 overflow-hidden">
+                          <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[76%]"></div>
                         </div>
                         <div className="mt-2 text-xs text-yellow-700 font-medium">📈 Rapid Growth</div>
                       </div>
@@ -809,65 +809,65 @@ const Index = () => {
       <section className="py-16">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               
               {/* Annual Plan - Best Value */}
-              <div className="relative p-6 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-6 py-2 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
+              <div className="relative p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
+                <div className="absolute -top-2 sm:-top-3 left-1/2 transform -translate-x-1/2 z-10">
+                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-3 sm:px-6 py-1 sm:py-2 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
                     BEST VALUE
                   </span>
                 </div>
                 
-                <div className="pt-4">
-                  <h3 className="text-xl font-bold mb-2">Annual</h3>
+                <div className="pt-3 sm:pt-4">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2">Annual</h3>
                   <div className="mb-2">
-                    <span className="text-4xl font-black">$39.99</span>
-                    <span className="text-muted-foreground">/mo</span>
+                    <span className="text-3xl sm:text-4xl font-black">$39.99</span>
+                    <span className="text-muted-foreground text-sm sm:text-base">/mo</span>
                   </div>
-                  <div className="mb-4">
-                    <span className="text-sm text-muted-foreground">$479.99 billed annually</span>
+                  <div className="mb-3 sm:mb-4">
+                    <span className="text-xs sm:text-sm text-muted-foreground">$479.99 billed annually</span>
                   </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-2 sm:p-3 mb-3 sm:mb-4">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    3-Day Free Trial
+                    <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="text-sm">3-Day Free Trial</span>
                   </div>
                 </div>
 
-                <Link to="/auth/register" className="block mb-4">
-                  <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                <Link to="/auth/register" className="block mb-3 sm:mb-4">
+                  <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-sm sm:text-base py-2 sm:py-3">
                     Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2" />
                   </Button>
                 </Link>
               </div>
 
 
               {/* Monthly Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">Monthly</h3>
+              <div className="relative p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
+                <h3 className="text-lg sm:text-xl font-bold mb-2">Monthly</h3>
                 <div className="mb-2">
-                  <span className="text-4xl font-black">$159.99</span>
-                  <span className="text-muted-foreground">/mo</span>
+                  <span className="text-3xl sm:text-4xl font-black">$159.99</span>
+                  <span className="text-muted-foreground text-sm sm:text-base">/mo</span>
                 </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$159.99 monthly</span>
+                <div className="mb-3 sm:mb-4">
+                  <span className="text-xs sm:text-sm text-muted-foreground">$159.99 monthly</span>
                 </div>
                 
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-2 sm:p-3 mb-3 sm:mb-4">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    3-Day Free Trial
+                    <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="text-sm">3-Day Free Trial</span>
                   </div>
                 </div>
 
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
+                <Link to="/auth/register" className="block mb-3 sm:mb-4">
+                  <Button variant="outline" className="w-full text-sm sm:text-base py-2 sm:py-3">
                     Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2" />
                   </Button>
                 </Link>
               </div>
