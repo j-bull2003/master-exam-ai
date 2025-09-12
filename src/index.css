@@ -47,9 +47,9 @@
     --input: 240 5.9% 90%;
     --ring: 217 91% 60%;
 
-    /* Premium accent color for elite features */
-    --accent: 270 95% 75%;
-    --accent-foreground: 0 0% 100%;
+    /* Premium dark navy for elite features */
+    --accent: 222 47% 11%;
+    --accent-foreground: 0 0% 98%;
 
     /* Neutral tones for layered depth */
     --neutral-50: 240 4.8% 98%;

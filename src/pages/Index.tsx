@@ -114,29 +114,28 @@ const Index = () => {
       <Header />
       
       {/* Premium Hero Section */}
-      <section className="pt-32 pb-20 relative overflow-hidden bg-mesh">
-        <AnimatedBackground className="opacity-80" />
+      <section className="pt-32 pb-20 relative overflow-hidden bg-background">
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 rounded-full px-6 py-3 text-sm font-medium mb-8 shadow-sm">
+            <div className="inline-flex items-center gap-2 bg-muted/50 border border-border rounded-full px-6 py-3 text-sm font-medium mb-8">
               <Star className="w-4 h-4 text-accent fill-accent" />
               <span className="text-accent font-semibold">Trusted by 15,000+ students at elite universities</span>
             </div>
 
             {/* Premium Headline */}
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-display font-bold leading-none mb-8">
-              <span className="text-foreground">Master the SAT</span>
+              <span className="text-foreground">Elite SAT</span>
               <br />
-              <span className="bg-gradient-to-r from-accent via-accent/80 to-accent bg-clip-text text-transparent">
-                Score 1500+
+              <span className="text-accent">
+                Coaching
               </span>
             </h1>
 
             {/* Premium Subtitle */}
             <p className="text-2xl text-muted-foreground leading-relaxed mb-8 max-w-3xl mx-auto font-light">
-              The most advanced AI-powered SAT preparation platform. Join elite students achieving 
-              <span className="font-semibold text-foreground"> average 250+ point improvements</span> in record time.
+              Transform your SAT performance with our <span className="italic">bespoke</span> 1:1 coaching program.
+              <br />Where excellence meets personalization.
             </p>
 
             {/* Trial Badge */}
@@ -146,17 +145,24 @@ const Index = () => {
             </div>
 
             {/* Premium CTA */}
-            <div className="mb-12">
+            <div className="mb-12 flex flex-col gap-4 items-center">
               <Link to="/auth/register">
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-accent to-accent/80 hover:scale-105 transition-all duration-300 text-lg px-12 py-6 rounded-xl shadow-lg hover:shadow-xl"
+                  className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-12 py-6 rounded-lg"
                 >
-                  Start Your Free Trial
+                  Reserve Your Consultation
                   <ArrowRight className="w-6 h-6 ml-3" />
                 </Button>
               </Link>
-              <p className="text-sm text-muted-foreground mt-4">No credit card required for trial • Card required after 3 days</p>
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="border-border text-muted-foreground hover:bg-muted/30 px-12 py-6 rounded-lg"
+              >
+                Explore Success Stories
+              </Button>
+              <p className="text-sm text-muted-foreground mt-4">3-day platform trial • Full consultation available</p>
             </div>
 
             {/* Trust Indicators */}
@@ -218,32 +224,29 @@ const Index = () => {
           
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center">
-              <div className="bg-gradient-to-br from-accent/5 to-accent/10 rounded-3xl p-10">
-                <Users className="w-16 h-16 text-accent mx-auto mb-6" />
+              <div className="bg-background border border-border rounded-2xl p-10">
                 <div className="text-5xl font-display font-bold text-foreground mb-3">
-                  {statsCounter.students.toLocaleString()}+
+                  500+
                 </div>
-                <div className="text-lg text-muted-foreground font-medium">Students Prepared</div>
+                <div className="text-lg text-muted-foreground font-medium">ELITE STUDENTS COACHED</div>
               </div>
             </div>
             
             <div className="text-center">
-              <div className="bg-gradient-to-br from-success/5 to-success/10 rounded-3xl p-10">
-                <TrendingUp className="w-16 h-16 text-success mx-auto mb-6" />
+              <div className="bg-background border border-border rounded-2xl p-10">
                 <div className="text-5xl font-display font-bold text-foreground mb-3">
-                  {statsCounter.improvement}+
+                  98%
                 </div>
-                <div className="text-lg text-muted-foreground font-medium">Average Point Improvement</div>
+                <div className="text-lg text-muted-foreground font-medium">SUCCESS RATE</div>
               </div>
             </div>
             
             <div className="text-center">
-              <div className="bg-gradient-to-br from-accent/5 to-accent/10 rounded-3xl p-10">
-                <Award className="w-16 h-16 text-accent mx-auto mb-6" />
+              <div className="bg-background border border-border rounded-2xl p-10">
                 <div className="text-5xl font-display font-bold text-foreground mb-3">
-                  {statsCounter.questions.toLocaleString()}+
+                  +210
                 </div>
-                <div className="text-lg text-muted-foreground font-medium">Expert Questions</div>
+                <div className="text-lg text-muted-foreground font-medium">AVERAGE IMPROVEMENT</div>
               </div>
             </div>
           </div>
@@ -285,8 +288,7 @@ const Index = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-accent via-accent/90 to-accent/80 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/5" />
+      <section className="py-20 bg-accent relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-5xl font-display font-bold text-white mb-6">
@@ -301,7 +303,7 @@ const Index = () => {
               <Link to="/auth/register">
                 <Button 
                   size="lg" 
-                  className="bg-white text-accent hover:bg-white/90 transition-all duration-300 text-lg px-12 py-6 rounded-xl shadow-lg hover:shadow-xl"
+                  className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 transition-all duration-300 text-lg px-12 py-6 rounded-lg"
                 >
                   Start Your Free Trial
                   <ArrowRight className="w-6 h-6 ml-3" />
