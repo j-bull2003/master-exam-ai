@@ -45,27 +45,27 @@ const Pricing = () => {
       {/* Pricing Plans */}
       <section className="py-16 bg-mesh">
         <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8">
               
               {/* Annual Plan - Best Value */}
-              <div className="relative p-6 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
+              <div className="relative p-8 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-semibold">
                     BEST VALUE
                   </span>
                 </div>
                 
-                <h3 className="text-xl font-bold mb-2">Annual</h3>
+                <h3 className="text-2xl font-bold mb-2">Annual Plan</h3>
                 <div className="mb-2">
-                  <span className="text-4xl font-black">$39.99</span>
-                  <span className="text-muted-foreground">/mo</span>
+                  <span className="text-5xl font-black">$39.99</span>
+                  <span className="text-muted-foreground text-lg">/mo</span>
                 </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$479.99 billed annually</span>
+                <div className="mb-6">
+                  <span className="text-muted-foreground">$479.99 billed annually</span>
                 </div>
                 
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
                     <Sparkles className="w-4 h-4" />
                     7-Day Free Trial
@@ -73,59 +73,7 @@ const Pricing = () => {
                 </div>
 
                 <Link to="/auth/register" className="block mb-4">
-                  <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-
-              {/* 6-Month Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">6-Month</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$54.99</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$329.99 every 6 months</span>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
-                </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-
-              {/* 3-Month Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">3-Month</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$79.99</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$239.99 every 3 months</span>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
-                </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
+                  <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-lg py-3">
                     Start Free Trial
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -133,17 +81,17 @@ const Pricing = () => {
               </div>
 
               {/* Monthly Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">Monthly</h3>
+              <div className="relative p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
+                <h3 className="text-2xl font-bold mb-2">Monthly Plan</h3>
                 <div className="mb-2">
-                  <span className="text-4xl font-black">$159.99</span>
-                  <span className="text-muted-foreground">/mo</span>
+                  <span className="text-5xl font-black">$159.99</span>
+                  <span className="text-muted-foreground text-lg">/mo</span>
                 </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$159.99 monthly</span>
+                <div className="mb-6">
+                  <span className="text-muted-foreground">$159.99 monthly</span>
                 </div>
                 
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
                     <Sparkles className="w-4 h-4" />
                     7-Day Free Trial
@@ -151,7 +99,7 @@ const Pricing = () => {
                 </div>
 
                 <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full text-lg py-3">
                     Start Free Trial
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
