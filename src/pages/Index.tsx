@@ -10,6 +10,7 @@ import { InteractiveCard } from "@/components/InteractiveCard";
 import { MagneticButton } from "@/components/MagneticButton";
 import { EmptyState } from "@/components/EmptyState";
 import { PageProgressBar } from "@/components/PageProgressBar";
+import { RealPlatformDemo } from "@/components/RealPlatformDemo";
 import { EXAM_CONFIGS } from "@/data/examConfig";
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
@@ -329,6 +330,59 @@ const Index = () => {
                   All questions, answers, hints, and explanations are reviewed by our 
                   Curriculum Team for accuracy, difficulty, and structure.
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Platform Demo Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.3),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(120,119,198,0.2),transparent_50%)]"></div>
+        
+        <div className="container mx-auto max-w-6xl px-6 relative">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/90 mb-8 border border-white/20">
+              <div className="w-2 h-2 bg-blue-400 rounded-full mr-3 animate-pulse"></div>
+              Live Platform Preview
+            </div>
+            
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
+              See Your Personalized
+              <br />
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Study Plan in Action
+              </span>
+            </h2>
+            
+            <p className="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed">
+              Experience how our platform creates a customized study plan based on your diagnostic results and exam date
+            </p>
+          </div>
+
+          {/* Interactive Demo */}
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
+              {/* Demo Header */}
+              <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                  <div className="text-white text-sm font-medium">Unihack.ai Platform</div>
+                  <div className="flex items-center gap-2 text-white/80 text-xs">
+                    <span>📍 Demo Mode</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Demo Content */}
+              <div className="p-8">
+                <RealPlatformDemo />
               </div>
             </div>
           </div>
