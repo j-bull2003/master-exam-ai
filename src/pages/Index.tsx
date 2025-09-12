@@ -167,7 +167,7 @@ const Index = () => {
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors card-layered">
                   <CheckCircle className="w-4 h-4 text-success" />
-                  <span className="text-success font-semibold">7-day free trial</span>
+                  <span className="text-success font-semibold">3-day free trial</span>
                 </div>
                 <div className="text-muted-foreground font-medium">From $39.99/month (annual)</div>
                 <div className="text-muted-foreground">No setup fees • Cancel anytime</div>
@@ -473,7 +473,7 @@ const Index = () => {
               <span className="text-foreground">Pricing</span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Choose your SAT preparation plan. 7-day free trial included with all plans.
+              Choose your SAT preparation plan. 3-day free trial included with all plans.
             </p>
           </div>
         </div>
@@ -483,7 +483,7 @@ const Index = () => {
       <section className="py-16">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid md:grid-cols-2 gap-6">
               
               {/* Annual Plan - Best Value */}
               <div className="relative p-6 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
@@ -507,7 +507,7 @@ const Index = () => {
                 <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
                     <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
+                    3-Day Free Trial
                   </div>
                 </div>
 
@@ -519,57 +519,6 @@ const Index = () => {
                 </Link>
               </div>
 
-              {/* 6-Month Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">6-Month</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$54.99</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$329.99 every 6 months</span>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
-                </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-
-              {/* 3-Month Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">3-Month</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$79.99</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$239.99 every 3 months</span>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
-                </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
 
               {/* Monthly Plan */}
               <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
@@ -585,7 +534,7 @@ const Index = () => {
                 <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
                     <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
+                    3-Day Free Trial
                   </div>
                 </div>
 

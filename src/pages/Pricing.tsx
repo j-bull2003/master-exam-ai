@@ -68,7 +68,7 @@ const Pricing = () => {
                 <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
                     <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
+                    3-Day Free Trial
                   </div>
                 </div>
 
@@ -94,7 +94,7 @@ const Pricing = () => {
                 <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
                     <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
+                    3-Day Free Trial
                   </div>
                 </div>
 
@@ -146,7 +146,7 @@ const Pricing = () => {
             <div className="space-y-6">
               <div className="p-6 rounded-xl bg-card border border-border/50">
                 <h3 className="font-semibold mb-2">How does the free trial work?</h3>
-                <p className="text-muted-foreground">You can explore the platform with limited access for 7 days. No credit card required upfront. Cancel anytime during the trial with no charges.</p>
+                <p className="text-muted-foreground">You can explore the platform with limited access for 3 days. No credit card required upfront. Cancel anytime during the trial with no charges.</p>
               </div>
               <div className="p-6 rounded-xl bg-card border border-border/50">
                 <h3 className="font-semibold mb-2">Can I cancel anytime?</h3>
