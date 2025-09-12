@@ -10,6 +10,7 @@ import { InteractiveCard } from "@/components/InteractiveCard";
 import { MagneticButton } from "@/components/MagneticButton";
 import { EmptyState } from "@/components/EmptyState";
 import { PageProgressBar } from "@/components/PageProgressBar";
+import GroupClassSection from "@/components/GroupClassSection";
 import { EXAM_CONFIGS } from "@/data/examConfig";
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
@@ -221,6 +222,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Group Classes Section */}
+      <GroupClassSection />
 
       {/* Live Stats Section */}
       <section className="py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">

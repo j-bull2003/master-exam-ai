@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Shield, ArrowRight, Sparkles } from "lucide-react";
+import { CheckCircle, Shield, ArrowRight, Sparkles, Users, Target, Brain, Zap } from "lucide-react";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const Pricing = () => {
@@ -42,120 +42,169 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* Pricing Plans */}
+      {/* Group Classes Section */}
       <section className="py-16 bg-mesh">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Group Classes Header */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
+                <Users className="w-4 h-4 text-primary" />
+                <span className="text-primary font-semibold">New: Live Group Classes</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Choose Your Learning Path</h2>
+              <p className="text-muted-foreground">Flexible weekly options with expert tutors and AI-powered platform access</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               
-              {/* Annual Plan - Best Value */}
-              <div className="relative p-6 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
+              {/* Group Classes Only */}
+              <div className="relative p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
+                <h3 className="text-xl font-bold mb-2">Group Classes</h3>
+                <div className="mb-2">
+                  <span className="text-4xl font-black">$20</span>
+                  <span className="text-muted-foreground">/week</span>
+                </div>
+                <div className="mb-6">
+                  <span className="text-sm text-muted-foreground">Weekly commitment</span>
+                </div>
+
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Live SAT group sessions</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Expert tutor instruction</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">8-12 students per class</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Interactive learning</span>
+                  </div>
+                </div>
+
+                <Link to="/auth/register" className="block mb-4">
+                  <Button variant="outline" className="w-full">
+                    Join Group Classes
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Group + Platform - Most Popular */}
+              <div className="relative p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-primary-variant/5 border border-primary/30 shadow-lg">
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-semibold">
-                    BEST VALUE
+                    MOST POPULAR
                   </span>
                 </div>
                 
-                <h3 className="text-xl font-bold mb-2">Annual</h3>
+                <h3 className="text-xl font-bold mb-2">Group + Platform</h3>
                 <div className="mb-2">
-                  <span className="text-4xl font-black">$39.99</span>
-                  <span className="text-muted-foreground">/mo</span>
+                  <span className="text-4xl font-black">$35</span>
+                  <span className="text-muted-foreground">/week</span>
                 </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$479.99 billed annually</span>
+                <div className="mb-6">
+                  <span className="text-sm text-muted-foreground">Save $5 vs separate</span>
                 </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
+
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Everything in Group Classes</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">8,500+ practice questions</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">AI weakness detection</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Full analytics dashboard</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Mock exams & scoring</span>
                   </div>
                 </div>
 
                 <Link to="/auth/register" className="block mb-4">
                   <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
-                    Start Free Trial
+                    Start Learning Today
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
               </div>
 
-              {/* 6-Month Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">6-Month</h3>
+              {/* Premium Package */}
+              <div className="relative p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
+                <h3 className="text-xl font-bold mb-2">Premium Package</h3>
                 <div className="mb-2">
-                  <span className="text-4xl font-black">$54.99</span>
-                  <span className="text-muted-foreground">/mo</span>
+                  <span className="text-4xl font-black">$75</span>
+                  <span className="text-muted-foreground">/week</span>
                 </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$329.99 every 6 months</span>
+                <div className="mb-6">
+                  <span className="text-sm text-muted-foreground">Complete SAT mastery</span>
                 </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
+
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Everything in Group + Platform</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Weekly 1-on-1 tutoring</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Custom study plans</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span className="text-sm">Priority support</span>
                   </div>
                 </div>
 
                 <Link to="/auth/register" className="block mb-4">
                   <Button variant="outline" className="w-full">
-                    Start Free Trial
+                    Go Premium
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
               </div>
+            </div>
 
-              {/* 3-Month Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">3-Month</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$79.99</span>
-                  <span className="text-muted-foreground">/mo</span>
+            {/* Add-ons Section */}
+            <div className="mt-16 p-8 bg-muted/30 rounded-3xl">
+              <h3 className="text-2xl font-bold text-center mb-8">Available Add-ons</h3>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="text-center p-6 bg-background rounded-2xl border border-border/50">
+                  <Target className="w-8 h-8 text-primary mx-auto mb-3" />
+                  <h4 className="font-semibold mb-2">Platform Access</h4>
+                  <p className="text-sm text-muted-foreground mb-2">AI-powered practice & analytics</p>
+                  <div className="text-lg font-bold text-primary">+$15/week</div>
                 </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$239.99 every 3 months</span>
+                <div className="text-center p-6 bg-background rounded-2xl border border-border/50">
+                  <Brain className="w-8 h-8 text-primary mx-auto mb-3" />
+                  <h4 className="font-semibold mb-2">1-on-1 Tutoring</h4>
+                  <p className="text-sm text-muted-foreground mb-2">Weekly private sessions</p>
+                  <div className="text-lg font-bold text-primary">+$40/week</div>
                 </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
+                <div className="text-center p-6 bg-background rounded-2xl border border-border/50">
+                  <Zap className="w-8 h-8 text-primary mx-auto mb-3" />
+                  <h4 className="font-semibold mb-2">Extra Mock Tests</h4>
+                  <p className="text-sm text-muted-foreground mb-2">Additional practice exams</p>
+                  <div className="text-lg font-bold text-primary">+$10/week</div>
                 </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Monthly Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">Monthly</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$159.99</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$159.99 monthly</span>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
-                </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
               </div>
             </div>
             
