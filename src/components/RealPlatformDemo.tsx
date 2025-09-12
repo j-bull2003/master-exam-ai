@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Target, BookOpen, TrendingUp, Play, CheckCircle, Brain, Calculator, Trophy, Star } from "lucide-react";
+import { Calendar, Clock, Target, BookOpen, TrendingUp, Play, CheckCircle, Brain, Calculator, Trophy, Star, Zap, Home, BarChart3, Clipboard, User, LogOut } from "lucide-react";
+
+const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 export const RealPlatformDemo = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -13,6 +15,11 @@ export const RealPlatformDemo = () => {
 
   const steps = [
     {
+      title: "Dashboard Overview",
+      description: "Your personalized learning hub",
+      component: "dashboard"
+    },
+    {
       title: "Take Diagnostic Test",
       description: "Complete our comprehensive assessment",
       component: "diagnostic"
@@ -21,11 +28,6 @@ export const RealPlatformDemo = () => {
       title: "View Results",
       description: "See your strengths and areas for improvement",
       component: "results"
-    },
-    {
-      title: "Set Study Goals",
-      description: "Choose your target score and exam date",
-      component: "goals"
     },
     {
       title: "Get Your Plan",
@@ -39,7 +41,7 @@ export const RealPlatformDemo = () => {
       const timer = setTimeout(() => {
         setCurrentStep(prev => prev + 1);
         setProgress(prev => prev + 25);
-      }, 2500);
+      }, 3000);
       return () => clearTimeout(timer);
     } else if (isAnimating && currentStep === steps.length - 1) {
       setIsAnimating(false);
@@ -60,8 +62,182 @@ export const RealPlatformDemo = () => {
     setSelectedAnswer("");
   };
 
+  const renderDashboardStep = () => (
+    <div className="min-h-[600px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
+      {/* Header like actual platform */}
+      <header className="border-b border-border bg-background/95 backdrop-blur">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <img
+            src={uniHackLogo}
+            alt="UniHack.ai Logo"
+            className="h-24 max-h-[96px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
+          />
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-6">
+            <div className="text-primary font-medium border-b-2 border-primary flex items-center gap-2">
+              <Target className="w-4 h-4" />Dashboard
+            </div>
+            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+              <BookOpen className="w-4 h-4" />Practice
+            </div>
+            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+              <Clipboard className="w-4 h-4" />Mocks
+            </div>
+            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" />Analytics
+            </div>
+            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+              <User className="w-4 h-4" />Profile
+            </div>
+            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 flex items-center gap-2">
+              <LogOut className="w-4 h-4" />
+              Logout
+            </Button>
+          </nav>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-6">
+        {/* Page Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold mb-3">Welcome back, Demo User! 👋</h1>
+          <p className="text-muted-foreground">Ready to continue your SAT preparation?</p>
+        </div>
+
+        {/* Stats Grid - Matching actual design */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+          <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20 hover:shadow-lg transition-all">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
+              <Target className="h-4 w-4 text-emerald-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-emerald-700">0%</div>
+              <p className="text-xs text-muted-foreground">Start practicing to see your accuracy</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20 hover:shadow-lg transition-all">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-blue-700">Weekly Progress</CardTitle>
+              <TrendingUp className="h-4 w-4 text-blue-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-blue-700">0%</div>
+              <p className="text-xs text-muted-foreground">Complete sessions to track progress</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border-purple-500/20 hover:shadow-lg transition-all">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-purple-700">Study Streak</CardTitle>
+              <Zap className="h-4 w-4 text-purple-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-purple-700">0 days</div>
+              <p className="text-xs text-muted-foreground">Practice daily to build your streak</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border-orange-500/20 hover:shadow-lg transition-all">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-orange-700">Total Questions</CardTitle>
+              <BookOpen className="h-4 w-4 text-orange-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-orange-700">0</div>
+              <p className="text-xs text-muted-foreground">Questions attempted</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-yellow-500/5 to-yellow-600/10 border-yellow-500/20 hover:shadow-lg transition-all">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-yellow-700">Your Timeline</CardTitle>
+              <Calendar className="h-4 w-4 text-yellow-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-sm text-muted-foreground mb-2">No exam date set</div>
+              <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white w-full">
+                📅 Set Exam Date
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Study Plan Section */}
+        <div className="grid xl:grid-cols-3 gap-6">
+          <div className="xl:col-span-2">
+            <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-slate-200 hover:shadow-lg transition-all">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-slate-700">
+                  <Calendar className="w-5 h-5" />
+                  Study Plan
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">Your personalized SAT study schedule</p>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-6">
+                  <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">Build Your Study Plan</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Complete your diagnostic test to get a personalized SAT study plan
+                  </p>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                    <Brain className="w-4 h-4 mr-2" />
+                    Take Diagnostic Test
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="space-y-4">
+            {/* Target Universities */}
+            <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200">
+              <CardHeader>
+                <CardTitle className="text-emerald-700">Target Universities</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="p-3 bg-white rounded-lg border border-emerald-200 text-center font-medium">Harvard</div>
+                <div className="p-3 bg-white rounded-lg border border-emerald-200 text-center font-medium">MIT</div>
+                <div className="p-3 bg-white rounded-lg border border-emerald-200 text-center font-medium">Stanford</div>
+                <Button variant="outline" size="sm" className="w-full text-emerald-700 border-emerald-300">
+                  Manage Universities
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Study Focus */}
+            <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
+              <CardHeader>
+                <CardTitle className="text-red-700 flex items-center gap-2">
+                  🎯 Study Focus
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Math - Algebra</span>
+                  <span className="text-red-600 font-bold">35%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Information & Ideas</span>
+                  <span className="text-blue-600 font-bold">26%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Advanced Math</span>
+                  <span className="text-red-600 font-bold">35%</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderDiagnosticStep = () => (
-    <div className="min-h-[500px] bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 rounded-2xl relative overflow-hidden">
+    <div className="min-h-[600px] bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 rounded-2xl relative overflow-hidden">
       {/* Background elements like actual platform */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
@@ -136,7 +312,7 @@ export const RealPlatformDemo = () => {
   );
 
   const renderResultsStep = () => (
-    <div className="min-h-[500px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
+    <div className="min-h-[600px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
       <div className="p-6">
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -184,60 +360,8 @@ export const RealPlatformDemo = () => {
     </div>
   );
 
-  const renderGoalsStep = () => (
-    <div className="min-h-[500px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
-      <div className="p-6">
-        <div className="text-center mb-6">
-          <Calendar className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-          <h3 className="text-2xl font-bold text-slate-900 mb-2">Set Your Goals</h3>
-          <p className="text-slate-600">Tell us your target score and when you're taking the SAT</p>
-        </div>
-
-        <div className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Target SAT Score</label>
-            <div className="grid grid-cols-3 gap-3">
-              {[1400, 1500, 1600].map((score) => (
-                <button
-                  key={score}
-                  className={`p-4 text-center rounded-xl border-2 transition-all ${
-                    score === 1500 ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300'
-                  }`}
-                >
-                  <div className="text-lg font-bold text-slate-900">{score}</div>
-                  <div className="text-xs text-slate-600">
-                    {score === 1400 ? 'Good' : score === 1500 ? 'Excellent' : 'Perfect'}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Exam Date</label>
-            <div className="grid grid-cols-2 gap-3">
-              {['December 2024', 'March 2025'].map((date) => (
-                <button
-                  key={date}
-                  className={`p-4 text-center rounded-xl border-2 transition-all ${
-                    date === 'December 2024' ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300'
-                  }`}
-                >
-                  <div className="font-medium text-slate-900">{date}</div>
-                  <div className="text-xs text-slate-600">
-                    {date === 'December 2024' ? '8 weeks prep' : '20 weeks prep'}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   const renderPlanStep = () => (
-    <div className="min-h-[500px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
+    <div className="min-h-[600px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
       <div className="p-6">
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -293,15 +417,15 @@ export const RealPlatformDemo = () => {
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 0:
-        return renderDiagnosticStep();
+        return renderDashboardStep();
       case 1:
-        return renderResultsStep();
+        return renderDiagnosticStep();
       case 2:
-        return renderGoalsStep();
+        return renderResultsStep();
       case 3:
         return renderPlanStep();
       default:
-        return renderDiagnosticStep();
+        return renderDashboardStep();
     }
   };
 
@@ -332,8 +456,8 @@ export const RealPlatformDemo = () => {
       <div className="w-full max-w-md mx-auto">
         <Progress value={progress} className="h-2" />
         <div className="flex justify-between text-xs text-slate-600 mt-2">
-          <span>Assessment</span>
-          <span>Personalized Plan</span>
+          <span>Dashboard</span>
+          <span>Study Plan Ready</span>
         </div>
       </div>
 
