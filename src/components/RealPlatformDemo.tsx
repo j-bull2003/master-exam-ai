@@ -34,23 +34,6 @@ export const RealPlatformDemo = () => {
     },
     {
       id: 2,
-      section: "Reading & Writing", 
-      domain: "Craft and Structure",
-      subdomain: "Text Structure and Purpose",
-      difficulty: "Hard",
-      passage: "The most recent iteration of the immersive theater experience Sleep No More, which premiered in New York City in 2011, transforms its performance space—a five-story warehouse—into a 1930s-era hotel. Audience members, who wander through the labyrinthine venue at their own pace and follow the actors as they play out simultaneous, interweaving narrative loops, confront the impossibility of experiencing the production in its entirety. The play's refusal of narrative coherence thus hinges on the sense of spatial fragmentation that the venue's immense and intricate layout generates.",
-      question: "What does the text most strongly suggest about Sleep No More's use of its performance space?",
-      choices: [
-        "The choice of a New York City venue likely enabled the play's creators to experiment with the use of theatrical space in a way that venues from earlier productions could not.",
-        "Audience members likely find the experience of the play disappointing because they generally cannot make their way through the entire venue.",
-        "The production's dependence on a particular performance environment would likely make it difficult to reproduce exactly in a different theatrical space.",
-        "Audience members who navigate the space according to a recommended itinerary will likely have a better grasp of the play's narrative than audience members who depart from that itinerary."
-      ],
-      correctAnswer: "C",
-      explanation: "The text emphasizes how the venue's 'immense and intricate layout' is fundamental to creating the spatial fragmentation that drives the play's narrative approach, making it venue-dependent."
-    },
-    {
-      id: 3,
       section: "Math",
       domain: "Algebra", 
       subdomain: "Systems of Linear Equations",
