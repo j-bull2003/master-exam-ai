@@ -12,6 +12,7 @@ import Features from "./pages/Features";
 import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Consulting from "./pages/Consulting";
+import GroupClasses from "./pages/GroupClasses";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
           <Route path="/consulting" element={<Consulting />} />
+          <Route path="/group-classes" element={<GroupClasses />} />
           
           {/* Authentication */}
           <Route path="/auth/login" element={<Login />} />

@@ -105,6 +105,13 @@ export const Header = () => {
               SAT Program
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
+            <Link
+              to="/group-classes"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
+            >
+              Group Mastery
+              <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
+            </Link>
           </div>
 
           {/* Command Palette Button & CTA Buttons */}
@@ -205,6 +212,13 @@ export const Header = () => {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     SAT Program
+                  </Link>
+                  <Link
+                    to="/group-classes"
+                    className="block text-base font-medium text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Group Mastery
                   </Link>
                 </div>
               </div>
