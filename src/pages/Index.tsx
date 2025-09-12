@@ -10,9 +10,6 @@ import { InteractiveCard } from "@/components/InteractiveCard";
 import { MagneticButton } from "@/components/MagneticButton";
 import { EmptyState } from "@/components/EmptyState";
 import { PageProgressBar } from "@/components/PageProgressBar";
-import GroupClassSection from "@/components/GroupClassSection";
-import OneOnOneSection from "@/components/OneOnOneSection";
-import StudentSuccessPipeline from "@/components/StudentSuccessPipeline";
 import { EXAM_CONFIGS } from "@/data/examConfig";
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
@@ -197,10 +194,10 @@ const Index = () => {
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <div className="flex items-center gap-2 bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/50 rounded-full px-3 py-1.5 hover:bg-emerald-50 transition-colors">
                   <CheckCircle className="w-4 h-4 text-emerald-700" />
-                  <span className="text-emerald-800 font-semibold">3-day free trial • No credit card</span>
+                  <span className="text-emerald-800 font-semibold">3-day free trial • No credit card required</span>
                 </div>
-                <div className="text-slate-600 font-medium">Platform access from $149/month</div>
-                <div className="text-slate-600">Group classes +$120/month • 1-on-1 program $3,000</div>
+                <div className="text-slate-600 font-medium">Plans starting from $149/month</div>
+                <div className="text-slate-600">Save up to 16% with annual plans</div>
               </div>
             ) : (
               <Skeleton className="h-6 w-96 mx-auto mb-8" />
@@ -287,53 +284,202 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Student Success Pipeline */}
-      <StudentSuccessPipeline />
-
-      {/* Group Classes Section */}
-      <GroupClassSection />
-
-      {/* One-on-One Section */}
-      <OneOnOneSection />
-
-      {/* Live Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+      {/* Platform Pricing Section */}
+      <section className="py-16 bg-gradient-to-r from-slate-50/50 via-white to-slate-50/50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 font-display">
+              Choose Your Plan
+            </h2>
+            <p className="text-slate-600 font-light">Start with our 3-day free trial, then select the perfect plan for your SAT preparation</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Monthly Plan */}
+            <div className="relative p-8 rounded-3xl bg-white/80 backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/50 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">Monthly</h3>
+                <div className="mb-2">
+                  <span className="text-4xl font-black text-slate-900 font-display">$149</span>
+                  <span className="text-slate-600">/month</span>
+                </div>
+                <p className="text-sm text-slate-600 font-light">Perfect for focused preparation</p>
+              </div>
+
+              <div className="space-y-3 mb-8">
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">AI-powered personalized study plans</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">8,500+ expert-crafted SAT questions</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Real-time weakness detection</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Full-length practice tests</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Detailed performance analytics</span>
+                </div>
+              </div>
+
+              <Link to="/auth/register" className="block">
+                <Button className="w-full border-slate-300 text-slate-700 hover:border-slate-900 hover:text-slate-900" variant="outline">
+                  Start 3-Day Free Trial
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+
+            {/* 3-Month Plan */}
+            <div className="relative p-8 rounded-3xl bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl scale-105 transition-all duration-300">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-gradient-to-r from-slate-900 to-slate-800 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  Most Popular
+                </span>
+              </div>
+
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">3-Month</h3>
+                <div className="mb-2">
+                  <span className="text-4xl font-black text-slate-900 font-display">$399</span>
+                  <span className="text-slate-600">/3 months</span>
+                </div>
+                <div className="text-xs bg-emerald-50 text-emerald-800 px-2 py-1 rounded-full mb-2">
+                  Save $48 (11% off)
+                </div>
+                <p className="text-sm text-slate-600 font-light">Ideal for comprehensive preparation</p>
+              </div>
+
+              <div className="space-y-3 mb-8">
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Everything in Monthly plan</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Priority customer support</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Extended progress tracking</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Advanced analytics dashboard</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Mobile app premium features</span>
+                </div>
+              </div>
+
+              <Link to="/auth/register" className="block">
+                <Button className="w-full bg-gradient-to-r from-slate-900 to-slate-800 text-white hover:from-slate-800 hover:to-slate-700 hover:scale-105">
+                  Start 3-Day Free Trial
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+
+            {/* Annual Plan */}
+            <div className="relative p-8 rounded-3xl bg-white/80 backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/50 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">Annual</h3>
+                <div className="mb-2">
+                  <span className="text-4xl font-black text-slate-900 font-display">$1,499</span>
+                  <span className="text-slate-600">/year</span>
+                </div>
+                <div className="text-xs bg-emerald-50 text-emerald-800 px-2 py-1 rounded-full mb-2">
+                  Save $289 (16% off)
+                </div>
+                <p className="text-sm text-slate-600 font-light">Best value for long-term success</p>
+              </div>
+
+              <div className="space-y-3 mb-8">
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Everything in 3-Month plan</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Dedicated success manager</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Exclusive webinars & workshops</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">College application guidance</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-700">Lifetime progress tracking</span>
+                </div>
+              </div>
+
+              <Link to="/auth/register" className="block">
+                <Button className="w-full border-slate-300 text-slate-700 hover:border-slate-900 hover:text-slate-900" variant="outline">
+                  Start 3-Day Free Trial
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <p className="text-sm text-slate-600 font-light">
+              All plans include a 3-day free trial. Add group classes or 1-on-1 coaching during checkout.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Live Stats Section */}
+      <section className="py-16 bg-gradient-to-r from-slate-50/50 via-white to-slate-50/50">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 font-display">
               Proven SAT Success
             </h2>
-            <p className="text-muted-foreground">Join thousands of students who've achieved their dream SAT scores</p>
+            <p className="text-slate-600 font-light">Join thousands of students who've achieved their dream SAT scores with our AI-powered platform</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Users className="w-12 h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-4xl font-bold text-foreground mb-2">
+              <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Users className="w-12 h-12 text-slate-700 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                <div className="text-4xl font-bold text-slate-900 mb-2 font-display">
                   {statsCounter.students.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium">SAT Students</div>
+                <div className="text-slate-600 font-medium">SAT Students</div>
               </div>
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <TrendingUp className="w-12 h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-4xl font-bold text-foreground mb-2">
+              <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <TrendingUp className="w-12 h-12 text-slate-700 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                <div className="text-4xl font-bold text-slate-900 mb-2 font-display">
                   {statsCounter.questions.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium">SAT Practice Questions</div>
+                <div className="text-slate-600 font-medium">SAT Practice Questions</div>
               </div>
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Award className="w-12 h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-4xl font-bold text-foreground mb-2">
+              <div className="bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Award className="w-12 h-12 text-slate-700 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                <div className="text-4xl font-bold text-slate-900 mb-2 font-display">
                   {statsCounter.accuracy}%
                 </div>
-                <div className="text-muted-foreground font-medium">Score Improvement Rate</div>
+                <div className="text-slate-600 font-medium">Score Improvement Rate</div>
               </div>
             </div>
           </div>
@@ -341,13 +487,13 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-background">
+      <section className="py-16 bg-gradient-to-br from-slate-50 to-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 font-display">
               Why Students Choose UniHack for SAT Prep
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto font-light">
               Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
             </p>
           </div>
@@ -362,11 +508,11 @@ const Index = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="p-8">
-                  <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-all duration-300 group-hover:scale-110">
-                    <feature.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
+                  <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-slate-100 flex items-center justify-center group-hover:bg-slate-200 transition-all duration-300 group-hover:scale-110">
+                    <feature.icon className="w-8 h-8 text-slate-700 group-hover:scale-110 transition-transform" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4 text-foreground">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                  <h3 className="text-xl font-semibold mb-4 text-slate-900 font-display">{feature.title}</h3>
+                  <p className="text-slate-600 font-light">{feature.description}</p>
                 </div>
               </InteractiveCard>
             ))}
@@ -374,48 +520,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Expert-Crafted Content Section */}
-      <section className="py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 relative">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
-              Proven by elite students at
-              <span className="bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent"> top universities worldwide.</span>
-            </h2>
-            
-            <div className="glass border border-primary/20 rounded-2xl p-8 mb-8 shadow-lg hover:shadow-primary/20 transition-all duration-300 card-layered">
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Our elite SAT preparation system has been trusted by students achieving perfect scores and gaining admission 
-                to Harvard, MIT, Stanford, and other top-tier institutions. Every component—from our AI algorithms to our 
-                expert tutors—is designed for maximum score improvement.
-              </p>
-              
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Our content is handcrafted by curriculum team members who are assisted by cutting-edge AI workflows. 
-                The curriculum team consists of top-scoring educators and test prep experts with proven track records 
-                of helping students achieve their dream scores.
-              </p>
-              
-              <div className="bg-gradient-to-r from-primary to-primary-variant text-white p-6 rounded-xl shadow-lg card-layered">
-                <p className="text-lg font-medium">
-                  Every question, explanation, and strategy is meticulously reviewed by our expert team 
-                  to ensure maximum effectiveness and accuracy for elite SAT performance.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Testimonials Section */}
-      <section className="py-20 bg-muted/20">
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 font-display">
               Real SAT Score Improvements
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Students are achieving 200+ point improvements with our AI-powered SAT preparation
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto font-light">
+              Students are achieving 200+ point improvements with our AI-powered SAT preparation platform
             </p>
           </div>
 
@@ -424,34 +537,34 @@ const Index = () => {
               <InteractiveCard
                 key={index}
                 tiltEnabled={true}
-                className="group hover:border-primary/20"
+                className="group hover:border-slate-300/50 bg-white/80 backdrop-blur-sm border-slate-200/50"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="p-8">
                   {/* Quote Icon */}
-                  <Quote className="w-8 h-8 text-primary/60 mb-4 group-hover:text-primary transition-colors group-hover:scale-110 transform duration-200" />
+                  <Quote className="w-8 h-8 text-slate-400 mb-4 group-hover:text-slate-600 transition-colors group-hover:scale-110 transform duration-200" />
                   
                   {/* Testimonial Quote */}
-                  <p className="text-muted-foreground mb-6 italic leading-relaxed">
+                  <p className="text-slate-600 mb-6 italic leading-relaxed font-light">
                     "{testimonial.quote}"
                   </p>
                   
                   {/* Student Info */}
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20 group-hover:border-primary/40 transition-colors group-hover:scale-110 transform duration-200">
-                      <span className="text-primary font-semibold text-sm">{testimonial.avatar}</span>
+                    <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center border-2 border-slate-200 group-hover:border-slate-300 transition-colors group-hover:scale-110 transform duration-200">
+                      <span className="text-slate-700 font-semibold text-sm">{testimonial.avatar}</span>
                     </div>
                   <div>
-                    <div className="font-semibold text-foreground">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.university}</div>
+                    <div className="font-semibold text-slate-900">{testimonial.name}</div>
+                    <div className="text-sm text-slate-600">{testimonial.university}</div>
                   </div>
                 </div>
                 
                 {/* Score Badge */}
                 <div className="mt-4 flex gap-2">
-                  <div className="inline-flex items-center gap-2 bg-success/10 border border-success/20 rounded-full px-3 py-1 group-hover:bg-success/15 transition-colors">
-                    <Star className="w-4 h-4 text-success group-hover:rotate-12 transition-transform" />
-                    <span className="text-sm font-semibold text-success">SAT: {testimonial.score}</span>
+                  <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-full px-3 py-1 group-hover:bg-emerald-100 transition-colors">
+                    <Star className="w-4 h-4 text-emerald-700 group-hover:rotate-12 transition-transform" />
+                    <span className="text-sm font-semibold text-emerald-800">SAT: {testimonial.score}</span>
                   </div>
                   <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-3 py-1">
                     <TrendingUp className="w-4 h-4 text-primary" />
@@ -478,153 +591,44 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-      <section className="pt-4 pb-4 ">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
-              <span className="text-foreground">Simple,</span>{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
-                Transparent
-              </span>{" "}
-              <span className="text-foreground">Pricing</span>
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              Choose your SAT preparation plan. 7-day free trial included with all plans.
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05),transparent)]"></div>
+        <div className="container mx-auto px-6 relative">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white font-display">
+              Ready to Transform Your SAT Score?
+            </h2>
+            <p className="text-slate-300 mb-8 text-lg font-light">
+              Join thousands of students who've achieved their dream scores with our AI-powered platform.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Plans */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              
-              {/* Annual Plan - Best Value */}
-              <div className="relative p-6 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-6 py-2 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
-                    BEST VALUE
-                  </span>
-                </div>
-                
-                <div className="pt-4">
-                  <h3 className="text-xl font-bold mb-2">Annual</h3>
-                  <div className="mb-2">
-                    <span className="text-4xl font-black">$39.99</span>
-                    <span className="text-muted-foreground">/mo</span>
-                  </div>
-                  <div className="mb-4">
-                    <span className="text-sm text-muted-foreground">$479.99 billed annually</span>
-                  </div>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
-                </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-
-              {/* 6-Month Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">6-Month</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$54.99</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$329.99 every 6 months</span>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
-                </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-
-              {/* 3-Month Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">3-Month</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$79.99</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$239.99 every 3 months</span>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
-                </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Monthly Plan */}
-              <div className="relative p-6 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">Monthly</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black">$159.99</span>
-                  <span className="text-muted-foreground">/mo</span>
-                </div>
-                <div className="mb-4">
-                  <span className="text-sm text-muted-foreground">$159.99 monthly</span>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold mb-1">
-                    <Sparkles className="w-4 h-4" />
-                    7-Day Free Trial
-                  </div>
-                </div>
-
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/auth/register">
+                <Button className="bg-white text-slate-900 hover:bg-slate-100 hover:scale-105 transition-all duration-300 shadow-xl px-8">
+                  Start Your 3-Day Free Trial
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+              <Link to="/services">
+                <Button variant="outline" className="border-slate-300 text-slate-300 hover:bg-slate-300/10 px-8">
+                  Explore All Services
+                </Button>
+              </Link>
             </div>
             
-            {/* Promo Code Link */}
-            <div className="text-center mt-8">
-              <button className="text-primary hover:text-primary/80 text-sm font-medium transition-colors">
-                + Add promo code
-              </button>
+            <div className="flex items-center justify-center gap-6 mt-8 text-slate-400 text-sm">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-400" />
+                <span>No credit card required</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-emerald-400" />
+                <span>Cancel anytime</span>
+              </div>
             </div>
           </div>
         </div>
-      </section>
       </section>
 
 
