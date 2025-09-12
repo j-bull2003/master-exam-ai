@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { 
   User, 
   Mail, 
@@ -9,30 +9,27 @@ import {
   CheckCircle, 
   ArrowRight,
   ArrowLeft,
-  Shield,
-  Calendar,
-  CalendarIcon,
-  Sparkles,
   Eye,
   EyeOff,
   AlertCircle,
   CheckCircle2,
   X,
-  BarChart3,
-  BookOpen,
-  Clock
+  Clock,
+  Users,
+  Target,
+  GraduationCap,
+  BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { ONBOARDING_EXAMS } from "@/data/examConfig";
 
 // SAT Platform Access pricing - using Annual plan as default
 const PRICING_PLANS = {
@@ -45,6 +42,9 @@ const PRICING_PLANS = {
   }
 };
 
+// Group Classes pricing
+const GROUP_CLASSES_PRICE_ID = "price_1S6XxxLBctfCMRN8KjKrel0Y"; // Weekly $50 subscription
+
 interface OnboardingFlowProps {
   onComplete: () => void;
 }
@@ -53,10 +53,10 @@ interface FormData {
   name: string;
   email: string;
   password: string;
-  examType: string;
   examDate: Date | null;
   targetUniversities: string[];
   targetScore: string;
+  interestedInGroupClasses: boolean;
 }
 
 const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
@@ -75,24 +75,16 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     name: "",
     email: "",
     password: "",
-    examType: "",
     examDate: null,
     targetUniversities: [],
     targetScore: "",
+    interestedInGroupClasses: false,
   });
 
   // Focus name input on mount
   useEffect(() => {
     nameInputRef.current?.focus();
   }, []);
-
-  const examTypes = ONBOARDING_EXAMS.map(exam => ({
-    id: exam.id.toUpperCase(),
-    name: exam.name,
-    description: exam.fullName,
-    universities: exam.universities || [],
-    scoreRange: exam.scoreRange || 'N/A'
-  }));
 
   const allUniversities = [
     "Harvard University", "MIT", "Stanford University", "Princeton University", 
@@ -135,29 +127,16 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const validateStep2 = () => {
-    const newErrors: { [key: string]: string } = {};
-    
-    if (!formData.examType) {
-      newErrors.examType = "Please select an exam type";
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const nextStep = () => {
     let isValid = false;
     
     if (currentStep === 1) {
       isValid = validateStep1();
-    } else if (currentStep === 2) {
-      isValid = validateStep2();
     } else {
       isValid = true; // No validation for other steps
     }
     
-    if (isValid && currentStep < 5) { // Updated to 5 steps
+    if (isValid && currentStep < 4) { // 4 steps total now
       setCurrentStep(currentStep + 1);
       setErrors({});
     }
@@ -193,7 +172,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           .from('profiles')
           .update({
             full_name: formData.name,
-            exam_type: formData.examType,
+            exam_type: 'SAT', // Since we only do SAT
             exam_date: formData.examDate?.toISOString().split('T')[0] || null,
             target_university: formData.targetUniversities[0] || null,
             target_universities: formData.targetUniversities,
@@ -252,7 +231,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         .from('profiles')
         .update({
           full_name: formData.name,
-          exam_type: formData.examType,
+          exam_type: 'SAT', // Since we only do SAT
           exam_date: formData.examDate?.toISOString().split('T')[0] || null,
           target_university: formData.targetUniversities[0] || null,
           target_universities: formData.targetUniversities,
@@ -294,9 +273,42 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   };
 
+  const handleGroupClassesCheckout = async () => {
+    setIsProcessingPayment(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Please log in first");
+
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { email: session.user.email },
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+
+      if (error) throw error;
+
+      // Redirect to group classes checkout
+      window.open(data.url, '_blank');
+      
+      toast({
+        title: "Success!",
+        description: "Redirecting to group classes enrollment...",
+      });
+
+    } catch (error: any) {
+      console.error('Group classes error:', error);
+      toast({
+        title: "Enrollment failed",
+        description: error.message || "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !isLoading && !isProcessingPayment) {
-      if (currentStep < 5) {
+      if (currentStep < 4) {
         nextStep();
       }
     }
@@ -329,7 +341,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         {/* Enhanced Progress Indicator */}
         <div className="flex justify-center mb-3 sm:mb-6">
           <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6">
-            {[1, 2, 3, 4, 5].map((step) => (
+            {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
                 <div className={`relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-500 ${
                   step < currentStep 
@@ -343,7 +355,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-primary to-primary-variant animate-pulse"></div>
                   )}
                 </div>
-                {step < 5 && (
+                {step < 4 && (
                   <div className={`w-8 sm:w-12 md:w-16 h-1 rounded-full transition-all duration-500 ${
                     step < currentStep ? 'bg-gradient-to-r from-primary to-primary-variant' : 'bg-muted/50'
                   }`} />
@@ -358,17 +370,15 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           <CardHeader className="text-center pb-2 px-4 sm:px-6">
             <CardTitle className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent mb-2">
               {currentStep === 1 && "Create Your Account"}
-              {currentStep === 2 && "Choose Your SAT Exam"}
-              {currentStep === 3 && "Set Your Goals"}
-              {currentStep === 4 && "Profile Complete!"}
-              {currentStep === 5 && "Choose Your Plan"}
+              {currentStep === 2 && "Set Your SAT Goals"}
+              {currentStep === 3 && "Choose Add-Ons"}
+              {currentStep === 4 && "Choose Your Plan"}
             </CardTitle>
             <CardDescription className="text-sm sm:text-base md:text-lg text-muted-foreground px-2">
               {currentStep === 1 && "Let's get you set up with a secure account"}
-              {currentStep === 2 && "Select your SAT test details"}
-              {currentStep === 3 && "Set your target score and universities for motivation"}
-              {currentStep === 4 && "Your personalized SAT prep profile is ready"}
-              {currentStep === 5 && "Start with a 3-day free trial, then continue with premium access"}
+              {currentStep === 2 && "Set your target score and universities for motivation"}
+              {currentStep === 3 && "Enhance your SAT prep with our premium add-ons"}
+              {currentStep === 4 && "Start with a 3-day free trial, then continue with premium access"}
             </CardDescription>
           </CardHeader>
 
@@ -489,56 +499,18 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               </div>
             )}
 
-            {/* Step 2: Exam Selection */}
+            {/* Step 2: SAT Goals & Preferences */}
             {currentStep === 2 && (
-              <div className="space-y-4 sm:space-y-6">
+              <div className="space-y-6">
                 <div className="text-center space-y-2">
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Target className="h-8 w-8 text-white" />
+                  </div>
                   <p className="text-sm sm:text-base text-muted-foreground px-2">
-                    Choose the SAT exam you're preparing for to get personalized practice content
-                  </p>
-                  <p className="text-xs sm:text-sm text-muted-foreground bg-muted/50 rounded-lg px-2 sm:px-3 py-2 mx-2 sm:mx-0">
-                    Currently available: {ONBOARDING_EXAMS.map(e => e.name).join(', ')}
+                    Set your SAT goals to help us personalize your prep experience
                   </p>
                 </div>
 
-                <RadioGroup 
-                  value={formData.examType} 
-                  onValueChange={(value) => {
-                    setFormData(prev => ({ ...prev, examType: value }));
-                    if (errors.examType) setErrors(prev => ({ ...prev, examType: "" }));
-                  }}
-                  className="space-y-3 sm:space-y-4"
-                >
-                  {examTypes.map((exam) => (
-                    <div key={exam.id} className="flex items-start sm:items-center space-x-2 sm:space-x-3">
-                      <RadioGroupItem value={exam.id} id={exam.id} className="mt-1 sm:mt-0" />
-                      <div className="flex-1 cursor-pointer" onClick={() => setFormData(prev => ({ ...prev, examType: exam.id }))}>
-                        <Label 
-                          htmlFor={exam.id} 
-                          className="text-sm sm:text-base font-medium cursor-pointer block"
-                        >
-                          {exam.name}
-                        </Label>
-                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-                          {exam.description} • Score Range: {exam.scoreRange}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-
-                {errors.examType && (
-                  <p className="text-sm text-destructive flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4" />
-                    {errors.examType}
-                  </p>
-                )}
-              </div>
-            )}
-
-            {/* Step 3: Goals & Preferences */}
-            {currentStep === 3 && (
-              <div className="space-y-6">
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Target Score (Optional)</Label>
@@ -636,7 +608,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-sm font-medium">Exam Date (Optional)</Label>
+                    <Label className="text-sm font-medium">SAT Test Date (Optional)</Label>
                     <Input
                       type="date"
                       value={formData.examDate ? formData.examDate.toISOString().split('T')[0] : ''}
@@ -647,44 +619,81 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                       className="h-12 text-base"
                       min={new Date().toISOString().split('T')[0]}
                     />
+                    <p className="text-xs text-muted-foreground">
+                      Help us create a personalized study timeline
+                    </p>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Step 4: Profile Summary */}
-            {currentStep === 4 && (
+            {/* Step 3: Add-Ons */}
+            {currentStep === 3 && (
               <div className="space-y-6">
-                <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg">
-                  <h4 className="font-semibold text-lg mb-4">Your Profile Summary:</h4>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Name:</span>
-                      <p className="font-medium">{formData.name}</p>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Exam:</span>
-                      <p className="font-medium">{formData.examType}</p>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Target Date:</span>
-                      <p className="font-medium">{formData.examDate?.toLocaleDateString() || 'Not specified'}</p>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Target Score:</span>
-                      <p className="font-medium">{formData.targetScore || 'Not specified'}</p>
-                    </div>
-                    <div className="col-span-2">
-                      <span className="text-muted-foreground">Target Universities:</span>
-                      <p className="font-medium">{formData.targetUniversities.length > 0 ? formData.targetUniversities.join(', ') : 'Not specified'}</p>
-                    </div>
+                <div className="text-center space-y-2">
+                  <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="h-8 w-8 text-white" />
                   </div>
+                  <h3 className="text-lg font-semibold">Enhance Your SAT Prep</h3>
+                  <p className="text-sm sm:text-base text-muted-foreground px-2">
+                    Optional add-ons to supercharge your SAT preparation
+                  </p>
+                </div>
+
+                {/* Group Classes Add-On */}
+                <Card className="border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 transition-colors">
+                  <CardContent className="p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="flex items-center h-5">
+                        <Checkbox
+                          id="groupClasses"
+                          checked={formData.interestedInGroupClasses}
+                          onCheckedChange={(checked) => 
+                            setFormData(prev => ({ ...prev, interestedInGroupClasses: !!checked }))
+                          }
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <Users className="h-5 w-5 text-purple-600" />
+                          <h4 className="font-semibold text-lg">SAT Group Classes</h4>
+                          <Badge variant="outline" className="border-purple-300 text-purple-700">
+                            $50/week
+                          </Badge>
+                        </div>
+                        <p className="text-muted-foreground text-sm mb-3">
+                          Join small group sessions with expert instruction in Reading & Writing and Mathematics. 
+                          Two 60-minute sessions per week starting October 13th, 2025.
+                        </p>
+                        <ul className="space-y-1 text-sm text-muted-foreground">
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="h-3 w-3 text-purple-600" />
+                            Expert-led small group sessions
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="h-3 w-3 text-purple-600" />
+                            Interactive practice with real SAT questions
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="h-3 w-3 text-purple-600" />
+                            Personalized feedback and support
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <div className="bg-muted/50 p-4 rounded-lg">
+                  <p className="text-sm text-muted-foreground text-center">
+                    You can add these services later from your dashboard if you change your mind.
+                  </p>
                 </div>
               </div>
             )}
 
-            {/* Step 5: Payment Options */}
-            {currentStep === 5 && (
+            {/* Step 4: Payment Options */}
+            {currentStep === 4 && (
               <div className="space-y-6">
                 {/* Free Trial Option */}
                 <div className="border-2 border-green-200 bg-green-50 p-6 rounded-lg">
@@ -753,6 +762,31 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     {!isProcessingPayment && <ArrowRight className="ml-2 h-4 w-4" />}
                   </Button>
                 </div>
+
+                {/* Group Classes Add-On if selected */}
+                {formData.interestedInGroupClasses && (
+                  <div className="border-2 border-orange-200 bg-orange-50 p-6 rounded-lg">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Users className="h-5 w-5 text-orange-600" />
+                      <h4 className="font-semibold text-lg text-orange-800">SAT Group Classes</h4>
+                      <Badge variant="outline" className="border-orange-300 text-orange-700">
+                        $50/week
+                      </Badge>
+                    </div>
+                    <p className="text-orange-700 mb-4">
+                      You selected group classes! Enroll now for the next cohort starting October 13th, 2025.
+                    </p>
+                    <Button 
+                      onClick={handleGroupClassesCheckout}
+                      disabled={isProcessingPayment}
+                      variant="outline" 
+                      className="w-full border-orange-300 text-orange-700 hover:bg-orange-100"
+                    >
+                      {isProcessingPayment ? 'Processing...' : 'Enroll in Group Classes'}
+                      {!isProcessingPayment && <ArrowRight className="ml-2 h-4 w-4" />}
+                    </Button>
+                  </div>
+                )}
               </div>
             )}
 
@@ -769,7 +803,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   Back
                 </Button>
               )}
-              {currentStep < 5 && (
+              {currentStep < 4 && (
                 <Button 
                   onClick={nextStep} 
                   className={`${currentStep === 1 ? 'w-full' : 'flex-1'}`}
