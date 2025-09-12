@@ -48,7 +48,7 @@ const TutoringPage = () => {
       price: "$150",
       period: "/week",
       features: [
-        "2 hours of 1-on-1 tutoring weekly",
+        "2 hours of 1-on-1 tutoring weekly (4 sessions)",
         "Full platform access",
         "Custom study plan",
         "Progress tracking"
@@ -60,7 +60,7 @@ const TutoringPage = () => {
       price: "$250",
       period: "/week",
       features: [
-        "4 hours of 1-on-1 tutoring weekly",
+        "4 hours of 1-on-1 tutoring weekly (6-8 sessions)",
         "Full platform access",
         "Custom study plan",
         "Weekly mock exam reviews",
@@ -73,7 +73,7 @@ const TutoringPage = () => {
       price: "$400",
       period: "/week", 
       features: [
-        "6 hours of 1-on-1 tutoring weekly",
+        "6 hours of 1-on-1 tutoring weekly (10+ sessions)",
         "Full platform access",
         "Custom study plan",
         "Daily check-ins",

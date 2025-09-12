@@ -159,7 +159,7 @@ const Index = () => {
               <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
                 <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
-                  #1 AI-Powered SAT Prep Platform
+                  Trusted by Students at Harvard, MIT, Stanford & More
                 </span>
               </div>
             ) : (
@@ -169,9 +169,9 @@ const Index = () => {
             {/* Main Headline with enhanced typography */}
             {isLoaded ? (
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <span className="text-foreground block mb-2">Achieve 200+ Point</span>
+                <span className="text-foreground block mb-2">Elite SAT Mastery</span>
                 <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
-                  SAT Score Improvements
+                  Guaranteed 200+ Point Gains
                 </span>
               </h1>
             ) : (
@@ -184,8 +184,8 @@ const Index = () => {
             {/* Subtext with better contrast */}
             {isLoaded ? (
               <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                Join thousands of students achieving 200+ point improvements with UniHack's AI-powered SAT prep platform. 
-                Add live group classes and 1-on-1 coaching to maximize your results.
+                The world's most advanced SAT preparation system. Join elite students achieving unprecedented score improvements 
+                with our AI-powered platform, expert-led group classes, and exclusive 1-on-1 coaching programs.
               </p>
             ) : (
               <Skeleton className="h-6 w-full max-w-xl mx-auto mb-6" />
@@ -196,11 +196,10 @@ const Index = () => {
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors card-layered">
                   <CheckCircle className="w-4 h-4 text-success" />
-                  <span className="text-success font-semibold">7-day free trial</span>
+                  <span className="text-success font-semibold">7-day free trial • No credit card</span>
                 </div>
-                <div className="text-muted-foreground font-medium">Platform from $40/month</div>
-                <div className="text-muted-foreground">Group classes +$30/week</div>
-                <div className="text-muted-foreground">No setup fees • Cancel anytime</div>
+                <div className="text-muted-foreground font-medium">Platform access from $40/month</div>
+                <div className="text-muted-foreground">Group classes +$30/week • 1-on-1 from $150/week</div>
               </div>
             ) : (
               <Skeleton className="h-6 w-96 mx-auto mb-8" />
@@ -258,10 +257,10 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              Why Students Choose UniHack for SAT Prep
+              Elite SAT Preparation System
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
+              Advanced AI technology combined with expert instruction delivers unprecedented SAT score improvements.
             </p>
           </div>
 
@@ -376,29 +375,27 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
-              Questions built by a team of 
-              <span className="bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent"> educators, tutors, </span>
-              and 
-              <span className="bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent"> test-prep experts.</span>
+              Proven by elite students at
+              <span className="bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent"> top universities worldwide.</span>
             </h2>
             
             <div className="glass border border-primary/20 rounded-2xl p-8 mb-8 shadow-lg hover:shadow-primary/20 transition-all duration-300 card-layered">
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Our team has been working with students since 2017, and we know AI is the next step in education. 
-                We believe that combining our quality education with cutting-edge AI tools allows us to elevate 
-                your test prep experience and help you achieve your goal score.
+                Our elite SAT preparation system has been trusted by students achieving perfect scores and gaining admission 
+                to Harvard, MIT, Stanford, and other top-tier institutions. Every component—from our AI algorithms to our 
+                expert tutors—is designed for maximum score improvement.
               </p>
               
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Our content is handcrafted by curriculum team members who are assisted by AI workflows. 
-                The curriculum team consists of educators and test prep experts with experience in developing 
-                questions for multiple standardized tests.
+                Our content is handcrafted by curriculum team members who are assisted by cutting-edge AI workflows. 
+                The curriculum team consists of top-scoring educators and test prep experts with proven track records 
+                of helping students achieve their dream scores.
               </p>
               
               <div className="bg-gradient-to-r from-primary to-primary-variant text-white p-6 rounded-xl shadow-lg card-layered">
                 <p className="text-lg font-medium">
-                  All questions, answers, hints, and explanations are reviewed by our 
-                  Curriculum Team for accuracy, difficulty, and structure.
+                  Every question, explanation, and strategy is meticulously reviewed by our expert team 
+                  to ensure maximum effectiveness and accuracy for elite SAT performance.
                 </p>
               </div>
             </div>

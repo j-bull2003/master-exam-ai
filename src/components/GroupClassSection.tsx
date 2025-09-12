@@ -8,7 +8,7 @@ const GroupClassSection = () => {
     {
       title: "SAT Complete Mastery",
       schedule: "Mon & Wed • 7:00 PM EST",
-      duration: "90 minutes per session",
+      duration: "60 minutes per session",
       students: "8-12 students",
       difficulty: "All Levels",
       price: "$30/week",
