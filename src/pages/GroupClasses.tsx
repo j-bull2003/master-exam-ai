@@ -52,8 +52,8 @@ export default function GroupClasses() {
             <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto px-4 mb-12">
               {[
                 { number: "2", label: "Sessions Per Week" },
-                { number: "$30", label: "Per Week Total" },
-                { number: "8", label: "Max Students" }
+                { number: "$50", label: "Per Week Total" },
+                { number: "Oct 13", label: "Cohort Starts" }
               ].map((metric, idx) => (
                 <div key={idx} className="text-center group flex flex-col items-center">
                   <div className="text-xl sm:text-3xl font-bold text-slate-900 mb-2 font-serif group-hover:scale-110 transition-transform duration-300 h-8 sm:h-12 flex items-center justify-center">{metric.number}</div>
@@ -186,7 +186,7 @@ export default function GroupClasses() {
               
               <div className="mb-6">
                 <div className="font-serif text-4xl sm:text-5xl font-bold text-slate-900 mb-2">
-                  $30
+                  $50
                   <span className="text-xl font-normal text-slate-600">/week</span>
                 </div>
               <p className="text-slate-600 font-light">
@@ -194,22 +194,18 @@ export default function GroupClasses() {
               </p>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-4 mb-8 max-w-2xl mx-auto">
+              <div className="grid md:grid-cols-1 gap-4 mb-8 max-w-2xl mx-auto">
                 <div className="flex items-center justify-center gap-3 p-4 rounded-lg bg-slate-50">
                   <Calendar className="w-5 h-5 text-slate-700" />
-                  <span className="font-medium text-slate-900 text-sm">Starts Oct 13th</span>
-                </div>
-                <div className="flex items-center justify-center gap-3 p-4 rounded-lg bg-slate-50">
-                  <Users className="w-5 h-5 text-slate-700" />
-                  <span className="font-medium text-slate-900 text-sm">Max 8 Students</span>
+                  <span className="font-medium text-slate-900 text-sm">Starts October 13th</span>
                 </div>
               </div>
               
               <div className="space-y-3 mb-8">
-                <Link to="/auth/register">
+                <Link to="/payment/group-classes">
                   <button className="group w-full max-w-sm mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-3 px-6 rounded-lg text-base font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                    <span className="relative">Join Group Classes</span>
+                    <span className="relative">Enroll Now - $50/week</span>
                   </button>
                 </Link>
                 
@@ -695,10 +691,10 @@ export default function GroupClasses() {
             </p>
             
             <div className="flex justify-center mb-12 sm:mb-16 px-4">
-              <Link to="/auth/register" className="w-full max-w-sm">
+              <Link to="/payment/group-classes" className="w-full max-w-sm">
                 <button className="group w-full px-8 sm:px-16 py-4 sm:py-6 bg-white text-slate-900 rounded-2xl text-lg sm:text-xl font-semibold hover:bg-slate-100 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-1 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-100/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                  <span className="relative">Enroll Now - $30/week</span>
+                  <span className="relative">Enroll Now - $50/week</span>
                 </button>
               </Link>
             </div>
