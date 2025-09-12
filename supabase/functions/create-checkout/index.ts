@@ -55,6 +55,14 @@ serve(async (req) => {
       mode: "subscription",
       success_url: `${req.headers.get("origin")}/group-classes/success`,
       cancel_url: `${req.headers.get("origin")}/group-classes`,
+      custom_text: {
+        submit: {
+          message: "Subscribe to Unihack SAT Group Classes"
+        }
+      },
+      metadata: {
+        business_name: "Unihack"
+      }
     });
 
     logStep("Checkout session created", { sessionId: session.id, url: session.url });
