@@ -261,10 +261,10 @@ export default function GroupClasses() {
             </div>
             
             <div className="bg-slate-800 p-6 rounded-b-xl">
-              {/* Video Grid */}
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                {/* Instructor - Main with SAT Content */}
-                <div className="col-span-2 relative">
+              {/* Video Grid - Loom Style */}
+              <div className="relative">
+                {/* Main Screen Share */}
+                <div className="w-full relative">
                   <div className="aspect-video bg-white rounded-lg relative overflow-hidden border-2 border-slate-300">
                     {/* SAT Passage Display */}
                     <div className="absolute inset-0">
@@ -275,11 +275,24 @@ export default function GroupClasses() {
                       />
                     </div>
                     
-                    {/* Instructor overlay */}
-                    <div className="absolute bottom-4 left-4 bg-slate-900/90 text-white px-3 py-1 rounded text-sm font-medium">
-                      Sarah Johnson - SAT Expert
+                    {/* Instructor Video Overlay - Bottom Right (Loom Style) */}
+                    <div className="absolute bottom-4 right-4 w-32 h-24 bg-gradient-to-br from-blue-900 to-slate-800 rounded-lg border-2 border-white shadow-lg overflow-hidden">
+                      {/* Instructor Avatar/Video */}
+                      <div className="relative w-full h-full bg-gradient-to-br from-purple-600 to-blue-700 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                            <span className="text-slate-700 font-bold text-sm">SJ</span>
+                          </div>
+                        </div>
+                        {/* Speaking indicator */}
+                        <div className="absolute bottom-1 left-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <div className="absolute bottom-1 right-1 text-white text-xs font-medium">Sarah</div>
+                      </div>
                     </div>
-                    <div className="absolute top-4 right-4 bg-green-600 text-white px-2 py-1 rounded text-xs">
+                    
+                    {/* Screen share indicator */}
+                    <div className="absolute top-4 right-4 bg-green-600 text-white px-2 py-1 rounded text-xs flex items-center gap-1">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
                       SHARING SCREEN
                     </div>
                     
@@ -311,21 +324,28 @@ export default function GroupClasses() {
                   </div>
                 </div>
                 
-                {/* Student Grid */}
-                <div className="grid grid-cols-2 gap-2">
+                {/* Student Avatar Strip */}
+                <div className="mt-4 flex justify-center gap-3">
                   {[
-                    { name: "Alex M.", active: true },
-                    { name: "Maria S.", active: false },
-                    { name: "David L.", active: true },
-                    { name: "Emma R.", active: false }
+                    { name: "Alex M.", color: "from-green-500 to-emerald-600", active: true },
+                    { name: "Maria S.", color: "from-pink-500 to-rose-600", active: false },
+                    { name: "David L.", color: "from-orange-500 to-amber-600", active: true },
+                    { name: "Emma R.", color: "from-purple-500 to-violet-600", active: true },
+                    { name: "Jake T.", color: "from-blue-500 to-cyan-600", active: false },
+                    { name: "Zara K.", color: "from-indigo-500 to-blue-600", active: true }
                   ].map((student, idx) => (
-                    <div key={idx} className="aspect-square bg-gradient-to-br from-slate-700 to-slate-600 rounded-lg relative">
-                      <div className="absolute bottom-1 left-1 bg-slate-900/80 text-white px-2 py-0.5 rounded text-xs">
-                        {student.name}
+                    <div key={idx} className="text-center">
+                      <div className={`w-12 h-12 bg-gradient-to-br ${student.color} rounded-full flex items-center justify-center border-2 ${student.active ? 'border-green-400' : 'border-slate-300'} relative`}>
+                        <span className="text-white font-bold text-sm">
+                          {student.name.split(' ').map(n => n[0]).join('')}
+                        </span>
+                        {student.active && (
+                          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white flex items-center justify-center">
+                            <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                          </div>
+                        )}
                       </div>
-                      {student.active && (
-                        <div className="absolute top-1 right-1 w-2 h-2 bg-green-400 rounded-full"></div>
-                      )}
+                      <div className="text-xs text-slate-600 mt-1 font-medium">{student.name.split(' ')[0]}</div>
                     </div>
                   ))}
                 </div>
@@ -361,16 +381,21 @@ export default function GroupClasses() {
                   </div>
                 </div>
                 
-                {/* Answer choices overlay */}
+                {/* Answer choices from uploaded image */}
                 {!showRationale && (
                   <div className="mt-4 p-3 bg-slate-600 rounded-lg">
-                    <div className="text-white text-xs font-medium mb-2">Quick Poll: What&apos;s your answer?</div>
-                    <div className="grid grid-cols-2 gap-2">
-                      {["A) new invertebrate species were discovered", "B) researchers treated microorganism differences as separate species", "C) Bianchi was less sensitive to variations", "D) Coll underestimated the count"].map((choice, idx) => (
+                    <div className="text-white text-xs font-medium mb-2">Quick Poll: Which choice most logically completes the text?</div>
+                    <div className="space-y-2">
+                      {[
+                        "A. Coll and colleagues reported a much higher number of species than Bianchi and Morri did largely due to the inclusion of invertebrate species that had not been described at the time of Bianchi and Morri's census.",
+                        "B. some differences observed in microorganisms may have been treated as variations within species by Bianchi and Morri but treated as indicative of distinct species by Coll and colleagues.",
+                        "C. Bianchi and Morri may have been less sensitive to the degree of morphological variation displayed within a typical species of microorganism than Coll and colleagues were.",
+                        "D. the absence of clarity regarding how to differentiate among species of microorganisms may have resulted in Coll and colleagues underestimating the number of microorganism species."
+                      ].map((choice, idx) => (
                         <button
                           key={idx}
                           onClick={() => setSelectedAnswer(choice.charAt(0))}
-                          className={`text-xs p-2 rounded transition-colors text-left ${
+                          className={`w-full text-xs p-2 rounded transition-colors text-left ${
                             selectedAnswer === choice.charAt(0)
                               ? "bg-blue-600 text-white"
                               : "bg-slate-500 text-slate-200 hover:bg-slate-400"
@@ -380,6 +405,40 @@ export default function GroupClasses() {
                         </button>
                       ))}
                     </div>
+                    
+                    {/* Show poll results */}
+                    {selectedAnswer && (
+                      <div className="mt-3 text-xs text-slate-300">
+                        <div className="flex justify-between items-center mb-1">
+                          <span>Live Poll Results:</span>
+                          <span>6/8 voted</span>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex justify-between">
+                            <span>A: 1 vote (17%)</span>
+                            <div className="w-16 bg-slate-700 rounded h-2">
+                              <div className="w-1/6 bg-red-400 rounded h-2"></div>
+                            </div>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>B: 4 votes (67%)</span>
+                            <div className="w-16 bg-slate-700 rounded h-2">
+                              <div className="w-2/3 bg-green-400 rounded h-2"></div>
+                            </div>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>C: 1 vote (17%)</span>
+                            <div className="w-16 bg-slate-700 rounded h-2">
+                              <div className="w-1/6 bg-yellow-400 rounded h-2"></div>
+                            </div>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>D: 0 votes (0%)</span>
+                            <div className="w-16 bg-slate-700 rounded h-2"></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
