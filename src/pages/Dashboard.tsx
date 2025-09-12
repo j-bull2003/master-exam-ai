@@ -301,54 +301,54 @@ const Dashboard = () => {
             {/* Left side - Stats and Actions (3/4 width) */}
             <div className="xl:col-span-3 space-y-4 sm:space-y-6">
               {/* Stats Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20 hover:shadow-lg transition-all">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-xs sm:text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
-                    <Target className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600" />
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                    <CardTitle className="text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
+                    <Target className="h-4 w-4 text-emerald-600" />
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-emerald-700">0%</div>
-                    <p className="text-xs text-muted-foreground">
+                  <CardContent className="pt-0">
+                    <div className="text-2xl font-bold text-emerald-700">0%</div>
+                    <p className="text-xs text-muted-foreground mt-1">
                       Start practicing to see your accuracy
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20 hover:shadow-lg transition-all">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-xs sm:text-sm font-medium text-blue-700">Weekly Progress</CardTitle>
-                    <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                    <CardTitle className="text-sm font-medium text-blue-700">Weekly Progress</CardTitle>
+                    <TrendingUp className="h-4 w-4 text-blue-600" />
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">0%</div>
-                    <p className="text-xs text-muted-foreground">
+                  <CardContent className="pt-0">
+                    <div className="text-2xl font-bold text-blue-700">0%</div>
+                    <p className="text-xs text-muted-foreground mt-1">
                       Complete sessions to track progress
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border-purple-500/20 hover:shadow-lg transition-all">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-xs sm:text-sm font-medium text-purple-700">Study Streak</CardTitle>
-                    <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-purple-600" />
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                    <CardTitle className="text-sm font-medium text-purple-700">Study Streak</CardTitle>
+                    <Zap className="h-4 w-4 text-purple-600" />
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-700">0 days</div>
-                    <p className="text-xs text-muted-foreground">
+                  <CardContent className="pt-0">
+                    <div className="text-2xl font-bold text-purple-700">0 days</div>
+                    <p className="text-xs text-muted-foreground mt-1">
                       Practice daily to build your streak
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border-orange-500/20 hover:shadow-lg transition-all">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-xs sm:text-sm font-medium text-orange-700">Total Questions</CardTitle>
-                    <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-orange-600" />
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                    <CardTitle className="text-sm font-medium text-orange-700">Total Questions</CardTitle>
+                    <BookOpen className="h-4 w-4 text-orange-600" />
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-700">0</div>
-                    <p className="text-xs text-muted-foreground">
+                  <CardContent className="pt-0">
+                    <div className="text-2xl font-bold text-orange-700">0</div>
+                    <p className="text-xs text-muted-foreground mt-1">
                       Questions attempted
                     </p>
                   </CardContent>
@@ -497,28 +497,31 @@ const Dashboard = () => {
 
               {/* Quick Actions */}
               <Card className="bg-gradient-to-br from-violet-50 to-violet-100 border-violet-200 hover:shadow-lg transition-all">
-                <CardHeader>
-                  <CardTitle className="text-violet-700">Quick Actions</CardTitle>
-                  <CardDescription>Jump into your study activities</CardDescription>
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-violet-700 text-lg">Quick Actions</CardTitle>
+                  <CardDescription className="text-sm">Jump into your study activities</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-1 gap-3">
                     <Link to="/practice">
-                      <Button variant="outline" className="w-full h-16 sm:h-20 flex flex-col gap-1 sm:gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
-                        <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
-                        <span className="text-xs sm:text-sm">Practice Questions</span>
+                      <Button variant="outline" className="w-full h-14 flex items-center justify-start gap-3 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all px-4">
+                        <BookOpen className="w-5 h-5" />
+                        <span className="text-sm font-medium">Practice Questions</span>
+                        <ChevronRight className="w-4 h-4 ml-auto" />
                       </Button>
                     </Link>
                     <Link to="/mocks">
-                      <Button variant="outline" className="w-full h-16 sm:h-20 flex flex-col gap-1 sm:gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
-                        <Clipboard className="w-5 h-5 sm:w-6 sm:h-6" />
-                        <span className="text-xs sm:text-sm">Mock Tests</span>
+                      <Button variant="outline" className="w-full h-14 flex items-center justify-start gap-3 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all px-4">
+                        <Clipboard className="w-5 h-5" />
+                        <span className="text-sm font-medium">Mock Tests</span>
+                        <ChevronRight className="w-4 h-4 ml-auto" />
                       </Button>
                     </Link>
                     <Link to="/analytics">
-                      <Button variant="outline" className="w-full h-16 sm:h-20 flex flex-col gap-1 sm:gap-2 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all">
-                        <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6" />
-                        <span className="text-xs sm:text-sm">View Analytics</span>
+                      <Button variant="outline" className="w-full h-14 flex items-center justify-start gap-3 border-violet-300 text-violet-700 hover:bg-violet-50 transition-all px-4">
+                        <BarChart3 className="w-5 h-5" />
+                        <span className="text-sm font-medium">View Analytics</span>
+                        <ChevronRight className="w-4 h-4 ml-auto" />
                       </Button>
                     </Link>
                   </div>
@@ -531,21 +534,21 @@ const Dashboard = () => {
             <div className="xl:col-span-1 space-y-4 sm:space-y-6">
               {/* Your Timeline */}
               <Card className="bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 hover:shadow-lg transition-all">
-                <CardHeader>
+                <CardHeader className="pb-3">
                   <CardTitle className="text-sm font-medium text-amber-700">Your Timeline</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {profileData?.exam_date ? (
                     <>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-primary">
+                      <div className="text-center space-y-2">
+                        <div className="text-xl sm:text-2xl font-bold text-primary">
                           {isExamPassed ? 'Past' : examCountdown}
                         </div>
                         <div className="text-xs text-muted-foreground">
                           {isExamPassed ? 'Exam Date Passed' : 'days until exam'}
                         </div>
                       </div>
-                      <div className="text-xs text-center">
+                      <div className="text-xs text-center py-2 border-y border-amber-200">
                         <div className="font-medium">SAT Exam</div>
                         <div className="text-muted-foreground">
                           {new Date(profileData.exam_date).toLocaleDateString()}
@@ -561,7 +564,7 @@ const Dashboard = () => {
                         variant="outline" 
                         size="sm" 
                         onClick={() => setIsDateModalOpen(true)}
-                        className="w-full text-xs"
+                        className="w-full text-xs h-8"
                       >
                         Update Date
                       </Button>
@@ -572,7 +575,7 @@ const Dashboard = () => {
                       <Button 
                         size="sm" 
                         onClick={() => setIsDateModalOpen(true)}
-                        className="w-full text-xs"
+                        className="w-full text-xs h-10"
                       >
                         <Calendar className="w-3 h-3 mr-1" />
                         Set Exam Date
