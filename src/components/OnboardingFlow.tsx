@@ -19,7 +19,8 @@ import {
   CheckCircle2,
   X,
   BarChart3,
-  BookOpen
+  BookOpen,
+  Clock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,9 +28,22 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import { ONBOARDING_EXAMS } from "@/data/examConfig";
+
+// SAT Platform Access pricing - using Annual plan as default
+const PRICING_PLANS = {
+  annual: {
+    price_id: "price_1S6XsQLBctfCMRN8sZGewfbK",
+    name: "Annual Plan",
+    price: "$39.99/month",
+    billed: "Billed annually at $479.99",
+    savings: "Best Value - Save 75%"
+  }
+};
 
 interface OnboardingFlowProps {
   onComplete: () => void;
@@ -50,6 +64,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const { signUp } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [universitySearch, setUniversitySearch] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -139,10 +154,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     } else if (currentStep === 2) {
       isValid = validateStep2();
     } else {
-      isValid = true; // No validation for step 3
+      isValid = true; // No validation for other steps
     }
     
-    if (isValid && currentStep < 4) {
+    if (isValid && currentStep < 5) { // Updated to 5 steps
       setCurrentStep(currentStep + 1);
       setErrors({});
     }
@@ -154,10 +169,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleStartTrial = async () => {
     setIsLoading(true);
     try {
-      // Sign up the user with Supabase
+      // First sign up the user
       const { error: authError } = await signUp(
         formData.email,
         formData.password,
@@ -170,16 +185,36 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         throw new Error(authError.message || 'Registration failed');
       }
 
-      console.log('User registered successfully:', formData.email);
-      
+      // Get the current user session to update profile
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        // Update profile with onboarding data and trial status
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .update({
+            full_name: formData.name,
+            exam_type: formData.examType,
+            exam_date: formData.examDate?.toISOString().split('T')[0] || null,
+            target_university: formData.targetUniversities[0] || null,
+            target_universities: formData.targetUniversities,
+            subscription_status: 'trial',
+            trial_end_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days from now
+          })
+          .eq('user_id', session.user.id);
+
+        if (profileError) {
+          console.error('Profile update error:', profileError);
+        }
+      }
+
       toast({
-        title: "Registration successful!",
-        description: "Welcome to UniHack.ai! Check your email to verify your account.",
+        title: "Welcome to UniHack.ai!",
+        description: "Your 3-day free trial has started. Check your email to verify your account.",
       });
 
       onComplete();
     } catch (error: any) {
-      console.error('Registration error:', error);
+      console.error('Trial start error:', error);
       toast({
         title: "Registration failed",
         description: error.message || "Please try again.",
@@ -190,12 +225,79 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   };
 
+  const handleUpgradeNow = async () => {
+    setIsProcessingPayment(true);
+    try {
+      // First sign up the user
+      const { error: authError } = await signUp(
+        formData.email,
+        formData.password,
+        formData.name.split(' ')[0], // first name
+        formData.name.split(' ').slice(1).join(' ') // last name
+      );
+
+      if (authError) {
+        console.error('Registration error:', authError);
+        throw new Error(authError.message || 'Registration failed');
+      }
+
+      // Wait a moment for the session to be established
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Please try again - session not established");
+
+      // Update profile with onboarding data
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          full_name: formData.name,
+          exam_type: formData.examType,
+          exam_date: formData.examDate?.toISOString().split('T')[0] || null,
+          target_university: formData.targetUniversities[0] || null,
+          target_universities: formData.targetUniversities,
+          subscription_status: 'trial' // Will be updated to 'active' after successful payment
+        })
+        .eq('user_id', session.user.id);
+
+      if (profileError) console.error('Profile update error:', profileError);
+
+      // Create checkout session
+      const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
+        body: { priceId: PRICING_PLANS.annual.price_id },
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+
+      if (error) throw error;
+
+      // Redirect to Stripe checkout
+      window.open(data.url, '_blank');
+      
+      // Complete onboarding after a short delay
+      setTimeout(() => {
+        toast({
+          title: "Account created!",
+          description: "Redirecting to secure payment...",
+        });
+        onComplete();
+      }, 1000);
+
+    } catch (error: any) {
+      console.error('Payment error:', error);
+      toast({
+        title: "Setup failed",
+        description: error.message || "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !isLoading) {
-      if (currentStep < 4) {
+    if (e.key === 'Enter' && !isLoading && !isProcessingPayment) {
+      if (currentStep < 5) {
         nextStep();
-      } else {
-        handleSubmit();
       }
     }
   };
@@ -227,7 +329,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         {/* Enhanced Progress Indicator */}
         <div className="flex justify-center mb-3 sm:mb-6">
           <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6">
-            {[1, 2, 3, 4].map((step) => (
+            {[1, 2, 3, 4, 5].map((step) => (
               <div key={step} className="flex items-center">
                 <div className={`relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-500 ${
                   step < currentStep 
@@ -241,7 +343,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-primary to-primary-variant animate-pulse"></div>
                   )}
                 </div>
-                {step < 4 && (
+                {step < 5 && (
                   <div className={`w-8 sm:w-12 md:w-16 h-1 rounded-full transition-all duration-500 ${
                     step < currentStep ? 'bg-gradient-to-r from-primary to-primary-variant' : 'bg-muted/50'
                   }`} />
@@ -258,13 +360,15 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               {currentStep === 1 && "Create Your Account"}
               {currentStep === 2 && "Choose Your SAT Exam"}
               {currentStep === 3 && "Set Your Goals"}
-              {currentStep === 4 && "Ready to Begin!"}
+              {currentStep === 4 && "Profile Complete!"}
+              {currentStep === 5 && "Choose Your Plan"}
             </CardTitle>
             <CardDescription className="text-sm sm:text-base md:text-lg text-muted-foreground px-2">
               {currentStep === 1 && "Let's get you set up with a secure account"}
               {currentStep === 2 && "Select your SAT test details"}
               {currentStep === 3 && "Set your target score and universities for motivation"}
-              {currentStep === 4 && "You're all set! Time to start your SAT journey"}
+              {currentStep === 4 && "Your personalized SAT prep profile is ready"}
+              {currentStep === 5 && "Start with a 3-day free trial, then continue with premium access"}
             </CardDescription>
           </CardHeader>
 
@@ -409,357 +513,275 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     <div key={exam.id} className="flex items-start sm:items-center space-x-2 sm:space-x-3">
                       <RadioGroupItem value={exam.id} id={exam.id} className="mt-1 sm:mt-0" />
                       <div className="flex-1 cursor-pointer" onClick={() => setFormData(prev => ({ ...prev, examType: exam.id }))}>
-                        <Card className={`transition-all duration-200 hover:shadow-md ${
-                          formData.examType === exam.id ? 'ring-2 ring-primary border-primary' : 'border-input'
-                        }`}>
-                          <CardContent className="p-3 sm:p-4">
-                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start space-y-3 sm:space-y-0">
-                              <div className="flex-1">
-                                <h3 className="font-semibold text-base sm:text-lg">{exam.name}</h3>
-                                <p className="text-xs sm:text-sm text-muted-foreground mb-2 leading-relaxed">{exam.description}</p>
-                                <p className="text-xs sm:text-sm text-muted-foreground">Score Range: {exam.scoreRange}</p>
-                              </div>
-                              <div className="sm:text-right sm:ml-4">
-                                <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-1 sm:mb-1">Target Universities:</p>
-                                <div className="flex flex-wrap gap-1 sm:justify-end">
-                                  {exam.universities.slice(0, 2).map((uni) => (
-                                    <span key={uni} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded whitespace-nowrap">
-                                      {uni}
-                                    </span>
-                                  ))}
-                                  {exam.universities.length > 2 && (
-                                    <span className="text-xs text-muted-foreground whitespace-nowrap">+{exam.universities.length - 2} more</span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
+                        <Label 
+                          htmlFor={exam.id} 
+                          className="text-sm sm:text-base font-medium cursor-pointer block"
+                        >
+                          {exam.name}
+                        </Label>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                          {exam.description} • Score Range: {exam.scoreRange}
+                        </p>
                       </div>
                     </div>
                   ))}
                 </RadioGroup>
 
                 {errors.examType && (
-                  <p className="text-sm text-destructive flex items-center gap-2 px-2 sm:px-0">
-                    <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  <p className="text-sm text-destructive flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4" />
                     {errors.examType}
                   </p>
                 )}
               </div>
             )}
 
-            {/* Step 3: Goal Setting */}
+            {/* Step 3: Goals & Preferences */}
             {currentStep === 3 && (
-              <div className="space-y-8">
-                <div className="text-center space-y-3">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary-variant/20 rounded-2xl flex items-center justify-center mx-auto">
-                    <Calendar className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold">Set Your SAT Goals</h3>
-                  <p className="text-muted-foreground">Let's create a personalized plan to keep you motivated and on track</p>
-                </div>
-
-                {/* Exam Date */}
-                <div className="space-y-3">
-                  <Label className="text-base font-semibold">When is your SAT exam?</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={`w-full h-12 justify-start text-left font-normal ${
-                          !formData.examDate ? "text-muted-foreground" : ""
-                        }`}
-                      >
-                        <CalendarIcon className="mr-3 h-5 w-5" />
-                        {formData.examDate ? (
-                          formData.examDate.toLocaleDateString()
-                        ) : (
-                          <span>Select your exam date</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <input
-                        type="date"
-                        className="p-3 border rounded-lg w-full"
-                        onChange={(e) => {
-                          const date = e.target.value ? new Date(e.target.value) : null;
-                          setFormData(prev => ({ ...prev, examDate: date }));
-                        }}
-                        min={new Date().toISOString().split('T')[0]}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-
-                {/* Target Score */}
-                <div className="space-y-3">
-                  <Label className="text-base font-semibold">What's your target SAT score?</Label>
-                  <div className="grid grid-cols-3 gap-3">
-                    {["1400+", "1500+", "1600"].map((score) => (
-                      <Button
-                        key={score}
-                        variant={formData.targetScore === score ? "default" : "outline"}
-                        className={`h-12 text-center transition-all duration-200 ${
-                          formData.targetScore === score 
-                            ? "bg-gradient-to-r from-primary to-primary-variant shadow-lg scale-105" 
-                            : "hover:scale-105"
-                        }`}
-                        onClick={() => setFormData(prev => ({ ...prev, targetScore: score }))}
-                      >
-                        {score}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Target Universities */}
-                <div className="space-y-3">
-                  <Label className="text-base font-semibold">Which universities are you targeting?</Label>
-                  
-                  {/* Search Input */}
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Target Score (Optional)</Label>
                     <Input
-                      placeholder="Search universities..."
-                      value={universitySearch}
-                      onChange={(e) => setUniversitySearch(e.target.value)}
-                      className="pl-10 h-12"
+                      type="number"
+                      placeholder="e.g., 1500"
+                      value={formData.targetScore}
+                      onChange={(e) => setFormData(prev => ({ ...prev, targetScore: e.target.value }))}
+                      className="h-12 text-base"
+                      min="400"
+                      max="1600"
                     />
-                  </div>
-
-                  {/* Selected Universities */}
-                  {formData.targetUniversities.length > 0 && (
-                    <div className="flex flex-wrap gap-2 p-3 bg-muted/30 rounded-lg border border-border/50">
-                      {formData.targetUniversities.map((uni) => (
-                        <div
-                          key={uni}
-                          className="flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm border border-primary/20"
-                        >
-                          {uni}
-                          <button
-                            onClick={() => {
-                              const unis = formData.targetUniversities.filter(u => u !== uni);
-                              setFormData(prev => ({ ...prev, targetUniversities: unis }));
-                            }}
-                            className="hover:text-destructive transition-colors"
-                          >
-                            <X className="w-3 h-3" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* University Dropdown */}
-                  {universitySearch && filteredUniversities.length > 0 && (
-                    <div className="relative">
-                      <div className="absolute top-0 left-0 right-0 bg-background border border-border/50 rounded-lg shadow-xl z-50 max-h-48 overflow-y-auto">
-                        {filteredUniversities.slice(0, 8).map((uni) => (
-                          <button
-                            key={uni}
-                            onClick={() => {
-                              if (!formData.targetUniversities.includes(uni)) {
-                                setFormData(prev => ({ 
-                                  ...prev, 
-                                  targetUniversities: [...prev.targetUniversities, uni] 
-                                }));
-                              }
-                              setUniversitySearch("");
-                            }}
-                            disabled={formData.targetUniversities.includes(uni)}
-                            className={`w-full text-left px-4 py-3 hover:bg-muted/80 transition-colors text-sm border-b border-border/30 last:border-b-0 ${
-                              formData.targetUniversities.includes(uni) 
-                                ? 'text-muted-foreground bg-muted/50 cursor-not-allowed' 
-                                : 'text-foreground hover:text-primary'
-                            }`}
-                          >
-                            {uni}
-                            {formData.targetUniversities.includes(uni) && (
-                              <span className="ml-2 text-xs text-success">✓ Selected</span>
-                            )}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Motivation Message */}
-                {(formData.examDate || formData.targetScore || formData.targetUniversities.length > 0) && (
-                  <div className="p-6 bg-gradient-to-r from-primary/10 to-primary-variant/10 rounded-2xl border border-primary/20">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Sparkles className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="space-y-2">
-                        <h4 className="font-semibold text-primary">Your Personalized Plan</h4>
-                        <div className="space-y-1 text-sm text-muted-foreground">
-                          {formData.examDate && (
-                            <p>📅 Exam Date: {formData.examDate.toLocaleDateString()}</p>
-                          )}
-                          {formData.targetScore && (
-                            <p>🎯 Target Score: {formData.targetScore}</p>
-                          )}
-                          {formData.targetUniversities.length > 0 && (
-                            <p>🏛️ Dream Universities: {formData.targetUniversities.join(", ")}</p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Step 4: Confirmation */}
-            {currentStep === 4 && (
-              <div className="space-y-8 text-center">
-                <div className="space-y-6">
-                  <div className="relative">
-                    <div className="w-20 h-20 bg-gradient-to-r from-primary/20 to-primary-variant/20 rounded-3xl flex items-center justify-center mx-auto">
-                      <Sparkles className="w-10 h-10 text-primary" />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary-variant/20 rounded-3xl blur-xl animate-pulse"></div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <h3 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent">
-                      Welcome to UniHack.ai!
-                    </h3>
-                    <p className="text-lg text-muted-foreground max-w-md mx-auto">
-                      Your account is ready! Choose how you'd like to begin your SAT preparation journey.
+                    <p className="text-xs text-muted-foreground">
+                      SAT scores range from 400 to 1600
                     </p>
                   </div>
 
-                  {/* Action Options */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-                    <button 
-                      onClick={() => onComplete?.()} 
-                      className="bg-primary/10 hover:bg-primary/20 border-2 border-primary/30 hover:border-primary/50 rounded-2xl p-6 transition-all duration-200 hover:scale-105 group"
-                    >
-                      <div className="w-12 h-12 mx-auto bg-primary/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/30 transition-colors">
-                        <BarChart3 className="w-6 h-6 text-primary" />
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Target Universities (Optional)</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className="w-full h-12 justify-between text-left font-normal text-base"
+                        >
+                          {formData.targetUniversities.length > 0
+                            ? `${formData.targetUniversities.length} selected`
+                            : "Select universities..."
+                          }
+                          <Search className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full p-0" align="start">
+                        <div className="p-3 border-b">
+                          <Input
+                            placeholder="Search universities..."
+                            value={universitySearch}
+                            onChange={(e) => setUniversitySearch(e.target.value)}
+                            className="h-8"
+                          />
+                        </div>
+                        <div className="max-h-40 overflow-auto">
+                          {filteredUniversities.map((university) => (
+                            <div
+                              key={university}
+                              className="flex items-center space-x-2 p-2 hover:bg-accent cursor-pointer"
+                              onClick={() => {
+                                const isSelected = formData.targetUniversities.includes(university);
+                                if (isSelected) {
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    targetUniversities: prev.targetUniversities.filter(u => u !== university)
+                                  }));
+                                } else {
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    targetUniversities: [...prev.targetUniversities, university]
+                                  }));
+                                }
+                              }}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={formData.targetUniversities.includes(university)}
+                                readOnly
+                                className="h-4 w-4"
+                              />
+                              <Label className="text-sm cursor-pointer">{university}</Label>
+                            </div>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                    {formData.targetUniversities.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {formData.targetUniversities.map((uni) => (
+                          <Badge
+                            key={uni}
+                            variant="secondary"
+                            className="text-xs py-1 px-2 cursor-pointer"
+                            onClick={() => {
+                              setFormData(prev => ({
+                                ...prev,
+                                targetUniversities: prev.targetUniversities.filter(u => u !== uni)
+                              }));
+                            }}
+                          >
+                            {uni}
+                            <X className="ml-1 h-3 w-3" />
+                          </Badge>
+                        ))}
                       </div>
-                      <h4 className="font-semibold mb-2 text-foreground">Take Diagnostic Test</h4>
-                      <p className="text-sm text-muted-foreground mb-3">Get personalized insights and create a custom study plan</p>
-                      <div className="inline-block px-3 py-1 bg-primary/20 text-primary text-xs font-medium rounded-full">
-                        Recommended • 15 mins
-                      </div>
-                    </button>
-                    
-                    <button 
-                      onClick={() => window.location.href = '/dashboard'} 
-                      className="bg-muted/30 hover:bg-muted/50 border-2 border-muted hover:border-border rounded-2xl p-6 transition-all duration-200 hover:scale-105 group"
-                    >
-                      <div className="w-12 h-12 mx-auto bg-muted/50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-muted/70 transition-colors">
-                        <BookOpen className="w-6 h-6 text-muted-foreground" />
-                      </div>
-                      <h4 className="font-semibold mb-2 text-foreground">Skip to Dashboard</h4>
-                      <p className="text-sm text-muted-foreground mb-3">Start exploring practice questions right away</p>
-                      <div className="inline-block px-3 py-1 bg-muted/50 text-muted-foreground text-xs font-medium rounded-full">
-                        Skip diagnostic
-                      </div>
-                    </button>
+                    )}
                   </div>
 
-                  {/* Summary Card */}
-                  <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6 text-left max-w-md mx-auto">
-                    <h4 className="font-semibold mb-4 text-center">Your Profile Summary</h4>
-                    <div className="space-y-3 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Name:</span>
-                        <span className="font-medium">{formData.name}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Exam:</span>
-                        <span className="font-medium">{formData.examType}</span>
-                      </div>
-                      {formData.examDate && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Exam Date:</span>
-                          <span className="font-medium">{formData.examDate.toLocaleDateString()}</span>
-                        </div>
-                      )}
-                      {formData.targetScore && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Target Score:</span>
-                          <span className="font-medium">{formData.targetScore}</span>
-                        </div>
-                      )}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Exam Date (Optional)</Label>
+                    <Input
+                      type="date"
+                      value={formData.examDate ? formData.examDate.toISOString().split('T')[0] : ''}
+                      onChange={(e) => setFormData(prev => ({ 
+                        ...prev, 
+                        examDate: e.target.value ? new Date(e.target.value) : null 
+                      }))}
+                      className="h-12 text-base"
+                      min={new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 4: Profile Summary */}
+            {currentStep === 4 && (
+              <div className="space-y-6">
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg">
+                  <h4 className="font-semibold text-lg mb-4">Your Profile Summary:</h4>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="text-muted-foreground">Name:</span>
+                      <p className="font-medium">{formData.name}</p>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Exam:</span>
+                      <p className="font-medium">{formData.examType}</p>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Target Date:</span>
+                      <p className="font-medium">{formData.examDate?.toLocaleDateString() || 'Not specified'}</p>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Target Score:</span>
+                      <p className="font-medium">{formData.targetScore || 'Not specified'}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="text-muted-foreground">Target Universities:</span>
+                      <p className="font-medium">{formData.targetUniversities.length > 0 ? formData.targetUniversities.join(', ') : 'Not specified'}</p>
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Enhanced Navigation */}
-            <div className="flex flex-col sm:flex-row justify-between items-center pt-6 sm:pt-8 border-t border-border/50 gap-4 sm:gap-0">
-              <Button
-                variant="outline"
-                onClick={prevStep}
-                disabled={currentStep === 1}
-                className="flex items-center gap-2 h-10 sm:h-12 px-4 sm:px-6 w-full sm:w-auto order-2 sm:order-1"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Back
-              </Button>
+            {/* Step 5: Payment Options */}
+            {currentStep === 5 && (
+              <div className="space-y-6">
+                {/* Free Trial Option */}
+                <div className="border-2 border-green-200 bg-green-50 p-6 rounded-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Clock className="h-5 w-5 text-green-600" />
+                    <h4 className="font-semibold text-lg text-green-800">3-Day Free Trial</h4>
+                    <Badge variant="secondary" className="bg-green-100 text-green-800">Recommended</Badge>
+                  </div>
+                  <p className="text-green-700 mb-4">
+                    Get full access to all SAT prep features for 3 days. No payment required to start.
+                  </p>
+                  <ul className="space-y-2 text-sm text-green-700 mb-4">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" />
+                      Unlimited practice questions
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" />
+                      AI-powered personalization
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" />
+                      Full-length mock exams
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" />
+                      Detailed analytics
+                    </li>
+                  </ul>
+                  <Button 
+                    onClick={handleStartTrial}
+                    disabled={isLoading}
+                    className="w-full bg-green-600 hover:bg-green-700"
+                  >
+                    {isLoading ? 'Creating Account...' : 'Start Free Trial'}
+                    {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
+                  </Button>
+                </div>
 
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground order-1 sm:order-2">
-                Step {currentStep} of 4
+                {/* Premium Plan Option */}
+                <div className="border-2 border-purple-200 bg-purple-50 p-6 rounded-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <CreditCard className="h-5 w-5 text-purple-600" />
+                    <h4 className="font-semibold text-lg text-purple-800">Upgrade to Premium</h4>
+                    <Badge variant="outline" className="border-purple-300 text-purple-700">
+                      {PRICING_PLANS.annual.savings}
+                    </Badge>
+                  </div>
+                  <div className="mb-4">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl font-bold text-purple-800">{PRICING_PLANS.annual.price}</span>
+                      <span className="text-sm text-purple-600">per month</span>
+                    </div>
+                    <p className="text-sm text-purple-600">{PRICING_PLANS.annual.billed}</p>
+                  </div>
+                  <p className="text-purple-700 mb-4">
+                    Skip the trial and get immediate access to everything plus premium features.
+                  </p>
+                  <Button 
+                    onClick={handleUpgradeNow}
+                    disabled={isProcessingPayment}
+                    variant="outline" 
+                    className="w-full border-purple-300 text-purple-700 hover:bg-purple-100"
+                  >
+                    {isProcessingPayment ? 'Processing...' : 'Upgrade Now'}
+                    {!isProcessingPayment && <ArrowRight className="ml-2 h-4 w-4" />}
+                  </Button>
+                </div>
               </div>
+            )}
 
-              {currentStep < 4 ? (
-                <Button
-                  onClick={nextStep}
-                  className="flex items-center gap-2 h-10 sm:h-12 px-4 sm:px-6 bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-200 w-full sm:w-auto order-3"
+            {/* Navigation Buttons */}
+            <div className="flex gap-3 pt-4">
+              {currentStep > 1 && (
+                <Button 
+                  variant="outline" 
+                  onClick={prevStep} 
+                  className="flex-1"
+                  disabled={isLoading || isProcessingPayment}
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back
+                </Button>
+              )}
+              {currentStep < 5 && (
+                <Button 
+                  onClick={nextStep} 
+                  className={`${currentStep === 1 ? 'w-full' : 'flex-1'}`}
+                  disabled={isLoading || isProcessingPayment}
                 >
                   Continue
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleSubmit}
-                  disabled={isLoading}
-                  className="flex items-center gap-2 h-10 sm:h-12 px-4 sm:px-8 bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-200 shadow-lg w-full sm:w-auto order-3"
-                >
-                  {isLoading ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span className="hidden sm:inline">Creating Account...</span>
-                      <span className="sm:hidden">Creating...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="hidden sm:inline">Start My Journey</span>
-                      <span className="sm:hidden">Start Journey</span>
-                      <Sparkles className="w-4 h-4" />
-                    </>
-                  )}
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               )}
             </div>
           </CardContent>
         </Card>
-
-        {/* Trust Indicators */}
-        <div className="mt-6 sm:mt-8 md:mt-12 text-center px-4">
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 text-xs sm:text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>Secure & Private</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>7-Day Free Trial</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CreditCard className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>Cancel Anytime</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
