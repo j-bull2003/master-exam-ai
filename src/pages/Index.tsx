@@ -197,10 +197,10 @@ const Index = () => {
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors card-layered">
                   <CheckCircle className="w-4 h-4 text-success" />
-                  <span className="text-success font-semibold">7-day free trial • No credit card</span>
+                  <span className="text-success font-semibold">3-day free trial • No credit card</span>
                 </div>
-                <div className="text-muted-foreground font-medium">Platform access from $40/month</div>
-                <div className="text-muted-foreground">Group classes +$30/week • 1-on-1 from $150/week</div>
+                <div className="text-muted-foreground font-medium">Platform access from $149/month</div>
+                <div className="text-muted-foreground">Group classes +$120/month • 1-on-1 program $3,000</div>
               </div>
             ) : (
               <Skeleton className="h-6 w-96 mx-auto mb-8" />

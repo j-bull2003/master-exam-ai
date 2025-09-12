@@ -14,10 +14,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    /* Enhanced primary with consistent naming */
-    --primary: 218 100% 58%;
-    --primary-foreground: 210 40% 98%;
-    --primary-hover: 218 100% 52%;
+    /* Enhanced primary with consistent naming - matching SAT program theme */
+    --primary: 270 95% 75%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 270 95% 70%;
     --primary-variant: 252 83% 67%;
     --primary-glow: 270 91% 65%;
 
@@ -47,7 +47,7 @@
     --input: 240 5.9% 90%;
     --ring: 217 91% 60%;
 
-    /* Premium accent color for elite features */
+    /* Premium accent color for elite features - matching SAT program theme */
     --accent: 270 95% 75%;
     --accent-foreground: 0 0% 100%;
 
