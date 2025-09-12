@@ -50,14 +50,14 @@ const GroupClassSection = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
             <Users className="w-4 h-4 text-primary" />
-            <span className="text-primary font-semibold">Add-On: Live Group Classes</span>
+            <span className="text-primary font-semibold">Optional Add-On: Live Group Classes</span>
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Enhance Your Learning with Group Classes
+            Enhance Your SAT Prep with Live Classes
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Join our next cohort starting <span className="text-primary font-semibold">October 13th</span>. 
+            Add live group learning to your platform access. Next cohort starts <span className="text-primary font-semibold">October 13th</span>. 
             Two sessions per week covering both Math and Reading & Writing for just <span className="text-primary font-semibold">$15 per session</span>
           </p>
         </div>
@@ -173,11 +173,11 @@ const GroupClassSection = () => {
         {/* CTA Section */}
         <div className="text-center bg-gradient-to-r from-primary/10 to-primary-variant/10 rounded-3xl p-12 border border-primary/20">
           <h3 className="text-3xl font-bold mb-4 text-foreground">
-            Ready to Join Our October 13th Cohort?
+            Ready to Add Group Classes to Your Plan?
           </h3>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Add group classes to your platform access for comprehensive SAT preparation. 
-            Just $30/week for two expert-led sessions covering all SAT sections.
+            Start with our platform access, then add group classes for enhanced learning with peers. 
+            Perfect combination of AI-powered prep and live instruction.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

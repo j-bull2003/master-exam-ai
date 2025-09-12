@@ -58,7 +58,7 @@ const Pricing = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               
-              {/* Group Classes Only */}
+              {/* Platform Access */}
               <div className="relative p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
                 <h3 className="text-xl font-bold mb-2">Platform Access</h3>
                 <div className="mb-2">
@@ -102,7 +102,7 @@ const Pricing = () => {
                 </Link>
               </div>
 
-              {/* Group + Platform - Most Popular */}
+              {/* Platform + Group Classes - Most Popular */}
               <div className="relative p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-primary-variant/5 border border-primary/30 shadow-lg">
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-semibold">
@@ -110,79 +110,79 @@ const Pricing = () => {
                   </span>
                 </div>
                 
-                <h3 className="text-xl font-bold mb-2">Group + Platform</h3>
+                <h3 className="text-xl font-bold mb-2">Platform + Group Classes</h3>
                 <div className="mb-2">
-                  <span className="text-4xl font-black">$35</span>
-                  <span className="text-muted-foreground">/week</span>
+                  <span className="text-4xl font-black">$70</span>
+                  <span className="text-muted-foreground">/month</span>
                 </div>
                 <div className="mb-6">
-                  <span className="text-sm text-muted-foreground">Save $5 vs separate</span>
+                  <span className="text-sm text-muted-foreground">$40 platform + $30/week classes</span>
                 </div>
 
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Everything in Group Classes</span>
+                    <span className="text-sm">Everything in Platform Access</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">8,500+ practice questions</span>
+                    <span className="text-sm">Live group sessions (2x/week)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">AI weakness detection</span>
+                    <span className="text-sm">Math + Reading & Writing</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Full analytics dashboard</span>
+                    <span className="text-sm">Expert tutor instruction</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Mock exams & scoring</span>
+                    <span className="text-sm">Interactive peer learning</span>
                   </div>
                 </div>
 
                 <Link to="/auth/register" className="block mb-4">
                   <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
-                    Start Learning Today
+                    Start Free Trial
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
               </div>
 
-              {/* Premium Package */}
+              {/* 1-on-1 Program */}
               <div className="relative p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">Premium Package</h3>
+                <h3 className="text-xl font-bold mb-2">1-on-1 Program</h3>
                 <div className="mb-2">
-                  <span className="text-4xl font-black">$75</span>
+                  <span className="text-4xl font-black">From $150</span>
                   <span className="text-muted-foreground">/week</span>
                 </div>
                 <div className="mb-6">
-                  <span className="text-sm text-muted-foreground">Complete SAT mastery</span>
+                  <span className="text-sm text-muted-foreground">Elite SAT coaching</span>
                 </div>
 
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Everything in Group + Platform</span>
+                    <span className="text-sm">Personalized study plans</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Weekly 1-on-1 tutoring</span>
+                    <span className="text-sm">Weekly 1-on-1 sessions</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Custom study plans</span>
+                    <span className="text-sm">Full platform access included</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Priority support</span>
+                    <span className="text-sm">Average 250+ point gains</span>
                   </div>
                 </div>
 
-                <Link to="/auth/register" className="block mb-4">
+                <Link to="/tutoring" className="block mb-4">
                   <Button variant="outline" className="w-full">
-                    Go Premium
+                    Learn More
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
@@ -200,10 +200,10 @@ const Pricing = () => {
                   <div className="text-lg font-bold text-primary">+$30/week</div>
                 </div>
                 <div className="text-center p-6 bg-background rounded-2xl border border-border/50">
-                  <Brain className="w-8 h-8 text-primary mx-auto mb-3" />
+                  <Target className="w-8 h-8 text-primary mx-auto mb-3" />
                   <h4 className="font-semibold mb-2">1-on-1 Tutoring</h4>
-                  <p className="text-sm text-muted-foreground mb-2">Weekly private sessions</p>
-                  <div className="text-lg font-bold text-primary">+$40/week</div>
+                  <p className="text-sm text-muted-foreground mb-2">Personalized coaching</p>
+                  <div className="text-lg font-bold text-primary">From $150/week</div>
                 </div>
                 <div className="text-center p-6 bg-background rounded-2xl border border-border/50">
                   <Zap className="w-8 h-8 text-primary mx-auto mb-3" />

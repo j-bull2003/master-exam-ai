@@ -11,6 +11,7 @@ import { MagneticButton } from "@/components/MagneticButton";
 import { EmptyState } from "@/components/EmptyState";
 import { PageProgressBar } from "@/components/PageProgressBar";
 import GroupClassSection from "@/components/GroupClassSection";
+import OneOnOneSection from "@/components/OneOnOneSection";
 import { EXAM_CONFIGS } from "@/data/examConfig";
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
@@ -158,7 +159,7 @@ const Index = () => {
               <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
                 <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
-                  Master the SAT in just 10 minutes daily
+                  #1 AI-Powered SAT Prep Platform
                 </span>
               </div>
             ) : (
@@ -183,8 +184,8 @@ const Index = () => {
             {/* Subtext with better contrast */}
             {isLoaded ? (
               <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                Join thousands of students achieving 200+ point improvements with AI-powered SAT prep. 
-                Expert-authored content meets cutting-edge technology.
+                Join thousands of students achieving 200+ point improvements with UniHack's AI-powered SAT prep platform. 
+                Add live group classes and 1-on-1 coaching to maximize your results.
               </p>
             ) : (
               <Skeleton className="h-6 w-full max-w-xl mx-auto mb-6" />
@@ -197,7 +198,8 @@ const Index = () => {
                   <CheckCircle className="w-4 h-4 text-success" />
                   <span className="text-success font-semibold">7-day free trial</span>
                 </div>
-                <div className="text-muted-foreground font-medium">From $39.99/month (annual)</div>
+                <div className="text-muted-foreground font-medium">Platform from $40/month</div>
+                <div className="text-muted-foreground">Group classes +$30/week</div>
                 <div className="text-muted-foreground">No setup fees • Cancel anytime</div>
               </div>
             ) : (
@@ -287,6 +289,9 @@ const Index = () => {
 
       {/* Group Classes Section */}
       <GroupClassSection />
+
+      {/* One-on-One Section */}
+      <OneOnOneSection />
 
       {/* Live Stats Section */}
       <section className="py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">

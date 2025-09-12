@@ -2,20 +2,28 @@ import { useState, useEffect } from "react";
 import { Users, Mic, MicOff, Video, VideoOff, MessageSquare, Hand, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Import realistic AI avatars
+import drMartinezAvatar from "@/assets/avatar-dr-martinez.jpg";
+import alexAvatar from "@/assets/avatar-alex.jpg";
+import mayaAvatar from "@/assets/avatar-maya.jpg";
+import samAvatar from "@/assets/avatar-sam.jpg";
+import emmaAvatar from "@/assets/avatar-emma.jpg";
+import youAvatar from "@/assets/avatar-you.jpg";
+
 const LiveZoomDemo = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOff, setIsVideoOff] = useState(false);
   const [handRaised, setHandRaised] = useState(false);
   const [animationStage, setAnimationStage] = useState(0);
 
-  // Enhanced AI character data with realistic profiles
+  // Enhanced AI character data with realistic profiles and avatar images
   const participants = [
-    { id: 1, name: "Dr. Martinez", role: "teacher", avatar: "👩‍🏫", isTeacher: true, speaking: false, bg: "from-primary/30 to-primary/20" },
-    { id: 2, name: "Alex Chen", role: "student", avatar: "👨‍🎓", isTeacher: false, speaking: false, bg: "from-blue-200/40 to-blue-100/30" },
-    { id: 3, name: "Maya Patel", role: "student", avatar: "👩‍🎓", isTeacher: false, speaking: true, bg: "from-green-200/40 to-green-100/30" },
-    { id: 4, name: "Sam Johnson", role: "student", avatar: "👨‍🎓", isTeacher: false, speaking: false, bg: "from-purple-200/40 to-purple-100/30" },
-    { id: 5, name: "Emma Rodriguez", role: "student", avatar: "👩‍🎓", isTeacher: false, speaking: false, bg: "from-pink-200/40 to-pink-100/30" },
-    { id: 6, name: "You", role: "student", avatar: "👤", isTeacher: false, speaking: false, isYou: true, bg: "from-orange-200/40 to-orange-100/30" }
+    { id: 1, name: "Dr. Martinez", role: "teacher", avatar: drMartinezAvatar, isTeacher: true, speaking: false, bg: "from-primary/30 to-primary/20" },
+    { id: 2, name: "Alex Chen", role: "student", avatar: alexAvatar, isTeacher: false, speaking: false, bg: "from-blue-200/40 to-blue-100/30" },
+    { id: 3, name: "Maya Patel", role: "student", avatar: mayaAvatar, isTeacher: false, speaking: true, bg: "from-green-200/40 to-green-100/30" },
+    { id: 4, name: "Sam Johnson", role: "student", avatar: samAvatar, isTeacher: false, speaking: false, bg: "from-purple-200/40 to-purple-100/30" },
+    { id: 5, name: "Emma Rodriguez", role: "student", avatar: emmaAvatar, isTeacher: false, speaking: false, bg: "from-pink-200/40 to-pink-100/30" },
+    { id: 6, name: "You", role: "student", avatar: youAvatar, isTeacher: false, speaking: false, isYou: true, bg: "from-orange-200/40 to-orange-100/30" }
   ];
 
   // Animation cycle for demo effect
@@ -50,16 +58,18 @@ const LiveZoomDemo = () => {
               participant.speaking ? 'border-primary/60 shadow-lg shadow-primary/20' : 'border-border/30'
             } ${participant.isTeacher ? 'md:col-span-2' : ''}`}
           >
-            {/* Enhanced AI character background */}
-            <div className={`w-full h-full bg-gradient-to-br ${participant.bg} flex items-center justify-center relative overflow-hidden`}>
+            {/* Realistic AI avatar background with photo */}
+            <div className="w-full h-full bg-gradient-to-br from-gray-900/20 to-gray-800/20 flex items-center justify-center relative overflow-hidden">
               
-              {/* Realistic AI avatar with better styling */}
-              <div className="relative">
-                <div className={`text-4xl ${participant.speaking ? 'animate-pulse scale-110' : ''} transition-all duration-300`}>
-                  {participant.avatar}
-                </div>
-                {/* Subtle glow effect for realism */}
-                <div className="absolute inset-0 bg-white/10 rounded-full blur-lg"></div>
+              {/* Professional AI avatar photo */}
+              <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-white/20 shadow-lg">
+                <img 
+                  src={participant.avatar} 
+                  alt={participant.name}
+                  className={`w-full h-full object-cover ${participant.speaking ? 'animate-pulse scale-110' : ''} transition-all duration-300`}
+                />
+                {/* Realistic lighting overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
               </div>
 
               {/* Speaking indicator */}
