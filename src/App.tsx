@@ -27,8 +27,6 @@ import TutorStudio from "./pages/TutorStudio";
 import Admin from "./pages/Admin";
 import FeedbackButton from "@/components/FeedbackButton";
 import NotFound from "./pages/NotFound";
-import TutoringPage from "./pages/TutoringPage";
-import Services from "./pages/Services";
 
 const queryClient = new QueryClient();
 
@@ -48,8 +46,6 @@ const App = () => {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
           <Route path="/consulting" element={<Consulting />} />
-          <Route path="/tutoring" element={<TutoringPage />} />
-          <Route path="/services" element={<Services />} />
           
           {/* Authentication */}
           <Route path="/auth/login" element={<Login />} />
