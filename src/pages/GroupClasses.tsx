@@ -208,15 +208,170 @@ export default function GroupClasses() {
                   </button>
                 </Link>
                 
-                <button className="group w-full max-w-sm mx-auto border border-slate-300 text-slate-700 py-3 px-6 rounded-lg text-base font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
-                  <span className="relative">Watch Demo Session</span>
+                <button 
+                  className="group w-full max-w-sm mx-auto border border-slate-300 text-slate-700 py-3 px-6 rounded-lg text-base font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
+                  onClick={() => document.getElementById('demo-section')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  <span className="relative">See Live Demo Session</span>
                 </button>
               </div>
               
               <p className="text-slate-600 font-light text-sm max-w-sm mx-auto">
-                Join our free demo session to experience our teaching methodology
+                Experience our interactive teaching methodology firsthand
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Demo Session Section */}
+      <section id="demo-section" className="py-20 bg-gradient-to-br from-slate-100 to-slate-50 relative">
+        <div className="container mx-auto max-w-6xl px-6">
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-slate-900 leading-tight">
+              Experience Our
+              <br />
+              <span className="text-slate-600">Live Sessions</span>
+            </h2>
+            <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed px-4">
+              Get a preview of our interactive group learning environment and expert instruction methodology.
+            </p>
+          </div>
+          
+          {/* Mock Zoom Interface */}
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-slate-900 rounded-t-xl p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+                <div className="text-white text-sm font-medium">SAT Group Mastery - Reading & Writing Session</div>
+                <div className="flex items-center gap-2 text-white text-xs">
+                  <span className="bg-red-600 px-2 py-1 rounded">REC</span>
+                  <span>45:23</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-slate-800 p-6 rounded-b-xl">
+              {/* Video Grid */}
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                {/* Instructor - Main */}
+                <div className="col-span-2 relative">
+                  <div className="aspect-video bg-gradient-to-br from-blue-900 to-slate-800 rounded-lg relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 bg-slate-900/80 text-white px-3 py-1 rounded text-sm font-medium">
+                      Sarah Johnson - SAT Expert
+                    </div>
+                    <div className="absolute top-4 right-4 bg-green-600 text-white px-2 py-1 rounded text-xs">
+                      LIVE
+                    </div>
+                    {/* Mock content overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center text-white">
+                        <div className="w-16 h-16 bg-white/20 rounded-full mx-auto mb-2 flex items-center justify-center">
+                          <BookOpen className="w-8 h-8" />
+                        </div>
+                        <p className="text-sm opacity-80">Sharing screen: SAT Reading Passage</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Student Grid */}
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { name: "Alex M.", active: true },
+                    { name: "Maria S.", active: false },
+                    { name: "David L.", active: true },
+                    { name: "Emma R.", active: false }
+                  ].map((student, idx) => (
+                    <div key={idx} className="aspect-square bg-gradient-to-br from-slate-700 to-slate-600 rounded-lg relative">
+                      <div className="absolute bottom-1 left-1 bg-slate-900/80 text-white px-2 py-0.5 rounded text-xs">
+                        {student.name}
+                      </div>
+                      {student.active && (
+                        <div className="absolute top-1 right-1 w-2 h-2 bg-green-400 rounded-full"></div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Chat Section */}
+              <div className="bg-slate-700 rounded-lg p-4 mb-4">
+                <div className="text-white text-sm font-medium mb-3 border-b border-slate-600 pb-2">
+                  Chat (Private to Group)
+                </div>
+                <div className="space-y-2 text-sm max-h-32 overflow-y-auto">
+                  <div className="text-slate-300">
+                    <span className="text-blue-400 font-medium">Sarah Johnson:</span> Let's analyze the main idea of this passage together
+                  </div>
+                  <div className="text-slate-300">
+                    <span className="text-green-400 font-medium">Alex M:</span> Is it about the environmental impact?
+                  </div>
+                  <div className="text-slate-300">
+                    <span className="text-blue-400 font-medium">Sarah Johnson:</span> Great thinking! What specific evidence supports that?
+                  </div>
+                  <div className="text-slate-300">
+                    <span className="text-purple-400 font-medium">Emma R:</span> Lines 15-18 mention carbon emissions
+                  </div>
+                </div>
+              </div>
+              
+              {/* Control Bar */}
+              <div className="flex items-center justify-center gap-4">
+                <button className="w-12 h-12 bg-slate-600 hover:bg-slate-500 rounded-full flex items-center justify-center text-white transition-colors">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                <button className="w-12 h-12 bg-slate-600 hover:bg-slate-500 rounded-full flex items-center justify-center text-white transition-colors">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                  </svg>
+                </button>
+                <button className="w-12 h-12 bg-red-600 hover:bg-red-500 rounded-full flex items-center justify-center text-white transition-colors">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 6.707 6.293a1 1 0 00-1.414 1.414L8.586 11l-3.293 3.293a1 1 0 001.414 1.414L10 12.414l3.293 3.293a1 1 0 001.414-1.414L11.414 11l3.293-3.293z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                <button className="w-12 h-12 bg-slate-600 hover:bg-slate-500 rounded-full flex items-center justify-center text-white transition-colors">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          {/* Demo Features */}
+          <div className="grid md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
+            <Card className="border border-slate-200/50 bg-white/80 backdrop-blur-sm shadow-lg">
+              <CardContent className="p-6 text-center">
+                <Users className="w-8 h-8 text-slate-700 mx-auto mb-3" />
+                <h3 className="font-serif font-semibold text-slate-900 mb-2">Interactive Learning</h3>
+                <p className="text-sm text-slate-600 font-light">Real-time engagement with instructor and peers</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="border border-slate-200/50 bg-white/80 backdrop-blur-sm shadow-lg">
+              <CardContent className="p-6 text-center">
+                <BookOpen className="w-8 h-8 text-slate-700 mx-auto mb-3" />
+                <h3 className="font-serif font-semibold text-slate-900 mb-2">Screen Sharing</h3>
+                <p className="text-sm text-slate-600 font-light">Live walkthrough of SAT problems and strategies</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="border border-slate-200/50 bg-white/80 backdrop-blur-sm shadow-lg">
+              <CardContent className="p-6 text-center">
+                <Target className="w-8 h-8 text-slate-700 mx-auto mb-3" />
+                <h3 className="font-serif font-semibold text-slate-900 mb-2">Small Groups</h3>
+                <p className="text-sm text-slate-600 font-light">Maximum 8 students for personalized attention</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
