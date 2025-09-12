@@ -156,7 +156,7 @@ export const RealPlatformDemo = () => {
         </div>
 
         {/* Stats Grid - Compact */}
-        <div className="grid grid-cols-5 gap-2 mb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-4">
           <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20">
             <CardContent className="p-2 text-center">
               <Target className="h-3 w-3 text-emerald-600 mx-auto mb-1" />
@@ -192,7 +192,7 @@ export const RealPlatformDemo = () => {
           <Card className="bg-gradient-to-br from-yellow-500/5 to-yellow-600/10 border-yellow-500/20">
             <CardContent className="p-2 text-center">
               <Calendar className="h-3 w-3 text-yellow-600 mx-auto mb-1" />
-              <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-2 py-1">
+              <Button size="sm" variant="outline" className="w-full text-xs h-7 px-2">
                 Set Date
               </Button>
             </CardContent>
