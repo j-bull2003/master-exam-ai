@@ -119,170 +119,140 @@ export const RealPlatformDemo = () => {
   };
 
   const renderDashboardStep = () => (
-    <div className="min-h-[600px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
+    <div className="min-h-[450px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
       {/* Header like actual platform */}
       <header className="border-b border-border bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-4 h-12 flex items-center justify-between">
           <img
             src={uniHackLogo}
             alt="UniHack.ai Logo"
-            className="h-20 max-h-[80px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
+            className="h-16 max-h-[64px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
           />
           
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6">
-            <div className="text-primary font-medium border-b-2 border-primary flex items-center gap-2">
-              <Target className="w-4 h-4" />Dashboard
+          <nav className="hidden lg:flex items-center space-x-4">
+            <div className="text-primary font-medium border-b-2 border-primary flex items-center gap-1 text-sm">
+              <Target className="w-3 h-3" />Dashboard
             </div>
-            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-              <BookOpen className="w-4 h-4" />Practice
+            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-sm">
+              <BookOpen className="w-3 h-3" />Practice
             </div>
-            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-              <Clipboard className="w-4 h-4" />Mocks
+            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-sm">
+              <Clipboard className="w-3 h-3" />Mocks
             </div>
-            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-              <BarChart3 className="w-4 h-4" />Analytics
-            </div>
-            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-              <User className="w-4 h-4" />Profile
-            </div>
-            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-6 flex items-center gap-2">
-              <LogOut className="w-4 h-4" />
+            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-3 flex items-center gap-1 text-xs">
+              <LogOut className="w-3 h-3" />
               Logout
             </Button>
           </nav>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-3">
         {/* Page Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold mb-3">Welcome back, Demo User! 👋</h1>
-          <p className="text-muted-foreground">Ready to continue your SAT preparation?</p>
+        <div className="mb-3 text-center">
+          <h1 className="text-xl font-bold mb-1">Welcome back, Demo User! 👋</h1>
+          <p className="text-muted-foreground text-xs">Ready to continue your SAT preparation?</p>
         </div>
 
-        {/* Stats Grid - Matching actual design */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-          <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20 hover:shadow-lg transition-all">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-emerald-700">Overall Accuracy</CardTitle>
-              <Target className="h-4 w-4 text-emerald-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-emerald-700">0%</div>
-              <p className="text-xs text-muted-foreground">Start practicing to see your accuracy</p>
+        {/* Stats Grid - Compact */}
+        <div className="grid grid-cols-5 gap-2 mb-4">
+          <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20">
+            <CardContent className="p-2 text-center">
+              <Target className="h-3 w-3 text-emerald-600 mx-auto mb-1" />
+              <div className="text-lg font-bold text-emerald-700">0%</div>
+              <p className="text-xs text-muted-foreground">Accuracy</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20 hover:shadow-lg transition-all">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-blue-700">Weekly Progress</CardTitle>
-              <TrendingUp className="h-4 w-4 text-blue-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-blue-700">0%</div>
-              <p className="text-xs text-muted-foreground">Complete sessions to track progress</p>
+          <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20">
+            <CardContent className="p-2 text-center">
+              <TrendingUp className="h-3 w-3 text-blue-600 mx-auto mb-1" />
+              <div className="text-lg font-bold text-blue-700">0%</div>
+              <p className="text-xs text-muted-foreground">Progress</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border-purple-500/20 hover:shadow-lg transition-all">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-purple-700">Study Streak</CardTitle>
-              <Zap className="h-4 w-4 text-purple-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-purple-700">0 days</div>
-              <p className="text-xs text-muted-foreground">Practice daily to build your streak</p>
+          <Card className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border-purple-500/20">
+            <CardContent className="p-2 text-center">
+              <Zap className="h-3 w-3 text-purple-600 mx-auto mb-1" />
+              <div className="text-lg font-bold text-purple-700">0</div>
+              <p className="text-xs text-muted-foreground">Streak</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border-orange-500/20 hover:shadow-lg transition-all">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-orange-700">Total Questions</CardTitle>
-              <BookOpen className="h-4 w-4 text-orange-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-orange-700">0</div>
-              <p className="text-xs text-muted-foreground">Questions attempted</p>
+          <Card className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border-orange-500/20">
+            <CardContent className="p-2 text-center">
+              <BookOpen className="h-3 w-3 text-orange-600 mx-auto mb-1" />
+              <div className="text-lg font-bold text-orange-700">0</div>
+              <p className="text-xs text-muted-foreground">Questions</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-yellow-500/5 to-yellow-600/10 border-yellow-500/20 hover:shadow-lg transition-all">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-yellow-700">Your Timeline</CardTitle>
-              <Calendar className="h-4 w-4 text-yellow-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-sm text-muted-foreground mb-2">No exam date set</div>
-              <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white w-full">
-                📅 Set Exam Date
+          <Card className="bg-gradient-to-br from-yellow-500/5 to-yellow-600/10 border-yellow-500/20">
+            <CardContent className="p-2 text-center">
+              <Calendar className="h-3 w-3 text-yellow-600 mx-auto mb-1" />
+              <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-2 py-1">
+                Set Date
               </Button>
             </CardContent>
           </Card>
         </div>
 
-        {/* Study Plan Section */}
-        <div className="grid xl:grid-cols-3 gap-6">
+        {/* Study Plan Section - Compact */}
+        <div className="grid xl:grid-cols-3 gap-3">
           <div className="xl:col-span-2">
-            <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-slate-200 hover:shadow-lg transition-all">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-slate-700">
-                  <Calendar className="w-5 h-5" />
+            <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-slate-200">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2 text-slate-700 text-base">
+                  <Calendar className="w-4 h-4" />
                   Study Plan
                 </CardTitle>
-                <p className="text-sm text-muted-foreground">Your personalized SAT study schedule</p>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-6">
-                  <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Build Your Study Plan</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Complete your diagnostic test to get a personalized SAT study plan
+                <div className="text-center py-3">
+                  <Calendar className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
+                  <h3 className="text-sm font-semibold mb-1">Build Your Study Plan</h3>
+                  <p className="text-muted-foreground mb-2 text-xs">
+                    Complete diagnostic test for personalized plan
                   </p>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                    <Brain className="w-4 h-4 mr-2" />
-                    Take Diagnostic Test
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1">
+                    <Brain className="w-3 h-3 mr-1" />
+                    Take Diagnostic
                   </Button>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-2">
             {/* Target Universities */}
             <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200">
-              <CardHeader>
-                <CardTitle className="text-emerald-700">Target Universities</CardTitle>
+              <CardHeader className="pb-1">
+                <CardTitle className="text-emerald-700 text-xs">Target Universities</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="p-3 bg-white rounded-lg border border-emerald-200 text-center font-medium">Harvard</div>
-                <div className="p-3 bg-white rounded-lg border border-emerald-200 text-center font-medium">MIT</div>
-                <div className="p-3 bg-white rounded-lg border border-emerald-200 text-center font-medium">Stanford</div>
-                <Button variant="outline" size="sm" className="w-full text-emerald-700 border-emerald-300">
-                  Manage Universities
-                </Button>
+              <CardContent className="space-y-1">
+                <div className="p-1 bg-white rounded border border-emerald-200 text-center font-medium text-xs">Harvard</div>
+                <div className="p-1 bg-white rounded border border-emerald-200 text-center font-medium text-xs">MIT</div>
+                <div className="p-1 bg-white rounded border border-emerald-200 text-center font-medium text-xs">Stanford</div>
               </CardContent>
             </Card>
 
             {/* Study Focus */}
             <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
-              <CardHeader>
-                <CardTitle className="text-red-700 flex items-center gap-2">
+              <CardHeader className="pb-1">
+                <CardTitle className="text-red-700 flex items-center gap-1 text-xs">
                   🎯 Study Focus
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Math - Algebra</span>
+              <CardContent className="space-y-1">
+                <div className="flex justify-between items-center text-xs">
+                  <span>Math - Algebra</span>
                   <span className="text-red-600 font-bold">35%</span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Information & Ideas</span>
+                <div className="flex justify-between items-center text-xs">
+                  <span>Information & Ideas</span>
                   <span className="text-blue-600 font-bold">26%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Advanced Math</span>
-                  <span className="text-red-600 font-bold">35%</span>
                 </div>
               </CardContent>
             </Card>
@@ -296,80 +266,71 @@ export const RealPlatformDemo = () => {
     const currentQuestion = diagnosticQuestions[currentQuestionIndex];
     
     return (
-      <div className="min-h-[600px] bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 rounded-2xl relative overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        </div>
-
+      <div className="min-h-[450px] bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 rounded-2xl relative overflow-hidden">
         {/* Header */}
-        <div className="p-4 border-b bg-white/95 backdrop-blur-2xl">
+        <div className="p-3 border-b bg-white/95 backdrop-blur">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                <Brain className="h-4 w-4 text-white" />
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                <Brain className="h-3 w-3 text-white" />
               </div>
               <div>
                 <h3 className="text-sm font-bold">SAT Diagnostic Assessment</h3>
                 <div className="flex gap-2 items-center">
                   <Badge variant="secondary" className="text-xs">{currentQuestion.section}</Badge>
                   <Badge variant="outline" className="text-xs">{currentQuestion.difficulty}</Badge>
-                  <span className="text-xs text-muted-foreground">• Demo only - Real test is 30 minutes with more questions</span>
+                  <span className="text-xs text-muted-foreground">• Demo - Real test is 30 min</span>
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-2 bg-orange-100 px-3 py-1 rounded-xl">
+            <div className="flex items-center gap-2 bg-orange-100 px-2 py-1 rounded-lg">
               <Clock className="h-3 w-3 text-orange-600" />
               <span className="font-mono text-xs font-bold text-orange-700">28:45</span>
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-2">
             <div className="flex justify-between text-xs text-slate-600 mb-1">
               <span>Question {currentQuestionIndex + 1} of {diagnosticQuestions.length}</span>
               <span>{Math.round(((currentQuestionIndex + 1) / diagnosticQuestions.length) * 100)}% Complete</span>
             </div>
-            <Progress value={((currentQuestionIndex + 1) / diagnosticQuestions.length) * 100} className="h-1.5" />
+            <Progress value={((currentQuestionIndex + 1) / diagnosticQuestions.length) * 100} className="h-1" />
           </div>
         </div>
 
         {/* Question content */}
-        <div className="p-6">
+        <div className="p-4">
           {/* Domain/Subdomain Info */}
-          <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-            <div className="text-sm font-medium text-blue-900">
+          <div className="mb-3 p-2 bg-blue-50 rounded-lg border border-blue-200">
+            <div className="text-xs font-medium text-blue-900">
               Testing: {currentQuestion.domain} → {currentQuestion.subdomain}
-            </div>
-            <div className="text-xs text-blue-700 mt-1">
-              This question assesses your understanding of {currentQuestion.subdomain.toLowerCase()} within the {currentQuestion.domain.toLowerCase()} domain, which represents {currentQuestion.domain === 'Information and Ideas' ? '26%' : currentQuestion.domain === 'Craft and Structure' ? '28%' : '35%'} of the {currentQuestion.section} section.
             </div>
           </div>
 
-          <Card className="bg-white/95 backdrop-blur-2xl border-0 shadow-xl">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white font-bold">
+          <Card className="bg-white/95 backdrop-blur border-0 shadow-lg">
+            <CardContent className="p-4">
+              <div className="flex items-start gap-3 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
                   {currentQuestionIndex + 1}
                 </div>
                 <div className="flex-1">
                   {currentQuestion.passage && (
-                    <div className="text-slate-700 mb-4 leading-relaxed border-l-4 border-blue-200 pl-4 bg-slate-50 p-3 rounded-r">
+                    <div className="text-slate-700 mb-3 leading-relaxed border-l-2 border-blue-200 pl-3 bg-slate-50 p-2 rounded-r text-sm">
                       {currentQuestion.passage}
                     </div>
                   )}
-                  <p className="font-bold text-slate-900 text-lg">
+                  <p className="font-bold text-slate-900 text-base">
                     {currentQuestion.question}
                   </p>
                 </div>
               </div>
               
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {currentQuestion.choices.map((choice, index) => (
                   <button
                     key={index}
                     onClick={() => handleAnswerClick(String.fromCharCode(65 + index))}
                     disabled={showExplanation}
-                    className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                    className={`w-full p-3 text-left rounded-lg border-2 transition-all text-sm ${
                       selectedAnswer === String.fromCharCode(65 + index)
                         ? selectedAnswer === currentQuestion.correctAnswer
                           ? 'border-green-500 bg-green-50'
@@ -381,16 +342,16 @@ export const RealPlatformDemo = () => {
                             : 'border-slate-200 bg-white'
                     }`}
                   >
-                    <span className="font-medium text-slate-600 mr-3">{String.fromCharCode(65 + index)}.</span>
+                    <span className="font-medium text-slate-600 mr-2">{String.fromCharCode(65 + index)}.</span>
                     {choice}
                     {selectedAnswer === String.fromCharCode(65 + index) && selectedAnswer === currentQuestion.correctAnswer && (
-                      <CheckCircle className="inline-block w-5 h-5 text-green-600 ml-2" />
+                      <CheckCircle className="inline-block w-4 h-4 text-green-600 ml-2" />
                     )}
                     {selectedAnswer === String.fromCharCode(65 + index) && selectedAnswer !== currentQuestion.correctAnswer && (
-                      <span className="inline-block w-5 h-5 text-red-600 ml-2">✗</span>
+                      <span className="inline-block w-4 h-4 text-red-600 ml-2">✗</span>
                     )}
                     {showExplanation && String.fromCharCode(65 + index) === currentQuestion.correctAnswer && selectedAnswer !== currentQuestion.correctAnswer && (
-                      <CheckCircle className="inline-block w-5 h-5 text-green-600 ml-2" />
+                      <CheckCircle className="inline-block w-4 h-4 text-green-600 ml-2" />
                     )}
                   </button>
                 ))}
@@ -398,25 +359,25 @@ export const RealPlatformDemo = () => {
               
               {/* Show explanation after answer selection */}
               {showExplanation && (
-                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
+                <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
                   <div className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5" />
                     <div>
-                      <div className="font-medium text-green-900 mb-1">
+                      <div className="font-medium text-green-900 mb-1 text-sm">
                         Correct Answer: {currentQuestion.correctAnswer}
                         {selectedAnswer === currentQuestion.correctAnswer ? " - Great job!" : " - Study this concept more"}
                       </div>
-                      <div className="text-sm text-green-800">{currentQuestion.explanation}</div>
+                      <div className="text-xs text-green-800">{currentQuestion.explanation}</div>
                     </div>
                   </div>
                 </div>
               )}
               
               {/* Next button */}
-              <div className="mt-6 flex justify-end">
+              <div className="mt-4 flex justify-end">
                 <Button 
                   onClick={handleNextQuestion}
-                  className={`px-6 ${showExplanation ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-300'} text-white`}
+                  className={`px-4 ${showExplanation ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-300'} text-white text-sm`}
                   disabled={!showExplanation}
                 >
                   {currentQuestionIndex < diagnosticQuestions.length - 1 ? 'Next Question →' : 'See Results →'}
@@ -426,9 +387,9 @@ export const RealPlatformDemo = () => {
           </Card>
           
           {/* Demo Notice */}
-          <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-            <div className="text-sm text-amber-800">
-              <strong>Demo Preview:</strong> The actual diagnostic test contains 30+ questions across all SAT domains and takes 30 minutes. This is a sample to show our question quality and detailed explanations.
+          <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+            <div className="text-xs text-amber-800">
+              <strong>Demo Preview:</strong> The actual diagnostic test contains 30+ questions across all SAT domains and takes 30 minutes.
             </div>
           </div>
         </div>
@@ -437,126 +398,81 @@ export const RealPlatformDemo = () => {
   };
 
   const renderResultsStep = () => (
-    <div className="min-h-[600px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
-      <div className="p-6">
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <CheckCircle className="h-8 w-8 text-white" />
+    <div className="min-h-[450px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
+      <div className="p-4">
+        <div className="text-center mb-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <CheckCircle className="h-6 w-6 text-white" />
           </div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-2">Diagnostic Complete!</h3>
-          <p className="text-slate-600">Comprehensive analysis across all SAT domains</p>
+          <h3 className="text-xl font-bold text-slate-900 mb-1">Diagnostic Complete!</h3>
+          <p className="text-slate-600 text-sm">Comprehensive analysis across all SAT domains</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 gap-3 mb-4">
           <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20">
-            <CardContent className="p-4 text-center">
-              <Target className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-emerald-700">78%</div>
-              <p className="text-sm text-slate-600">Overall Accuracy</p>
+            <CardContent className="p-3 text-center">
+              <Target className="h-6 w-6 text-emerald-600 mx-auto mb-1" />
+              <div className="text-xl font-bold text-emerald-700">78%</div>
+              <p className="text-xs text-slate-600">Overall Accuracy</p>
             </CardContent>
           </Card>
           
           <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20">
-            <CardContent className="p-4 text-center">
-              <TrendingUp className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-blue-700">1420</div>
-              <p className="text-sm text-slate-600">Projected Score</p>
+            <CardContent className="p-3 text-center">
+              <TrendingUp className="h-6 w-6 text-blue-600 mx-auto mb-1" />
+              <div className="text-xl font-bold text-blue-700">1420</div>
+              <p className="text-xs text-slate-600">Projected Score</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Detailed Domain Analysis */}
-        <div className="space-y-4">
-          <h4 className="font-semibold text-slate-900 mb-3">Performance by SAT Domain</h4>
+        {/* Detailed Domain Analysis - Compact */}
+        <div className="space-y-3">
+          <h4 className="font-semibold text-slate-900 mb-2 text-sm">Performance by SAT Domain</h4>
           
           {/* Reading & Writing Domains */}
-          <div className="space-y-3">
-            <div className="p-4 bg-slate-50 rounded-lg">
-              <div className="flex justify-between items-center mb-2">
+          <div className="space-y-2">
+            <div className="p-2 bg-slate-50 rounded-lg">
+              <div className="flex justify-between items-center mb-1">
                 <div>
-                  <span className="font-medium">Information and Ideas</span>
-                  <span className="text-xs text-slate-500 ml-2">(26% of R&W section)</span>
+                  <span className="font-medium text-sm">Information and Ideas</span>
+                  <span className="text-xs text-slate-500 ml-1">(26% of R&W)</span>
                 </div>
-                <span className="text-blue-600 font-bold">Strong</span>
+                <span className="text-green-600 font-bold text-sm">Strong</span>
               </div>
-              <Progress value={85} className="h-2 mb-2" />
+              <Progress value={85} className="h-1.5 mb-1" />
               <div className="text-xs text-slate-600">
-                Strong in: Central Ideas • Command of Evidence • Inference
+                Mastered: Central Ideas • Command of Evidence
               </div>
             </div>
             
-            <div className="p-4 bg-slate-50 rounded-lg">
-              <div className="flex justify-between items-center mb-2">
+            <div className="p-2 bg-slate-50 rounded-lg">
+              <div className="flex justify-between items-center mb-1">
                 <div>
-                  <span className="font-medium">Craft and Structure</span>
-                  <span className="text-xs text-slate-500 ml-2">(28% of R&W section)</span>
+                  <span className="font-medium text-sm">Algebra</span>
+                  <span className="text-xs text-slate-500 ml-1">(35% of Math)</span>
                 </div>
-                <span className="text-amber-600 font-bold">Developing</span>
+                <span className="text-red-600 font-bold text-sm">Needs Work</span>
               </div>
-              <Progress value={72} className="h-2 mb-2" />
-              <div className="text-xs text-slate-600">
-                Focus needed: Text Structure • Words in Context
-              </div>
-            </div>
-            
-            <div className="p-4 bg-slate-50 rounded-lg">
-              <div className="flex justify-between items-center mb-2">
-                <div>
-                  <span className="font-medium">Expression of Ideas</span>
-                  <span className="text-xs text-slate-500 ml-2">(20% of R&W section)</span>
-                </div>
-                <span className="text-emerald-600 font-bold">Excellent</span>
-              </div>
-              <Progress value={90} className="h-2 mb-2" />
-              <div className="text-xs text-slate-600">
-                Mastered: Rhetorical Synthesis • Transitions
-              </div>
-            </div>
-          </div>
-
-          {/* Math Domains */}
-          <div className="space-y-3 mt-6">
-            <div className="p-4 bg-slate-50 rounded-lg">
-              <div className="flex justify-between items-center mb-2">
-                <div>
-                  <span className="font-medium">Algebra</span>
-                  <span className="text-xs text-slate-500 ml-2">(35% of Math section)</span>
-                </div>
-                <span className="text-red-600 font-bold">Needs Work</span>
-              </div>
-              <Progress value={65} className="h-2 mb-2" />
+              <Progress value={65} className="h-1.5 mb-1" />
               <div className="text-xs text-slate-600">
                 Review: Systems of Equations • Linear Inequalities
-              </div>
-            </div>
-            
-            <div className="p-4 bg-slate-50 rounded-lg">
-              <div className="flex justify-between items-center mb-2">
-                <div>
-                  <span className="font-medium">Advanced Math</span>
-                  <span className="text-xs text-slate-500 ml-2">(35% of Math section)</span>
-                </div>
-                <span className="text-blue-600 font-bold">Strong</span>
-              </div>
-              <Progress value={82} className="h-2 mb-2" />
-              <div className="text-xs text-slate-600">
-                Strong in: Nonlinear Functions • Equivalent Expressions
               </div>
             </div>
           </div>
         </div>
 
         {/* Insight Box */}
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <div className="text-sm text-blue-800">
-            <strong>Key Insight:</strong> Your strongest areas are Expression of Ideas and Advanced Math. Focus your study time on Algebra fundamentals and Text Structure analysis to maximize score improvement.
+        <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="text-xs text-blue-800">
+            <strong>Key Insight:</strong> Focus your study time on Algebra fundamentals to maximize score improvement.
           </div>
         </div>
         
         {/* Demo Notice */}
-        <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-          <div className="text-sm text-amber-800">
-            <strong>Demo Results:</strong> This analysis is based on sample questions. The real 30-minute diagnostic test provides comprehensive assessment across all SAT domains with detailed performance insights.
+        <div className="mt-2 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+          <div className="text-xs text-amber-800">
+            <strong>Demo Results:</strong> Real 30-minute diagnostic provides comprehensive assessment across all SAT domains.
           </div>
         </div>
       </div>
