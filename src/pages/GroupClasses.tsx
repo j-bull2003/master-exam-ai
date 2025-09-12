@@ -2,10 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/Header";
-import { Check, Users, BookOpen, Calculator, FileText, Clock, Award, Target, Calendar } from "lucide-react";
+import { Check, Users, BookOpen, Calculator, FileText, Clock, Award, Target, Calendar, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import satReadingPassage from "@/assets/sat-reading-passage.png";
+import satReadingRationale from "@/assets/sat-reading-rationale.png";
 
 export default function GroupClasses() {
+  const [showRationale, setShowRationale] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState("");
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <Header />
@@ -258,23 +263,49 @@ export default function GroupClasses() {
             <div className="bg-slate-800 p-6 rounded-b-xl">
               {/* Video Grid */}
               <div className="grid grid-cols-3 gap-4 mb-6">
-                {/* Instructor - Main */}
+                {/* Instructor - Main with SAT Content */}
                 <div className="col-span-2 relative">
-                  <div className="aspect-video bg-gradient-to-br from-blue-900 to-slate-800 rounded-lg relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4 bg-slate-900/80 text-white px-3 py-1 rounded text-sm font-medium">
+                  <div className="aspect-video bg-white rounded-lg relative overflow-hidden border-2 border-slate-300">
+                    {/* SAT Passage Display */}
+                    <div className="absolute inset-0">
+                      <img 
+                        src={showRationale ? satReadingRationale : satReadingPassage}
+                        alt="SAT Reading Passage"
+                        className="w-full h-full object-contain bg-white"
+                      />
+                    </div>
+                    
+                    {/* Instructor overlay */}
+                    <div className="absolute bottom-4 left-4 bg-slate-900/90 text-white px-3 py-1 rounded text-sm font-medium">
                       Sarah Johnson - SAT Expert
                     </div>
                     <div className="absolute top-4 right-4 bg-green-600 text-white px-2 py-1 rounded text-xs">
-                      LIVE
+                      SHARING SCREEN
                     </div>
-                    {/* Mock content overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center text-white">
-                        <div className="w-16 h-16 bg-white/20 rounded-full mx-auto mb-2 flex items-center justify-center">
-                          <BookOpen className="w-8 h-8" />
-                        </div>
-                        <p className="text-sm opacity-80">Sharing screen: SAT Reading Passage</p>
+                    
+                    {/* Interactive overlay for demo */}
+                    <div className="absolute top-4 left-4">
+                      <div className="flex gap-2">
+                        <button 
+                          onClick={() => setShowRationale(false)}
+                          className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                            !showRationale 
+                              ? "bg-blue-600 text-white" 
+                              : "bg-white/80 text-slate-700 hover:bg-white"
+                          }`}
+                        >
+                          Question
+                        </button>
+                        <button 
+                          onClick={() => setShowRationale(true)}
+                          className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                            showRationale 
+                              ? "bg-blue-600 text-white" 
+                              : "bg-white/80 text-slate-700 hover:bg-white"
+                          }`}
+                        >
+                          Explanation
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -300,25 +331,57 @@ export default function GroupClasses() {
                 </div>
               </div>
               
-              {/* Chat Section */}
+              {/* Enhanced Interactive Chat */}
               <div className="bg-slate-700 rounded-lg p-4 mb-4">
-                <div className="text-white text-sm font-medium mb-3 border-b border-slate-600 pb-2">
-                  Chat (Private to Group)
+                <div className="text-white text-sm font-medium mb-3 border-b border-slate-600 pb-2 flex items-center justify-between">
+                  <span>Live Discussion (Private to Group)</span>
+                  <span className="text-xs text-slate-400">8 participants</span>
                 </div>
-                <div className="space-y-2 text-sm max-h-32 overflow-y-auto">
+                <div className="space-y-3 text-sm max-h-40 overflow-y-auto">
                   <div className="text-slate-300">
-                    <span className="text-blue-400 font-medium">Sarah Johnson:</span> Let's analyze the main idea of this passage together
+                    <span className="text-blue-400 font-medium">Sarah Johnson:</span> Let&apos;s analyze this passage about Mediterranean Sea biodiversity. What&apos;s the main focus here?
                   </div>
                   <div className="text-slate-300">
-                    <span className="text-green-400 font-medium">Alex M:</span> Is it about the environmental impact?
+                    <span className="text-green-400 font-medium">Alex M:</span> It&apos;s comparing two different censuses and their results
                   </div>
                   <div className="text-slate-300">
-                    <span className="text-blue-400 font-medium">Sarah Johnson:</span> Great thinking! What specific evidence supports that?
+                    <span className="text-blue-400 font-medium">Sarah Johnson:</span> Excellent! Now, what key difference do you notice between Coll&apos;s and Bianchi&apos;s studies?
                   </div>
                   <div className="text-slate-300">
-                    <span className="text-purple-400 font-medium">Emma R:</span> Lines 15-18 mention carbon emissions
+                    <span className="text-purple-400 font-medium">Emma R:</span> Coll found almost double the species - around 17,000 vs the earlier count
+                  </div>
+                  <div className="text-slate-300">
+                    <span className="text-blue-400 font-medium">Sarah Johnson:</span> Perfect! So what could explain this huge difference? Think about the blank we need to fill...
+                  </div>
+                  <div className="text-slate-300">
+                    <span className="text-orange-400 font-medium">David L:</span> Maybe they counted differently? Like what they considered separate species?
+                  </div>
+                  <div className="text-slate-300 bg-slate-600 p-2 rounded">
+                    <span className="text-blue-400 font-medium">Sarah Johnson:</span> 🎯 Brilliant thinking, David! That&apos;s exactly the key insight. Let me show you the explanation now...
                   </div>
                 </div>
+                
+                {/* Answer choices overlay */}
+                {!showRationale && (
+                  <div className="mt-4 p-3 bg-slate-600 rounded-lg">
+                    <div className="text-white text-xs font-medium mb-2">Quick Poll: What&apos;s your answer?</div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {["A) new invertebrate species were discovered", "B) researchers treated microorganism differences as separate species", "C) Bianchi was less sensitive to variations", "D) Coll underestimated the count"].map((choice, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedAnswer(choice.charAt(0))}
+                          className={`text-xs p-2 rounded transition-colors text-left ${
+                            selectedAnswer === choice.charAt(0)
+                              ? "bg-blue-600 text-white"
+                              : "bg-slate-500 text-slate-200 hover:bg-slate-400"
+                          }`}
+                        >
+                          {choice}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               
               {/* Control Bar */}
