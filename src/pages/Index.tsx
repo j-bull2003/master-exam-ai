@@ -294,140 +294,120 @@ const Index = () => {
             <p className="text-slate-600 font-light">Start with our 3-day free trial, then select the perfect plan for your SAT preparation</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Monthly Plan */}
-            <div className="relative p-8 rounded-3xl bg-white/80 backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/50 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="text-center mb-6">
-                <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">Monthly</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black text-slate-900 font-display">$149</span>
-                  <span className="text-slate-600">/month</span>
-                </div>
-                <p className="text-sm text-slate-600 font-light">Perfect for focused preparation</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {/* Annual Plan - Best Value */}
+            <div className="relative p-8 rounded-3xl bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl scale-105 transition-all duration-300">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-gradient-to-r from-slate-900 to-slate-800 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  Best Value
+                </span>
               </div>
 
-              <div className="space-y-3 mb-8">
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">AI-powered personalized study plans</span>
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">Annual</h3>
+                <div className="mb-2">
+                  <span className="text-4xl font-black text-slate-900 font-display">$39.99</span>
+                  <span className="text-slate-600">/mo</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">8,500+ expert-crafted SAT questions</span>
+                <div className="mb-4">
+                  <span className="text-sm text-slate-600 font-light">$479.99 billed annually</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Real-time weakness detection</span>
+              </div>
+
+              <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/50 rounded-xl p-3 mb-6">
+                <div className="flex items-center gap-2 text-emerald-800 font-semibold text-sm">
+                  <Sparkles className="w-4 h-4" />
+                  3-Day Free Trial
                 </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Full-length practice tests</span>
+              </div>
+
+              <Link to="/auth/register" className="block">
+                <Button className="w-full bg-gradient-to-r from-slate-900 to-slate-800 text-white hover:from-slate-800 hover:to-slate-700 hover:scale-105">
+                  Start Free Trial
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+
+            {/* 6-Month Plan */}
+            <div className="relative p-8 rounded-3xl bg-white/80 backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/50 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">6-Month</h3>
+                <div className="mb-2">
+                  <span className="text-4xl font-black text-slate-900 font-display">$54.99</span>
+                  <span className="text-slate-600">/mo</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Detailed performance analytics</span>
+                <div className="mb-4">
+                  <span className="text-sm text-slate-600 font-light">$329.99 every 6 months</span>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/50 rounded-xl p-3 mb-6">
+                <div className="flex items-center gap-2 text-emerald-800 font-semibold text-sm">
+                  <Sparkles className="w-4 h-4" />
+                  3-Day Free Trial
                 </div>
               </div>
 
               <Link to="/auth/register" className="block">
                 <Button className="w-full border-slate-300 text-slate-700 hover:border-slate-900 hover:text-slate-900" variant="outline">
-                  Start 3-Day Free Trial
+                  Start Free Trial
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
             </div>
 
             {/* 3-Month Plan */}
-            <div className="relative p-8 rounded-3xl bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-xl scale-105 transition-all duration-300">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-gradient-to-r from-slate-900 to-slate-800 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  Most Popular
-                </span>
-              </div>
-
+            <div className="relative p-8 rounded-3xl bg-white/80 backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/50 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">3-Month</h3>
                 <div className="mb-2">
-                  <span className="text-4xl font-black text-slate-900 font-display">$399</span>
-                  <span className="text-slate-600">/3 months</span>
+                  <span className="text-4xl font-black text-slate-900 font-display">$79.99</span>
+                  <span className="text-slate-600">/mo</span>
                 </div>
-                <div className="text-xs bg-emerald-50 text-emerald-800 px-2 py-1 rounded-full mb-2">
-                  Save $48 (11% off)
-                </div>
-                <p className="text-sm text-slate-600 font-light">Ideal for comprehensive preparation</p>
-              </div>
-
-              <div className="space-y-3 mb-8">
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Everything in Monthly plan</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Priority customer support</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Extended progress tracking</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Advanced analytics dashboard</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Mobile app premium features</span>
+                <div className="mb-4">
+                  <span className="text-sm text-slate-600 font-light">$239.99 every 3 months</span>
                 </div>
               </div>
 
-              <Link to="/auth/register" className="block">
-                <Button className="w-full bg-gradient-to-r from-slate-900 to-slate-800 text-white hover:from-slate-800 hover:to-slate-700 hover:scale-105">
-                  Start 3-Day Free Trial
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
-
-            {/* Annual Plan */}
-            <div className="relative p-8 rounded-3xl bg-white/80 backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/50 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="text-center mb-6">
-                <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">Annual</h3>
-                <div className="mb-2">
-                  <span className="text-4xl font-black text-slate-900 font-display">$1,499</span>
-                  <span className="text-slate-600">/year</span>
-                </div>
-                <div className="text-xs bg-emerald-50 text-emerald-800 px-2 py-1 rounded-full mb-2">
-                  Save $289 (16% off)
-                </div>
-                <p className="text-sm text-slate-600 font-light">Best value for long-term success</p>
-              </div>
-
-              <div className="space-y-3 mb-8">
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Everything in 3-Month plan</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Dedicated success manager</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Exclusive webinars & workshops</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">College application guidance</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-700">Lifetime progress tracking</span>
+              <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/50 rounded-xl p-3 mb-6">
+                <div className="flex items-center gap-2 text-emerald-800 font-semibold text-sm">
+                  <Sparkles className="w-4 h-4" />
+                  3-Day Free Trial
                 </div>
               </div>
 
               <Link to="/auth/register" className="block">
                 <Button className="w-full border-slate-300 text-slate-700 hover:border-slate-900 hover:text-slate-900" variant="outline">
-                  Start 3-Day Free Trial
+                  Start Free Trial
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+
+            {/* Monthly Plan */}
+            <div className="relative p-8 rounded-3xl bg-white/80 backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/50 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">Monthly</h3>
+                <div className="mb-2">
+                  <span className="text-4xl font-black text-slate-900 font-display">$159.99</span>
+                  <span className="text-slate-600">/mo</span>
+                </div>
+                <div className="mb-4">
+                  <span className="text-sm text-slate-600 font-light">$159.99 monthly</span>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/50 rounded-xl p-3 mb-6">
+                <div className="flex items-center gap-2 text-emerald-800 font-semibold text-sm">
+                  <Sparkles className="w-4 h-4" />
+                  3-Day Free Trial
+                </div>
+              </div>
+
+              <Link to="/auth/register" className="block">
+                <Button className="w-full border-slate-300 text-slate-700 hover:border-slate-900 hover:text-slate-900" variant="outline">
+                  Start Free Trial
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
