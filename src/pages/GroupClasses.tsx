@@ -88,7 +88,7 @@ export default function GroupClasses() {
             
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-800 rounded-full text-sm font-medium mb-8 border border-emerald-200/50">
               <Calendar className="w-4 h-4 mr-2" />
-              Next Cohort Starts: October 13th, 2024
+              Next Cohort Starts: October 13th, 2025
             </div>
             
             {/* Prestigious metrics */}
@@ -96,7 +96,7 @@ export default function GroupClasses() {
               {[
                 { number: "2", label: "Sessions Per Week" },
                 { number: "$50", label: "Per Week Total" },
-                { number: "Oct 13", label: "Cohort Starts" }
+                { number: "Oct 13, 2025", label: "Cohort Starts" }
               ].map((metric, idx) => (
                 <div key={idx} className="text-center group flex flex-col items-center">
                   <div className="text-xl sm:text-3xl font-bold text-slate-900 mb-2 font-serif group-hover:scale-110 transition-transform duration-300 h-8 sm:h-12 flex items-center justify-center">{metric.number}</div>
@@ -118,7 +118,7 @@ export default function GroupClasses() {
               <span className="text-slate-600">Structure</span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed px-4">
-              Two focused sessions per week, each targeting specific SAT sections with expert guidance and interactive learning. Next cohort begins October 13th.
+              Two focused sessions per week, each targeting specific SAT sections with expert guidance and interactive learning. Next cohort begins October 13th, 2025.
             </p>
           </div>
           
@@ -240,7 +240,7 @@ export default function GroupClasses() {
               <div className="grid md:grid-cols-1 gap-4 mb-8 max-w-2xl mx-auto">
                 <div className="flex items-center justify-center gap-3 p-4 rounded-lg bg-slate-50">
                   <Calendar className="w-5 h-5 text-slate-700" />
-                  <span className="font-medium text-slate-900 text-sm">Starts October 13th</span>
+                  <span className="font-medium text-slate-900 text-sm">Starts October 13th, 2025</span>
                 </div>
               </div>
               
