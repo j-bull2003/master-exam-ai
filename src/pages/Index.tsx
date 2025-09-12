@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Sparkles, Brain, Target, Shield, Clock, Zap, CheckCircle, ArrowRight, Users, TrendingUp, Award, Star, Quote, Menu, X, BookOpen, Clipboard, BarChart3, User } from "lucide-react";
+import { Sparkles, Brain, Target, Shield, Clock, Zap, CheckCircle, ArrowRight, Users, TrendingUp, Award, Star, Quote, Menu, X, BookOpen, Clipboard, BarChart3, User, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Header } from "@/components/Header";
@@ -502,68 +502,158 @@ const Index = () => {
 
             {/* Right Side - Analytics Dashboard Preview */}
             <div className="lg:sticky lg:top-8">
-              <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
-                <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-4">
-                  <div className="flex items-center justify-between">
+              <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/60 overflow-hidden card-layered">
+                {/* Dashboard Header */}
+                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse delay-200"></div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse delay-500"></div>
                     </div>
-                    <div className="text-white text-sm font-medium">Analytics Dashboard</div>
-                    <div className="flex items-center gap-2 text-white/80 text-xs">
-                      <span>🔍 Live Insights</span>
+                    <div className="text-white text-lg font-bold">AI Analytics Dashboard</div>
+                    <div className="flex items-center gap-2 bg-green-500/20 px-3 py-1 rounded-full">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="text-green-300 text-xs font-medium">Live</span>
+                    </div>
+                  </div>
+                  
+                  {/* Quick Stats */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <div className="text-emerald-400 text-2xl font-bold">87%</div>
+                      <div className="text-white/70 text-xs">Accuracy</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-blue-400 text-2xl font-bold">1480</div>
+                      <div className="text-white/70 text-xs">Predicted</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-purple-400 text-2xl font-bold">+220</div>
+                      <div className="text-white/70 text-xs">Improvement</div>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-6">
-                  <div className="mb-6">
-                    <h4 className="text-lg font-bold mb-4 text-slate-900">Performance Breakdown</h4>
+                  {/* SAT Subject Performance */}
+                  <div className="mb-8">
+                    <div className="flex items-center justify-between mb-6">
+                      <h4 className="text-xl font-bold text-slate-900">SAT Subject Breakdown</h4>
+                      <div className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">Real-time Analysis</div>
+                    </div>
                     
-                    {/* Sample Analytics Cards */}
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <div>
-                          <div className="font-medium text-slate-900">Reading & Writing</div>
-                          <div className="text-sm text-slate-600">Information and Ideas</div>
+                    <div className="space-y-5">
+                      {/* Reading & Writing */}
+                      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100/50 border border-emerald-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-3">
+                          <div>
+                            <div className="font-bold text-slate-900 text-lg">Reading & Writing</div>
+                            <div className="text-sm text-emerald-700 font-medium">Craft & Structure</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-emerald-600 font-bold text-xl">92%</div>
+                            <div className="flex items-center gap-1">
+                              <TrendingUp className="w-3 h-3 text-emerald-500" />
+                              <span className="text-xs text-emerald-600 font-medium">+8%</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <div className="text-red-600 font-bold">65%</div>
-                          <div className="text-xs text-red-500">Needs Focus</div>
+                        <div className="w-full bg-emerald-200 rounded-full h-3 overflow-hidden">
+                          <div className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-3 rounded-full transition-all duration-700 w-[92%]"></div>
                         </div>
+                        <div className="mt-2 text-xs text-emerald-700 font-medium">✓ Strength Area</div>
                       </div>
                       
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <div>
-                          <div className="font-medium text-slate-900">Math</div>
-                          <div className="text-sm text-slate-600">Algebra</div>
+                      {/* Heart of Algebra */}
+                      <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 border border-blue-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-3">
+                          <div>
+                            <div className="font-bold text-slate-900 text-lg">Heart of Algebra</div>
+                            <div className="text-sm text-blue-700 font-medium">Linear Equations</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-blue-600 font-bold text-xl">84%</div>
+                            <div className="flex items-center gap-1">
+                              <TrendingUp className="w-3 h-3 text-blue-500" />
+                              <span className="text-xs text-blue-600 font-medium">+5%</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <div className="text-yellow-600 font-bold">78%</div>
-                          <div className="text-xs text-yellow-500">Improving</div>
+                        <div className="w-full bg-blue-200 rounded-full h-3 overflow-hidden">
+                          <div className="bg-gradient-to-r from-blue-400 to-blue-600 h-3 rounded-full transition-all duration-700 w-[84%]"></div>
                         </div>
+                        <div className="mt-2 text-xs text-blue-700 font-medium">↗ Improving</div>
                       </div>
                       
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <div>
-                          <div className="font-medium text-slate-900">Advanced Math</div>
-                          <div className="text-sm text-slate-600">Functions</div>
+                      {/* Problem Solving & Data Analysis */}
+                      <div className="bg-gradient-to-r from-red-50 to-red-100/50 border border-red-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-3">
+                          <div>
+                            <div className="font-bold text-slate-900 text-lg">Problem Solving & Data</div>
+                            <div className="text-sm text-red-700 font-medium">Statistics & Probability</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-red-600 font-bold text-xl">68%</div>
+                            <div className="flex items-center gap-1">
+                              <AlertCircle className="w-3 h-3 text-red-500" />
+                              <span className="text-xs text-red-600 font-medium">Focus</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <div className="text-green-600 font-bold">92%</div>
-                          <div className="text-xs text-green-500">Mastered</div>
+                        <div className="w-full bg-red-200 rounded-full h-3 overflow-hidden">
+                          <div className="bg-gradient-to-r from-red-400 to-red-600 h-3 rounded-full transition-all duration-700 w-[68%]"></div>
                         </div>
+                        <div className="mt-2 text-xs text-red-700 font-medium">⚡ Priority Area</div>
+                      </div>
+                      
+                      {/* Passport to Advanced Math */}
+                      <div className="bg-gradient-to-r from-yellow-50 to-yellow-100/50 border border-yellow-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-3">
+                          <div>
+                            <div className="font-bold text-slate-900 text-lg">Passport to Advanced Math</div>
+                            <div className="text-sm text-yellow-700 font-medium">Quadratic Functions</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-yellow-600 font-bold text-xl">76%</div>
+                            <div className="flex items-center gap-1">
+                              <TrendingUp className="w-3 h-3 text-yellow-500" />
+                              <span className="text-xs text-yellow-600 font-medium">+12%</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="w-full bg-yellow-200 rounded-full h-3 overflow-hidden">
+                          <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-3 rounded-full transition-all duration-700 w-[76%]"></div>
+                        </div>
+                        <div className="mt-2 text-xs text-yellow-700 font-medium">📈 Rapid Growth</div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                    <h5 className="font-bold text-blue-900 mb-2">🎯 AI Recommendation</h5>
-                    <p className="text-sm text-blue-800">
-                      Focus 60% of study time on Reading & Writing - Information and Ideas. 
-                      Projected score increase: +80 points in 4 weeks.
-                    </p>
+                  {/* AI Insights Panel */}
+                  <div className="space-y-4">
+                    <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-5 rounded-xl shadow-lg card-layered">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Brain className="w-6 h-6" />
+                        <h5 className="font-bold text-lg">🎯 AI Priority Recommendation</h5>
+                      </div>
+                      <p className="text-purple-100 mb-3 leading-relaxed">
+                        Focus 65% of study time on <strong>Problem Solving & Data Analysis</strong> - specifically Statistics & Probability concepts.
+                      </p>
+                      <div className="bg-white/20 p-3 rounded-lg">
+                        <div className="text-sm font-medium">Projected Score Increase: <span className="text-yellow-300 font-bold">+25 points</span> in 2 weeks</div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl shadow-lg">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Zap className="w-5 h-5" />
+                        <h5 className="font-bold">⚡ Speed Insight</h5>
+                      </div>
+                      <p className="text-blue-100 text-sm">
+                        You're 18% slower on data interpretation questions. Practice with timer mode for optimal pacing.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
