@@ -121,7 +121,7 @@ export const RealPlatformDemo = () => {
           <img
             src={uniHackLogo}
             alt="UniHack.ai Logo"
-            className="h-24 max-h-[96px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
+            className="h-20 max-h-[80px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
           />
           
           {/* Desktop Navigation */}
