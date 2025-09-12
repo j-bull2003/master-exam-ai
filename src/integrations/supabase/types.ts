@@ -185,11 +185,16 @@ export type Database = {
           exam_types: string[] | null
           full_name: string
           id: string
+          stripe_customer_id: string | null
           study_mode: string | null
+          subscription_status:
+            | Database["public"]["Enums"]["subscription_status_enum"]
+            | null
           target_course: string | null
           target_courses: string[] | null
           target_universities: string[] | null
           target_university: string | null
+          trial_end_date: string | null
           updated_at: string
           user_id: string
         }
@@ -202,11 +207,16 @@ export type Database = {
           exam_types?: string[] | null
           full_name: string
           id?: string
+          stripe_customer_id?: string | null
           study_mode?: string | null
+          subscription_status?:
+            | Database["public"]["Enums"]["subscription_status_enum"]
+            | null
           target_course?: string | null
           target_courses?: string[] | null
           target_universities?: string[] | null
           target_university?: string | null
+          trial_end_date?: string | null
           updated_at?: string
           user_id: string
         }
@@ -219,11 +229,16 @@ export type Database = {
           exam_types?: string[] | null
           full_name?: string
           id?: string
+          stripe_customer_id?: string | null
           study_mode?: string | null
+          subscription_status?:
+            | Database["public"]["Enums"]["subscription_status_enum"]
+            | null
           target_course?: string | null
           target_courses?: string[] | null
           target_universities?: string[] | null
           target_university?: string | null
+          trial_end_date?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -466,6 +481,7 @@ export type Database = {
       content_pack_status: "draft" | "review" | "published" | "rejected"
       difficulty_level: "easy" | "medium" | "hard"
       question_type: "single_choice" | "multiple_choice" | "numeric" | "text"
+      subscription_status_enum: "trial" | "active" | "canceled" | "expired"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -597,6 +613,7 @@ export const Constants = {
       content_pack_status: ["draft", "review", "published", "rejected"],
       difficulty_level: ["easy", "medium", "hard"],
       question_type: ["single_choice", "multiple_choice", "numeric", "text"],
+      subscription_status_enum: ["trial", "active", "canceled", "expired"],
     },
   },
 } as const
