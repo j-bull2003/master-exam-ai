@@ -12,11 +12,10 @@ export const RealPlatformDemo = () => {
   const [progress, setProgress] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [showMouseCursor, setShowMouseCursor] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isAnswerSelected, setIsAnswerSelected] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [showExplanation, setShowExplanation] = useState(false);
 
-  // Real SAT questions from your uploads organized by domain
+  // Real SAT questions from your uploads
   const diagnosticQuestions = [
     {
       id: 1,
@@ -56,7 +55,7 @@ export const RealPlatformDemo = () => {
     },
     {
       title: "Diagnostic Assessment",
-      description: "Sample questions from our comprehensive test"
+      description: "Interactive demo with sample questions"
     },
     {
       title: "Performance Analysis", 
@@ -68,59 +67,46 @@ export const RealPlatformDemo = () => {
     }
   ];
 
+  const handleAnswerClick = (answer: string) => {
+    setSelectedAnswer(answer);
+    setShowExplanation(true);
+  };
+
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex < diagnosticQuestions.length - 1) {
+      setCurrentQuestionIndex(prev => prev + 1);
+      setSelectedAnswer(null);
+      setShowExplanation(false);
+    } else {
+      // Move to next step after last question
+      setCurrentStep(prev => prev + 1);
+      setProgress(prev => prev + 25);
+    }
+  };
+
   useEffect(() => {
     if (isAnimating && currentStep < steps.length - 1) {
       const timer = setTimeout(() => {
         if (currentStep === 1) {
-          // During diagnostic step, show mouse animation
-          if (currentQuestionIndex === 0 && !isAnswerSelected) {
-            // First question: show mouse cursor after 2 seconds
-            setTimeout(() => {
-              setShowMouseCursor(true);
-              // Animate mouse to correct answer
-              setTimeout(() => {
-                setIsAnswerSelected(true);
-                setShowMouseCursor(false);
-                // Move to next question after clicking
-                setTimeout(() => {
-                  setCurrentQuestionIndex(1);
-                  setIsAnswerSelected(false);
-                }, 1000);
-              }, 2000);
-            }, 2000);
-          } else if (currentQuestionIndex === 1 && !isAnswerSelected) {
-            // Second question: show mouse animation
-            setTimeout(() => {
-              setShowMouseCursor(true);
-              setTimeout(() => {
-                setIsAnswerSelected(true);
-                setShowMouseCursor(false);
-                // Move to next step after second question
-                setTimeout(() => {
-                  setCurrentStep(prev => prev + 1);
-                  setProgress(prev => prev + 25);
-                }, 1000);
-              }, 2000);
-            }, 2000);
-          }
-        } else {
-          setCurrentStep(prev => prev + 1);
-          setProgress(prev => prev + 25);
+          // Skip automatic progression for diagnostic step - user interaction required
+          return;
         }
-      }, currentStep === 0 ? 2000 : currentStep === 1 ? 8000 : 3000);
+        setCurrentStep(prev => prev + 1);
+        setProgress(prev => prev + 25);
+      }, currentStep === 0 ? 2000 : 3000);
       return () => clearTimeout(timer);
     } else if (isAnimating && currentStep === steps.length - 1) {
       setIsAnimating(false);
     }
-  }, [currentStep, isAnimating, steps.length, currentQuestionIndex, isAnswerSelected]);
+  }, [currentStep, isAnimating, steps.length]);
 
   const startDemo = () => {
     setCurrentStep(0);
     setProgress(0);
     setIsAnimating(true);
     setCurrentQuestionIndex(0);
-    setShowMouseCursor(false);
-    setIsAnswerSelected(false);
+    setSelectedAnswer(null);
+    setShowExplanation(false);
   };
 
   const resetDemo = () => {
@@ -128,8 +114,8 @@ export const RealPlatformDemo = () => {
     setProgress(0);
     setIsAnimating(false);
     setCurrentQuestionIndex(0);
-    setShowMouseCursor(false);
-    setIsAnswerSelected(false);
+    setSelectedAnswer(null);
+    setShowExplanation(false);
   };
 
   const renderDashboardStep = () => (
@@ -377,33 +363,49 @@ export const RealPlatformDemo = () => {
                 </div>
               </div>
               
-              <div className="space-y-3 relative">
+              <div className="space-y-3">
                 {currentQuestion.choices.map((choice, index) => (
-                  <div
+                  <button
                     key={index}
-                    id={`choice-${index}`}
+                    onClick={() => handleAnswerClick(String.fromCharCode(65 + index))}
+                    disabled={showExplanation}
                     className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
-                      String.fromCharCode(65 + index) === currentQuestion.correctAnswer && isAnswerSelected
-                        ? 'border-green-500 bg-green-50' 
-                        : 'border-slate-200 bg-white hover:border-blue-300'
+                      selectedAnswer === String.fromCharCode(65 + index)
+                        ? selectedAnswer === currentQuestion.correctAnswer
+                          ? 'border-green-500 bg-green-50'
+                          : 'border-red-500 bg-red-50'
+                        : !selectedAnswer
+                          ? 'border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50'
+                          : String.fromCharCode(65 + index) === currentQuestion.correctAnswer
+                            ? 'border-green-500 bg-green-50'
+                            : 'border-slate-200 bg-white'
                     }`}
                   >
                     <span className="font-medium text-slate-600 mr-3">{String.fromCharCode(65 + index)}.</span>
                     {choice}
-                    {String.fromCharCode(65 + index) === currentQuestion.correctAnswer && isAnswerSelected && (
+                    {selectedAnswer === String.fromCharCode(65 + index) && selectedAnswer === currentQuestion.correctAnswer && (
                       <CheckCircle className="inline-block w-5 h-5 text-green-600 ml-2" />
                     )}
-                  </div>
+                    {selectedAnswer === String.fromCharCode(65 + index) && selectedAnswer !== currentQuestion.correctAnswer && (
+                      <span className="inline-block w-5 h-5 text-red-600 ml-2">✗</span>
+                    )}
+                    {showExplanation && String.fromCharCode(65 + index) === currentQuestion.correctAnswer && selectedAnswer !== currentQuestion.correctAnswer && (
+                      <CheckCircle className="inline-block w-5 h-5 text-green-600 ml-2" />
+                    )}
+                  </button>
                 ))}
               </div>
               
-              {/* Show explanation for correct answer after selection */}
-              {isAnswerSelected && (
+              {/* Show explanation after answer selection */}
+              {showExplanation && (
                 <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
                     <div>
-                      <div className="font-medium text-green-900 mb-1">Correct Answer: {currentQuestion.correctAnswer}</div>
+                      <div className="font-medium text-green-900 mb-1">
+                        Correct Answer: {currentQuestion.correctAnswer}
+                        {selectedAnswer === currentQuestion.correctAnswer ? " - Great job!" : " - Study this concept more"}
+                      </div>
                       <div className="text-sm text-green-800">{currentQuestion.explanation}</div>
                     </div>
                   </div>
@@ -413,11 +415,11 @@ export const RealPlatformDemo = () => {
               {/* Next button */}
               <div className="mt-6 flex justify-end">
                 <Button 
-                  id="next-button"
-                  className={`px-6 ${isAnswerSelected ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-300'} text-white`}
-                  disabled={!isAnswerSelected}
+                  onClick={handleNextQuestion}
+                  className={`px-6 ${showExplanation ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-300'} text-white`}
+                  disabled={!showExplanation}
                 >
-                  Next Question →
+                  {currentQuestionIndex < diagnosticQuestions.length - 1 ? 'Next Question →' : 'See Results →'}
                 </Button>
               </div>
             </CardContent>
@@ -430,23 +432,6 @@ export const RealPlatformDemo = () => {
             </div>
           </div>
         </div>
-        
-        {/* Animated Mouse Cursor */}
-        {showMouseCursor && (
-          <div 
-            className="absolute pointer-events-none z-50 transition-all duration-1000 ease-in-out"
-            style={{
-              left: currentQuestionIndex === 0 ? '60%' : '50%',
-              top: currentQuestionIndex === 0 ? '65%' : '70%',
-              transform: 'translate(-50%, -50%)'
-            }}
-          >
-            <div className="relative">
-              <div className="w-6 h-6 bg-blue-600 rounded-full animate-pulse"></div>
-              <div className="absolute top-0 left-0 w-6 h-6 bg-blue-400 rounded-full animate-ping"></div>
-            </div>
-          </div>
-        )}
       </div>
     );
   };
