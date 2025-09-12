@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/Header";
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Check, Users, BookOpen, Calculator, FileText, Clock, Award, Target, Calendar, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -14,28 +16,32 @@ export default function GroupClasses() {
   const [showRationale, setShowRationale] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [isEnrolling, setIsEnrolling] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const handleEnrollment = async () => {
+    if (!email || !email.includes('@')) {
+      toast({
+        title: "Email Required",
+        description: "Please enter a valid email address to continue.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       setIsEnrolling(true);
-      
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        toast({
-          title: "Authentication Required",
-          description: "Please log in to enroll in group classes.",
-          variant: "destructive",
-        });
-        return;
-      }
 
-      const { data, error } = await supabase.functions.invoke('create-checkout');
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { email }
+      });
       
       if (error) throw error;
       
       if (data?.url) {
         window.open(data.url, '_blank');
+        setIsDialogOpen(false);
       }
     } catch (error) {
       console.error('Enrollment error:', error);
@@ -239,16 +245,42 @@ export default function GroupClasses() {
               </div>
               
               <div className="space-y-3 mb-8">
-                <button 
-                  onClick={handleEnrollment}
-                  disabled={isEnrolling}
-                  className="group w-full max-w-sm mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-3 px-6 rounded-lg text-base font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                  <span className="relative">
-                    {isEnrolling ? "Processing..." : "Enroll Now - $50/week"}
-                  </span>
-                </button>
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <button 
+                      className="group w-full max-w-sm mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-3 px-6 rounded-lg text-base font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                      <span className="relative">
+                        Enroll Now - $50/week
+                      </span>
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Enroll in SAT Group Classes</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <p className="text-sm text-slate-600">
+                        Enter your email to proceed to checkout for the weekly $50 subscription.
+                      </p>
+                      <Input
+                        type="email"
+                        placeholder="your@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full"
+                      />
+                      <Button 
+                        onClick={handleEnrollment}
+                        disabled={isEnrolling}
+                        className="w-full"
+                      >
+                        {isEnrolling ? "Processing..." : "Continue to Checkout"}
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
                 
                 <button 
                   className="group w-full max-w-sm mx-auto border border-slate-300 text-slate-700 py-3 px-6 rounded-lg text-base font-semibold hover:border-slate-900 hover:text-slate-900 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
