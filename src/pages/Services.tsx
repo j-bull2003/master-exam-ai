@@ -95,26 +95,27 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <Header />
       <AnimatedBackground className="opacity-80" />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-mesh">
-        <div className="container mx-auto px-6">
+      <section className="pt-32 pb-16 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/5 via-transparent to-slate-900/5"></div>
+        <div className="container mx-auto px-6 relative">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
-              <Trophy className="w-4 h-4 text-accent" />
-              <span className="text-accent font-semibold">Premium SAT Services</span>
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-900/10 to-slate-700/10 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium mb-6 border border-slate-200/50">
+              <Trophy className="w-4 h-4 text-slate-700" />
+              <span className="text-slate-700 font-semibold">Premium SAT Services</span>
             </div>
 
             <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
-              <span className="text-foreground">Choose Your</span>{" "}
-              <span className="bg-gradient-to-r from-accent via-accent/80 to-accent bg-clip-text text-transparent">
+              <span className="text-slate-900">Choose Your</span>{" "}
+              <span className="bg-gradient-to-r from-slate-600 via-slate-800 to-slate-900 bg-clip-text text-transparent">
                 SAT Success Path
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto font-light">
               From AI-powered self-study to elite 1-on-1 coaching, we have the perfect solution 
               to help you achieve your target SAT score.
             </p>
@@ -123,13 +124,13 @@ const Services = () => {
       </section>
 
       {/* Services Pricing */}
-      <section className="py-16 bg-gradient-to-r from-accent/5 via-background to-accent/5">
+      <section className="py-16 bg-gradient-to-r from-slate-50/50 via-white to-slate-50/50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 font-display">
               Our SAT Preparation Services
             </h2>
-            <p className="text-muted-foreground">Choose the level of support that matches your goals</p>
+            <p className="text-slate-600 font-light">Choose the level of support that matches your goals</p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -138,32 +139,32 @@ const Services = () => {
                 key={index}
                 className={`relative p-8 rounded-3xl border transition-all duration-300 hover:scale-105 ${
                   service.popular 
-                    ? 'bg-gradient-to-br from-accent/10 to-accent/5 border-accent/30 shadow-lg lg:scale-105'
-                    : 'bg-card border-border/50 hover:border-accent/20'
+                    ? 'bg-white/90 backdrop-blur-sm border-slate-200/50 shadow-xl lg:scale-105'
+                    : 'bg-white/80 backdrop-blur-sm border-slate-200/50 hover:border-slate-300/50 shadow-lg'
                 }`}
               >
                 {service.badge && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-gradient-to-r from-accent to-accent/80 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    <span className="bg-gradient-to-r from-slate-900 to-slate-800 text-white px-4 py-2 rounded-full text-sm font-semibold">
                       {service.badge}
                     </span>
                   </div>
                 )}
 
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-bold mb-2 text-foreground">{service.name}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-slate-900 font-display">{service.name}</h3>
                   <div className="mb-2">
-                    <span className="text-4xl font-black text-accent">{service.price}</span>
-                    <span className="text-muted-foreground">{service.period}</span>
+                    <span className="text-4xl font-black text-slate-900 font-display">{service.price}</span>
+                    <span className="text-slate-600">{service.period}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">{service.description}</p>
+                  <p className="text-sm text-slate-600 font-light">{service.description}</p>
                 </div>
 
                 <div className="space-y-3 mb-8">
                   {service.features.map((feature, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm">
-                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                      <span>{feature}</span>
+                      <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                      <span className="text-slate-700">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -172,8 +173,8 @@ const Services = () => {
                   <Button 
                     className={`w-full ${
                       service.popular 
-                        ? 'bg-gradient-to-r from-accent to-accent/80 hover:scale-105' 
-                        : ''
+                        ? 'bg-gradient-to-r from-slate-900 to-slate-800 text-white hover:from-slate-800 hover:to-slate-700 hover:scale-105' 
+                        : 'border-slate-300 text-slate-700 hover:border-slate-900 hover:text-slate-900'
                     }`}
                     variant={service.popular ? "default" : "outline"}
                   >
@@ -188,39 +189,39 @@ const Services = () => {
       </section>
 
       {/* Success Stories by Service */}
-      <section className="py-16 bg-muted/20">
+      <section className="py-16 bg-gradient-to-br from-slate-50 to-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 font-display">
               Success Stories from Each Service
             </h2>
-            <p className="text-muted-foreground">Real students, real results across all our offerings</p>
+            <p className="text-slate-600 font-light">Real students, real results across all our offerings</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {successStories.map((story, index) => (
-              <div key={index} className="p-8 rounded-3xl bg-card border border-border/50 hover:border-accent/20 transition-all duration-300">
+              <div key={index} className="p-8 rounded-3xl bg-white/90 backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/50 transition-all duration-300 shadow-lg hover:shadow-xl">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center border-2 border-accent/20">
-                      <span className="text-accent font-bold">{story.name.charAt(0)}</span>
+                    <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center border-2 border-slate-200">
+                      <span className="text-slate-700 font-bold">{story.name.charAt(0)}</span>
                     </div>
                     <div>
-                      <div className="font-semibold text-foreground">{story.name}</div>
-                      <div className="text-sm text-muted-foreground">{story.university}</div>
+                      <div className="font-semibold text-slate-900">{story.name}</div>
+                      <div className="text-sm text-slate-600">{story.university}</div>
                     </div>
                   </div>
-                  <div className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full">
+                  <div className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded-full">
                     {story.service}
                   </div>
                 </div>
                 
                 <div className="mb-4">
-                  <div className="text-3xl font-black text-accent mb-1">{story.score}</div>
-                  <div className="text-success font-semibold">{story.improvement}</div>
+                  <div className="text-3xl font-black text-slate-900 mb-1 font-display">{story.score}</div>
+                  <div className="text-emerald-700 font-semibold">{story.improvement}</div>
                 </div>
                 
-                <p className="text-muted-foreground italic">"{story.quote}"</p>
+                <p className="text-slate-700 italic font-light">"{story.quote}"</p>
               </div>
             ))}
           </div>
@@ -232,35 +233,35 @@ const Services = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 font-display">
                 Why Students Choose Our SAT Services
               </h2>
-              <p className="text-muted-foreground">Proven methodology, expert instruction, and guaranteed results</p>
+              <p className="text-slate-600 font-light">Proven methodology, expert instruction, and guaranteed results</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center p-6">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center">
-                  <Target className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center">
+                  <Target className="w-8 h-8 text-slate-700" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Personalized Approach</h3>
-                <p className="text-muted-foreground">Every service is tailored to your unique learning style and target score goals.</p>
+                <h3 className="text-xl font-semibold mb-3 text-slate-900 font-display">Personalized Approach</h3>
+                <p className="text-slate-600 font-light">Every service is tailored to your unique learning style and target score goals.</p>
               </div>
               
               <div className="text-center p-6">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center">
-                  <Users className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center">
+                  <Users className="w-8 h-8 text-slate-700" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Expert Instructors</h3>
-                <p className="text-muted-foreground">Learn from verified top SAT scorers and experienced educators.</p>
+                <h3 className="text-xl font-semibold mb-3 text-slate-900 font-display">Expert Instructors</h3>
+                <p className="text-slate-600 font-light">Learn from verified top SAT scorers and experienced educators.</p>
               </div>
               
               <div className="text-center p-6">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center">
-                  <Trophy className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center">
+                  <Trophy className="w-8 h-8 text-slate-700" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Proven Results</h3>
-                <p className="text-muted-foreground">Average score improvements of 200+ points across all service levels.</p>
+                <h3 className="text-xl font-semibold mb-3 text-slate-900 font-display">Proven Results</h3>
+                <p className="text-slate-600 font-light">Average score improvements of 200+ points across all service levels.</p>
               </div>
             </div>
           </div>
@@ -268,24 +269,25 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto text-center bg-gradient-to-r from-accent/10 to-accent/5 rounded-3xl p-12 border border-accent/20">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
+      <section className="py-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05),transparent)]"></div>
+        <div className="container mx-auto px-6 relative">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white font-display">
               Ready to Achieve Your Target SAT Score?
             </h2>
-            <p className="text-muted-foreground mb-8 text-lg">
+            <p className="text-slate-300 mb-8 text-lg font-light">
               Join thousands of students who've achieved their dream scores with our proven SAT preparation services.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth/register">
-                <Button className="bg-gradient-to-r from-accent to-accent/80 hover:scale-105 transition-transform px-8">
+                <Button className="bg-white text-slate-900 hover:bg-slate-100 hover:scale-105 transition-all duration-300 shadow-xl px-8">
                   Start Your Free Trial
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
-              <Button variant="outline" className="border-accent/30 text-accent hover:bg-accent/10 px-8">
+              <Button variant="outline" className="border-slate-300 text-slate-300 hover:bg-slate-300/10 px-8">
                 Compare All Services
               </Button>
             </div>

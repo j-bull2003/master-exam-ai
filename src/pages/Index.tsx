@@ -150,16 +150,16 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 relative overflow-hidden bg-mesh" data-bg="mesh">
+      <section className="pt-32 pb-16 relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100" data-bg="mesh">
         {/* Animated background */}
         <AnimatedBackground className="opacity-80" />
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge with enhanced glassmorphism */}
             {isLoaded ? (
-              <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
-                <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
-                <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-900/10 to-slate-700/10 backdrop-blur-sm border border-slate-200/50 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in">
+                <Sparkles className="w-4 h-4 text-slate-700 group-hover:animate-pulse" />
+                <span className="text-slate-700 font-semibold">
                   Trusted by Students at Harvard, MIT, Stanford & More
                 </span>
               </div>
@@ -170,8 +170,8 @@ const Index = () => {
             {/* Main Headline with enhanced typography */}
             {isLoaded ? (
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <span className="text-foreground block mb-2">Elite SAT Mastery</span>
-                <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
+                <span className="text-slate-900 block mb-2">Elite SAT Mastery</span>
+                <span className="bg-gradient-to-r from-slate-600 via-slate-800 to-slate-900 bg-clip-text text-transparent">
                   Guaranteed 200+ Point Gains
                 </span>
               </h1>
@@ -184,7 +184,7 @@ const Index = () => {
 
             {/* Subtext with better contrast */}
             {isLoaded ? (
-              <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <p className="text-xl text-slate-600 leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in font-light" style={{ animationDelay: '0.2s' }}>
                 The world's most advanced SAT preparation system. Join elite students achieving unprecedented score improvements 
                 with our AI-powered platform, expert-led group classes, and exclusive 1-on-1 coaching programs.
               </p>
@@ -195,12 +195,12 @@ const Index = () => {
             {/* Enhanced pricing info with layered cards */}
             {isLoaded ? (
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-                <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors card-layered">
-                  <CheckCircle className="w-4 h-4 text-success" />
-                  <span className="text-success font-semibold">3-day free trial • No credit card</span>
+                <div className="flex items-center gap-2 bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/50 rounded-full px-3 py-1.5 hover:bg-emerald-50 transition-colors">
+                  <CheckCircle className="w-4 h-4 text-emerald-700" />
+                  <span className="text-emerald-800 font-semibold">3-day free trial • No credit card</span>
                 </div>
-                <div className="text-muted-foreground font-medium">Platform access from $149/month</div>
-                <div className="text-muted-foreground">Group classes +$120/month • 1-on-1 program $3,000</div>
+                <div className="text-slate-600 font-medium">Platform access from $149/month</div>
+                <div className="text-slate-600">Group classes +$120/month • 1-on-1 program $3,000</div>
               </div>
             ) : (
               <Skeleton className="h-6 w-96 mx-auto mb-8" />
@@ -214,7 +214,7 @@ const Index = () => {
                     <MagneticButton className="px-8 sm:px-12 w-full sm:w-auto">
                       {/* Enhanced shimmer effect */}
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
-                      <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                      <Button className="w-full bg-gradient-to-r from-slate-900 to-slate-800 text-white hover:from-slate-800 hover:to-slate-700 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                         Start Free Trial
                         <ArrowRight className="w-5 h-5 ml-2" />
                       </Button>

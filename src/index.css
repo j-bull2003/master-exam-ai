@@ -14,12 +14,12 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    /* Enhanced primary with consistent naming - matching SAT program theme */
-    --primary: 270 95% 75%;
+    /* Enhanced primary with consulting page theme - elegant slate */
+    --primary: 220 13% 18%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 270 95% 70%;
-    --primary-variant: 252 83% 67%;
-    --primary-glow: 270 91% 65%;
+    --primary-hover: 220 13% 15%;
+    --primary-variant: 215 25% 27%;
+    --primary-glow: 220 13% 91%;
 
     /* Status colors with consistent structure */
     --success: 142 76% 36%;
@@ -47,8 +47,8 @@
     --input: 240 5.9% 90%;
     --ring: 217 91% 60%;
 
-    /* Premium accent color for elite features - matching SAT program theme */
-    --accent: 270 95% 75%;
+    /* Premium accent color matching consulting page elegance */
+    --accent: 220 13% 18%;
     --accent-foreground: 0 0% 100%;
 
     /* Neutral tones for layered depth */
@@ -66,8 +66,8 @@
     /* Professional spacing and typography */
     --radius: 0.75rem;
 
-    --font-display: "Orbitron", system-ui, sans-serif;
-    --font-body: "Fira Sans", system-ui, sans-serif;
+    --font-display: "Playfair Display", "Georgia", serif;
+    --font-body: "Inter", system-ui, sans-serif;
 
     
 
