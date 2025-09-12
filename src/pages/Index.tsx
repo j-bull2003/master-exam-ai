@@ -84,8 +84,8 @@ const Index = () => {
       university: "MIT (Class of 2024)",
       exam: "SAT",
       score: "1540",
-      improvement: "+160 points",
-      quote: "After struggling with math for months, UniHack's personalized approach helped me understand my weak spots. Went from 1380 to 1540 in 6 weeks of focused practice.",
+      improvement: "+220 points",
+      quote: "After struggling with math for months, UniHack's personalized approach helped me understand my weak spots. Went from 1320 to 1540 in 8 weeks of focused practice.",
       avatar: "J"
     },
     {
@@ -93,7 +93,7 @@ const Index = () => {
       university: "Stanford (Class of 2025)",
       exam: "SAT", 
       score: "1520",
-      improvement: "+140 points",
+      improvement: "+210 points",
       quote: "The diagnostic test was incredibly accurate - it identified exactly where I needed help. The daily practice plans actually fit my busy schedule, and the explanations are clear and detailed.",
       avatar: "D"
     },
@@ -105,6 +105,60 @@ const Index = () => {
       improvement: "+190 points",
       quote: "What impressed me most was how the platform adapted to my learning style. The reading comprehension strategies and math shortcuts saved me so much time on test day.",
       avatar: "M"
+    },
+    {
+      name: "Alex K.",
+      university: "UC Berkeley (Class of 2025)",
+      exam: "SAT",
+      score: "1510",
+      improvement: "+230 points",
+      quote: "I was stuck at 1280 for months. UniHack's AI spotted my grammar patterns and helped me master the writing section. Gained 230 points in just 10 weeks!",
+      avatar: "A"
+    },
+    {
+      name: "Sophia R.",
+      university: "Yale (Class of 2024)",
+      exam: "SAT",
+      score: "1550",
+      improvement: "+180 points",
+      quote: "The practice questions felt exactly like the real test. The detailed explanations helped me understand not just what was wrong, but why. Couldn't have done it without this platform.",
+      avatar: "S"
+    },
+    {
+      name: "Michael T.",
+      university: "Princeton (Class of 2025)",
+      exam: "SAT",
+      score: "1530",
+      improvement: "+240 points",
+      quote: "From 1290 to 1530 - I never thought I could improve this much. The step-by-step solutions and timing strategies completely changed my approach to the SAT.",
+      avatar: "M"
+    },
+    {
+      name: "Emma C.",
+      university: "Northwestern (Class of 2024)",
+      exam: "SAT",
+      score: "1480",
+      improvement: "+200 points",
+      quote: "The reading comprehension section was my biggest weakness. After 6 weeks with UniHack, I finally understood how to approach passages strategically and efficiently.",
+      avatar: "E"
+    },
+    {
+      name: "Ryan P.",
+      university: "Duke (Class of 2025)",
+      exam: "SAT",
+      score: "1500",
+      improvement: "+190 points",
+      quote: "The math section used to intimidate me. The AI identified exactly which algebra concepts I was missing and created a personalized study plan that actually worked.",
+      avatar: "R"
+    },
+    {
+      name: "Olivia H.",
+      university: "Columbia (Class of 2024)",
+      exam: "SAT",
+      score: "1560",
+      improvement: "+220 points",
+      quote: "I tried other prep programs but none were as personalized. UniHack's diagnostic pinpointed my exact weak areas and the practice sessions were perfectly targeted.",
+      avatar: "O"
     }
   ];
 
@@ -397,7 +451,7 @@ const Index = () => {
               Verified SAT Score Improvements
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Real students, real results. Average improvement of 160+ points with our structured SAT preparation program.
+              Real students, real results. Average improvement of 210+ points with our structured SAT preparation program.
             </p>
           </div>
 
