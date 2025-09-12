@@ -109,26 +109,26 @@ const Index = () => {
 
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <PageProgressBar />
       <Header />
       
       {/* Premium Hero Section */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-white to-accent/2" />
+      <section className="pt-32 pb-20 relative overflow-hidden bg-mesh">
+        <AnimatedBackground className="opacity-80" />
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 bg-white border border-primary/20 rounded-full px-6 py-3 text-sm font-medium mb-8 shadow-sm">
-              <Star className="w-4 h-4 text-primary fill-primary" />
-              <span className="text-primary font-semibold">Trusted by 15,000+ students at elite universities</span>
+            <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 rounded-full px-6 py-3 text-sm font-medium mb-8 shadow-sm">
+              <Star className="w-4 h-4 text-accent fill-accent" />
+              <span className="text-accent font-semibold">Trusted by 15,000+ students at elite universities</span>
             </div>
 
             {/* Premium Headline */}
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-display font-bold leading-none mb-8">
               <span className="text-foreground">Master the SAT</span>
               <br />
-              <span className="bg-gradient-to-r from-primary via-primary-variant to-accent bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-accent via-accent/80 to-accent bg-clip-text text-transparent">
                 Score 1500+
               </span>
             </h1>
@@ -142,7 +142,7 @@ const Index = () => {
             {/* Trial Badge */}
             <div className="inline-flex items-center gap-3 bg-success/10 border border-success/20 rounded-full px-6 py-3 mb-10">
               <CheckCircle className="w-5 h-5 text-success" />
-              <span className="text-success font-semibold">3-Day Free Trial • Full Platform Access</span>
+              <span className="text-success font-semibold">3-Day Free Trial • Card Required After Trial</span>
             </div>
 
             {/* Premium CTA */}
@@ -150,13 +150,13 @@ const Index = () => {
               <Link to="/auth/register">
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-all duration-300 text-lg px-12 py-6 rounded-xl shadow-lg hover:shadow-xl"
+                  className="bg-gradient-to-r from-accent to-accent/80 hover:scale-105 transition-all duration-300 text-lg px-12 py-6 rounded-xl shadow-lg hover:shadow-xl"
                 >
                   Start Your Free Trial
                   <ArrowRight className="w-6 h-6 ml-3" />
                 </Button>
               </Link>
-              <p className="text-sm text-muted-foreground mt-4">No credit card required • Cancel anytime</p>
+              <p className="text-sm text-muted-foreground mt-4">No credit card required for trial • Card required after 3 days</p>
             </div>
 
             {/* Trust Indicators */}
@@ -181,7 +181,7 @@ const Index = () => {
       </section>
 
       {/* Platform Features */}
-      <section className="py-20 bg-neutral-50">
+      <section className="py-20 bg-muted/20">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-display font-bold mb-6 text-foreground">
@@ -194,9 +194,9 @@ const Index = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {features.map((feature, index) => (
-              <Card key={index} className="p-8 text-center hover:shadow-lg transition-all duration-300 border-0 bg-white">
-                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center">
-                  <feature.icon className="w-8 h-8 text-primary" />
+              <Card key={index} className="p-8 text-center hover:shadow-lg transition-all duration-300 border-0 bg-card hover:border-accent/20">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-accent/10 flex items-center justify-center">
+                  <feature.icon className="w-8 h-8 text-accent" />
                 </div>
                 <h3 className="text-xl font-semibold mb-4 text-foreground">{feature.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
@@ -207,7 +207,7 @@ const Index = () => {
       </section>
 
       {/* Social Proof Stats */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-display font-bold mb-6 text-foreground">
@@ -218,8 +218,8 @@ const Index = () => {
           
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center">
-              <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-3xl p-10">
-                <Users className="w-16 h-16 text-primary mx-auto mb-6" />
+              <div className="bg-gradient-to-br from-accent/5 to-accent/10 rounded-3xl p-10">
+                <Users className="w-16 h-16 text-accent mx-auto mb-6" />
                 <div className="text-5xl font-display font-bold text-foreground mb-3">
                   {statsCounter.students.toLocaleString()}+
                 </div>
@@ -251,7 +251,7 @@ const Index = () => {
       </section>
 
       {/* Student Testimonials */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 via-white to-accent/5">
+      <section className="py-20 bg-gradient-to-br from-accent/5 via-background to-accent/5">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-display font-bold mb-6 text-foreground">
@@ -264,7 +264,7 @@ const Index = () => {
             {testimonials.map((testimonial, index) => (
               <Card key={index} className="p-8 bg-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-variant flex items-center justify-center text-white font-bold text-lg">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-accent/80 flex items-center justify-center text-white font-bold text-lg">
                     {testimonial.avatar}
                   </div>
                   <div>
@@ -272,11 +272,11 @@ const Index = () => {
                     <div className="text-sm text-muted-foreground">{testimonial.university}</div>
                   </div>
                   <div className="ml-auto text-right">
-                    <div className="text-2xl font-bold text-primary">{testimonial.score}</div>
+                    <div className="text-2xl font-bold text-accent">{testimonial.score}</div>
                     <div className="text-sm font-semibold text-success">{testimonial.improvement}</div>
                   </div>
                 </div>
-                <Quote className="w-6 h-6 text-primary/30 mb-4" />
+                <Quote className="w-6 h-6 text-accent/30 mb-4" />
                 <p className="text-muted-foreground leading-relaxed">{testimonial.quote}</p>
               </Card>
             ))}
@@ -285,7 +285,7 @@ const Index = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary via-primary-variant to-accent relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-r from-accent via-accent/90 to-accent/80 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/5" />
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -301,7 +301,7 @@ const Index = () => {
               <Link to="/auth/register">
                 <Button 
                   size="lg" 
-                  className="bg-white text-primary hover:bg-white/90 transition-all duration-300 text-lg px-12 py-6 rounded-xl shadow-lg hover:shadow-xl"
+                  className="bg-white text-accent hover:bg-white/90 transition-all duration-300 text-lg px-12 py-6 rounded-xl shadow-lg hover:shadow-xl"
                 >
                   Start Your Free Trial
                   <ArrowRight className="w-6 h-6 ml-3" />

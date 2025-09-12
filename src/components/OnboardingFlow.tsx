@@ -29,7 +29,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
   if (currentStep === "account-creation") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-accent/5 flex items-center justify-center p-6">
+      <div className="min-h-screen bg-gradient-to-br from-accent/5 via-background to-accent/5 flex items-center justify-center p-6">
         <Card className="w-full max-w-md p-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold mb-2">Create Your Account</h2>
@@ -72,7 +72,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
             <Button 
               onClick={handleAccountCreation}
-              className="w-full bg-gradient-to-r from-primary to-primary-variant py-6 text-lg"
+              className="w-full bg-gradient-to-r from-accent to-accent/80 py-6 text-lg"
             >
               Continue to Program Selection
               <ArrowRight className="w-5 h-5 ml-2" />
@@ -95,7 +95,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-accent/5 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-accent/5 via-background to-accent/5 p-6">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-display font-bold mb-4">Choose Your SAT Program</h1>
@@ -107,18 +107,18 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           <Card 
             className={`p-8 cursor-pointer transition-all duration-300 ${
               selectedProgram === "platform-only" 
-                ? 'ring-2 ring-primary border-primary/30' 
+                ? 'ring-2 ring-accent border-accent/30' 
                 : 'hover:shadow-lg'
             }`}
             onClick={() => setSelectedProgram("platform-only")}
           >
             <div className="text-center mb-6">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <Sparkles className="w-8 h-8 text-primary" />
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center">
+                <Sparkles className="w-8 h-8 text-accent" />
               </div>
               <h3 className="text-xl font-bold mb-2">SAT Platform</h3>
               <p className="text-sm text-muted-foreground mb-4">AI-powered personalized SAT preparation</p>
-              <div className="text-3xl font-bold text-primary">$40/month</div>
+              <div className="text-3xl font-bold text-accent">$149/month</div>
             </div>
 
             <div className="space-y-3 mb-6">
@@ -140,7 +140,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             <div className="text-center">
               <div className={`w-6 h-6 mx-auto rounded-full border-2 transition-all ${
                 selectedProgram === "platform-only"
-                  ? 'bg-primary border-primary'
+                  ? 'bg-accent border-accent'
                   : 'border-muted-foreground'
               }`}>
                 {selectedProgram === "platform-only" && (
@@ -154,23 +154,23 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           <Card 
             className={`p-8 cursor-pointer transition-all duration-300 relative ${
               selectedProgram === "platform-plus-groups" 
-                ? 'ring-2 ring-primary border-primary/30' 
+                ? 'ring-2 ring-accent border-accent/30' 
                 : 'hover:shadow-lg'
             }`}
             onClick={() => setSelectedProgram("platform-plus-groups")}
           >
-            <Badge className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-1">
+            <Badge className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent to-accent/80 text-white px-4 py-1">
               Most Popular
             </Badge>
 
             <div className="text-center mb-6">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <Users className="w-8 h-8 text-primary" />
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center">
+                <Users className="w-8 h-8 text-accent" />
               </div>
               <h3 className="text-xl font-bold mb-2">Platform + Live Classes</h3>
               <p className="text-sm text-muted-foreground mb-4">Complete SAT mastery with live expert instruction</p>
-              <div className="text-3xl font-bold text-primary">$160/month</div>
-              <div className="text-sm text-muted-foreground">($40 platform + $120 weekly classes)</div>
+              <div className="text-3xl font-bold text-accent">$269/month</div>
+              <div className="text-sm text-muted-foreground">($149 platform + $120 weekly classes)</div>
             </div>
 
             <div className="space-y-3 mb-6">
@@ -192,7 +192,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             <div className="text-center">
               <div className={`w-6 h-6 mx-auto rounded-full border-2 transition-all ${
                 selectedProgram === "platform-plus-groups"
-                  ? 'bg-primary border-primary'
+                  ? 'bg-accent border-accent'
                   : 'border-muted-foreground'
               }`}>
                 {selectedProgram === "platform-plus-groups" && (
@@ -206,10 +206,15 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           <Card className="p-8 bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
             <div className="text-center">
               <Crown className="w-16 h-16 mx-auto mb-4 text-accent" />
-              <h3 className="text-xl font-bold mb-2">Elite 1-on-1 Program</h3>
+              <h3 className="text-xl font-bold mb-2">Elite 1-on-1 SAT Program</h3>
               <p className="text-sm text-muted-foreground mb-6">
-                Guaranteed 200+ point improvements with personal SAT coaching
+                20-session personalized coaching program for guaranteed 200+ point improvements
               </p>
+              
+              <div className="mb-6">
+                <div className="text-3xl font-bold text-accent mb-1">$3,000</div>
+                <div className="text-sm text-muted-foreground">Complete 20-session package</div>
+              </div>
               
               <Link to="/tutoring">
                 <Button variant="outline" className="w-full border-accent/30 text-accent hover:bg-accent/10">
@@ -222,9 +227,9 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         </div>
 
         <div className="text-center">
-          <Button 
+            <Button 
             onClick={() => handleProgramSelection(selectedProgram)}
-            className="bg-gradient-to-r from-primary to-primary-variant px-12 py-6 text-lg"
+            className="bg-gradient-to-r from-accent to-accent/80 px-12 py-6 text-lg"
           >
             Start My Free Trial
             <ArrowRight className="w-5 h-5 ml-2" />
