@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface UseKeyboardShortcutsProps {
   onCommandPaletteOpen: () => void;
@@ -9,7 +10,7 @@ export const useKeyboardShortcuts = ({
   onCommandPaletteOpen, 
   onHelpOpen 
 }: UseKeyboardShortcutsProps) => {
-  
+  const navigate = useNavigate();
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     const isMetaOrCtrl = e.metaKey || e.ctrlKey;
@@ -39,7 +40,7 @@ export const useKeyboardShortcuts = ({
       if (e.key === 'g') {
         const nextKeyHandler = (nextE: KeyboardEvent) => {
           if (nextE.key === 'd') {
-            window.location.assign('/dashboard');
+            navigate('/dashboard');
           }
           document.removeEventListener('keydown', nextKeyHandler);
         };
@@ -53,7 +54,7 @@ export const useKeyboardShortcuts = ({
         }, 0);
       }
     }
-  }, [onCommandPaletteOpen, onHelpOpen]);
+  }, [navigate, onCommandPaletteOpen, onHelpOpen]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
