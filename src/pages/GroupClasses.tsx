@@ -202,7 +202,7 @@ export default function GroupClasses() {
               </div>
               
               <div className="space-y-3 mb-8">
-                <Link to="/payment/group-classes">
+                <Link to="/auth/register">
                   <button className="group w-full max-w-sm mx-auto bg-gradient-to-r from-slate-900 to-slate-800 text-white py-3 px-6 rounded-lg text-base font-semibold hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                     <span className="relative">Enroll Now - $50/week</span>
@@ -691,7 +691,7 @@ export default function GroupClasses() {
             </p>
             
             <div className="flex justify-center mb-12 sm:mb-16 px-4">
-              <Link to="/payment/group-classes" className="w-full max-w-sm">
+              <Link to="/auth/register" className="w-full max-w-sm">
                 <button className="group w-full px-8 sm:px-16 py-4 sm:py-6 bg-white text-slate-900 rounded-2xl text-lg sm:text-xl font-semibold hover:bg-slate-100 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-1 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-100/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                   <span className="relative">Enroll Now - $50/week</span>
