@@ -6,60 +6,27 @@ import LiveZoomDemo from "./LiveZoomDemo";
 const GroupClassSection = () => {
   const classTypes = [
     {
-      title: "SAT Math Intensive",
-      schedule: "Mon, Wed, Fri • 7:00 PM EST",
-      duration: "90 minutes",
+      title: "SAT Complete Mastery",
+      schedule: "Mon & Wed • 7:00 PM EST",
+      duration: "90 minutes per session",
       students: "8-12 students",
       difficulty: "All Levels",
-      price: "$20/week",
+      price: "$30/week",
+      pricePerSession: "$15/session",
+      startDate: "October 13th, 2024",
       features: [
+        "Math + Reading & Writing combined",
         "Live interactive sessions",
-        "Real-time Q&A with expert tutors",
+        "Real-time Q&A with expert tutors", 
         "Collaborative problem solving",
-        "Weekly progress tracking"
+        "Weekly progress tracking",
+        "Small group attention"
       ],
       popular: true
-    },
-    {
-      title: "SAT Reading & Writing",
-      schedule: "Tue, Thu • 6:30 PM EST",
-      duration: "75 minutes", 
-      students: "6-10 students",
-      difficulty: "All Levels",
-      price: "$20/week",
-      features: [
-        "Literary analysis techniques",
-        "Grammar & writing strategies",
-        "Passage comprehension skills",
-        "Essay writing workshops"
-      ],
-      popular: false
-    },
-    {
-      title: "SAT Strategy Bootcamp",
-      schedule: "Saturdays • 2:00 PM EST",
-      duration: "2 hours",
-      students: "10-15 students",
-      difficulty: "Advanced",
-      price: "$25/week",
-      features: [
-        "Test-taking strategies",
-        "Time management techniques",
-        "Mock exam walkthroughs",
-        "Score optimization tips"
-      ],
-      popular: false
     }
   ];
 
   const addOns = [
-    {
-      icon: Brain,
-      title: "Platform Access",
-      description: "Full access to AI-powered practice questions and analytics",
-      price: "+$15/week",
-      features: ["8,500+ practice questions", "AI weakness detection", "Progress analytics"]
-    },
     {
       icon: Target,
       title: "1-on-1 Tutoring",
@@ -83,15 +50,15 @@ const GroupClassSection = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
             <Users className="w-4 h-4 text-primary" />
-            <span className="text-primary font-semibold">Now Available: Live Group Classes</span>
+            <span className="text-primary font-semibold">Add-On: Live Group Classes</span>
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Join Live SAT Group Classes
+            Enhance Your Learning with Group Classes
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Learn alongside peers in interactive group sessions led by expert SAT tutors. 
-            Starting at just <span className="text-primary font-semibold">$20/week</span>
+            Join our next cohort starting <span className="text-primary font-semibold">October 13th</span>. 
+            Two sessions per week covering both Math and Reading & Writing for just <span className="text-primary font-semibold">$15 per session</span>
           </p>
         </div>
 
@@ -104,34 +71,29 @@ const GroupClassSection = () => {
           <LiveZoomDemo />
         </div>
 
-        {/* Group Class Options */}
+        {/* Single Group Class Option */}
         <div className="mb-16">
           <h3 className="text-3xl font-bold text-center mb-12 text-foreground">
-            Choose Your Group Class
+            October 13th Cohort Now Enrolling
           </h3>
           
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="max-w-lg mx-auto">
             {classTypes.map((classType, index) => (
               <div 
                 key={index}
-                className={`relative p-8 rounded-3xl border transition-all duration-300 hover:scale-105 hover:shadow-xl ${
-                  classType.popular 
-                    ? 'bg-gradient-to-br from-primary/10 to-primary-variant/5 border-primary/30 shadow-lg'
-                    : 'bg-card border-border/50 hover:border-primary/20'
-                }`}
+                className="relative p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-primary-variant/5 border border-primary/30 shadow-lg"
               >
-                {classType.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-semibold">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    NEXT COHORT
+                  </span>
+                </div>
 
                 <div className="text-center mb-6">
                   <h4 className="text-xl font-bold mb-2 text-foreground">{classType.title}</h4>
                   <div className="text-3xl font-black text-primary mb-1">{classType.price}</div>
-                  <div className="text-sm text-muted-foreground">per week commitment</div>
+                  <div className="text-sm text-muted-foreground mb-2">{classType.pricePerSession}</div>
+                  <div className="text-sm font-medium text-success">Starts: {classType.startDate}</div>
                 </div>
 
                 <div className="space-y-3 mb-6">
@@ -163,15 +125,8 @@ const GroupClassSection = () => {
                 </div>
 
                 <Link to="/auth/register" className="block">
-                  <Button 
-                    className={`w-full ${
-                      classType.popular 
-                        ? 'bg-gradient-to-r from-primary to-primary-variant hover:scale-105' 
-                        : ''
-                    }`}
-                    variant={classType.popular ? "default" : "outline"}
-                  >
-                    Join This Class
+                  <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                    Add to My Plan
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
@@ -187,7 +142,7 @@ const GroupClassSection = () => {
             <p className="text-muted-foreground">Add these powerful tools to maximize your SAT prep</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {addOns.map((addon, index) => (
               <div 
                 key={index}
@@ -218,17 +173,17 @@ const GroupClassSection = () => {
         {/* CTA Section */}
         <div className="text-center bg-gradient-to-r from-primary/10 to-primary-variant/10 rounded-3xl p-12 border border-primary/20">
           <h3 className="text-3xl font-bold mb-4 text-foreground">
-            Ready to Join Our Learning Community?
+            Ready to Join Our October 13th Cohort?
           </h3>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Start with any group class and add platform access or tutoring as needed. 
-            Flexible weekly commitments with no long-term contracts.
+            Add group classes to your platform access for comprehensive SAT preparation. 
+            Just $30/week for two expert-led sessions covering all SAT sections.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/auth/register">
               <Button className="bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform px-8">
-                Start Group Classes
+                Add Group Classes
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>

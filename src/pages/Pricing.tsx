@@ -60,37 +60,43 @@ const Pricing = () => {
               
               {/* Group Classes Only */}
               <div className="relative p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-xl font-bold mb-2">Group Classes</h3>
+                <h3 className="text-xl font-bold mb-2">Platform Access</h3>
                 <div className="mb-2">
-                  <span className="text-4xl font-black">$20</span>
-                  <span className="text-muted-foreground">/week</span>
+                  <span className="text-4xl font-black">$40</span>
+                  <span className="text-muted-foreground">/month</span>
                 </div>
                 <div className="mb-6">
-                  <span className="text-sm text-muted-foreground">Weekly commitment</span>
+                  <span className="text-sm text-muted-foreground">AI-powered SAT prep</span>
                 </div>
 
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Live SAT group sessions</span>
+                    <span className="text-sm">8,500+ expert-authored questions</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Expert tutor instruction</span>
+                    <span className="text-sm">AI-powered weakness detection</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">8-12 students per class</span>
+                    <span className="text-sm">Full analytics dashboard</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-success" />
-                    <span className="text-sm">Interactive learning</span>
+                    <span className="text-sm">Mock exams & detailed reports</span>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-primary/10 to-primary-variant/5 border border-primary/20 rounded-xl p-3 mb-6">
+                  <div className="text-sm font-medium text-primary text-center">
+                    Add Group Classes for +$30/week
                   </div>
                 </div>
 
                 <Link to="/auth/register" className="block mb-4">
                   <Button variant="outline" className="w-full">
-                    Join Group Classes
+                    Start Free Trial
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
@@ -188,10 +194,10 @@ const Pricing = () => {
               <h3 className="text-2xl font-bold text-center mb-8">Available Add-ons</h3>
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="text-center p-6 bg-background rounded-2xl border border-border/50">
-                  <Target className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <h4 className="font-semibold mb-2">Platform Access</h4>
-                  <p className="text-sm text-muted-foreground mb-2">AI-powered practice & analytics</p>
-                  <div className="text-lg font-bold text-primary">+$15/week</div>
+                  <Users className="w-8 h-8 text-primary mx-auto mb-3" />
+                  <h4 className="font-semibold mb-2">Group Classes</h4>
+                  <p className="text-sm text-muted-foreground mb-2">Live sessions • Oct 13th cohort</p>
+                  <div className="text-lg font-bold text-primary">+$30/week</div>
                 </div>
                 <div className="text-center p-6 bg-background rounded-2xl border border-border/50">
                   <Brain className="w-8 h-8 text-primary mx-auto mb-3" />

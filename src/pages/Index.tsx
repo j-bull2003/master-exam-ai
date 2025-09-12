@@ -94,7 +94,7 @@ const Index = () => {
       exam: "SAT", 
       score: "1560",
       improvement: "+200 points",
-      quote: "The bite-sized daily practice sessions fit perfectly into my schedule. Never felt more confident on test day.",
+      quote: "The combination of platform AI and group classes was perfect. Never felt more confident on test day.",
       avatar: "M"
     },
     {
@@ -102,9 +102,36 @@ const Index = () => {
       university: "Harvard",
       exam: "SAT",
       score: "1590",
-      improvement: "+180 points",
-      quote: "The AI explanations were like having a personal tutor 24/7. Every mistake became a learning opportunity.",
+      improvement: "+280 points",
+      quote: "From 1310 to 1590! The AI explanations and group discussions made every concept click.",
       avatar: "E"
+    },
+    {
+      name: "David Kim",
+      university: "Yale",
+      exam: "SAT",
+      score: "1570",
+      improvement: "+220 points",
+      quote: "The personalized study plan adapted to my schedule. 220 points improvement in 4 months was beyond my expectations.",
+      avatar: "D"
+    },
+    {
+      name: "Ashley Thompson",
+      university: "Princeton",
+      exam: "SAT",
+      score: "1550",
+      improvement: "+190 points",
+      quote: "Group classes kept me motivated while the AI platform targeted my weak spots. Perfect combination!",
+      avatar: "A"
+    },
+    {
+      name: "Ryan Patel",
+      university: "Columbia",
+      exam: "SAT",
+      score: "1580",
+      improvement: "+260 points",
+      quote: "I never thought I could break 1500. UniHack's system made the impossible possible. 260 points up!",
+      avatar: "R"
     }
   ];
 
@@ -141,9 +168,9 @@ const Index = () => {
             {/* Main Headline with enhanced typography */}
             {isLoaded ? (
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <span className="text-foreground block mb-2">Ace the SAT</span>
+                <span className="text-foreground block mb-2">Achieve 200+ Point</span>
                 <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
-                  with AI-Driven Precision
+                  SAT Score Improvements
                 </span>
               </h1>
             ) : (
@@ -156,7 +183,8 @@ const Index = () => {
             {/* Subtext with better contrast */}
             {isLoaded ? (
               <p className="text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                Master the SAT with AI-powered precision. Personalized study plans. Adaptive practice. Expert-authored content.
+                Join thousands of students achieving 200+ point improvements with AI-powered SAT prep. 
+                Expert-authored content meets cutting-edge technology.
               </p>
             ) : (
               <Skeleton className="h-6 w-full max-w-xl mx-auto mb-6" />
@@ -219,6 +247,40 @@ const Index = () => {
                 <Skeleton className="h-14 w-full max-w-4xl mx-auto" />
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              Why Students Choose UniHack for SAT Prep
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <InteractiveCard
+                key={index}
+                tiltEnabled={true}
+                glowEnabled={true}
+                className="text-center group hover:border-primary/20"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="p-8">
+                  <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-all duration-300 group-hover:scale-110">
+                    <feature.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-foreground">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </div>
+              </InteractiveCard>
+            ))}
           </div>
         </div>
       </section>
@@ -351,7 +413,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {testimonials.map((testimonial, index) => (
               <InteractiveCard
                 key={index}

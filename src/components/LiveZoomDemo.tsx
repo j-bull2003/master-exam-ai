@@ -8,14 +8,14 @@ const LiveZoomDemo = () => {
   const [handRaised, setHandRaised] = useState(false);
   const [animationStage, setAnimationStage] = useState(0);
 
-  // Simulated participants data
+  // Enhanced AI character data with realistic profiles
   const participants = [
-    { id: 1, name: "Ms. Sarah", role: "teacher", avatar: "S", isTeacher: true, speaking: false },
-    { id: 2, name: "Alex", role: "student", avatar: "A", isTeacher: false, speaking: false },
-    { id: 3, name: "Jamie", role: "student", avatar: "J", isTeacher: false, speaking: true },
-    { id: 4, name: "Sam", role: "student", avatar: "S", isTeacher: false, speaking: false },
-    { id: 5, name: "Casey", role: "student", avatar: "C", isTeacher: false, speaking: false },
-    { id: 6, name: "You", role: "student", avatar: "Y", isTeacher: false, speaking: false, isYou: true }
+    { id: 1, name: "Dr. Martinez", role: "teacher", avatar: "👩‍🏫", isTeacher: true, speaking: false, bg: "from-primary/30 to-primary/20" },
+    { id: 2, name: "Alex Chen", role: "student", avatar: "👨‍🎓", isTeacher: false, speaking: false, bg: "from-blue-200/40 to-blue-100/30" },
+    { id: 3, name: "Maya Patel", role: "student", avatar: "👩‍🎓", isTeacher: false, speaking: true, bg: "from-green-200/40 to-green-100/30" },
+    { id: 4, name: "Sam Johnson", role: "student", avatar: "👨‍🎓", isTeacher: false, speaking: false, bg: "from-purple-200/40 to-purple-100/30" },
+    { id: 5, name: "Emma Rodriguez", role: "student", avatar: "👩‍🎓", isTeacher: false, speaking: false, bg: "from-pink-200/40 to-pink-100/30" },
+    { id: 6, name: "You", role: "student", avatar: "👤", isTeacher: false, speaking: false, isYou: true, bg: "from-orange-200/40 to-orange-100/30" }
   ];
 
   // Animation cycle for demo effect
@@ -32,7 +32,7 @@ const LiveZoomDemo = () => {
       <div className="flex items-center justify-between mb-4 pb-3 border-b border-border/30">
         <div className="flex items-center gap-3">
           <div className="w-3 h-3 bg-success rounded-full animate-pulse"></div>
-          <span className="font-semibold text-foreground">SAT Math Group Class</span>
+          <span className="font-semibold text-foreground">SAT Complete Mastery • Session 2/8</span>
           <span className="text-sm text-muted-foreground">• Live</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -50,18 +50,16 @@ const LiveZoomDemo = () => {
               participant.speaking ? 'border-primary/60 shadow-lg shadow-primary/20' : 'border-border/30'
             } ${participant.isTeacher ? 'md:col-span-2' : ''}`}
           >
-            {/* Mock video background */}
-            <div className={`w-full h-full bg-gradient-to-br ${
-              participant.isTeacher 
-                ? 'from-primary/20 to-primary/10' 
-                : 'from-accent/20 to-muted/20'
-            } flex items-center justify-center relative`}>
+            {/* Enhanced AI character background */}
+            <div className={`w-full h-full bg-gradient-to-br ${participant.bg} flex items-center justify-center relative overflow-hidden`}>
               
-              {/* Avatar */}
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold ${
-                participant.isTeacher ? 'bg-primary' : 'bg-accent'
-              } ${participant.speaking ? 'animate-pulse' : ''}`}>
-                {participant.avatar}
+              {/* Realistic AI avatar with better styling */}
+              <div className="relative">
+                <div className={`text-4xl ${participant.speaking ? 'animate-pulse scale-110' : ''} transition-all duration-300`}>
+                  {participant.avatar}
+                </div>
+                {/* Subtle glow effect for realism */}
+                <div className="absolute inset-0 bg-white/10 rounded-full blur-lg"></div>
               </div>
 
               {/* Speaking indicator */}
@@ -110,19 +108,19 @@ const LiveZoomDemo = () => {
       <div className="bg-muted/30 rounded-lg p-3 mb-4 max-h-24 overflow-hidden">
         <div className="space-y-1 text-sm">
           <div className="flex items-start gap-2">
-            <span className="font-medium text-primary">Ms. Sarah:</span>
-            <span className="text-muted-foreground">Let's work through this quadratic equation together</span>
+            <span className="font-medium text-primary">Dr. Martinez:</span>
+            <span className="text-muted-foreground">Let's tackle this quadratic equation step by step. Who can identify the coefficients?</span>
           </div>
           {animationStage >= 1 && (
             <div className="flex items-start gap-2 animate-fade-in">
-              <span className="font-medium text-foreground">Jamie:</span>
-              <span className="text-muted-foreground">I think we need to factor first?</span>
+              <span className="font-medium text-foreground">Maya:</span>
+              <span className="text-muted-foreground">I see a=2, b=-5, c=-3. Should we use the quadratic formula?</span>
             </div>
           )}
           {animationStage >= 3 && (
             <div className="flex items-start gap-2 animate-fade-in">
               <span className="font-medium text-foreground">Alex:</span>
-              <span className="text-muted-foreground">Great explanation! 🎯</span>
+              <span className="text-muted-foreground">Great catch Maya! That's exactly right 🎯</span>
             </div>
           )}
         </div>
