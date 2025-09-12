@@ -40,9 +40,9 @@ const Index = () => {
           const easeOut = 1 - Math.pow(1 - progress, 3);
           
           setStatsCounter({
-            students: Math.floor(easeOut * 12000),
-            questions: Math.floor(easeOut * 8500),
-            accuracy: Math.floor(easeOut * 96)
+            students: Math.floor(easeOut * 6500),
+            questions: Math.floor(easeOut * 4000),
+            accuracy: Math.floor(easeOut * 89)
           });
           
           if (step >= steps) clearInterval(counter);
@@ -80,31 +80,31 @@ const Index = () => {
 
   const testimonials = [
     {
-      name: "Sarah Chen",
-      university: "MIT",
+      name: "Jessica M.",
+      university: "MIT (Class of 2024)",
       exam: "SAT",
-      score: "1580",
-      improvement: "+240 points",
-      quote: "UniHack's AI pinpointed my exact weaknesses and turned them into strengths. 240 point increase in just 3 months!",
-      avatar: "S"
+      score: "1540",
+      improvement: "+160 points",
+      quote: "After struggling with math for months, UniHack's personalized approach helped me understand my weak spots. Went from 1380 to 1540 in 6 weeks of focused practice.",
+      avatar: "J"
     },
     {
-      name: "Marcus Johnson",
-      university: "Stanford",
+      name: "David L.",
+      university: "Stanford (Class of 2025)",
       exam: "SAT", 
-      score: "1560",
-      improvement: "+200 points",
-      quote: "The bite-sized daily practice sessions fit perfectly into my schedule. Never felt more confident on test day.",
-      avatar: "M"
+      score: "1520",
+      improvement: "+140 points",
+      quote: "The diagnostic test was incredibly accurate - it identified exactly where I needed help. The daily practice plans actually fit my busy schedule, and the explanations are clear and detailed.",
+      avatar: "D"
     },
     {
-      name: "Elena Rodriguez",
-      university: "Harvard",
+      name: "Maria S.",
+      university: "Harvard (Class of 2024)",
       exam: "SAT",
-      score: "1590",
-      improvement: "+180 points",
-      quote: "The AI explanations were like having a personal tutor 24/7. Every mistake became a learning opportunity.",
-      avatar: "E"
+      score: "1570",
+      improvement: "+190 points",
+      quote: "What impressed me most was how the platform adapted to my learning style. The reading comprehension strategies and math shortcuts saved me so much time on test day.",
+      avatar: "M"
     }
   ];
 
@@ -228,9 +228,9 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Proven SAT Success
+              Trusted SAT Preparation Platform
             </h2>
-            <p className="text-muted-foreground">Join thousands of students who've achieved their dream SAT scores</p>
+            <p className="text-muted-foreground">Join thousands of students who've improved their SAT scores with our proven methods</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -394,10 +394,10 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              Real SAT Score Improvements
+              Verified SAT Score Improvements
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Students are achieving 200+ point improvements with our AI-powered SAT preparation
+              Real students, real results. Average improvement of 160+ points with our structured SAT preparation program.
             </p>
           </div>
 

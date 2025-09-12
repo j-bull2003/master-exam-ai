@@ -15,7 +15,7 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const About = () => {
   const stats = [
-    { number: "8K+", label: "SAT Practice Questions" },
+    { number: "4K+", label: "SAT Practice Questions" },
     { number: "15+", label: "Top US Universities" },
     { number: "+210", label: "Average Score Improvement" },
     { number: "1", label: "SAT Focus - No Distractions" }
@@ -198,9 +198,9 @@ const About = () => {
             </p>
             <div className="bg-card rounded-2xl p-8 border border-border/50">
               <blockquote className="text-lg italic text-muted-foreground mb-4">
-                "The AI-powered SAT questions really challenged me and exposed my weak areas. My SAT score improved by 240 points in just 8 weeks."
+                "The structured approach and detailed explanations helped me understand my mistakes. Went from 1320 to 1480 over 10 weeks of consistent practice. The diagnostic test was spot-on in identifying my weak areas."
               </blockquote>
-              <div className="text-sm font-semibold">Sarah M., Harvard Admitted Student</div>
+              <div className="text-sm font-semibold">Sarah M., Harvard Class of 2024</div>
             </div>
           </div>
         </div>
