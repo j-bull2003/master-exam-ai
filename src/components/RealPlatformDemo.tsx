@@ -11,28 +11,74 @@ export const RealPlatformDemo = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  // Real SAT questions from your uploads organized by domain
+  const diagnosticQuestions = [
+    {
+      id: 1,
+      section: "Reading & Writing",
+      domain: "Information and Ideas",
+      subdomain: "Central Ideas and Details",
+      difficulty: "Hard",
+      passage: "One recognized social norm of gift giving is that the time spent obtaining a gift will be viewed as a reflection of the gift's thoughtfulness. Marketing experts Farnoush Reshadi, Julian Givi, and Gopal Das addressed this view in their studies of norms specifically surrounding the giving of gift cards, noting that while recipients tend to view digital gift cards (which can be purchased online from anywhere and often can be redeemed online as well) as superior to physical gift cards (which sometimes must be purchased in person and may only be redeemable in person) in terms of usage, 94.8 percent of participants surveyed indicated that it is more socially acceptable to give a physical gift card to a recipient. This finding suggests that ______",
+      question: "Which choice most logically completes the text?",
+      choices: [
+        "gift givers likely overestimate the amount of effort required to use digital gift cards and thus mistakenly assume gift recipients will view them as less desirable than physical gift cards.",
+        "physical gift cards are likely preferred by gift recipients because the tangible nature of those cards offers a greater psychological sense of ownership than digital gift cards do.",
+        "physical gift cards are likely less desirable to gift recipients than digital gift cards are because of the perception that physical gift cards require unnecessary effort to obtain.",
+        "gift givers likely perceive digital gift cards as requiring relatively low effort to obtain and thus wrongly assume gift recipients will appreciate them less than they do physical gift cards."
+      ],
+      correctAnswer: "D",
+      explanation: "The text establishes that gift-giving norms connect thoughtfulness with effort, and while digital cards are easier to use, 94.8% find physical cards more socially acceptable to give, suggesting gift givers perceive digital cards as low-effort."
+    },
+    {
+      id: 2,
+      section: "Reading & Writing", 
+      domain: "Craft and Structure",
+      subdomain: "Text Structure and Purpose",
+      difficulty: "Hard",
+      passage: "The most recent iteration of the immersive theater experience Sleep No More, which premiered in New York City in 2011, transforms its performance space—a five-story warehouse—into a 1930s-era hotel. Audience members, who wander through the labyrinthine venue at their own pace and follow the actors as they play out simultaneous, interweaving narrative loops, confront the impossibility of experiencing the production in its entirety. The play's refusal of narrative coherence thus hinges on the sense of spatial fragmentation that the venue's immense and intricate layout generates.",
+      question: "What does the text most strongly suggest about Sleep No More's use of its performance space?",
+      choices: [
+        "The choice of a New York City venue likely enabled the play's creators to experiment with the use of theatrical space in a way that venues from earlier productions could not.",
+        "Audience members likely find the experience of the play disappointing because they generally cannot make their way through the entire venue.",
+        "The production's dependence on a particular performance environment would likely make it difficult to reproduce exactly in a different theatrical space.",
+        "Audience members who navigate the space according to a recommended itinerary will likely have a better grasp of the play's narrative than audience members who depart from that itinerary."
+      ],
+      correctAnswer: "C",
+      explanation: "The text emphasizes how the venue's 'immense and intricate layout' is fundamental to creating the spatial fragmentation that drives the play's narrative approach, making it venue-dependent."
+    },
+    {
+      id: 3,
+      section: "Math",
+      domain: "Algebra", 
+      subdomain: "Systems of Linear Equations",
+      difficulty: "Medium",
+      passage: "Given the system of equations: y = x + 1 and y = x² + x",
+      question: "What value of x satisfies both equations?",
+      choices: ["-1", "0", "2", "3"],
+      correctAnswer: "A",
+      explanation: "Setting the equations equal: x + 1 = x² + x. Subtracting x from both sides: 1 = x². So x = ±1. Of the given choices, only -1 is available."
+    }
+  ];
 
   const steps = [
     {
       title: "Dashboard Overview",
-      description: "Your personalized learning hub",
-      component: "dashboard"
+      description: "Your personalized learning hub"
     },
     {
-      title: "Take Diagnostic Test",
-      description: "Complete our comprehensive assessment",
-      component: "diagnostic"
+      title: "Diagnostic Assessment",
+      description: "Sample questions from our comprehensive test"
     },
     {
-      title: "View Results",
-      description: "See your strengths and areas for improvement",
-      component: "results"
+      title: "Performance Analysis", 
+      description: "Detailed breakdown by SAT domains"
     },
     {
-      title: "Get Your Plan",
-      description: "Receive your personalized study roadmap",
-      component: "plan"
+      title: "Personalized Study Plan",
+      description: "AI-generated roadmap based on your results"
     }
   ];
 
@@ -41,25 +87,30 @@ export const RealPlatformDemo = () => {
       const timer = setTimeout(() => {
         setCurrentStep(prev => prev + 1);
         setProgress(prev => prev + 25);
-      }, 3000);
+        
+        // Cycle through questions during diagnostic step
+        if (currentStep === 1) {
+          setCurrentQuestionIndex(prev => (prev + 1) % diagnosticQuestions.length);
+        }
+      }, 4000);
       return () => clearTimeout(timer);
     } else if (isAnimating && currentStep === steps.length - 1) {
       setIsAnimating(false);
     }
-  }, [currentStep, isAnimating, steps.length]);
+  }, [currentStep, isAnimating, steps.length, diagnosticQuestions.length]);
 
   const startDemo = () => {
     setCurrentStep(0);
     setProgress(0);
     setIsAnimating(true);
-    setSelectedAnswer("");
+    setCurrentQuestionIndex(0);
   };
 
   const resetDemo = () => {
     setCurrentStep(0);
     setProgress(0);
     setIsAnimating(false);
-    setSelectedAnswer("");
+    setCurrentQuestionIndex(0);
   };
 
   const renderDashboardStep = () => (
@@ -236,80 +287,118 @@ export const RealPlatformDemo = () => {
     </div>
   );
 
-  const renderDiagnosticStep = () => (
-    <div className="min-h-[600px] bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 rounded-2xl relative overflow-hidden">
-      {/* Background elements like actual platform */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
-      {/* Header like actual platform */}
-      <div className="p-4 border-b bg-white/95 backdrop-blur-2xl">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-              <Brain className="h-4 w-4 text-white" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold">SAT Diagnostic</h3>
-              <Badge variant="secondary" className="text-xs">Reading & Writing</Badge>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 bg-orange-100 px-3 py-1 rounded-xl">
-            <Clock className="h-3 w-3 text-orange-600" />
-            <span className="font-mono text-xs font-bold text-orange-700">28:45</span>
-          </div>
+  const renderDiagnosticStep = () => {
+    const currentQuestion = diagnosticQuestions[currentQuestionIndex];
+    
+    return (
+      <div className="min-h-[600px] bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 rounded-2xl relative overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
-        <div className="mt-2">
-          <Progress value={33} className="h-1.5" />
-        </div>
-      </div>
 
-      {/* Question content */}
-      <div className="p-6">
-        <Card className="bg-white/95 backdrop-blur-2xl border-0 shadow-xl">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white font-bold">
-                1
+        {/* Header */}
+        <div className="p-4 border-b bg-white/95 backdrop-blur-2xl">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                <Brain className="h-4 w-4 text-white" />
               </div>
-              <div className="flex-1">
-                <p className="text-slate-700 mb-4">
-                  The recent study shows that students who engage in regular physical exercise perform better academically...
-                </p>
-                <p className="font-bold text-slate-900">
-                  Which of the following can be concluded from the passage?
-                </p>
+              <div>
+                <h3 className="text-sm font-bold">SAT Diagnostic Assessment</h3>
+                <div className="flex gap-2">
+                  <Badge variant="secondary" className="text-xs">{currentQuestion.section}</Badge>
+                  <Badge variant="outline" className="text-xs">{currentQuestion.difficulty}</Badge>
+                </div>
               </div>
             </div>
-            
-            <div className="space-y-3">
-              {[
-                "All students should be required to exercise daily",
-                "Physical exercise may improve academic performance",
-                "Students who don't exercise will fail academically",
-                "Cognitive function is entirely dependent on physical activity"
-              ].map((choice, index) => (
-                <button
-                  key={index}
-                  className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
-                    selectedAnswer === String.fromCharCode(65 + index) 
-                      ? 'border-blue-500 bg-blue-50' 
-                      : 'border-slate-200 hover:border-slate-300'
-                  }`}
-                  onClick={() => setSelectedAnswer(String.fromCharCode(65 + index))}
-                >
-                  <span className="font-medium text-slate-600 mr-3">{String.fromCharCode(65 + index)}.</span>
-                  {choice}
-                </button>
-              ))}
+            <div className="flex items-center gap-2 bg-orange-100 px-3 py-1 rounded-xl">
+              <Clock className="h-3 w-3 text-orange-600" />
+              <span className="font-mono text-xs font-bold text-orange-700">28:45</span>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+          <div className="mt-3">
+            <div className="flex justify-between text-xs text-slate-600 mb-1">
+              <span>Question {currentQuestionIndex + 1} of {diagnosticQuestions.length}</span>
+              <span>{Math.round(((currentQuestionIndex + 1) / diagnosticQuestions.length) * 100)}% Complete</span>
+            </div>
+            <Progress value={((currentQuestionIndex + 1) / diagnosticQuestions.length) * 100} className="h-1.5" />
+          </div>
+        </div>
+
+        {/* Question content */}
+        <div className="p-6">
+          {/* Domain/Subdomain Info */}
+          <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <div className="text-sm font-medium text-blue-900">
+              Testing: {currentQuestion.domain} → {currentQuestion.subdomain}
+            </div>
+            <div className="text-xs text-blue-700 mt-1">
+              This question assesses your understanding of {currentQuestion.subdomain.toLowerCase()} within the {currentQuestion.domain.toLowerCase()} domain, which represents {currentQuestion.domain === 'Information and Ideas' ? '26%' : currentQuestion.domain === 'Craft and Structure' ? '28%' : '35%'} of the {currentQuestion.section} section.
+            </div>
+          </div>
+
+          <Card className="bg-white/95 backdrop-blur-2xl border-0 shadow-xl">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white font-bold">
+                  {currentQuestionIndex + 1}
+                </div>
+                <div className="flex-1">
+                  {currentQuestion.passage && (
+                    <div className="text-slate-700 mb-4 leading-relaxed border-l-4 border-blue-200 pl-4 bg-slate-50 p-3 rounded-r">
+                      {currentQuestion.passage}
+                    </div>
+                  )}
+                  <p className="font-bold text-slate-900 text-lg">
+                    {currentQuestion.question}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                {currentQuestion.choices.map((choice, index) => (
+                  <div
+                    key={index}
+                    className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                      String.fromCharCode(65 + index) === currentQuestion.correctAnswer
+                        ? 'border-green-500 bg-green-50' 
+                        : 'border-slate-200 bg-white'
+                    }`}
+                  >
+                    <span className="font-medium text-slate-600 mr-3">{String.fromCharCode(65 + index)}.</span>
+                    {choice}
+                    {String.fromCharCode(65 + index) === currentQuestion.correctAnswer && (
+                      <CheckCircle className="inline-block w-5 h-5 text-green-600 ml-2" />
+                    )}
+                  </div>
+                ))}
+              </div>
+              
+              {/* Show explanation for correct answer */}
+              <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+                  <div>
+                    <div className="font-medium text-green-900 mb-1">Correct Answer: {currentQuestion.correctAnswer}</div>
+                    <div className="text-sm text-green-800">{currentQuestion.explanation}</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          {/* Demo Notice */}
+          <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+            <div className="text-sm text-amber-800">
+              <strong>Demo Preview:</strong> The actual diagnostic test contains 30+ questions across all SAT domains and takes 30 minutes. This is a sample to show our question quality and detailed explanations.
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderResultsStep = () => (
     <div className="min-h-[600px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
@@ -319,14 +408,14 @@ export const RealPlatformDemo = () => {
             <CheckCircle className="h-8 w-8 text-white" />
           </div>
           <h3 className="text-2xl font-bold text-slate-900 mb-2">Diagnostic Complete!</h3>
-          <p className="text-slate-600">Here's your performance breakdown</p>
+          <p className="text-slate-600">Comprehensive analysis across all SAT domains</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20">
             <CardContent className="p-4 text-center">
               <Target className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-emerald-700">75%</div>
+              <div className="text-2xl font-bold text-emerald-700">78%</div>
               <p className="text-sm text-slate-600">Overall Accuracy</p>
             </CardContent>
           </Card>
@@ -334,26 +423,97 @@ export const RealPlatformDemo = () => {
           <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20">
             <CardContent className="p-4 text-center">
               <TrendingUp className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-blue-700">1380</div>
-              <p className="text-sm text-slate-600">Estimated Score</p>
+              <div className="text-2xl font-bold text-blue-700">1420</div>
+              <p className="text-sm text-slate-600">Projected Score</p>
             </CardContent>
           </Card>
         </div>
 
-        <div className="space-y-3">
-          <div className="p-4 bg-slate-50 rounded-lg">
-            <div className="flex justify-between items-center mb-2">
-              <span className="font-medium">Math</span>
-              <span className="text-emerald-600 font-bold">Strong</span>
+        {/* Detailed Domain Analysis */}
+        <div className="space-y-4">
+          <h4 className="font-semibold text-slate-900 mb-3">Performance by SAT Domain</h4>
+          
+          {/* Reading & Writing Domains */}
+          <div className="space-y-3">
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                  <span className="font-medium">Information and Ideas</span>
+                  <span className="text-xs text-slate-500 ml-2">(26% of R&W section)</span>
+                </div>
+                <span className="text-blue-600 font-bold">Strong</span>
+              </div>
+              <Progress value={85} className="h-2 mb-2" />
+              <div className="text-xs text-slate-600">
+                Strong in: Central Ideas • Command of Evidence • Inference
+              </div>
             </div>
-            <Progress value={85} className="h-2" />
+            
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                  <span className="font-medium">Craft and Structure</span>
+                  <span className="text-xs text-slate-500 ml-2">(28% of R&W section)</span>
+                </div>
+                <span className="text-amber-600 font-bold">Developing</span>
+              </div>
+              <Progress value={72} className="h-2 mb-2" />
+              <div className="text-xs text-slate-600">
+                Focus needed: Text Structure • Words in Context
+              </div>
+            </div>
+            
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                  <span className="font-medium">Expression of Ideas</span>
+                  <span className="text-xs text-slate-500 ml-2">(20% of R&W section)</span>
+                </div>
+                <span className="text-emerald-600 font-bold">Excellent</span>
+              </div>
+              <Progress value={90} className="h-2 mb-2" />
+              <div className="text-xs text-slate-600">
+                Mastered: Rhetorical Synthesis • Transitions
+              </div>
+            </div>
           </div>
-          <div className="p-4 bg-slate-50 rounded-lg">
-            <div className="flex justify-between items-center mb-2">
-              <span className="font-medium">Reading & Writing</span>
-              <span className="text-amber-600 font-bold">Needs Work</span>
+
+          {/* Math Domains */}
+          <div className="space-y-3 mt-6">
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                  <span className="font-medium">Algebra</span>
+                  <span className="text-xs text-slate-500 ml-2">(35% of Math section)</span>
+                </div>
+                <span className="text-red-600 font-bold">Needs Work</span>
+              </div>
+              <Progress value={65} className="h-2 mb-2" />
+              <div className="text-xs text-slate-600">
+                Review: Systems of Equations • Linear Inequalities
+              </div>
             </div>
-            <Progress value={65} className="h-2" />
+            
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                  <span className="font-medium">Advanced Math</span>
+                  <span className="text-xs text-slate-500 ml-2">(35% of Math section)</span>
+                </div>
+                <span className="text-blue-600 font-bold">Strong</span>
+              </div>
+              <Progress value={82} className="h-2 mb-2" />
+              <div className="text-xs text-slate-600">
+                Strong in: Nonlinear Functions • Equivalent Expressions
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Insight Box */}
+        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="text-sm text-blue-800">
+            <strong>Key Insight:</strong> Your strongest areas are Expression of Ideas and Advanced Math. Focus your study time on Algebra fundamentals and Text Structure analysis to maximize score improvement.
           </div>
         </div>
       </div>
@@ -367,48 +527,98 @@ export const RealPlatformDemo = () => {
           <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Trophy className="h-8 w-8 text-white" />
           </div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-2">Your Study Plan</h3>
-          <p className="text-slate-600">Personalized roadmap to reach your 1500 target</p>
+          <h3 className="text-2xl font-bold text-slate-900 mb-2">Your Personalized Study Plan</h3>
+          <p className="text-slate-600">AI-generated roadmap targeting your specific weak areas</p>
         </div>
 
         <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg mb-6">
-          <h4 className="font-semibold text-slate-900 mb-2">8-Week Intensive Plan</h4>
+          <h4 className="font-semibold text-slate-900 mb-2">10-Week Strategic Plan (Target: 1550+)</h4>
           <div className="grid grid-cols-3 gap-4 text-sm">
             <div className="text-center">
-              <div className="text-lg font-bold text-blue-600">3x</div>
+              <div className="text-lg font-bold text-blue-600">4x</div>
               <div className="text-slate-600">Practice Tests/Week</div>
             </div>
             <div className="text-center">
-              <div className="text-lg font-bold text-purple-600">45min</div>
+              <div className="text-lg font-bold text-purple-600">60min</div>
               <div className="text-slate-600">Daily Study Time</div>
             </div>
             <div className="text-center">
-              <div className="text-lg font-bold text-emerald-600">120+</div>
+              <div className="text-lg font-bold text-emerald-600">130+</div>
               <div className="text-slate-600">Point Improvement</div>
             </div>
           </div>
         </div>
 
+        {/* Weekly Breakdown */}
         <div className="space-y-3">
+          <h5 className="font-medium text-slate-900">Priority Focus Areas (Based on Your Results)</h5>
+          
+          <div className="p-3 bg-white rounded-lg border-l-4 border-red-500">
+            <div className="font-medium text-slate-900">Week 1-3: Algebra Mastery</div>
+            <div className="text-sm text-slate-600 mb-2">Address your weakest domain (35% of Math section)</div>
+            <div className="text-xs text-red-700 bg-red-50 p-2 rounded">
+              • Systems of Linear Equations practice (2x/week)
+              • Linear Inequalities in 1 or 2 variables 
+              • Focus on word problems and application
+            </div>
+          </div>
+          
+          <div className="p-3 bg-white rounded-lg border-l-4 border-amber-500">
+            <div className="font-medium text-slate-900">Week 4-6: Text Structure & Analysis</div>
+            <div className="text-sm text-slate-600 mb-2">Strengthen Craft and Structure (28% of R&W)</div>
+            <div className="text-xs text-amber-700 bg-amber-50 p-2 rounded">
+              • Text Structure and Purpose questions daily
+              • Cross-Text Connections practice
+              • Words in Context vocabulary building
+            </div>
+          </div>
+          
           <div className="p-3 bg-white rounded-lg border-l-4 border-blue-500">
-            <div className="font-medium text-slate-900">Week 1-2: Foundation Building</div>
-            <div className="text-sm text-slate-600">Focus on Reading Comprehension strategies</div>
+            <div className="font-medium text-slate-900">Week 7-8: Integration & Speed</div>
+            <div className="text-sm text-slate-600 mb-2">Combine skills and improve timing</div>
+            <div className="text-xs text-blue-700 bg-blue-50 p-2 rounded">
+              • Mixed domain practice tests
+              • Time management strategies
+              • Error pattern analysis
+            </div>
           </div>
-          <div className="p-3 bg-white rounded-lg border-l-4 border-purple-500">
-            <div className="font-medium text-slate-900">Week 3-5: Skill Development</div>
-            <div className="text-sm text-slate-600">Advanced Math concepts and Writing techniques</div>
-          </div>
+          
           <div className="p-3 bg-white rounded-lg border-l-4 border-emerald-500">
-            <div className="font-medium text-slate-900">Week 6-8: Test Mastery</div>
-            <div className="text-sm text-slate-600">Full practice tests and final preparation</div>
+            <div className="font-medium text-slate-900">Week 9-10: Final Preparation</div>
+            <div className="text-sm text-slate-600 mb-2">Peak performance and test strategy</div>
+            <div className="text-xs text-emerald-700 bg-emerald-50 p-2 rounded">
+              • Full-length practice tests (4x)
+              • Review strongest areas (maintain confidence)
+              • Test day strategy and mental preparation
+            </div>
+          </div>
+        </div>
+
+        {/* Study Schedule Preview */}
+        <div className="mt-6 p-4 bg-gradient-to-r from-slate-50 to-blue-50 rounded-lg border border-slate-200">
+          <h5 className="font-medium text-slate-900 mb-3">Sample Week Schedule</h5>
+          <div className="grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <div className="font-medium text-slate-700">Monday & Wednesday</div>
+              <div className="text-slate-600">• Algebra practice (30 min)</div>
+              <div className="text-slate-600">• Reading passages (30 min)</div>
+            </div>
+            <div>
+              <div className="font-medium text-slate-700">Tuesday & Thursday</div>
+              <div className="text-slate-600">• Full practice test section</div>
+              <div className="text-slate-600">• Review with explanations</div>
+            </div>
           </div>
         </div>
 
         <div className="mt-6 text-center">
           <Button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8">
             <Star className="h-4 w-4 mr-2" />
-            Start Your Journey
+            Begin Your Personalized Journey
           </Button>
+          <div className="text-xs text-slate-500 mt-2">
+            Study plan adapts based on your progress and performance
+          </div>
         </div>
       </div>
     </div>

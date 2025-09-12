@@ -373,9 +373,9 @@ const Index = () => {
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
-                  <div className="text-white text-sm font-medium">Unihack.ai Platform</div>
+                  <div className="text-white text-sm font-medium">SAT Preparation Platform</div>
                   <div className="flex items-center gap-2 text-white/80 text-xs">
-                    <span>📍 Demo Mode</span>
+                    <span>📍 Demo Preview</span>
                   </div>
                 </div>
               </div>
