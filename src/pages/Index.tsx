@@ -12,6 +12,7 @@ import { EmptyState } from "@/components/EmptyState";
 import { PageProgressBar } from "@/components/PageProgressBar";
 import GroupClassSection from "@/components/GroupClassSection";
 import OneOnOneSection from "@/components/OneOnOneSection";
+import StudentSuccessPipeline from "@/components/StudentSuccessPipeline";
 import { EXAM_CONFIGS } from "@/data/examConfig";
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
@@ -285,6 +286,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Student Success Pipeline */}
+      <StudentSuccessPipeline />
 
       {/* Group Classes Section */}
       <GroupClassSection />

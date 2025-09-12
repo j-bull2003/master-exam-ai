@@ -37,8 +37,6 @@
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
@@ -48,6 +46,10 @@
     --border-overlay: 240 5.9% 95%;
     --input: 240 5.9% 90%;
     --ring: 217 91% 60%;
+
+    /* Premium accent color for elite features */
+    --accent: 270 95% 75%;
+    --accent-foreground: 0 0% 100%;
 
     /* Neutral tones for layered depth */
     --neutral-50: 240 4.8% 98%;

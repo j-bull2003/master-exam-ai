@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Check, ArrowRight, Star, Shield, Zap, Target, Users, Trophy, Crown, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,60 +26,43 @@ interface ProgramSelectionProps {
 const ProgramSelection = ({ onComplete }: ProgramSelectionProps) => {
   const [selectedProgram, setSelectedProgram] = useState<string>("platform-plus-groups");
 
-  const programOptions: ProgramOption[] = [
+const programOptions: ProgramOption[] = [
     {
       id: "platform-only",
-      name: "Platform Access",
-      description: "AI-powered SAT prep with comprehensive practice and analytics",
+      name: "UniHack Platform",
+      description: "AI-powered SAT mastery with personalized learning and comprehensive analytics",
       price: "$40/month",
       features: [
         "8,500+ expert-authored questions",
         "AI weakness detection & targeting",
-        "Comprehensive analytics dashboard", 
-        "Full-length mock exams",
-        "Personalized study recommendations",
-        "Mobile app access"
+        "Personalized study roadmap", 
+        "Full-length practice SATs",
+        "Real-time performance analytics",
+        "Mobile app with offline access",
+        "Instant score predictions"
       ],
       icon: Zap,
-      badge: "Core Program"
+      badge: "Foundation"
     },
     {
       id: "platform-plus-groups",
-      name: "Platform + Group Classes",
-      description: "Complete SAT mastery with live expert instruction",
+      name: "Platform + Live Classes",
+      description: "Complete SAT mastery with live expert instruction and peer collaboration",
       price: "$70/month",
       originalPrice: "$160/month",
       savings: "Save $90/month",
       features: [
-        "Everything in Platform Access",
-        "Live group sessions (2x per week)",
-        "Expert SAT tutors",
-        "Interactive peer learning",
-        "Math + Reading & Writing coverage",
-        "Real-time Q&A support",
-        "October 13th cohort enrollment"
+        "Everything in UniHack Platform",
+        "Live group sessions (2x per week, 60 mins each)",
+        "Elite SAT coaches ($15 per session)",
+        "Interactive Math & Reading/Writing classes",
+        "Real-time Q&A and strategy sessions",
+        "Peer learning environment",
+        "October 13th cohort starts"
       ],
       recommended: true,
       icon: Users,
       badge: "Most Popular"
-    },
-    {
-      id: "elite-program",
-      name: "Elite 1-on-1 Program",
-      description: "Exclusive personalized coaching for maximum score gains",
-      price: "From $150/week",
-      features: [
-        "Everything in Platform + Groups",
-        "Weekly 1-on-1 expert coaching",
-        "Fully personalized study plans",
-        "Advanced strategy sessions",
-        "College application guidance",
-        "Priority tutor matching",
-        "Average 250+ point improvements"
-      ],
-      premium: true,
-      icon: Crown,
-      badge: "Elite Results"
     }
   ];
 
@@ -87,7 +71,7 @@ const ProgramSelection = ({ onComplete }: ProgramSelectionProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-accent/5 p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
@@ -96,11 +80,13 @@ const ProgramSelection = ({ onComplete }: ProgramSelectionProps) => {
             <span className="text-primary font-semibold">Choose Your SAT Success Path</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-            Start Your 7-Day Free Trial
+          <h1 className="text-4xl md:text-6xl font-display font-bold mb-6 text-foreground">
+            Choose Your 
+            <span className="bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent"> SAT Success Path</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Experience our complete SAT preparation system. Choose the program that matches your goals and start achieving elite results today.
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Start your 7-day free trial and experience our elite SAT preparation system. 
+            Choose the program that matches your goals and join students achieving 200+ point improvements.
           </p>
         </div>
 
@@ -234,6 +220,25 @@ const ProgramSelection = ({ onComplete }: ProgramSelectionProps) => {
               <Trophy className="w-8 h-8 text-success mx-auto mb-2" />
               <div className="font-semibold text-foreground">Personal Study Plan</div>
               <div className="text-sm text-muted-foreground">AI-generated roadmap</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Elite Program CTA */}
+        <div className="bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10 rounded-3xl p-8 mb-8 border border-accent/20">
+          <div className="text-center">
+            <Crown className="w-12 h-12 text-accent mx-auto mb-4" />
+            <h3 className="text-2xl font-bold text-foreground mb-2">Elite 1-on-1 SAT Program</h3>
+            <p className="text-muted-foreground mb-6">
+              Need guaranteed 200+ point improvements? Our exclusive 1-on-1 program delivers elite results with personalized coaching.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/tutoring">
+                <Button variant="outline" className="border-accent/30 text-accent hover:bg-accent/10 px-6">
+                  Learn More About Elite Program
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
