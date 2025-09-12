@@ -58,10 +58,20 @@ serve(async (req) => {
       custom_text: {
         submit: {
           message: "Subscribe to Unihack SAT Group Classes"
+        },
+        terms_of_service_acceptance: {
+          message: "I agree to the Unihack Terms of Service"
         }
       },
       metadata: {
-        business_name: "Unihack"
+        business_name: "Unihack",
+        service: "SAT Group Classes"
+      },
+      subscription_data: {
+        description: "Unihack SAT Group Classes - Weekly Subscription",
+        metadata: {
+          business_name: "Unihack"
+        }
       }
     });
 
