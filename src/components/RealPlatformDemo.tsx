@@ -75,7 +75,7 @@ export const RealPlatformDemo = () => {
         if (currentStep === 1) {
           setCurrentQuestionIndex(prev => (prev + 1) % diagnosticQuestions.length);
         }
-      }, 4000);
+      }, currentStep === 0 ? 2000 : 3000); // Shorter time on dashboard, normal time for others
       return () => clearTimeout(timer);
     } else if (isAnimating && currentStep === steps.length - 1) {
       setIsAnimating(false);
@@ -290,9 +290,10 @@ export const RealPlatformDemo = () => {
               </div>
               <div>
                 <h3 className="text-sm font-bold">SAT Diagnostic Assessment</h3>
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-center">
                   <Badge variant="secondary" className="text-xs">{currentQuestion.section}</Badge>
                   <Badge variant="outline" className="text-xs">{currentQuestion.difficulty}</Badge>
+                  <span className="text-xs text-muted-foreground">• Demo only - Real test is 30 minutes with more questions</span>
                 </div>
               </div>
             </div>
@@ -497,6 +498,13 @@ export const RealPlatformDemo = () => {
         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <div className="text-sm text-blue-800">
             <strong>Key Insight:</strong> Your strongest areas are Expression of Ideas and Advanced Math. Focus your study time on Algebra fundamentals and Text Structure analysis to maximize score improvement.
+          </div>
+        </div>
+        
+        {/* Demo Notice */}
+        <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+          <div className="text-sm text-amber-800">
+            <strong>Demo Results:</strong> This analysis is based on sample questions. The real 30-minute diagnostic test provides comprehensive assessment across all SAT domains with detailed performance insights.
           </div>
         </div>
       </div>
