@@ -204,7 +204,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       
       toast({
         title: "Welcome to UniHack.ai!",
-        description: "Complete your card setup to start your 3-day free trial.",
+        description: `Your 3-day free trial has started${formData.interestedInGroupClasses ? ' with group classes access' : ''}!`,
       });
 
       onComplete();
@@ -289,38 +289,6 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   };
 
-  const handleGroupClassesCheckout = async () => {
-    setIsProcessingPayment(true);
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error("Please log in first");
-
-      const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: { email: session.user.email },
-        headers: { Authorization: `Bearer ${session.access_token}` }
-      });
-
-      if (error) throw error;
-
-      // Redirect to group classes checkout
-      window.open(data.url, '_blank');
-      
-      toast({
-        title: "Success!",
-        description: "Redirecting to group classes enrollment...",
-      });
-
-    } catch (error: any) {
-      console.error('Group classes error:', error);
-      toast({
-        title: "Enrollment failed",
-        description: error.message || "Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsProcessingPayment(false);
-    }
-  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !isLoading && !isProcessingPayment) {
@@ -779,28 +747,19 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   </Button>
                 </div>
 
-                {/* Group Classes Add-On if selected */}
+                {/* Group Classes Confirmation if selected */}
                 {formData.interestedInGroupClasses && (
-                  <div className="border-2 border-orange-200 bg-orange-50 p-6 rounded-lg">
-                    <div className="flex items-center gap-3 mb-4">
+                  <div className="border-2 border-orange-200 bg-orange-50 p-4 rounded-lg">
+                    <div className="flex items-center gap-3 mb-2">
                       <Users className="h-5 w-5 text-orange-600" />
-                      <h4 className="font-semibold text-lg text-orange-800">SAT Group Classes</h4>
+                      <h4 className="font-semibold text-orange-800">SAT Group Classes Included</h4>
                       <Badge variant="outline" className="border-orange-300 text-orange-700">
                         $50/week
                       </Badge>
                     </div>
-                    <p className="text-orange-700 mb-4">
-                      You selected group classes! Enroll now for the next cohort starting October 13th, 2025.
+                    <p className="text-orange-700 text-sm">
+                      Group classes access will be activated with your trial. You'll receive enrollment details after signup.
                     </p>
-                    <Button 
-                      onClick={handleGroupClassesCheckout}
-                      disabled={isProcessingPayment}
-                      variant="outline" 
-                      className="w-full border-orange-300 text-orange-700 hover:bg-orange-100"
-                    >
-                      {isProcessingPayment ? 'Processing...' : 'Enroll in Group Classes'}
-                      {!isProcessingPayment && <ArrowRight className="ml-2 h-4 w-4" />}
-                    </Button>
                   </div>
                 )}
               </div>
