@@ -61,7 +61,7 @@ interface FormData {
 
 const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const { toast } = useToast();
-  const { signUp } = useAuth();
+  const { signUp, signIn } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
@@ -151,7 +151,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const handleStartTrial = async () => {
     setIsLoading(true);
     try {
-      // First sign up the user
+      // First try to sign up the user
       const { error: authError } = await signUp(
         formData.email,
         formData.password,
@@ -159,16 +159,32 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         formData.name.split(' ').slice(1).join(' ') // last name
       );
 
-      if (authError) {
-        console.error('Registration error:', authError);
+      // If user already exists, try to sign them in instead
+      if (authError && authError.message?.includes('already')) {
+        const { error: signInError } = await signIn(formData.email, formData.password);
+        if (signInError) {
+          throw new Error("This email is already registered. Please use a different email or try logging in.");
+        }
+      } else if (authError) {
         throw new Error(authError.message || 'Registration failed');
       }
 
-      // Wait a moment for the session to be established
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Wait for session to be established
+      let retries = 0;
+      let session = null;
+      
+      while (retries < 10 && !session) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const { data } = await supabase.auth.getSession();
+        session = data.session;
+        retries++;
+      }
 
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error("Please try again - session not established");
+      if (!session) {
+        throw new Error("Authentication successful but session not established. Please refresh and try again.");
+      }
+
+      console.log('Session established:', session.user.id);
 
       // Update profile with comprehensive onboarding data
       const { error: profileError } = await supabase
