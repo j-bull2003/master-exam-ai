@@ -377,18 +377,18 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             </div>
             
             {/* Hero Stats */}
-            <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto mb-6">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">2x</div>
-                <div className="text-xs text-muted-foreground">Sessions/Week</div>
+            <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto mb-8">
+              <div className="text-center p-4 bg-white rounded-xl border border-primary/20 shadow-sm">
+                <div className="text-3xl font-bold text-primary mb-1">2x</div>
+                <div className="text-sm text-slate-600 font-medium">Sessions/Week</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">$50</div>
-                <div className="text-xs text-muted-foreground">Per Week Total</div>
+              <div className="text-center p-4 bg-white rounded-xl border border-orange-200 shadow-sm">
+                <div className="text-3xl font-bold text-orange-600 mb-1">$50</div>
+                <div className="text-sm text-slate-600 font-medium">Per Week Total</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">120</div>
-                <div className="text-xs text-muted-foreground">Mins/Week</div>
+              <div className="text-center p-4 bg-white rounded-xl border border-primary/20 shadow-sm">
+                <div className="text-3xl font-bold text-primary mb-1">120</div>
+                <div className="text-sm text-slate-600 font-medium">Mins/Week</div>
               </div>
             </div>
             
@@ -424,87 +424,91 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 
                 <div className="pt-4">
                   <h3 className="text-2xl font-bold text-foreground mb-2">Add Expert Group Classes</h3>
-                  <p className="text-lg text-primary font-semibold mb-4">2 Sessions Per Week • $50 Total</p>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-2xl font-bold text-primary">2 Sessions Per Week</span>
+                    <span className="text-xl text-muted-foreground">•</span>
+                    <span className="text-2xl font-bold text-orange-600">+$50/week</span>
+                  </div>
                   
                   {/* Two Session Cards */}
                   <div className="grid md:grid-cols-2 gap-4 mb-6">
                     {/* Reading & Writing Session */}
-                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div className="p-4 bg-white rounded-xl border-2 border-slate-300 shadow-sm">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="w-8 h-8 bg-slate-600 rounded-lg flex items-center justify-center">
-                          <BookOpen className="w-4 h-4 text-white" />
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-md">
+                          <BookOpen className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-slate-900">Reading & Writing</h4>
-                          <p className="text-xs text-slate-600">60 minutes • Session 1</p>
+                          <h4 className="font-bold text-slate-900 text-base">Reading & Writing</h4>
+                          <p className="text-sm text-slate-600 font-medium">60 minutes • Session 1</p>
                         </div>
                       </div>
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-emerald-600" />
-                          <span className="text-slate-700">Evidence-based reading</span>
+                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                          <span className="text-slate-800 font-medium">Evidence-based reading</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-emerald-600" />
-                          <span className="text-slate-700">Grammar mastery</span>
+                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                          <span className="text-slate-800 font-medium">Grammar mastery</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-emerald-600" />
-                          <span className="text-slate-700">Passage analysis</span>
+                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                          <span className="text-slate-800 font-medium">Passage analysis</span>
                         </div>
                       </div>
                     </div>
                     
                     {/* Mathematics Session */}
-                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div className="p-4 bg-white rounded-xl border-2 border-slate-300 shadow-sm">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="w-8 h-8 bg-slate-600 rounded-lg flex items-center justify-center">
-                          <Calculator className="w-4 h-4 text-white" />
+                        <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg flex items-center justify-center shadow-md">
+                          <Calculator className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-slate-900">Mathematics</h4>
-                          <p className="text-xs text-slate-600">60 minutes • Session 2</p>
+                          <h4 className="font-bold text-slate-900 text-base">Mathematics</h4>
+                          <p className="text-sm text-slate-600 font-medium">60 minutes • Session 2</p>
                         </div>
                       </div>
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-emerald-600" />
-                          <span className="text-slate-700">Algebra & advanced math</span>
+                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                          <span className="text-slate-800 font-medium">Algebra & advanced math</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-emerald-600" />
-                          <span className="text-slate-700">Problem-solving strategies</span>
+                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                          <span className="text-slate-800 font-medium">Problem-solving strategies</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-3 h-3 text-emerald-600" />
-                          <span className="text-slate-700">Geometry & trigonometry</span>
+                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                          <span className="text-slate-800 font-medium">Geometry & trigonometry</span>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Value Proposition */}
-                  <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-xl p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Award className="w-5 h-5 text-emerald-600" />
-                      <span className="text-emerald-800 font-bold">Elite Small Group Learning</span>
+                  <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-300 rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Award className="w-6 h-6 text-emerald-700" />
+                      <span className="text-emerald-800 font-bold text-base">Elite Small Group Learning</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4 text-emerald-600" />
-                        <span className="text-emerald-700">Expert SAT instructors</span>
+                        <Users className="w-5 h-5 text-emerald-700 flex-shrink-0" />
+                        <span className="text-emerald-800 font-semibold">Expert SAT instructors</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Target className="w-4 h-4 text-emerald-600" />
-                        <span className="text-emerald-700">Personalized attention</span>
+                        <Target className="w-5 h-5 text-emerald-700 flex-shrink-0" />
+                        <span className="text-emerald-800 font-semibold">Personalized attention</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-emerald-600" />
-                        <span className="text-emerald-700">All sessions recorded</span>
+                        <Clock className="w-5 h-5 text-emerald-700 flex-shrink-0" />
+                        <span className="text-emerald-800 font-semibold">All sessions recorded</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <BookOpen className="w-4 h-4 text-emerald-600" />
-                        <span className="text-emerald-700">Homework review</span>
+                        <BookOpen className="w-5 h-5 text-emerald-700 flex-shrink-0" />
+                        <span className="text-emerald-800 font-semibold">Homework review</span>
                       </div>
                     </div>
                   </div>
