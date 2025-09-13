@@ -200,7 +200,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <p className="text-muted-foreground">Select the plan that works best for your SAT preparation</p>
             </div>
             
-            <div className="grid gap-6">
+            <div className="grid md:grid-cols-2 gap-6">
               {/* Annual Plan */}
               <div 
                 onClick={() => handleInputChange('planType', 'annual')}
@@ -231,18 +231,17 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 </div>
                 
                 <div className="pt-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="text-2xl font-bold text-foreground">Annual Plan</h3>
-                      <p className="text-success font-semibold">Save $1,439.89/year</p>
+                  <div className="text-center mb-4">
+                    <h3 className="text-2xl font-bold text-foreground">Annual Plan</h3>
+                    <p className="text-success font-semibold">Save $1,439.89/year</p>
+                  </div>
+                  
+                  <div className="text-center mb-4">
+                    <div className="flex items-baseline justify-center gap-1">
+                      <span className="text-4xl font-black text-foreground">$39.99</span>
+                      <span className="text-lg text-muted-foreground">/mo</span>
                     </div>
-                    <div className="text-right">
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-4xl font-black text-foreground">$39.99</span>
-                        <span className="text-lg text-muted-foreground">/mo</span>
-                      </div>
-                      <div className="text-sm text-muted-foreground">$479.99 billed annually</div>
-                    </div>
+                    <div className="text-sm text-muted-foreground">$479.99 billed annually</div>
                   </div>
                   
                   <div className="bg-gradient-to-r from-success/15 to-success/5 border border-success/30 rounded-lg p-4 mb-6">
@@ -253,7 +252,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     <p className="text-sm text-success/80 mt-1">Cancel anytime during trial</p>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="space-y-3 text-sm">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
                       <span>Unlimited practice questions</span>
@@ -296,44 +295,45 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   )}
                 </div>
                 
-                <div className="flex items-center justify-between mb-4">
-                  <div>
+                <div className="pt-4">
+                  <div className="text-center mb-4">
                     <h3 className="text-2xl font-bold text-foreground">Monthly Plan</h3>
                     <p className="text-muted-foreground">Flexible monthly billing</p>
                   </div>
-                  <div className="text-right">
-                    <div className="flex items-baseline gap-1">
+                  
+                  <div className="text-center mb-4">
+                    <div className="flex items-baseline justify-center gap-1">
                       <span className="text-4xl font-black text-foreground">$159.99</span>
                       <span className="text-lg text-muted-foreground">/mo</span>
                     </div>
                     <div className="text-sm text-muted-foreground">$159.99 monthly</div>
                   </div>
-                </div>
-                
-                <div className="bg-gradient-to-r from-success/15 to-success/5 border border-success/30 rounded-lg p-4 mb-6">
-                  <div className="flex items-center gap-2 text-success font-semibold">
-                    <Sparkles className="w-5 h-5" />
-                    <span>3-Day Free Trial Included</span>
+                  
+                  <div className="bg-gradient-to-r from-success/15 to-success/5 border border-success/30 rounded-lg p-4 mb-6">
+                    <div className="flex items-center gap-2 text-success font-semibold">
+                      <Sparkles className="w-5 h-5" />
+                      <span>3-Day Free Trial Included</span>
+                    </div>
+                    <p className="text-sm text-success/80 mt-1">Cancel anytime during trial</p>
                   </div>
-                  <p className="text-sm text-success/80 mt-1">Cancel anytime during trial</p>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>All features included</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Cancel anytime</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>No yearly commitment</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Perfect for short-term prep</span>
+                  
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>All features included</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Cancel anytime</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>No yearly commitment</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Perfect for short-term prep</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -544,7 +544,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <p className="text-muted-foreground">Choose how you'd like to begin your SAT preparation</p>
             </div>
             
-            <div className="grid gap-6">
+            <div className="grid md:grid-cols-2 gap-6">
               {/* Diagnostic Test Option */}
               <div 
                 onClick={() => handleInputChange('diagnostic', true)}
