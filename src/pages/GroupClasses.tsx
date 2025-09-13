@@ -300,39 +300,39 @@ export default function GroupClasses() {
       </section>
 
       {/* Demo Session Section */}
-      <section id="demo-section" className="py-20 bg-gradient-to-br from-slate-100 to-slate-50 relative">
-        <div className="container mx-auto max-w-6xl px-6">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-slate-900 leading-tight">
+      <section id="demo-section" className="py-16 sm:py-20 bg-gradient-to-br from-slate-100 to-slate-50 relative">
+        <div className="container mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-slate-900 leading-tight">
               Experience Our
               <br />
               <span className="text-slate-600">Live Sessions</span>
             </h2>
-            <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed px-4">
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed px-4">
               Get a preview of our interactive group learning environment and expert instruction methodology.
             </p>
           </div>
           
           {/* Mock Zoom Interface */}
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-slate-900 rounded-t-xl p-4">
+          <div className="max-w-5xl mx-auto mb-8 sm:mb-12">
+            <div className="bg-slate-900 rounded-t-xl p-3 sm:p-4">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-500 rounded-full"></div>
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"></div>
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full"></div>
                 </div>
-                <div className="text-white text-sm font-medium">SAT Group Mastery - Reading & Writing Session</div>
+                <div className="text-white text-xs sm:text-sm font-medium">SAT Group Mastery - Reading & Writing Session</div>
                 <div className="flex items-center gap-2 text-white text-xs">
-                  <span className="bg-red-600 px-2 py-1 rounded">REC</span>
+                  <span className="bg-red-600 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">REC</span>
                   <span>45:23</span>
                 </div>
               </div>
             </div>
             
-            <div className="bg-slate-800 p-6 rounded-b-xl">
+            <div className="bg-slate-800 p-4 sm:p-6 rounded-b-xl">
               {/* Video Grid - Loom Style */}
-              <div className="relative">
+              <div className="relative mb-6 sm:mb-8">
                 {/* Main Screen Share */}
                 <div className="w-full relative">
                   <div className="aspect-video bg-white rounded-lg relative overflow-hidden border-2 border-slate-300">
@@ -346,32 +346,33 @@ export default function GroupClasses() {
                     </div>
                     
                     {/* Instructor Video Overlay - Bottom Right (Loom Style) */}
-                    <div className="absolute bottom-4 right-4 w-32 h-24 bg-gradient-to-br from-blue-900 to-slate-800 rounded-lg border-2 border-white shadow-lg overflow-hidden">
+                    <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 w-24 h-18 sm:w-32 sm:h-24 bg-gradient-to-br from-blue-900 to-slate-800 rounded-lg border-2 border-white shadow-lg overflow-hidden">
                       {/* Instructor Avatar/Video */}
                       <div className="relative w-full h-full bg-gradient-to-br from-purple-600 to-blue-700 flex items-center justify-center">
-                        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                            <span className="text-slate-700 font-bold text-sm">SJ</span>
+                        <div className="w-8 h-8 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center">
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center">
+                            <span className="text-slate-700 font-bold text-xs sm:text-sm">SJ</span>
                           </div>
                         </div>
                         {/* Speaking indicator */}
-                        <div className="absolute bottom-1 left-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <div className="absolute bottom-1 right-1 text-white text-xs font-medium">Sarah</div>
+                        <div className="absolute bottom-0.5 sm:bottom-1 left-0.5 sm:left-1 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <div className="absolute bottom-0.5 sm:bottom-1 right-0.5 sm:right-1 text-white text-xs font-medium">Sarah</div>
                       </div>
                     </div>
                     
                     {/* Screen share indicator */}
-                    <div className="absolute top-4 right-4 bg-green-600 text-white px-2 py-1 rounded text-xs flex items-center gap-1">
+                    <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-green-600 text-white px-2 py-1 rounded text-xs flex items-center gap-1">
                       <div className="w-2 h-2 bg-white rounded-full"></div>
-                      SHARING SCREEN
+                      <span className="hidden sm:inline">SHARING SCREEN</span>
+                      <span className="sm:hidden">LIVE</span>
                     </div>
                     
                     {/* Interactive overlay for demo */}
-                    <div className="absolute top-4 left-4">
-                      <div className="flex gap-2">
+                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
+                      <div className="flex gap-1 sm:gap-2">
                         <button 
                           onClick={() => setShowRationale(false)}
-                          className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                          className={`px-2 sm:px-3 py-1 rounded text-xs font-medium transition-colors ${
                             !showRationale 
                               ? "bg-blue-600 text-white" 
                               : "bg-white/80 text-slate-700 hover:bg-white"
@@ -381,7 +382,7 @@ export default function GroupClasses() {
                         </button>
                         <button 
                           onClick={() => setShowRationale(true)}
-                          className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                          className={`px-2 sm:px-3 py-1 rounded text-xs font-medium transition-colors ${
                             showRationale 
                               ? "bg-blue-600 text-white" 
                               : "bg-white/80 text-slate-700 hover:bg-white"
@@ -395,7 +396,7 @@ export default function GroupClasses() {
                 </div>
                 
                 {/* Student Avatar Strip */}
-                <div className="mt-4 flex justify-center gap-3">
+                <div className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3">
                   {[
                     { name: "Alex M.", color: "from-green-500 to-emerald-600", active: true },
                     { name: "Maria S.", color: "from-pink-500 to-rose-600", active: false },
@@ -405,13 +406,13 @@ export default function GroupClasses() {
                     { name: "Zara K.", color: "from-indigo-500 to-blue-600", active: true }
                   ].map((student, idx) => (
                     <div key={idx} className="text-center">
-                      <div className={`w-12 h-12 bg-gradient-to-br ${student.color} rounded-full flex items-center justify-center border-2 ${student.active ? 'border-green-400' : 'border-slate-300'} relative`}>
-                        <span className="text-white font-bold text-sm">
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${student.color} rounded-full flex items-center justify-center border-2 ${student.active ? 'border-green-400' : 'border-slate-300'} relative`}>
+                        <span className="text-white font-bold text-xs sm:text-sm">
                           {student.name.split(' ').map(n => n[0]).join('')}
                         </span>
                         {student.active && (
-                          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white flex items-center justify-center">
-                            <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                          <div className="absolute -bottom-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-400 rounded-full border-2 border-white flex items-center justify-center">
+                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-600 rounded-full"></div>
                           </div>
                         )}
                       </div>
@@ -422,12 +423,12 @@ export default function GroupClasses() {
               </div>
               
               {/* Enhanced Interactive Chat */}
-              <div className="bg-slate-700 rounded-lg p-4 mb-4">
-                <div className="text-white text-sm font-medium mb-3 border-b border-slate-600 pb-2 flex items-center justify-between">
+              <div className="bg-slate-700 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
+                <div className="text-white text-xs sm:text-sm font-medium mb-3 border-b border-slate-600 pb-2 flex items-center justify-between">
                   <span>Live Discussion (Private to Group)</span>
                   <span className="text-xs text-slate-400">8 participants</span>
                 </div>
-                <div className="space-y-3 text-sm max-h-40 overflow-y-auto">
+                <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm max-h-32 sm:max-h-40 overflow-y-auto">
                   <div className="text-slate-300">
                     <span className="text-blue-400 font-medium">Sarah Johnson:</span> Let&apos;s analyze this passage about Mediterranean Sea biodiversity. What&apos;s the main focus here?
                   </div>
@@ -453,9 +454,9 @@ export default function GroupClasses() {
                 
                 {/* Answer choices from uploaded image */}
                 {!showRationale && (
-                  <div className="mt-4 p-3 bg-slate-600 rounded-lg">
+                  <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-slate-600 rounded-lg">
                     <div className="text-white text-xs font-medium mb-2">Quick Poll: Which choice most logically completes the text?</div>
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 sm:space-y-2">
                       {[
                         "A. Coll and colleagues reported a much higher number of species than Bianchi and Morri did largely due to the inclusion of invertebrate species that had not been described at the time of Bianchi and Morri's census.",
                         "B. some differences observed in microorganisms may have been treated as variations within species by Bianchi and Morri but treated as indicative of distinct species by Coll and colleagues.",
@@ -465,7 +466,7 @@ export default function GroupClasses() {
                         <button
                           key={idx}
                           onClick={() => setSelectedAnswer(choice.charAt(0))}
-                          className={`w-full text-xs p-2 rounded transition-colors text-left ${
+                          className={`w-full text-xs p-1.5 sm:p-2 rounded transition-colors text-left ${
                             selectedAnswer === choice.charAt(0)
                               ? "bg-blue-600 text-white"
                               : "bg-slate-500 text-slate-200 hover:bg-slate-400"
@@ -478,33 +479,33 @@ export default function GroupClasses() {
                     
                     {/* Show poll results */}
                     {selectedAnswer && (
-                      <div className="mt-3 text-xs text-slate-300">
+                      <div className="mt-2 sm:mt-3 text-xs text-slate-300">
                         <div className="flex justify-between items-center mb-1">
                           <span>Live Poll Results:</span>
                           <span>6/8 voted</span>
                         </div>
                         <div className="space-y-1">
-                          <div className="flex justify-between">
+                          <div className="flex justify-between items-center">
                             <span>A: 1 vote (17%)</span>
-                            <div className="w-16 bg-slate-700 rounded h-2">
+                            <div className="w-12 sm:w-16 bg-slate-700 rounded h-2">
                               <div className="w-1/6 bg-red-400 rounded h-2"></div>
                             </div>
                           </div>
-                          <div className="flex justify-between">
+                          <div className="flex justify-between items-center">
                             <span>B: 4 votes (67%)</span>
-                            <div className="w-16 bg-slate-700 rounded h-2">
+                            <div className="w-12 sm:w-16 bg-slate-700 rounded h-2">
                               <div className="w-2/3 bg-green-400 rounded h-2"></div>
                             </div>
                           </div>
-                          <div className="flex justify-between">
+                          <div className="flex justify-between items-center">
                             <span>C: 1 vote (17%)</span>
-                            <div className="w-16 bg-slate-700 rounded h-2">
+                            <div className="w-12 sm:w-16 bg-slate-700 rounded h-2">
                               <div className="w-1/6 bg-yellow-400 rounded h-2"></div>
                             </div>
                           </div>
-                          <div className="flex justify-between">
+                          <div className="flex justify-between items-center">
                             <span>D: 0 votes (0%)</span>
-                            <div className="w-16 bg-slate-700 rounded h-2"></div>
+                            <div className="w-12 sm:w-16 bg-slate-700 rounded h-2"></div>
                           </div>
                         </div>
                       </div>
@@ -514,24 +515,24 @@ export default function GroupClasses() {
               </div>
               
               {/* Control Bar */}
-              <div className="flex items-center justify-center gap-4">
-                <button className="w-12 h-12 bg-slate-600 hover:bg-slate-500 rounded-full flex items-center justify-center text-white transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <div className="flex items-center justify-center gap-2 sm:gap-4">
+                <button className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-600 hover:bg-slate-500 rounded-full flex items-center justify-center text-white transition-colors">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
                   </svg>
                 </button>
-                <button className="w-12 h-12 bg-slate-600 hover:bg-slate-500 rounded-full flex items-center justify-center text-white transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <button className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-600 hover:bg-slate-500 rounded-full flex items-center justify-center text-white transition-colors">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
                   </svg>
                 </button>
-                <button className="w-12 h-12 bg-red-600 hover:bg-red-500 rounded-full flex items-center justify-center text-white transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <button className="w-10 h-10 sm:w-12 sm:h-12 bg-red-600 hover:bg-red-500 rounded-full flex items-center justify-center text-white transition-colors">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 6.707 6.293a1 1 0 00-1.414 1.414L8.586 11l-3.293 3.293a1 1 0 001.414 1.414L10 12.414l3.293 3.293a1 1 0 001.414-1.414L11.414 11l3.293-3.293z" clipRule="evenodd" />
                   </svg>
                 </button>
-                <button className="w-12 h-12 bg-slate-600 hover:bg-slate-500 rounded-full flex items-center justify-center text-white transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <button className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-600 hover:bg-slate-500 rounded-full flex items-center justify-center text-white transition-colors">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                   </svg>
                 </button>
@@ -540,28 +541,28 @@ export default function GroupClasses() {
           </div>
           
           {/* Demo Features */}
-          <div className="grid md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-12 max-w-4xl mx-auto">
             <Card className="border border-slate-200/50 bg-white/80 backdrop-blur-sm shadow-lg">
-              <CardContent className="p-6 text-center">
-                <Users className="w-8 h-8 text-slate-700 mx-auto mb-3" />
-                <h3 className="font-serif font-semibold text-slate-900 mb-2">Interactive Learning</h3>
-                <p className="text-sm text-slate-600 font-light">Real-time engagement with instructor and peers</p>
+              <CardContent className="p-4 sm:p-6 text-center">
+                <Users className="w-6 h-6 sm:w-8 sm:h-8 text-slate-700 mx-auto mb-2 sm:mb-3" />
+                <h3 className="font-serif font-semibold text-slate-900 mb-1 sm:mb-2 text-sm sm:text-base">Interactive Learning</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-light">Real-time engagement with instructor and peers</p>
               </CardContent>
             </Card>
             
             <Card className="border border-slate-200/50 bg-white/80 backdrop-blur-sm shadow-lg">
-              <CardContent className="p-6 text-center">
-                <BookOpen className="w-8 h-8 text-slate-700 mx-auto mb-3" />
-                <h3 className="font-serif font-semibold text-slate-900 mb-2">Screen Sharing</h3>
-                <p className="text-sm text-slate-600 font-light">Live walkthrough of SAT problems and strategies</p>
+              <CardContent className="p-4 sm:p-6 text-center">
+                <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-slate-700 mx-auto mb-2 sm:mb-3" />
+                <h3 className="font-serif font-semibold text-slate-900 mb-1 sm:mb-2 text-sm sm:text-base">Screen Sharing</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-light">Live walkthrough of SAT problems and strategies</p>
               </CardContent>
             </Card>
             
             <Card className="border border-slate-200/50 bg-white/80 backdrop-blur-sm shadow-lg">
-              <CardContent className="p-6 text-center">
-                <Target className="w-8 h-8 text-slate-700 mx-auto mb-3" />
-                <h3 className="font-serif font-semibold text-slate-900 mb-2">Small Groups</h3>
-                <p className="text-sm text-slate-600 font-light">Maximum 8 students for personalized attention</p>
+              <CardContent className="p-4 sm:p-6 text-center">
+                <Target className="w-6 h-6 sm:w-8 sm:h-8 text-slate-700 mx-auto mb-2 sm:mb-3" />
+                <h3 className="font-serif font-semibold text-slate-900 mb-1 sm:mb-2 text-sm sm:text-base">Small Groups</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-light">Maximum 8 students for personalized attention</p>
               </CardContent>
             </Card>
           </div>
