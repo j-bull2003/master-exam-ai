@@ -206,11 +206,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <p className="text-muted-foreground text-sm">Select the plan that works best for your SAT preparation</p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               {/* Annual Plan */}
               <div 
                 onClick={() => handleInputChange('planType', 'annual')}
-                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
+                className={`relative p-3 sm:p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
                   formData.planType === 'annual' 
                     ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
                     : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
@@ -238,14 +238,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 
                 <div className="pt-3">
                   <div className="text-center mb-3">
-                    <h3 className="text-lg font-bold text-foreground">Annual Plan</h3>
-                    <p className="text-success font-semibold text-sm">Save $1,439.89/year</p>
+                    <h3 className="text-base sm:text-lg font-bold text-foreground">Annual Plan</h3>
+                    <p className="text-success font-semibold text-xs sm:text-sm">Save $1,439.89/year</p>
                   </div>
                   
                   <div className="text-center mb-3">
                     <div className="flex items-baseline justify-center gap-1">
-                      <span className="text-2xl font-black text-foreground">$39.99</span>
-                      <span className="text-sm text-muted-foreground">/mo</span>
+                      <span className="text-xl sm:text-2xl font-black text-foreground">$39.99</span>
+                      <span className="text-xs sm:text-sm text-muted-foreground">/mo</span>
                     </div>
                     <div className="text-xs text-muted-foreground">$479.99 billed annually</div>
                   </div>
@@ -355,7 +355,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <p className="text-muted-foreground text-sm">Add expert-led live group classes to accelerate your progress</p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               {/* Add Group Classes Option */}
               <div 
                 onClick={() => handleInputChange('groupClasses', true)}
@@ -475,7 +475,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <p className="text-muted-foreground text-sm">Choose how you'd like to begin your SAT preparation</p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               {/* Diagnostic Test Option */}
               <div 
                 onClick={() => handleInputChange('diagnostic', true)}
@@ -630,7 +630,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       case 5:
         return (
           <Elements stripe={stripePromise}>
-            <div className="grid lg:grid-cols-2 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 items-start">
               {/* Left side - Payment Form */}
               <div>
                 <PaymentForm 
@@ -735,8 +735,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl"> {/* Much smaller container */}
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-2 sm:p-4">
+      <div className="w-full max-w-4xl mx-auto"> {/* Added mx-auto for centering */}
         {/* Logo */}
         <div className="text-center mb-8">
           <img 
@@ -762,12 +762,12 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           <CardContent className="pb-8">
             {renderStep()}
 
-            <div className="flex justify-between mt-8">
+            <div className="flex flex-col sm:flex-row justify-between gap-3 mt-6">
               <Button
                 variant="ghost"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="flex items-center space-x-2"
+                className="flex items-center justify-center space-x-2 w-full sm:w-auto"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Back</span>
@@ -776,7 +776,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               {currentStep < 4 ? (
                 <Button
                   onClick={nextStep}
-                  className="flex items-center space-x-2"
+                  className="flex items-center justify-center space-x-2 w-full sm:w-auto"
                 >
                   <span>Continue</span>
                   <ArrowRight className="h-4 w-4" />
@@ -784,10 +784,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               ) : currentStep === 4 ? (
                 <Button
                   onClick={handleCompleteSignup}
-                  className="flex items-center space-x-2"
+                  className="flex items-center justify-center space-x-2 w-full sm:w-auto"
                   disabled={isLoading}
                 >
-                  <span>{isLoading ? 'Creating Account...' : 'Create Account & Continue'}</span>
+                  <span className="text-center">{isLoading ? 'Creating Account...' : 'Create Account & Continue'}</span>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               ) : null}
