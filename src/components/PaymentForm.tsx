@@ -27,9 +27,14 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
   React.useEffect(() => {
     const createSetupIntent = async () => {
       try {
+        console.log('Creating setup intent...');
         const { data: { session } } = await supabase.auth.getSession();
-        if (!session) return;
+        if (!session) {
+          console.log('No session found');
+          return;
+        }
 
+        console.log('Session found, calling create-payment-setup...');
         const { data, error } = await supabase.functions.invoke('create-payment-setup', {
           body: {
             action: 'create_setup_intent',
@@ -37,7 +42,11 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
           }
         });
 
-        if (error) throw error;
+        if (error) {
+          console.error('Setup intent error:', error);
+          throw error;
+        }
+        console.log('Setup intent created:', data);
         setSetupIntent(data.client_secret);
       } catch (error: any) {
         console.error('Setup intent error:', error);
@@ -55,7 +64,13 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('Form submitted');
+    console.log('Stripe available:', !!stripe);
+    console.log('Elements available:', !!elements);
+    console.log('Setup intent available:', !!setupIntent);
+    
     if (!stripe || !elements || !setupIntent) {
+      console.log('Missing requirements for payment');
       toast({
         title: "Payment Error",
         description: "Payment system not ready. Please try again.",
@@ -68,8 +83,12 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
     
     try {
       const cardElement = elements.getElement(CardElement);
-      if (!cardElement) throw new Error('Card element not found');
+      if (!cardElement) {
+        console.log('Card element not found');
+        throw new Error('Card element not found');
+      }
 
+      console.log('Confirming card setup...');
       // Confirm the setup intent to get payment method
       const { error: confirmError, setupIntent: confirmedSetupIntent } = await stripe.confirmCardSetup(setupIntent, {
         payment_method: {
@@ -82,13 +101,19 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
       });
 
       if (confirmError) {
+        console.error('Card setup confirmation error:', confirmError);
         throw new Error(confirmError.message);
       }
 
+      console.log('Card setup confirmed, processing payment...');
       // Process the payment with the saved payment method
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('No session found');
+      if (!session) {
+        console.log('No session found during payment processing');
+        throw new Error('No session found');
+      }
 
+      console.log('Calling create-payment-setup for payment processing...');
       const { data, error } = await supabase.functions.invoke('create-payment-setup', {
         body: {
           action: 'process_payment',
@@ -98,8 +123,12 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Payment processing error:', error);
+        throw error;
+      }
 
+      console.log('Payment successful:', data);
       toast({
         title: "Payment Successful!",
         description: formData.groupClasses 
