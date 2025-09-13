@@ -282,11 +282,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             <div className="text-center space-y-2">
               <Users className="mx-auto h-16 w-16 text-primary" />
               <h2 className="text-3xl font-bold text-foreground">Choose Your Plan</h2>
-              <p className="text-muted-foreground">Start with a free trial or add expert group classes</p>
+              <p className="text-muted-foreground">Start with our monthly plan or save with yearly billing</p>
             </div>
 
             <div className="grid gap-4">
-              {/* Platform Only Option */}
+              {/* Monthly Platform Access */}
               <div 
                 className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
                   !formData.groupClasses ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
@@ -300,7 +300,13 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     }`} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold mb-3">Platform Access</h3>
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-xl font-semibold">Monthly Platform Access</h3>
+                      <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
+                        <Shield className="w-3 h-3 mr-1" />
+                        3-Day Free Trial
+                      </Badge>
+                    </div>
                     <ul className="text-muted-foreground space-y-2 mb-4">
                       <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>AI-powered personalized study plans</li>
                       <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Unlimited practice questions</li>
@@ -308,17 +314,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                       <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Progress tracking & diagnostics</li>
                     </ul>
                     <div className="flex items-center space-x-2">
-                      <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
-                        <Shield className="w-3 h-3 mr-1" />
-                        3-Day Free Trial
-                      </Badge>
-                      <span className="text-lg font-semibold">Then $159.99/month</span>
+                      <span className="text-2xl font-bold text-primary">$159.99/month</span>
+                      <span className="text-sm text-muted-foreground">after trial</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Platform + Group Classes Option */}
+              {/* Yearly Platform Access + Group Classes */}
               <div 
                 className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
                   formData.groupClasses ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
@@ -333,25 +336,33 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-xl font-semibold">Platform + Expert Group Classes</h3>
-                      <Badge variant="default" className="bg-yellow-100 text-yellow-800 border-yellow-200">
-                        <Star className="w-3 h-3 mr-1" />
-                        Most Popular
-                      </Badge>
+                      <h3 className="text-xl font-semibold">Yearly Platform + Expert Group Classes</h3>
+                      <div className="flex space-x-2">
+                        <Badge variant="default" className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                          <Star className="w-3 h-3 mr-1" />
+                          Most Popular
+                        </Badge>
+                        <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
+                          <Shield className="w-3 h-3 mr-1" />
+                          3-Day Trial
+                        </Badge>
+                      </div>
                     </div>
                     <ul className="text-muted-foreground space-y-2 mb-4">
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Everything in Platform Access</li>
+                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Everything in Monthly Platform</li>
                       <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Live expert-led group sessions</li>
                       <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Weekly strategy workshops</li>
                       <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Direct access to SAT specialists</li>
+                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Save $600+ vs monthly billing</li>
                     </ul>
                     <div className="flex items-center space-x-2">
-                      <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
-                        <Shield className="w-3 h-3 mr-1" />
-                        3-Day Platform Trial
-                      </Badge>
-                      <span className="text-lg font-semibold text-primary">$50/week for classes</span>
+                      <span className="text-2xl font-bold text-primary">$1,320/year</span>
+                      <span className="text-lg line-through text-muted-foreground">$1,920</span>
+                      <span className="text-sm text-green-600 font-semibold">Save $600</span>
                     </div>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Includes platform access + $50/week group classes
+                    </p>
                   </div>
                 </div>
               </div>
