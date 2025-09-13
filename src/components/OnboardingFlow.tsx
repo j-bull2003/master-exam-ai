@@ -9,6 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Switch } from '@/components/ui/switch';
 import { ArrowRight, ArrowLeft, User, Mail, Lock, Eye, EyeOff, CheckCircle, Users, Brain, Clock, Sparkles, Target, BookOpen, Calculator, Award } from 'lucide-react';
+import PaymentForm from '@/components/PaymentForm';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_51QEjGYLBctfCMRN8TJFZPn3I3GkgPJnZdpYSF0C5ePx8wvhv9x8MZnwmV3LDvLJu3zP1wJY6V8NlKFOe4mVl7JIY00hGRZDjsO');
 
 interface OnboardingFlowProps {
   onComplete?: () => void;
@@ -29,8 +34,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     diagnostic: true
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const totalSteps = 4;
+  
+  const totalSteps = 5; // Updated to include payment step
   const progress = (currentStep / totalSteps) * 100;
 
   useEffect(() => {
@@ -95,46 +100,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         }
       }
 
-      // Create subscription checkout if needed
-      if (formData.planType) {
-        try {
-          const priceId = formData.planType === 'annual' 
-            ? 'price_1QEjIsLBctfCMRN8GkkNjrFE' 
-            : 'price_1QEjI9LBctfCMRN8dM3Sx99m';
-            
-          const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
-            body: { priceId },
-          });
-
-          if (error) throw error;
-          
-          if (data?.url) {
-            window.open(data.url, '_blank');
-          }
-        } catch (error) {
-          console.error('Checkout error:', error);
-          toast({
-            title: "Payment Setup",
-            description: "Account created! Visit pricing page to complete subscription setup.",
-            variant: "default",
-          });
-        }
-      }
-
+      console.log('Account created successfully');
       toast({
-        title: "Welcome to UniHack!",
-        description: `Account created! ${formData.diagnostic ? 'Taking you to diagnostic test.' : 'Taking you to dashboard.'}`,
+        title: "Account Created!",
+        description: "Please complete payment setup to finalize your registration.",
       });
 
-      // Wait for session to establish and call onComplete
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Redirect based on choice
-      if (formData.diagnostic) {
-        window.location.href = '/diagnostic';
-      } else {
-        window.location.href = '/dashboard';
-      }
+      // Move to payment step
+      setCurrentStep(5);
       
     } catch (error: any) {
       console.error('Account creation error:', error);
@@ -723,6 +696,108 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           </div>
         );
 
+      case 5:
+        return (
+          <Elements stripe={stripePromise}>
+            <div className="grid lg:grid-cols-2 gap-8 items-start">
+              {/* Left side - Payment Form */}
+              <div>
+                <PaymentForm 
+                  formData={formData}
+                  onPaymentSuccess={() => {
+                    toast({
+                      title: "Welcome to UniHack!",
+                      description: "Your account has been created successfully.",
+                    });
+                    if (onComplete) onComplete();
+                  }}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                />
+              </div>
+              
+              {/* Right side - Summary */}
+              <div className="space-y-4">
+                <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6 border border-border/50">
+                  <h4 className="text-lg font-bold mb-4 text-foreground">Your Selection Summary</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                          <CheckCircle className="w-4 h-4 text-primary" />
+                        </div>
+                        <span className="font-medium text-foreground">Plan Selected</span>
+                      </div>
+                      <span className="font-bold text-primary">
+                        {formData.planType === 'annual' ? 'Annual ($39.99/mo)' : 'Monthly ($159.99/mo)'}
+                      </span>
+                    </div>
+                    
+                    {formData.groupClasses && (
+                      <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                            <Users className="w-4 h-4 text-primary" />
+                          </div>
+                          <span className="font-medium text-foreground">Live Group Classes</span>
+                        </div>
+                        <span className="font-bold text-primary">+$50/week</span>
+                      </div>
+                    )}
+                    
+                    <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                          {formData.diagnostic ? <Brain className="w-4 h-4 text-primary" /> : <ArrowRight className="w-4 h-4 text-primary" />}
+                        </div>
+                        <span className="font-medium text-foreground">Next Step</span>
+                      </div>
+                      <span className="font-bold text-primary">
+                        {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Features Included */}
+                <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-6 border border-primary/20">
+                  <h4 className="text-lg font-bold mb-4 text-foreground">What's Included</h4>
+                  <div className="grid gap-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span className="text-foreground">AI-powered personalized practice</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span className="text-foreground">Unlimited practice questions</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span className="text-foreground">Full-length mock exams</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span className="text-foreground">Detailed performance analytics</span>
+                    </div>
+                    {formData.groupClasses && (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span className="text-foreground">2x weekly live classes</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span className="text-foreground">Expert SAT instructors</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Elements>
+        );
+
       default:
         return null;
     }
@@ -730,7 +805,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-6xl"> {/* Made wider for side-by-side layout */}
         {/* Logo */}
         <div className="text-center mb-8">
           <img 
@@ -767,7 +842,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 <span>Back</span>
               </Button>
 
-              {currentStep < totalSteps ? (
+              {currentStep < 4 ? (
                 <Button
                   onClick={nextStep}
                   className="flex items-center space-x-2"
@@ -775,16 +850,17 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   <span>Continue</span>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
-              ) : (
+              ) : currentStep === 4 ? (
                 <Button
                   onClick={handleCompleteSignup}
                   className="flex items-center space-x-2"
                   disabled={isLoading}
                 >
-                  <span>{isLoading ? 'Creating Account...' : 'Complete Setup'}</span>
+                  <span>{isLoading ? 'Creating Account...' : 'Create Account & Continue'}</span>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
-              )}
+              ) : null}
+              {/* Payment step (5) uses its own button from PaymentForm */}
             </div>
 
             {currentStep === 1 && (
