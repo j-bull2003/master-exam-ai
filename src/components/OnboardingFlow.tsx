@@ -343,64 +343,64 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
       case 3:
         return (
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-bold text-foreground">Accelerate Your Success</h2>
-              <p className="text-muted-foreground">Join our elite SAT Group Mastery program for expert-led sessions</p>
+          <div className="space-y-4">
+            <div className="text-center space-y-1 mb-4">
+              <h2 className="text-2xl font-bold text-foreground">Accelerate Your Success</h2>
+              <p className="text-muted-foreground text-sm">Join our elite SAT Group Mastery program for expert-led sessions</p>
             </div>
             
             {/* Hero Stats */}
-            <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto mb-8">
-              <div className="text-center p-4 bg-card rounded-xl border border-primary shadow-sm">
-                <div className="text-3xl font-bold text-primary mb-1">2x</div>
-                <div className="text-sm text-foreground font-medium">Sessions/Week</div>
+            <div className="grid grid-cols-3 gap-3 max-w-md mx-auto mb-4">
+              <div className="text-center p-3 bg-card rounded-lg border border-primary shadow-sm">
+                <div className="text-xl font-bold text-primary mb-1">2x</div>
+                <div className="text-xs text-foreground font-medium">Sessions/Week</div>
               </div>
-              <div className="text-center p-4 bg-card rounded-xl border border-primary shadow-sm">
-                <div className="text-3xl font-bold text-primary mb-1">$50</div>
-                <div className="text-sm text-foreground font-medium">Per Week Total</div>
+              <div className="text-center p-3 bg-card rounded-lg border border-primary shadow-sm">
+                <div className="text-xl font-bold text-primary mb-1">$50</div>
+                <div className="text-xs text-foreground font-medium">Per Week Total</div>
               </div>
-              <div className="text-center p-4 bg-card rounded-xl border border-primary shadow-sm">
-                <div className="text-3xl font-bold text-primary mb-1">120</div>
-                <div className="text-sm text-foreground font-medium">Mins/Week</div>
+              <div className="text-center p-3 bg-card rounded-lg border border-primary shadow-sm">
+                <div className="text-xl font-bold text-primary mb-1">120</div>
+                <div className="text-xs text-foreground font-medium">Mins/Week</div>
               </div>
             </div>
             
-            <div className="grid gap-6">
+            <div className="grid md:grid-cols-2 gap-4">
               {/* Add Group Classes Option */}
               <div 
                 onClick={() => handleInputChange('groupClasses', true)}
-                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
                   formData.groupClasses 
                     ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
                     : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
                 {/* Premium Badge */}
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
                     🎯 PREMIUM ADD-ON
                   </div>
                 </div>
                 
                 {/* Selection Indicator */}
-                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                <div className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 transition-all ${
                   formData.groupClasses 
                     ? 'border-primary bg-primary' 
                     : 'border-muted-foreground/30'
                 }`}>
                   {formData.groupClasses && (
                     <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
                   )}
                 </div>
                 
-                <div className="pt-4">
-                  <h3 className="text-2xl font-bold text-foreground mb-2">Add Expert Group Classes</h3>
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-2xl font-bold text-primary">2 Sessions Per Week</span>
-                    <span className="text-xl text-muted-foreground">•</span>
-                    <span className="text-2xl font-bold text-orange-600">+$50/week</span>
+                <div className="pt-3">
+                  <h3 className="text-lg font-bold text-foreground mb-2">Add Expert Live Group Classes</h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg font-bold text-primary">2 Sessions Per Week</span>
+                    <span className="text-muted-foreground">•</span>
+                    <span className="text-lg font-bold text-primary">+$50/week</span>
                   </div>
                   
                   {/* Two Session Cards */}
@@ -538,42 +538,42 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
       case 4:
         return (
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-bold text-foreground">Ready to Start?</h2>
-              <p className="text-muted-foreground">Choose how you'd like to begin your SAT preparation</p>
+          <div className="space-y-4">
+            <div className="text-center space-y-1 mb-4">
+              <h2 className="text-2xl font-bold text-foreground">Ready to Start?</h2>
+              <p className="text-muted-foreground text-sm">Choose how you'd like to begin your SAT preparation</p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-4">
               {/* Diagnostic Test Option */}
               <div 
                 onClick={() => handleInputChange('diagnostic', true)}
-                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
                   formData.diagnostic 
                     ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
                     : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
                 {/* Selection Indicator */}
-                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                <div className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 transition-all ${
                   formData.diagnostic 
                     ? 'border-primary bg-primary' 
                     : 'border-muted-foreground/30'
                 }`}>
                   {formData.diagnostic && (
                     <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
                   )}
                 </div>
                 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
-                    <Brain className="w-6 h-6 text-primary" />
+                <div className="flex items-start gap-3 pt-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Brain className="w-4 h-4 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2 text-foreground">Take Diagnostic Test</h3>
-                    <p className="text-muted-foreground mb-4">
+                    <h3 className="text-lg font-bold mb-2 text-foreground">Take Diagnostic Test</h3>
+                    <p className="text-muted-foreground mb-3 text-sm">
                       Get a personalized assessment of your current SAT level and receive a tailored study plan.
                     </p>
                     <div className="grid grid-cols-2 gap-3 text-sm">
