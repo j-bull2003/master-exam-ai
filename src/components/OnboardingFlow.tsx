@@ -584,40 +584,25 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             </div>
             
             {/* Enhanced Summary */}
-            <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6 border border-border/50">
+            <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-4 sm:p-6 border border-border/50">
               <h4 className="text-lg font-bold mb-4 text-foreground">Your Selection Summary</h4>
-              <div className="grid gap-4">
-                <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                      <CheckCircle className="w-4 h-4 text-primary" />
-                    </div>
-                    <span className="font-medium">Plan Selected</span>
-                  </div>
-                  <span className="font-bold text-primary">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between py-2">
+                  <span className="font-medium text-foreground">Plan Selected</span>
+                  <span className="font-bold text-primary text-right">
                     {formData.planType === 'annual' ? 'Annual ($39.99/mo)' : 'Monthly ($159.99/mo)'}
                   </span>
                 </div>
                 
                 {formData.groupClasses && (
-                  <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                        <Users className="w-4 h-4 text-primary" />
-                      </div>
-                      <span className="font-medium text-foreground">Group Classes</span>
-                    </div>
+                  <div className="flex items-center justify-between py-2 border-t border-border/50">
+                    <span className="font-medium text-foreground">Group Classes</span>
                     <span className="font-bold text-primary">+$50/week</span>
                   </div>
                 )}
                 
-                <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                      {formData.diagnostic ? <Brain className="w-4 h-4 text-primary" /> : <ArrowRight className="w-4 h-4 text-primary" />}
-                    </div>
-                    <span className="font-medium">Next Step</span>
-                  </div>
+                <div className="flex items-center justify-between py-2 border-t border-border/50">
+                  <span className="font-medium text-foreground">Next Step</span>
                   <span className="font-bold text-primary">
                     {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
                   </span>
@@ -649,56 +634,28 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               
               {/* Right side - Summary */}
               <div className="space-y-4">
-                <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6 border border-border/50">
+                <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-4 sm:p-6 border border-border/50">
                   <h4 className="text-lg font-bold mb-4 text-foreground">Your Selection Summary</h4>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                          <CheckCircle className="w-4 h-4 text-primary" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="font-medium text-foreground">Plan</span>
-                          <span className="font-medium text-foreground">Selected</span>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-bold text-primary">Annual</div>
-                        <div className="font-bold text-primary">($39.99/mo)</div>
-                      </div>
+                    <div className="flex items-center justify-between py-2">
+                      <span className="font-medium text-foreground">Plan Selected</span>
+                      <span className="font-bold text-primary text-right">
+                        {formData.planType === 'annual' ? 'Annual ($39.99/mo)' : 'Monthly ($159.99/mo)'}
+                      </span>
                     </div>
                     
                     {formData.groupClasses && (
-                      <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                            <Users className="w-4 h-4 text-primary" />
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="font-medium text-foreground">Group</span>
-                            <span className="font-medium text-foreground">Classes</span>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-bold text-primary">+$50/week</div>
-                        </div>
+                      <div className="flex items-center justify-between py-2 border-t border-border/50">
+                        <span className="font-medium text-foreground">Group Classes</span>
+                        <span className="font-bold text-primary">+$50/week</span>
                       </div>
                     )}
                     
-                    <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                          {formData.diagnostic ? <Brain className="w-4 h-4 text-primary" /> : <ArrowRight className="w-4 h-4 text-primary" />}
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="font-medium text-foreground">Next Step</span>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-bold text-primary">
-                          {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
-                        </div>
-                      </div>
+                    <div className="flex items-center justify-between py-2 border-t border-border/50">
+                      <span className="font-medium text-foreground">Next Step</span>
+                      <span className="font-bold text-primary">
+                        {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
+                      </span>
                     </div>
                   </div>
                 </div>
