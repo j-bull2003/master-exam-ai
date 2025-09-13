@@ -378,17 +378,17 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             
             {/* Hero Stats */}
             <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto mb-8">
-              <div className="text-center p-4 bg-white rounded-xl border border-primary/20 shadow-sm">
+              <div className="text-center p-4 bg-card rounded-xl border border-primary shadow-sm">
                 <div className="text-3xl font-bold text-primary mb-1">2x</div>
-                <div className="text-sm text-slate-600 font-medium">Sessions/Week</div>
+                <div className="text-sm text-foreground font-medium">Sessions/Week</div>
               </div>
-              <div className="text-center p-4 bg-white rounded-xl border border-orange-200 shadow-sm">
-                <div className="text-3xl font-bold text-orange-600 mb-1">$50</div>
-                <div className="text-sm text-slate-600 font-medium">Per Week Total</div>
+              <div className="text-center p-4 bg-card rounded-xl border border-primary shadow-sm">
+                <div className="text-3xl font-bold text-primary mb-1">$50</div>
+                <div className="text-sm text-foreground font-medium">Per Week Total</div>
               </div>
-              <div className="text-center p-4 bg-white rounded-xl border border-primary/20 shadow-sm">
+              <div className="text-center p-4 bg-card rounded-xl border border-primary shadow-sm">
                 <div className="text-3xl font-bold text-primary mb-1">120</div>
-                <div className="text-sm text-slate-600 font-medium">Mins/Week</div>
+                <div className="text-sm text-foreground font-medium">Mins/Week</div>
               </div>
             </div>
             
@@ -433,82 +433,82 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   {/* Two Session Cards */}
                   <div className="grid md:grid-cols-2 gap-4 mb-6">
                     {/* Reading & Writing Session */}
-                    <div className="p-4 bg-white rounded-xl border-2 border-slate-300 shadow-sm">
+                    <div className="p-4 bg-card rounded-xl border-2 border-primary/20 shadow-sm">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-md">
+                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-variant rounded-lg flex items-center justify-center shadow-md">
                           <BookOpen className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-slate-900 text-base">Reading & Writing</h4>
-                          <p className="text-sm text-slate-600 font-medium">60 minutes • Session 1</p>
+                          <h4 className="font-bold text-foreground text-base">Reading & Writing</h4>
+                          <p className="text-sm text-muted-foreground font-medium">60 minutes • Session 1</p>
                         </div>
                       </div>
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                          <span className="text-slate-800 font-medium">Evidence-based reading</span>
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span className="text-foreground font-medium">Evidence-based reading</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                          <span className="text-slate-800 font-medium">Grammar mastery</span>
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span className="text-foreground font-medium">Grammar mastery</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                          <span className="text-slate-800 font-medium">Passage analysis</span>
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span className="text-foreground font-medium">Passage analysis</span>
                         </div>
                       </div>
                     </div>
                     
                     {/* Mathematics Session */}
-                    <div className="p-4 bg-white rounded-xl border-2 border-slate-300 shadow-sm">
+                    <div className="p-4 bg-card rounded-xl border-2 border-primary/20 shadow-sm">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg flex items-center justify-center shadow-md">
+                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-variant rounded-lg flex items-center justify-center shadow-md">
                           <Calculator className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-slate-900 text-base">Mathematics</h4>
-                          <p className="text-sm text-slate-600 font-medium">60 minutes • Session 2</p>
+                          <h4 className="font-bold text-foreground text-base">Mathematics</h4>
+                          <p className="text-sm text-muted-foreground font-medium">60 minutes • Session 2</p>
                         </div>
                       </div>
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                          <span className="text-slate-800 font-medium">Algebra & advanced math</span>
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span className="text-foreground font-medium">Algebra & advanced math</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                          <span className="text-slate-800 font-medium">Problem-solving strategies</span>
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span className="text-foreground font-medium">Problem-solving strategies</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                          <span className="text-slate-800 font-medium">Geometry & trigonometry</span>
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                          <span className="text-foreground font-medium">Geometry & trigonometry</span>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Value Proposition */}
-                  <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-300 rounded-xl p-5">
+                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 border-2 border-primary/30 rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-3">
-                      <Award className="w-6 h-6 text-emerald-700" />
-                      <span className="text-emerald-800 font-bold text-base">Elite Small Group Learning</span>
+                      <Award className="w-6 h-6 text-primary" />
+                      <span className="text-foreground font-bold text-base">Elite Small Group Learning</span>
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center gap-2">
-                        <Users className="w-5 h-5 text-emerald-700 flex-shrink-0" />
-                        <span className="text-emerald-800 font-semibold">Expert SAT instructors</span>
+                        <Users className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-foreground font-semibold">Expert SAT instructors</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Target className="w-5 h-5 text-emerald-700 flex-shrink-0" />
-                        <span className="text-emerald-800 font-semibold">Personalized attention</span>
+                        <Target className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-foreground font-semibold">Personalized attention</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Clock className="w-5 h-5 text-emerald-700 flex-shrink-0" />
-                        <span className="text-emerald-800 font-semibold">All sessions recorded</span>
+                        <Clock className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-foreground font-semibold">All sessions recorded</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <BookOpen className="w-5 h-5 text-emerald-700 flex-shrink-0" />
-                        <span className="text-emerald-800 font-semibold">Homework review</span>
+                        <BookOpen className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-foreground font-semibold">Homework review</span>
                       </div>
                     </div>
                   </div>
