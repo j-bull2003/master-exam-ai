@@ -19,18 +19,18 @@ const Pricing = () => {
       priceId: "price_1QEjIsLBctfCMRN8GkkNjrFE", // Replace with actual Stripe price ID
       productId: "prod_annual",
       name: "Annual Plan",
-      price: "$39.99",
+      price: "$9.99",
       period: "/mo",
-      billing: "$479.99 billed annually",
-      savings: "Save $1,439.89/year"
+      billing: "$119.88 billed annually",
+      savings: "Save $79.89/year"
     },
     monthly: {
       priceId: "price_1QEjI9LBctfCMRN8dM3Sx99m", // Replace with actual Stripe price ID  
       productId: "prod_monthly",
       name: "Monthly Plan", 
-      price: "$159.99",
+      price: "$19.99",
       period: "/mo",
-      billing: "$159.99 monthly",
+      billing: "$19.99 monthly",
       savings: null
     }
   };
