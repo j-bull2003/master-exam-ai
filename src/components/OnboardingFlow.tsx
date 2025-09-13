@@ -35,7 +35,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const totalSteps = 5;
+  const totalSteps = 2;
   const progress = (currentStep / totalSteps) * 100;
 
   useEffect(() => {
@@ -77,18 +77,12 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   };
 
-  const handlePaymentSuccess = () => {
-    console.log('Payment successful, redirecting to dashboard...');
-    // Redirect to dashboard after successful payment
-    window.location.href = '/dashboard';
-  };
-
-  const handleSignUp = async () => {
+  const handleCompleteSignup = async () => {
     setIsLoading(true);
     try {
-      console.log('Starting signup process...');
+      console.log('Starting complete signup process...');
       
-      // Create the user account
+      // Create the user account - NO EMAIL CONFIRMATION
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -103,10 +97,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       if (authError) {
         console.error('Signup error:', authError);
         
-        // If user already exists, try to sign them in
+        // If user already exists, sign them in
         if (authError.message?.includes('already') || authError.message?.includes('registered')) {
-          console.log('User exists, trying to sign in...');
-          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          console.log('User exists, signing in...');
+          const { error: signInError } = await supabase.auth.signInWithPassword({
             email: formData.email,
             password: formData.password
           });
@@ -114,42 +108,24 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           if (signInError) {
             throw new Error("Account exists but password is incorrect. Please try logging in instead.");
           }
-          
-          toast({
-            title: "Welcome back!",
-            description: "Signed in successfully. Proceeding to payment setup.",
-          });
         } else {
           throw authError;
         }
-      } else {
-        console.log('Signup successful:', authData);
-        
-        // Check if email confirmation is required
-        if (authData.user && !authData.session) {
-          toast({
-            title: "Check Your Email",
-            description: "We've sent you a confirmation link. Please check your email and click the link to activate your account.",
-            duration: 8000,
-          });
-          
-          // Set a different step or state to show email confirmation message
-          setCurrentStep(5); // We'll add this step
-          setIsLoading(false);
-          return;
-        }
-        
-        toast({
-          title: "Account Created!",
-          description: "Your account has been created successfully.",
-        });
       }
 
-      // Proceed to payment step
-      setCurrentStep(3);
+      // Wait a moment for session to establish
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      toast({
+        title: "Welcome to UniHack!",
+        description: "Your account is ready. Taking you to the dashboard...",
+      });
+
+      // Redirect directly to dashboard
+      window.location.href = '/dashboard';
       
     } catch (error: any) {
-      console.error('Registration error:', error);
+      console.error('Signup error:', error);
       toast({
         title: "Registration Failed",
         description: error.message || 'Please try again',
@@ -235,215 +211,84 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         return (
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <Users className="mx-auto h-16 w-16 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">Choose Your Plan</h2>
-              <p className="text-muted-foreground">Select your billing period and optional add-ons</p>
+              <CreditCard className="mx-auto h-16 w-16 text-primary" />
+              <h2 className="text-3xl font-bold text-foreground">Complete Your Setup</h2>
+              <p className="text-muted-foreground">Choose your plan and add payment details</p>
             </div>
 
-            {/* Platform Billing Options */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Platform Access</h3>
-              <div className="grid gap-4">
-                {/* Monthly Option */}
-                <div 
-                  className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                    formData.billingPeriod === 'monthly' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
-                  }`}
-                  onClick={() => handleInputChange('billingPeriod', 'monthly')}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-5 h-5 rounded-full border-2 ${
-                        formData.billingPeriod === 'monthly' ? 'border-primary bg-primary' : 'border-gray-300'
-                      }`} />
-                      <div>
-                        <h4 className="font-semibold">Monthly Billing</h4>
-                        <p className="text-sm text-muted-foreground">Pay month-to-month</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-xl font-bold">$159.99/month</div>
-                      <Badge variant="secondary" className="bg-green-100 text-green-800">3-Day Trial</Badge>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Yearly Option */}
-                <div 
-                  className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                    formData.billingPeriod === 'yearly' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
-                  }`}
-                  onClick={() => handleInputChange('billingPeriod', 'yearly')}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-5 h-5 rounded-full border-2 ${
-                        formData.billingPeriod === 'yearly' ? 'border-primary bg-primary' : 'border-gray-300'
-                      }`} />
-                      <div>
-                        <h4 className="font-semibold">Yearly Billing</h4>
-                        <p className="text-sm text-muted-foreground">Save with annual payment</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xl font-bold">$39.99/month</span>
-                        <Badge className="bg-green-600 text-white">Save $1,440</Badge>
-                      </div>
-                      <div className="text-sm text-muted-foreground">$479.99 billed annually</div>
-                      <Badge variant="secondary" className="bg-green-100 text-green-800">3-Day Trial</Badge>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Optional Add-ons */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Optional Add-ons</h3>
+            {/* Quick Plan Selection */}
+            <div className="grid gap-3">
               <div 
-                className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                  formData.groupClasses ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
+                className={`p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                  formData.billingPeriod === 'monthly' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
                 }`}
-                onClick={() => handleInputChange('groupClasses', !formData.groupClasses)}
+                onClick={() => handleInputChange('billingPeriod', 'monthly')}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <Checkbox 
-                      checked={formData.groupClasses}
-                      onChange={() => handleInputChange('groupClasses', !formData.groupClasses)}
-                    />
-                    <div>
-                      <h4 className="font-semibold">Expert Group Classes</h4>
-                      <p className="text-sm text-muted-foreground">Live sessions with SAT specialists</p>
-                      <ul className="text-xs text-muted-foreground mt-1">
-                        <li>• Weekly strategy workshops</li>
-                        <li>• Direct access to expert tutors</li>
-                        <li>• Small group interactive sessions</li>
-                      </ul>
-                    </div>
+                    <div className={`w-4 h-4 rounded-full border-2 ${
+                      formData.billingPeriod === 'monthly' ? 'border-primary bg-primary' : 'border-gray-300'
+                    }`} />
+                    <span className="font-medium">Monthly</span>
                   </div>
                   <div className="text-right">
-                    <div className="text-lg font-bold text-primary">+$50/week</div>
-                    <p className="text-xs text-muted-foreground">Billed separately</p>
+                    <span className="font-bold">$159.99/month</span>
+                    <Badge variant="secondary" className="ml-2 bg-green-100 text-green-800">3-Day Trial</Badge>
+                  </div>
+                </div>
+              </div>
+
+              <div 
+                className={`p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                  formData.billingPeriod === 'yearly' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
+                }`}
+                onClick={() => handleInputChange('billingPeriod', 'yearly')}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className={`w-4 h-4 rounded-full border-2 ${
+                      formData.billingPeriod === 'yearly' ? 'border-primary bg-primary' : 'border-gray-300'
+                    }`} />
+                    <span className="font-medium">Yearly</span>
+                    <Badge className="bg-green-600 text-white text-xs">Save $1,440</Badge>
+                  </div>
+                  <div className="text-right">
+                    <span className="font-bold">$39.99/month</span>
+                    <div className="text-xs text-muted-foreground">$479.99/year</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Platform Features */}
-            <div className="bg-muted/50 rounded-lg p-4">
-              <h4 className="font-semibold mb-2">Platform Features (All Plans)</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• AI-powered personalized study plans</li>
-                <li>• Unlimited practice questions</li>
-                <li>• Performance analytics & insights</li>
-                <li>• Progress tracking & diagnostics</li>
-              </ul>
-            </div>
-          </div>
-        );
-
-      case 3:
-        return <PaymentForm 
-          formData={formData}
-          onPaymentSuccess={handlePaymentSuccess}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />;
-
-      case 4:
-        return (
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <Star className="mx-auto h-16 w-16 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">Welcome to UniHack!</h2>
-              <p className="text-muted-foreground">Your account is set up and ready to go</p>
-            </div>
-
-            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-              <CardContent className="p-6 text-center">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Shield className="h-6 w-6 text-green-600" />
-                    <span className="text-lg font-semibold text-green-800">
-                      {formData.groupClasses ? 'Payment Processed & Trial Started' : 'Trial Started Successfully'}
-                    </span>
-                  </div>
-                  
-                  <div className="bg-white/50 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2">Next Steps:</h4>
-                    <ul className="text-sm space-y-1 text-green-700">
-                      <li>✓ Account created and payment method saved</li>
-                      <li>✓ 3-day free trial activated</li>
-                      {formData.groupClasses && <li>✓ Group classes access confirmed</li>}
-                      <li>→ Time for your diagnostic test!</li>
-                    </ul>
+            {/* Group Classes Add-on */}
+            <div 
+              className={`p-3 border rounded-lg cursor-pointer transition-all ${
+                formData.groupClasses ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
+              }`}
+              onClick={() => handleInputChange('groupClasses', !formData.groupClasses)}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <Checkbox 
+                    checked={formData.groupClasses}
+                    onChange={() => handleInputChange('groupClasses', !formData.groupClasses)}
+                  />
+                  <div>
+                    <span className="font-medium">Add Expert Group Classes</span>
+                    <p className="text-xs text-muted-foreground">Live sessions with SAT specialists</p>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-
-            <div className="text-center">
-              <Button 
-                onClick={() => window.location.href = '/diagnostic'}
-                size="lg"
-                className="w-full h-14 text-lg"
-              >
-                Take Your Diagnostic Test →
-              </Button>
-              <p className="text-xs text-muted-foreground mt-3">
-                This will help us create your personalized study plan
-              </p>
-            </div>
-          </div>
-        );
-
-      case 5:
-        return (
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <Mail className="mx-auto h-16 w-16 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">Check Your Email</h2>
-              <p className="text-muted-foreground">We've sent you a confirmation link</p>
+                <span className="text-sm font-medium text-primary">+$50/week</span>
+              </div>
             </div>
 
-            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-              <CardContent className="p-6 text-center">
-                <div className="space-y-4">
-                  <div className="bg-white/50 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2">What to do next:</h4>
-                    <ul className="text-sm space-y-2 text-blue-700">
-                      <li>1. Check your email inbox for {formData.email}</li>
-                      <li>2. Click the confirmation link in the email</li>
-                      <li>3. Return here to continue your setup</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="text-xs text-muted-foreground">
-                    <p>Didn't receive the email? Check your spam folder or</p>
-                    <button 
-                      onClick={handleSignUp}
-                      className="text-primary hover:underline"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? 'Sending...' : 'click here to resend'}
-                    </button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="text-center">
-              <Button 
-                onClick={() => window.location.href = '/auth/login'}
-                variant="outline"
-                size="lg"
-                className="w-full h-14 text-lg"
-              >
-                Go to Login Page
-              </Button>
-            </div>
+            {/* Embedded Payment Form */}
+            <PaymentForm 
+              formData={formData}
+              onPaymentSuccess={() => window.location.href = '/dashboard'}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
           </div>
         );
 
@@ -492,16 +337,16 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   <span>Back</span>
                 </Button>
 
-                {currentStep < 3 && (
-                  <Button
-                    onClick={currentStep === 1 ? handleSignUp : nextStep}
-                    className="flex items-center space-x-2"
-                    disabled={isLoading}
-                  >
-                    <span>{currentStep === 1 ? (isLoading ? 'Creating Account...' : 'Create Account') : 'Continue'}</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                )}
+              {currentStep < 2 && (
+                <Button
+                  onClick={currentStep === 1 ? handleCompleteSignup : nextStep}
+                  className="flex items-center space-x-2"
+                  disabled={isLoading}
+                >
+                  <span>{currentStep === 1 ? (isLoading ? 'Creating Account...' : 'Create Account & Continue') : 'Continue'}</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              )}
               </div>
 
               {currentStep === 1 && (
