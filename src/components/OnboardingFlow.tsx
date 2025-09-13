@@ -532,32 +532,32 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               {/* Skip to Dashboard Option */}
               <div 
                 onClick={() => handleInputChange('diagnostic', false)}
-                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
                   !formData.diagnostic 
                     ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
                     : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
                 {/* Selection Indicator */}
-                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                <div className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 transition-all ${
                   !formData.diagnostic 
                     ? 'border-primary bg-primary' 
                     : 'border-muted-foreground/30'
                 }`}>
                   {!formData.diagnostic && (
                     <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
                   )}
                 </div>
                 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
-                    <ArrowRight className="w-6 h-6 text-primary" />
+                <div className="flex items-start gap-3 pt-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <ArrowRight className="w-4 h-4 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2 text-foreground">Skip to Dashboard</h3>
-                    <p className="text-muted-foreground mb-4">
+                    <h3 className="text-lg font-bold mb-2 text-foreground">Skip to Dashboard</h3>
+                    <p className="text-muted-foreground mb-3 text-sm">
                       Go straight to your dashboard and start practicing with general SAT questions.
                     </p>
                     <div className="grid grid-cols-2 gap-3 text-sm">
