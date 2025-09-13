@@ -10,6 +10,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, ArrowRight, User, Mail, Lock, CreditCard, Clock, Users, Star, Shield, Eye, EyeOff } from 'lucide-react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import PaymentForm from './PaymentForm';
+
+const stripePromise = loadStripe('pk_test_51S6XkiLBctfCMRN8TY7LTUnCCtZHT5zKt6Ygl3Q88Ys5Nqg5aGdK0y5lUzGcwkmRHzUgO1XYYhKOOyEaGNGz4fRT008IG5n3Bd');
 
 interface OnboardingFlowProps {
   onComplete?: () => void;
@@ -29,7 +34,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const totalSteps = 3;
+  const totalSteps = 4;
   const progress = (currentStep / totalSteps) * 100;
 
   useEffect(() => {
@@ -69,6 +74,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
+  };
+
+  const handlePaymentSuccess = () => {
+    setCurrentStep(4);
   };
 
   const handleStartJourney = async () => {
@@ -351,49 +360,39 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         );
 
       case 3:
+        return <PaymentForm 
+          formData={formData}
+          onPaymentSuccess={handlePaymentSuccess}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />;
+
+      case 4:
         return (
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <CreditCard className="mx-auto h-16 w-16 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">Ready to Begin!</h2>
-              <p className="text-muted-foreground">You're one click away from your SAT success journey</p>
+              <Star className="mx-auto h-16 w-16 text-primary" />
+              <h2 className="text-3xl font-bold text-foreground">Welcome to UniHack!</h2>
+              <p className="text-muted-foreground">Your account is set up and ready to go</p>
             </div>
 
-            <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
-              <CardContent className="p-6">
+            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+              <CardContent className="p-6 text-center">
                 <div className="space-y-4">
-                  <div className="text-center">
-                    <h3 className="text-xl font-semibold mb-2">Your Plan Summary</h3>
+                  <div className="flex items-center justify-center space-x-2">
+                    <Shield className="h-6 w-6 text-green-600" />
+                    <span className="text-lg font-semibold text-green-800">
+                      {formData.groupClasses ? 'Payment Processed & Trial Started' : 'Trial Started Successfully'}
+                    </span>
                   </div>
                   
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span>Platform Access (3-day trial)</span>
-                      <span className="text-green-600 font-semibold">Free</span>
-                    </div>
-                    
-                    {formData.groupClasses && (
-                      <div className="flex justify-between items-center">
-                        <span>Expert Group Classes</span>
-                        <span className="font-semibold">$50/week</span>
-                      </div>
-                    )}
-                    
-                    <div className="border-t pt-3 flex justify-between items-center font-bold text-lg">
-                      <span>Starting Today:</span>
-                      <span className="text-primary">
-                        {formData.groupClasses ? '$50/week + Trial' : 'Free Trial'}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="bg-background/50 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2">What happens next:</h4>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
-                      <li>1. Complete secure payment setup</li>
-                      <li>2. Take your personalized diagnostic test</li>
-                      <li>3. Get your custom study plan</li>
-                      <li>4. Start improving your SAT scores!</li>
+                  <div className="bg-white/50 rounded-lg p-4">
+                    <h4 className="font-semibold mb-2">Next Steps:</h4>
+                    <ul className="text-sm space-y-1 text-green-700">
+                      <li>✓ Account created and payment method saved</li>
+                      <li>✓ 3-day free trial activated</li>
+                      {formData.groupClasses && <li>✓ Group classes access confirmed</li>}
+                      <li>→ Time for your diagnostic test!</li>
                     </ul>
                   </div>
                 </div>
@@ -402,15 +401,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
             <div className="text-center">
               <Button 
-                onClick={handleStartJourney}
-                disabled={isLoading}
+                onClick={() => window.location.href = '/diagnostic'}
                 size="lg"
                 className="w-full h-14 text-lg"
               >
-                {isLoading ? 'Setting Up Your Account...' : 'Start My SAT Journey →'}
+                Take Your Diagnostic Test →
               </Button>
               <p className="text-xs text-muted-foreground mt-3">
-                Secure payment • Cancel anytime • No hidden fees
+                This will help us create your personalized study plan
               </p>
             </div>
           </div>
@@ -422,8 +420,9 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
+    <Elements stripe={stripePromise}>
+      <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
+        <div className="w-full max-w-2xl">
         {/* Logo */}
         <div className="text-center mb-8">
           <img 
@@ -483,8 +482,9 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             )}
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+    </Elements>
   );
 };
 
