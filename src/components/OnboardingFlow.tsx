@@ -195,78 +195,78 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       case 2:
         return (
           <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-bold text-foreground">Choose Your Plan</h2>
-              <p className="text-muted-foreground">Select the plan that works best for your SAT preparation</p>
+            <div className="text-center space-y-1 mb-4">
+              <h2 className="text-2xl font-bold text-foreground">Choose Your Plan</h2>
+              <p className="text-muted-foreground text-sm">Select the plan that works best for your SAT preparation</p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-4">
               {/* Annual Plan */}
               <div 
                 onClick={() => handleInputChange('planType', 'annual')}
-                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
                   formData.planType === 'annual' 
                     ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
                     : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
                 {/* Best Value Badge */}
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-primary to-primary-variant text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
                     ✨ BEST VALUE
                   </div>
                 </div>
                 
                 {/* Selection Indicator */}
-                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                <div className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 transition-all ${
                   formData.planType === 'annual' 
                     ? 'border-primary bg-primary' 
                     : 'border-muted-foreground/30'
                 }`}>
                   {formData.planType === 'annual' && (
                     <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
                   )}
                 </div>
                 
-                <div className="pt-4">
-                  <div className="text-center mb-4">
-                    <h3 className="text-2xl font-bold text-foreground">Annual Plan</h3>
-                    <p className="text-success font-semibold">Save $1,439.89/year</p>
+                <div className="pt-3">
+                  <div className="text-center mb-3">
+                    <h3 className="text-lg font-bold text-foreground">Annual Plan</h3>
+                    <p className="text-success font-semibold text-sm">Save $1,439.89/year</p>
                   </div>
                   
-                  <div className="text-center mb-4">
+                  <div className="text-center mb-3">
                     <div className="flex items-baseline justify-center gap-1">
-                      <span className="text-4xl font-black text-foreground">$39.99</span>
-                      <span className="text-lg text-muted-foreground">/mo</span>
+                      <span className="text-2xl font-black text-foreground">$39.99</span>
+                      <span className="text-sm text-muted-foreground">/mo</span>
                     </div>
-                    <div className="text-sm text-muted-foreground">$479.99 billed annually</div>
+                    <div className="text-xs text-muted-foreground">$479.99 billed annually</div>
                   </div>
                   
-                  <div className="bg-gradient-to-r from-success/15 to-success/5 border border-success/30 rounded-lg p-4 mb-6">
-                    <div className="flex items-center gap-2 text-success font-semibold">
-                      <Sparkles className="w-5 h-5" />
+                  <div className="bg-gradient-to-r from-success/15 to-success/5 border border-success/30 rounded-lg p-3 mb-4">
+                    <div className="flex items-center gap-2 text-success font-semibold text-sm">
+                      <Sparkles className="w-4 h-4" />
                       <span>3-Day Free Trial Included</span>
                     </div>
-                    <p className="text-sm text-success/80 mt-1">Cancel anytime during trial</p>
+                    <p className="text-xs text-success/80 mt-1">Cancel anytime during trial</p>
                   </div>
                   
-                  <div className="space-y-3 text-sm">
+                  <div className="space-y-2 text-xs">
                     <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
                       <span>Unlimited practice questions</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
                       <span>AI-powered personalization</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
                       <span>Full-length mock exams</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
                       <span>24/7 customer support</span>
                     </div>
                   </div>
@@ -276,62 +276,62 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               {/* Monthly Plan */}
               <div 
                 onClick={() => handleInputChange('planType', 'monthly')}
-                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
                   formData.planType === 'monthly' 
                     ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
                     : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
                 {/* Selection Indicator */}
-                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                <div className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 transition-all ${
                   formData.planType === 'monthly' 
                     ? 'border-primary bg-primary' 
                     : 'border-muted-foreground/30'
                 }`}>
                   {formData.planType === 'monthly' && (
                     <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
                   )}
                 </div>
                 
-                <div className="pt-4">
-                  <div className="text-center mb-4">
-                    <h3 className="text-2xl font-bold text-foreground">Monthly Plan</h3>
-                    <p className="text-muted-foreground">Flexible monthly billing</p>
+                <div className="pt-3">
+                  <div className="text-center mb-3">
+                    <h3 className="text-lg font-bold text-foreground">Monthly Plan</h3>
+                    <p className="text-muted-foreground text-sm">Flexible monthly billing</p>
                   </div>
                   
-                  <div className="text-center mb-4">
+                  <div className="text-center mb-3">
                     <div className="flex items-baseline justify-center gap-1">
-                      <span className="text-4xl font-black text-foreground">$159.99</span>
-                      <span className="text-lg text-muted-foreground">/mo</span>
+                      <span className="text-2xl font-black text-foreground">$159.99</span>
+                      <span className="text-sm text-muted-foreground">/mo</span>
                     </div>
-                    <div className="text-sm text-muted-foreground">$159.99 monthly</div>
+                    <div className="text-xs text-muted-foreground">$159.99 monthly</div>
                   </div>
                   
-                  <div className="bg-gradient-to-r from-success/15 to-success/5 border border-success/30 rounded-lg p-4 mb-6">
-                    <div className="flex items-center gap-2 text-success font-semibold">
-                      <Sparkles className="w-5 h-5" />
+                  <div className="bg-gradient-to-r from-success/15 to-success/5 border border-success/30 rounded-lg p-3 mb-4">
+                    <div className="flex items-center gap-2 text-success font-semibold text-sm">
+                      <Sparkles className="w-4 h-4" />
                       <span>3-Day Free Trial Included</span>
                     </div>
-                    <p className="text-sm text-success/80 mt-1">Cancel anytime during trial</p>
+                    <p className="text-xs text-success/80 mt-1">Cancel anytime during trial</p>
                   </div>
                   
-                  <div className="space-y-3 text-sm">
+                  <div className="space-y-2 text-xs">
                     <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
                       <span>All features included</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
                       <span>Cancel anytime</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
                       <span>No yearly commitment</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
                       <span>Perfect for short-term prep</span>
                     </div>
                   </div>
@@ -805,7 +805,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
-      <div className="w-full max-w-6xl"> {/* Made wider for side-by-side layout */}
+      <div className="w-full max-w-4xl"> {/* Much smaller container */}
         {/* Logo */}
         <div className="text-center mb-8">
           <img 
