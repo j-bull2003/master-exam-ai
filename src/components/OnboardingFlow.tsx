@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, ArrowRight, User, Mail, Lock, CreditCard, Clock, Users, Star, Shield, Eye, EyeOff } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from './PaymentForm';
 
 const stripePromise = loadStripe('pk_test_51S6XkiLBctfCMRN8TY7LTUnCCtZHT5zKt6Ygl3Q88Ys5Nqg5aGdK0y5lUzGcwkmRHzUgO1XYYhKOOyEaGNGz4fRT008IG5n3Bd');
@@ -35,7 +35,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const totalSteps = 4;
+  const totalSteps = 5;
   const progress = (currentStep / totalSteps) * 100;
 
   useEffect(() => {
@@ -78,122 +78,76 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   const handlePaymentSuccess = () => {
-    setCurrentStep(4);
+    console.log('Payment successful, redirecting to dashboard...');
+    // Redirect to dashboard after successful payment
+    window.location.href = '/dashboard';
   };
 
-  const handleStartJourney = async () => {
+  const handleSignUp = async () => {
     setIsLoading(true);
     try {
-      // Try to sign up first
-      const { error: authError } = await signUp(
-        formData.email,
-        formData.password,
-        formData.name.split(' ')[0],
-        formData.name.split(' ').slice(1).join(' ')
-      );
-
-      // If user already exists, sign them in
-      if (authError && authError.message?.includes('already')) {
-        const { error: signInError } = await signIn(formData.email, formData.password);
-        if (signInError) {
-          throw new Error("Email already registered. Please use a different email or sign in.");
-        }
-      } else if (authError) {
-        throw new Error(authError.message || 'Registration failed');
-      }
-
-      // Wait for session to be established
-      let retries = 0;
-      let session = null;
+      console.log('Starting signup process...');
       
-      while (retries < 10 && !session) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-        const { data } = await supabase.auth.getSession();
-        session = data.session;
-        retries++;
-      }
-
-      if (!session) {
-        throw new Error("Authentication successful but session not established. Please refresh and try again.");
-      }
-
-      // Update basic profile
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .update({
-          full_name: formData.name,
-          exam_type: 'SAT',
-          updated_at: new Date().toISOString()
-        })
-        .eq('user_id', session.user.id);
-
-      if (profileError) {
-        console.error('Profile update error:', profileError);
-      }
-
-      // Handle payment based on selection
-      if (formData.groupClasses) {
-        // Group classes - immediate payment
-        const { data: groupData, error: groupError } = await supabase.functions.invoke('create-checkout', {
-          body: {
-            priceId: 'price_1S6r2zLBctfCMRN8IkI7sagv', // $50 group classes
-            mode: 'payment',
-            metadata: {
-              group_classes: 'true',
-              user_name: formData.name
-            }
+      // Create the user account
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`,
+          data: {
+            full_name: formData.name
           }
-        });
-
-        if (groupError) {
-          throw new Error('Failed to create group classes payment');
         }
+      });
 
-        // Also create trial for platform
-        const { data: trialData, error: trialError } = await supabase.functions.invoke('create-checkout', {
-          body: {
-            priceId: 'price_1S6XpdLBctfCMRN8nJ7Gqaus', // Monthly platform
-            mode: 'subscription',
-            trial_period_days: 3,
-            metadata: {
-              trial_type: 'platform_access',
-              user_name: formData.name
-            }
+      if (authError) {
+        console.error('Signup error:', authError);
+        
+        // If user already exists, try to sign them in
+        if (authError.message?.includes('already') || authError.message?.includes('registered')) {
+          console.log('User exists, trying to sign in...');
+          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+            email: formData.email,
+            password: formData.password
+          });
+          
+          if (signInError) {
+            throw new Error("Account exists but password is incorrect. Please try logging in instead.");
           }
-        });
-
-        if (!trialError && trialData?.url) {
-          // Open group classes payment first, then redirect to trial
-          window.open(groupData.url, '_blank');
-          setTimeout(() => {
-            window.location.href = trialData.url;
-          }, 1000);
+          
+          toast({
+            title: "Welcome back!",
+            description: "Signed in successfully. Proceeding to payment setup.",
+          });
         } else {
-          window.location.href = groupData.url;
+          throw authError;
         }
       } else {
-        // Platform trial only
-        const { data: trialData, error: trialError } = await supabase.functions.invoke('create-checkout', {
-          body: {
-            priceId: 'price_1S6XpdLBctfCMRN8nJ7Gqaus', // Monthly platform
-            mode: 'subscription',
-            trial_period_days: 3,
-            metadata: {
-              trial_type: 'platform_access',
-              user_name: formData.name
-            }
-          }
+        console.log('Signup successful:', authData);
+        
+        // Check if email confirmation is required
+        if (authData.user && !authData.session) {
+          toast({
+            title: "Check Your Email",
+            description: "We've sent you a confirmation link. Please check your email and click the link to activate your account.",
+            duration: 8000,
+          });
+          
+          // Set a different step or state to show email confirmation message
+          setCurrentStep(5); // We'll add this step
+          setIsLoading(false);
+          return;
+        }
+        
+        toast({
+          title: "Account Created!",
+          description: "Your account has been created successfully.",
         });
-
-        if (trialError) {
-          throw new Error('Failed to create trial session');
-        }
-
-        if (trialData?.url) {
-          window.location.href = trialData.url;
-        }
       }
 
+      // Proceed to payment step
+      setCurrentStep(3);
+      
     } catch (error: any) {
       console.error('Registration error:', error);
       toast({
@@ -445,6 +399,54 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           </div>
         );
 
+      case 5:
+        return (
+          <div className="space-y-6">
+            <div className="text-center space-y-2">
+              <Mail className="mx-auto h-16 w-16 text-primary" />
+              <h2 className="text-3xl font-bold text-foreground">Check Your Email</h2>
+              <p className="text-muted-foreground">We've sent you a confirmation link</p>
+            </div>
+
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+              <CardContent className="p-6 text-center">
+                <div className="space-y-4">
+                  <div className="bg-white/50 rounded-lg p-4">
+                    <h4 className="font-semibold mb-2">What to do next:</h4>
+                    <ul className="text-sm space-y-2 text-blue-700">
+                      <li>1. Check your email inbox for {formData.email}</li>
+                      <li>2. Click the confirmation link in the email</li>
+                      <li>3. Return here to continue your setup</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="text-xs text-muted-foreground">
+                    <p>Didn't receive the email? Check your spam folder or</p>
+                    <button 
+                      onClick={handleSignUp}
+                      className="text-primary hover:underline"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Sending...' : 'click here to resend'}
+                    </button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="text-center">
+              <Button 
+                onClick={() => window.location.href = '/auth/login'}
+                variant="outline"
+                size="lg"
+                className="w-full h-14 text-lg"
+              >
+                Go to Login Page
+              </Button>
+            </div>
+          </div>
+        );
+
       default:
         return null;
     }
@@ -454,65 +456,66 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     <Elements stripe={stripePromise}>
       <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
         <div className="w-full max-w-2xl">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <img 
-            src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
-            alt="UniHack.ai" 
-            className="h-20 w-auto mx-auto mb-4"
-          />
-          <h1 className="text-2xl font-bold text-foreground">Welcome to UniHack</h1>
-          <p className="text-muted-foreground">Your AI-powered SAT prep starts here</p>
-        </div>
+          {/* Logo */}
+          <div className="text-center mb-8">
+            <img 
+              src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
+              alt="UniHack.ai" 
+              className="h-20 w-auto mx-auto mb-4"
+            />
+            <h1 className="text-2xl font-bold text-foreground">Welcome to UniHack</h1>
+            <p className="text-muted-foreground">Your AI-powered SAT prep starts here</p>
+          </div>
 
-        <Card className="shadow-xl">
-          <CardHeader className="space-y-4">
-            <div className="space-y-2">
-              <Progress value={progress} className="h-3" />
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <span>Step {currentStep} of {totalSteps}</span>
-                <span>{Math.round(progress)}% Complete</span>
+          <Card className="shadow-xl">
+            <CardHeader className="space-y-4">
+              <div className="space-y-2">
+                <Progress value={progress} className="h-3" />
+                <div className="flex justify-between text-sm text-muted-foreground">
+                  <span>Step {currentStep} of {totalSteps}</span>
+                  <span>{Math.round(progress)}% Complete</span>
+                </div>
               </div>
-            </div>
-          </CardHeader>
+            </CardHeader>
 
-          <CardContent className="pb-8">
-            {renderStep()}
+            <CardContent className="pb-8">
+              {renderStep()}
 
-            <div className="flex justify-between mt-8">
-              <Button
-                variant="ghost"
-                onClick={prevStep}
-                disabled={currentStep === 1}
-                className="flex items-center space-x-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                <span>Back</span>
-              </Button>
-
-              {currentStep < totalSteps && (
+              <div className="flex justify-between mt-8">
                 <Button
-                  onClick={nextStep}
+                  variant="ghost"
+                  onClick={prevStep}
+                  disabled={currentStep === 1}
                   className="flex items-center space-x-2"
                 >
-                  <span>Continue</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowLeft className="h-4 w-4" />
+                  <span>Back</span>
                 </Button>
-              )}
-            </div>
 
-            {currentStep === 1 && (
-              <div className="text-center mt-6">
-                <p className="text-sm text-muted-foreground">
-                  Already have an account?{' '}
-                  <a href="/auth/login" className="text-primary hover:underline">
-                    Sign in here
-                  </a>
-                </p>
+                {currentStep < 3 && (
+                  <Button
+                    onClick={currentStep === 1 ? handleSignUp : nextStep}
+                    className="flex items-center space-x-2"
+                    disabled={isLoading}
+                  >
+                    <span>{currentStep === 1 ? (isLoading ? 'Creating Account...' : 'Create Account') : 'Continue'}</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
-            )}
-          </CardContent>
-        </Card>
+
+              {currentStep === 1 && (
+                <div className="text-center mt-6">
+                  <p className="text-sm text-muted-foreground">
+                    Already have an account?{' '}
+                    <a href="/auth/login" className="text-primary hover:underline">
+                      Sign in here
+                    </a>
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </Elements>

@@ -136,7 +136,10 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
           : "Trial subscription created successfully!",
       });
 
-      onPaymentSuccess();
+      // Small delay then call success handler
+      setTimeout(() => {
+        onPaymentSuccess();
+      }, 1000);
 
     } catch (error: any) {
       console.error('Payment error:', error);
