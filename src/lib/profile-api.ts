@@ -20,7 +20,7 @@ export const ProfileAPI = {
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('id', user.id)
         .single();
 
       if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
@@ -32,7 +32,7 @@ export const ProfileAPI = {
       }
 
       return {
-        userId: data.user_id,
+        userId: data.id, // Use id instead of user_id
         email: data.email,
         full_name: data.full_name,
         examType: data.exam_type as ExamType,
@@ -68,7 +68,7 @@ export const ProfileAPI = {
       const { data: profileData, error } = await supabase
         .from('profiles')
         .update(updateData)
-        .eq('user_id', user.id)
+        .eq('id', user.id)
         .select()
         .single();
 
@@ -77,7 +77,7 @@ export const ProfileAPI = {
       }
 
       return {
-        userId: profileData.user_id,
+        userId: profileData.id,
         email: profileData.email,
         full_name: profileData.full_name,
         examType: profileData.exam_type as ExamType,
@@ -110,7 +110,7 @@ export const ProfileAPI = {
           exam_date: examDate,
           updated_at: new Date().toISOString()
         })
-        .eq('user_id', user.id);
+        .eq('id', user.id);
 
       if (error) {
         throw new ProfileApiError(`Failed to update exam date: ${error.message}`);

@@ -28,8 +28,8 @@ export const useUserProfile = () => {
         // Try Supabase first (source of truth)
         const { data, error } = await supabase
           .from('profiles')
-          .select('full_name, email, exam_type, exam_date, target_university, target_universities')
-          .eq('user_id', user.id)
+          .select('full_name, email, exam_type, exam_date')
+          .eq('id', user.id)
           .maybeSingle();
 
         if (error) throw error;
@@ -40,8 +40,8 @@ export const useUserProfile = () => {
             email: data.email || user.email || '',
             exam_type: data.exam_type || 'SAT',
             exam_date: data.exam_date ?? null,
-            target_university: data.target_university || 'Harvard University',
-            target_universities: Array.isArray(data.target_universities) ? data.target_universities : [],
+            target_university: 'Harvard University', // Default value
+            target_universities: [], // Default empty array
             target_score: 1500,
           };
           setProfileData(mapped);
@@ -94,7 +94,7 @@ export const useUserProfile = () => {
         const { error } = await supabase
           .from('profiles')
           .update({ ...payload, updated_at: new Date().toISOString() })
-          .eq('user_id', user.id);
+          .eq('id', user.id);
         if (error) throw error;
       }
     } catch (e) {
