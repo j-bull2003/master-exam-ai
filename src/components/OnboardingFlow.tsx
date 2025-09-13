@@ -368,7 +368,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 {/* Add-on Badge */}
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                    ADD ON
+                    ADD ON $50/w
                   </div>
                 </div>
                 
@@ -388,7 +388,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 <div className="pt-3">
                   <h3 className="text-lg font-bold text-foreground mb-2">Add Expert Live Group Classes</h3>
                   <p className="text-muted-foreground mb-3 text-sm">
-                    Weekly live sessions with expert instructors covering comprehensive SAT strategies
+                    2x sessions per week (Reading and Writing and Maths) with expert instructors covering comprehensive SAT strategies
                   </p>
                   
                   {/* Strategy Overview */}
