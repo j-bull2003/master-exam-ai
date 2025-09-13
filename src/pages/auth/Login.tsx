@@ -293,8 +293,11 @@ const Login = () => {
                 to="/auth/register" 
                 className="text-primary hover:text-primary/80 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 rounded px-1"
               >
-                Start your free trial
+                Create free account
               </Link>
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Having trouble? Try creating a new account instead.
             </p>
           </div>
         </div>
