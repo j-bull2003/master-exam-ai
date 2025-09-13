@@ -345,24 +345,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         return (
           <div className="space-y-4">
             <div className="text-center space-y-1 mb-4">
-              <h2 className="text-2xl font-bold text-foreground">Accelerate Your Success</h2>
-              <p className="text-muted-foreground text-sm">Join our elite SAT Group Mastery program for expert-led sessions</p>
-            </div>
-            
-            {/* Hero Stats */}
-            <div className="grid grid-cols-3 gap-3 max-w-md mx-auto mb-4">
-              <div className="text-center p-3 bg-card rounded-lg border border-primary shadow-sm">
-                <div className="text-xl font-bold text-primary mb-1">2x</div>
-                <div className="text-xs text-foreground font-medium">Sessions/Week</div>
-              </div>
-              <div className="text-center p-3 bg-card rounded-lg border border-primary shadow-sm">
-                <div className="text-xl font-bold text-primary mb-1">$50</div>
-                <div className="text-xs text-foreground font-medium">Per Week Total</div>
-              </div>
-              <div className="text-center p-3 bg-card rounded-lg border border-primary shadow-sm">
-                <div className="text-xl font-bold text-primary mb-1">120</div>
-                <div className="text-xs text-foreground font-medium">Mins/Week</div>
-              </div>
+              <h2 className="text-2xl font-bold text-foreground">Want Extra Support?</h2>
+              <p className="text-muted-foreground text-sm">Add expert-led live group classes to accelerate your progress</p>
             </div>
             
             <div className="grid md:grid-cols-2 gap-4">
@@ -375,10 +359,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
-                {/* Premium Badge */}
+                {/* Add-on Badge */}
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                    🎯 PREMIUM ADD-ON
+                    ADD ON
                   </div>
                 </div>
                 
@@ -397,91 +381,32 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 
                 <div className="pt-3">
                   <h3 className="text-lg font-bold text-foreground mb-2">Add Expert Live Group Classes</h3>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-lg font-bold text-primary">2 Sessions Per Week</span>
-                    <span className="text-muted-foreground">•</span>
-                    <span className="text-lg font-bold text-primary">+$50/week</span>
-                  </div>
+                  <p className="text-muted-foreground mb-3 text-sm">
+                    Weekly live sessions with expert instructors covering comprehensive SAT strategies
+                  </p>
                   
-                  {/* Two Session Cards */}
-                  <div className="grid md:grid-cols-2 gap-4 mb-6">
-                    {/* Reading & Writing Session */}
-                    <div className="p-4 bg-card rounded-xl border-2 border-primary/20 shadow-sm">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-variant rounded-lg flex items-center justify-center shadow-md">
-                          <BookOpen className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-foreground text-base">Reading & Writing</h4>
-                          <p className="text-sm text-muted-foreground font-medium">60 minutes • Session 1</p>
-                        </div>
-                      </div>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span className="text-foreground font-medium">Evidence-based reading</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span className="text-foreground font-medium">Grammar mastery</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span className="text-foreground font-medium">Passage analysis</span>
-                        </div>
-                      </div>
+                  {/* Strategy Overview */}
+                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/30 rounded-lg p-3 mb-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Award className="w-4 h-4 text-primary" />
+                      <span className="text-foreground font-bold text-sm">Comprehensive SAT Strategy</span>
                     </div>
-                    
-                    {/* Mathematics Session */}
-                    <div className="p-4 bg-card rounded-xl border-2 border-primary/20 shadow-sm">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-variant rounded-lg flex items-center justify-center shadow-md">
-                          <Calculator className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-foreground text-base">Mathematics</h4>
-                          <p className="text-sm text-muted-foreground font-medium">60 minutes • Session 2</p>
-                        </div>
-                      </div>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span className="text-foreground font-medium">Algebra & advanced math</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span className="text-foreground font-medium">Problem-solving strategies</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span className="text-foreground font-medium">Geometry & trigonometry</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Value Proposition */}
-                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 border-2 border-primary/30 rounded-xl p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Award className="w-6 h-6 text-primary" />
-                      <span className="text-foreground font-bold text-base">Elite Live Group Learning</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="space-y-2 text-xs">
                       <div className="flex items-center gap-2">
-                        <Users className="w-5 h-5 text-primary flex-shrink-0" />
-                        <span className="text-foreground font-semibold">Expert SAT instructors</span>
+                        <BookOpen className="w-3 h-3 text-primary flex-shrink-0" />
+                        <span className="text-foreground">Learn all tips, tricks and strategies for the highest score possible</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Target className="w-5 h-5 text-primary flex-shrink-0" />
-                        <span className="text-foreground font-semibold">Personalized attention</span>
+                        <Calculator className="w-3 h-3 text-primary flex-shrink-0" />
+                        <span className="text-foreground">Master all SAT modules with expert guidance</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Clock className="w-5 h-5 text-primary flex-shrink-0" />
-                        <span className="text-foreground font-semibold">All sessions recorded</span>
+                        <Target className="w-3 h-3 text-primary flex-shrink-0" />
+                        <span className="text-foreground">Personalized strategies for maximum improvement</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <BookOpen className="w-5 h-5 text-primary flex-shrink-0" />
-                        <span className="text-foreground font-semibold">Homework assignments</span>
+                        <Users className="w-3 h-3 text-primary flex-shrink-0" />
+                        <span className="text-foreground">Small group sessions with expert instructors</span>
                       </div>
                     </div>
                   </div>
