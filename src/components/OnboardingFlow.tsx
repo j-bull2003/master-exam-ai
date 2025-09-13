@@ -491,7 +491,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   <div className="bg-gradient-to-r from-primary/10 to-primary/5 border-2 border-primary/30 rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-3">
                       <Award className="w-6 h-6 text-primary" />
-                      <span className="text-foreground font-bold text-base">Elite Small Group Learning</span>
+                      <span className="text-foreground font-bold text-base">Elite Live Group Learning</span>
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center gap-2">
@@ -508,7 +508,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                       </div>
                       <div className="flex items-center gap-2">
                         <BookOpen className="w-5 h-5 text-primary flex-shrink-0" />
-                        <span className="text-foreground font-semibold">Homework review</span>
+                        <span className="text-foreground font-semibold">Homework assignments</span>
                       </div>
                     </div>
                   </div>
