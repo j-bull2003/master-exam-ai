@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { AuthNotice } from "@/components/AuthNotice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -145,6 +146,8 @@ const Login = () => {
             <p className="text-muted-foreground text-lg">Sign in to continue your learning journey</p>
           </div>
 
+          <AuthNotice />
+          
           <form onSubmit={handleSubmit} className="space-y-6" noValidate>
             {errors.submit && (
               <div className="flex items-center gap-3 p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive">
