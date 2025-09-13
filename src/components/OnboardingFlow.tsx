@@ -30,6 +30,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     name: '',
     email: '',
     password: '',
+    billingPeriod: 'monthly' as 'monthly' | 'yearly',
     groupClasses: false
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -282,90 +283,109 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             <div className="text-center space-y-2">
               <Users className="mx-auto h-16 w-16 text-primary" />
               <h2 className="text-3xl font-bold text-foreground">Choose Your Plan</h2>
-              <p className="text-muted-foreground">Start with our monthly plan or save with yearly billing</p>
+              <p className="text-muted-foreground">Select your billing period and optional add-ons</p>
             </div>
 
-            <div className="grid gap-4">
-              {/* Monthly Platform Access */}
-              <div 
-                className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
-                  !formData.groupClasses ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
-                }`}
-                onClick={() => handleInputChange('groupClasses', false)}
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 mt-1">
-                    <div className={`w-5 h-5 rounded-full border-2 ${
-                      !formData.groupClasses ? 'border-primary bg-primary' : 'border-gray-300'
-                    }`} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-xl font-semibold">Monthly Platform Access</h3>
-                      <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
-                        <Shield className="w-3 h-3 mr-1" />
-                        3-Day Free Trial
-                      </Badge>
-                    </div>
-                    <ul className="text-muted-foreground space-y-2 mb-4">
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>AI-powered personalized study plans</li>
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Unlimited practice questions</li>
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Performance analytics & insights</li>
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Progress tracking & diagnostics</li>
-                    </ul>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-bold text-primary">$159.99/month</span>
-                      <span className="text-sm text-muted-foreground">after trial</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Yearly Platform Access + Group Classes */}
-              <div 
-                className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
-                  formData.groupClasses ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
-                }`}
-                onClick={() => handleInputChange('groupClasses', true)}
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 mt-1">
-                    <div className={`w-5 h-5 rounded-full border-2 ${
-                      formData.groupClasses ? 'border-primary bg-primary' : 'border-gray-300'
-                    }`} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-xl font-semibold">Yearly Platform + Expert Group Classes</h3>
-                      <div className="flex space-x-2">
-                        <Badge variant="default" className="bg-yellow-100 text-yellow-800 border-yellow-200">
-                          <Star className="w-3 h-3 mr-1" />
-                          Most Popular
-                        </Badge>
-                        <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
-                          <Shield className="w-3 h-3 mr-1" />
-                          3-Day Trial
-                        </Badge>
+            {/* Platform Billing Options */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Platform Access</h3>
+              <div className="grid gap-4">
+                {/* Monthly Option */}
+                <div 
+                  className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                    formData.billingPeriod === 'monthly' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
+                  }`}
+                  onClick={() => handleInputChange('billingPeriod', 'monthly')}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-5 h-5 rounded-full border-2 ${
+                        formData.billingPeriod === 'monthly' ? 'border-primary bg-primary' : 'border-gray-300'
+                      }`} />
+                      <div>
+                        <h4 className="font-semibold">Monthly Billing</h4>
+                        <p className="text-sm text-muted-foreground">Pay month-to-month</p>
                       </div>
                     </div>
-                    <ul className="text-muted-foreground space-y-2 mb-4">
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Everything in Monthly Platform</li>
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Live expert-led group sessions</li>
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Weekly strategy workshops</li>
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Direct access to SAT specialists</li>
-                      <li className="flex items-center"><span className="w-2 h-2 bg-primary rounded-full mr-3"></span>Save $600+ vs monthly billing</li>
-                    </ul>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-bold text-primary">$1,320/year</span>
-                      <span className="text-lg line-through text-muted-foreground">$1,920</span>
-                      <span className="text-sm text-green-600 font-semibold">Save $600</span>
+                    <div className="text-right">
+                      <div className="text-xl font-bold">$159.99/month</div>
+                      <Badge variant="secondary" className="bg-green-100 text-green-800">3-Day Trial</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Includes platform access + $50/week group classes
-                    </p>
+                  </div>
+                </div>
+
+                {/* Yearly Option */}
+                <div 
+                  className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                    formData.billingPeriod === 'yearly' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
+                  }`}
+                  onClick={() => handleInputChange('billingPeriod', 'yearly')}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-5 h-5 rounded-full border-2 ${
+                        formData.billingPeriod === 'yearly' ? 'border-primary bg-primary' : 'border-gray-300'
+                      }`} />
+                      <div>
+                        <h4 className="font-semibold">Yearly Billing</h4>
+                        <p className="text-sm text-muted-foreground">Save with annual payment</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xl font-bold">$1,320/year</span>
+                        <Badge className="bg-green-600 text-white">Save $600</Badge>
+                      </div>
+                      <div className="text-sm text-muted-foreground">$110/month when paid yearly</div>
+                      <Badge variant="secondary" className="bg-green-100 text-green-800">3-Day Trial</Badge>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Optional Add-ons */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Optional Add-ons</h3>
+              <div 
+                className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                  formData.groupClasses ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
+                }`}
+                onClick={() => handleInputChange('groupClasses', !formData.groupClasses)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Checkbox 
+                      checked={formData.groupClasses}
+                      onChange={() => handleInputChange('groupClasses', !formData.groupClasses)}
+                    />
+                    <div>
+                      <h4 className="font-semibold">Expert Group Classes</h4>
+                      <p className="text-sm text-muted-foreground">Live sessions with SAT specialists</p>
+                      <ul className="text-xs text-muted-foreground mt-1">
+                        <li>• Weekly strategy workshops</li>
+                        <li>• Direct access to expert tutors</li>
+                        <li>• Small group interactive sessions</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-bold text-primary">+$50/week</div>
+                    <p className="text-xs text-muted-foreground">Billed separately</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Platform Features */}
+            <div className="bg-muted/50 rounded-lg p-4">
+              <h4 className="font-semibold mb-2">Platform Features (All Plans)</h4>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• AI-powered personalized study plans</li>
+                <li>• Unlimited practice questions</li>
+                <li>• Performance analytics & insights</li>
+                <li>• Progress tracking & diagnostics</li>
+              </ul>
             </div>
           </div>
         );
