@@ -175,102 +175,102 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 relative overflow-hidden bg-mesh" data-bg="mesh">
+      <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 relative overflow-hidden bg-mesh" data-bg="mesh">
         {/* Animated background */}
         <AnimatedBackground className="opacity-80" />
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge with enhanced glassmorphism */}
             {isLoaded ? (
-              <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
-                <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
+              <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium mb-4 sm:mb-6 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
+                <Sparkles className="w-3 sm:w-4 h-3 sm:h-4 text-primary group-hover:animate-pulse" />
                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
                   Master the SAT in just 10 minutes daily
                 </span>
               </div>
             ) : (
-              <Skeleton className="h-8 w-80 mx-auto mb-6 rounded-full" />
+              <Skeleton className="h-6 sm:h-8 w-64 sm:w-80 mx-auto mb-4 sm:mb-6 rounded-full" />
             )}
 
             {/* Main Headline with enhanced typography */}
             {isLoaded ? (
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <span className="text-foreground block mb-2">Ace the SAT</span>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold leading-tight mb-4 sm:mb-6 animate-fade-in px-2" style={{ animationDelay: '0.1s' }}>
+                <span className="text-foreground block mb-1 sm:mb-2">Ace the SAT</span>
                 <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
                   with AI-Driven Precision
                 </span>
               </h1>
             ) : (
-              <div className="space-y-4 mb-6">
-                <Skeleton className="h-12 sm:h-16 w-full max-w-3xl mx-auto" />
-                <Skeleton className="h-12 sm:h-16 w-full max-w-2xl mx-auto" />
+              <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
+                <Skeleton className="h-8 sm:h-12 md:h-16 w-full max-w-3xl mx-auto" />
+                <Skeleton className="h-8 sm:h-12 md:h-16 w-full max-w-2xl mx-auto" />
               </div>
             )}
 
             {/* Subtext with better contrast */}
             {isLoaded ? (
-              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mb-4 sm:mb-6 max-w-2xl mx-auto animate-fade-in px-4" style={{ animationDelay: '0.2s' }}>
                 Master the SAT with AI-powered precision. Personalized study plans. Adaptive practice. Expert-authored content.
               </p>
             ) : (
-              <Skeleton className="h-6 w-full max-w-xl mx-auto mb-6" />
+              <Skeleton className="h-5 sm:h-6 w-full max-w-xl mx-auto mb-4 sm:mb-6" />
             )}
 
             {/* Enhanced pricing info with layered cards */}
             {isLoaded ? (
-            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-6 text-sm mb-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-                <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-1.5 hover:bg-success/15 transition-colors card-layered">
-                  <CheckCircle className="w-4 h-4 text-success" />
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-6 text-xs sm:text-sm mb-6 sm:mb-8 animate-fade-in px-4" style={{ animationDelay: '0.3s' }}>
+                <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-2 sm:px-3 py-1 sm:py-1.5 hover:bg-success/15 transition-colors card-layered">
+                  <CheckCircle className="w-3 sm:w-4 h-3 sm:h-4 text-success" />
                   <span className="text-success font-semibold">3-day free trial</span>
                 </div>
                 <div className="text-muted-foreground font-medium text-center">From $39.99/month (annual)</div>
                 <div className="text-muted-foreground text-center">No setup fees • Cancel anytime</div>
               </div>
             ) : (
-              <Skeleton className="h-6 w-96 mx-auto mb-8" />
+              <Skeleton className="h-5 sm:h-6 w-72 sm:w-96 mx-auto mb-6 sm:mb-8" />
             )}
 
             {/* Enhanced CTA with magnetic button */}
             {isLoaded ? (
-              <div className="mb-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <div className="mb-6 sm:mb-8 animate-fade-in px-4" style={{ animationDelay: '0.4s' }}>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center">
                   <Link to="/auth/register" className="w-full sm:w-auto">
-                    <MagneticButton className="px-8 sm:px-12 w-full sm:w-auto">
+                    <MagneticButton className="px-6 sm:px-8 md:px-12 w-full sm:w-auto">
                       {/* Enhanced shimmer effect */}
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
-                      <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform">
+                      <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-sm sm:text-base py-2 sm:py-3">
                         Start Free Trial
-                        <ArrowRight className="w-5 h-5 ml-2" />
+                        <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 ml-2" />
                       </Button>
                     </MagneticButton>
                   </Link>
                 </div>
               </div>
             ) : (
-              <Skeleton className="h-14 w-48 mx-auto mb-8" />
+              <Skeleton className="h-12 sm:h-14 w-40 sm:w-48 mx-auto mb-6 sm:mb-8" />
             )}
 
 
             {/* University Logos Carousel with enhanced presentation */}
             {isLoaded ? (
-              <div className=" animate-fade-in" style={{ animationDelay: '0.7s' }}>
-                <p className="text-sm font-medium text-muted-foreground mb-12">
+              <div className="animate-fade-in px-4" style={{ animationDelay: '0.7s' }}>
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-8 sm:mb-12">
                   Trusted by students preparing for top US universities
                 </p>
                 <div 
                   className="relative"
-                  style={{ minHeight: '72px' }}
+                  style={{ minHeight: '48px sm:72px' }}
                 >
                   {/* Subtle gradient overlays for better integration */}
-                  <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-                  <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+                  <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
                   <LogoMarquee />
                 </div>
               </div>
             ) : (
               <div className="mb-4">
-                <Skeleton className="h-4 w-64 mx-auto mb-4" />
-                <Skeleton className="h-14 w-full max-w-4xl mx-auto" />
+                <Skeleton className="h-3 sm:h-4 w-48 sm:w-64 mx-auto mb-3 sm:mb-4" />
+                <Skeleton className="h-10 sm:h-14 w-full max-w-4xl mx-auto" />
               </div>
             )}
           </div>
@@ -278,43 +278,43 @@ const Index = () => {
       </section>
 
       {/* Live Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+      <section className="py-12 sm:py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-foreground">
               Trusted SAT Preparation Platform
             </h2>
-            <p className="text-muted-foreground">Join thousands of students who've improved their SAT scores with our proven methods</p>
+            <p className="text-muted-foreground text-sm sm:text-base px-4">Join thousands of students who've improved their SAT scores with our proven methods</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Users className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 md:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1 sm:mb-2">
                   {statsCounter.students.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium text-sm sm:text-base">SAT Students</div>
+                <div className="text-muted-foreground font-medium text-xs sm:text-sm md:text-base">SAT Students</div>
               </div>
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <TrendingUp className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 md:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1 sm:mb-2">
                   {statsCounter.questions.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium text-sm sm:text-base">SAT Practice Questions</div>
+                <div className="text-muted-foreground font-medium text-xs sm:text-sm md:text-base">SAT Practice Questions</div>
               </div>
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Award className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 md:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Award className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1 sm:mb-2">
                   {statsCounter.accuracy}%
                 </div>
-                <div className="text-muted-foreground font-medium text-sm sm:text-base">Score Improvement Rate</div>
+                <div className="text-muted-foreground font-medium text-xs sm:text-sm md:text-base">Score Improvement Rate</div>
               </div>
             </div>
           </div>
@@ -322,18 +322,18 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+      <section className="py-12 sm:py-16 bg-background">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground px-4">
               Why Students Choose UniHack for SAT Prep
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {features.map((feature, index) => (
               <InteractiveCard
                 key={index}
@@ -342,12 +342,12 @@ const Index = () => {
                 className="text-center group hover:border-primary/20"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="p-6 sm:p-8">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-all duration-300 group-hover:scale-110">
-                    <feature.icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform" />
+                <div className="p-4 sm:p-6 md:p-8">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-3 sm:mb-4 md:mb-6 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-all duration-300 group-hover:scale-110">
+                    <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary group-hover:scale-110 transition-transform" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-foreground">{feature.title}</h3>
-                  <p className="text-sm sm:text-base text-muted-foreground">{feature.description}</p>
+                  <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 md:mb-4 text-foreground">{feature.title}</h3>
+                  <p className="text-xs sm:text-sm md:text-base text-muted-foreground">{feature.description}</p>
                 </div>
               </InteractiveCard>
             ))}
@@ -356,19 +356,19 @@ const Index = () => {
       </section>
 
       {/* Platform Demo Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.3),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(120,119,198,0.2),transparent_50%)]"></div>
         
-        <div className="container mx-auto max-w-6xl px-6 relative">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/90 mb-8 border border-white/20">
-              <div className="w-2 h-2 bg-blue-400 rounded-full mr-3 animate-pulse"></div>
+        <div className="container mx-auto max-w-6xl px-4 sm:px-6 relative">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <div className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 backdrop-blur-sm rounded-full text-xs sm:text-sm font-medium text-white/90 mb-6 sm:mb-8 border border-white/20">
+              <div className="w-2 h-2 bg-blue-400 rounded-full mr-2 sm:mr-3 animate-pulse"></div>
               Live Platform Preview
             </div>
             
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-white leading-tight px-4">
               See Your Personalized
               <br />
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
@@ -376,23 +376,23 @@ const Index = () => {
               </span>
             </h2>
             
-            <p className="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed px-4">
               Experience how our platform creates a customized study plan based on your diagnostic results and exam date
             </p>
           </div>
 
           {/* Interactive Demo */}
           <div className="max-w-5xl mx-auto">
-            <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
+            <div className="bg-white/95 backdrop-blur-xl rounded-xl sm:rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
               {/* Demo Header */}
-              <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-4">
+              <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-3 sm:p-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full"></div>
                   </div>
-                  <div className="text-white text-sm font-medium"></div>
+                  <div className="text-white text-xs sm:text-sm font-medium"></div>
                   <div className="flex items-center gap-2 text-white/80 text-xs">
                     <span>📍 Demo Preview</span>
                   </div>
@@ -400,7 +400,7 @@ const Index = () => {
               </div>
 
               {/* Demo Content */}
-              <div className="p-8">
+              <div className="p-4 sm:p-6 md:p-8">
                 <RealPlatformDemo />
               </div>
             </div>

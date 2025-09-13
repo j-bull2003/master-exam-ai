@@ -119,28 +119,28 @@ export const RealPlatformDemo = () => {
   };
 
   const renderDashboardStep = () => (
-    <div className="min-h-[450px] bg-background bg-mesh rounded-2xl relative overflow-hidden">
+    <div className="min-h-[350px] sm:min-h-[450px] bg-background bg-mesh rounded-xl sm:rounded-2xl relative overflow-hidden">
       {/* Header like actual platform */}
       <header className="border-b border-border bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 h-12 flex items-center justify-between">
+        <div className="container mx-auto px-2 sm:px-4 h-10 sm:h-12 flex items-center justify-between">
           <img
             src={uniHackLogo}
             alt="UniHack.ai Logo"
-            className="h-16 max-h-[64px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
+            className="h-8 sm:h-12 md:h-16 max-h-[32px] sm:max-h-[48px] md:max-h-[64px] w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
           />
           
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-4">
-            <div className="text-primary font-medium border-b-2 border-primary flex items-center gap-1 text-sm">
+          <nav className="hidden md:flex items-center space-x-3 lg:space-x-4">
+            <div className="text-primary font-medium border-b-2 border-primary flex items-center gap-1 text-xs lg:text-sm">
               <Target className="w-3 h-3" />Dashboard
             </div>
-            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-sm">
+            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-xs lg:text-sm">
               <BookOpen className="w-3 h-3" />Practice
             </div>
-            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-sm">
+            <div className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-xs lg:text-sm">
               <Clipboard className="w-3 h-3" />Mocks
             </div>
-            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-3 flex items-center gap-1 text-xs">
+            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-2 lg:px-3 flex items-center gap-1 text-xs">
               <LogOut className="w-3 h-3" />
               Logout
             </Button>
@@ -148,51 +148,51 @@ export const RealPlatformDemo = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-3">
+      <div className="container mx-auto px-2 sm:px-4 py-2 sm:py-3">
         {/* Page Header */}
-        <div className="mb-3 text-center">
-          <h1 className="text-xl font-bold mb-1">Welcome back, Demo User! 👋</h1>
+        <div className="mb-2 sm:mb-3 text-center">
+          <h1 className="text-base sm:text-lg md:text-xl font-bold mb-0.5 sm:mb-1">Welcome back, Demo User! 👋</h1>
           <p className="text-muted-foreground text-xs">Ready to continue your SAT preparation?</p>
         </div>
 
         {/* Stats Grid - Compact */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-1.5 sm:gap-2 mb-3 sm:mb-4">
           <Card className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20">
-            <CardContent className="p-2 text-center">
-              <Target className="h-3 w-3 text-emerald-600 mx-auto mb-1" />
-              <div className="text-lg font-bold text-emerald-700">0%</div>
+            <CardContent className="p-1.5 sm:p-2 text-center">
+              <Target className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-emerald-600 mx-auto mb-0.5 sm:mb-1" />
+              <div className="text-sm sm:text-lg font-bold text-emerald-700">0%</div>
               <p className="text-xs text-muted-foreground">Accuracy</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20">
-            <CardContent className="p-2 text-center">
-              <TrendingUp className="h-3 w-3 text-blue-600 mx-auto mb-1" />
-              <div className="text-lg font-bold text-blue-700">0%</div>
+            <CardContent className="p-1.5 sm:p-2 text-center">
+              <TrendingUp className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-blue-600 mx-auto mb-0.5 sm:mb-1" />
+              <div className="text-sm sm:text-lg font-bold text-blue-700">0%</div>
               <p className="text-xs text-muted-foreground">Progress</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border-purple-500/20">
-            <CardContent className="p-2 text-center">
-              <Zap className="h-3 w-3 text-purple-600 mx-auto mb-1" />
-              <div className="text-lg font-bold text-purple-700">0</div>
+            <CardContent className="p-1.5 sm:p-2 text-center">
+              <Zap className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-purple-600 mx-auto mb-0.5 sm:mb-1" />
+              <div className="text-sm sm:text-lg font-bold text-purple-700">0</div>
               <p className="text-xs text-muted-foreground">Streak</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border-orange-500/20">
-            <CardContent className="p-2 text-center">
-              <BookOpen className="h-3 w-3 text-orange-600 mx-auto mb-1" />
-              <div className="text-lg font-bold text-orange-700">0</div>
+            <CardContent className="p-1.5 sm:p-2 text-center">
+              <BookOpen className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-orange-600 mx-auto mb-0.5 sm:mb-1" />
+              <div className="text-sm sm:text-lg font-bold text-orange-700">0</div>
               <p className="text-xs text-muted-foreground">Questions</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-yellow-500/5 to-yellow-600/10 border-yellow-500/20">
-            <CardContent className="p-2 text-center">
-              <Calendar className="h-3 w-3 text-yellow-600 mx-auto mb-1" />
-              <Button size="sm" variant="outline" className="w-full text-xs h-7 px-2">
+          <Card className="bg-gradient-to-br from-yellow-500/5 to-yellow-600/10 border-yellow-500/20 col-span-2 sm:col-span-1">
+            <CardContent className="p-1.5 sm:p-2 text-center">
+              <Calendar className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-yellow-600 mx-auto mb-0.5 sm:mb-1" />
+              <Button size="sm" variant="outline" className="w-full text-xs h-6 sm:h-7 px-1 sm:px-2">
                 Set Date
               </Button>
             </CardContent>
@@ -200,24 +200,24 @@ export const RealPlatformDemo = () => {
         </div>
 
         {/* Study Plan Section - Compact */}
-        <div className="grid xl:grid-cols-3 gap-3">
-          <div className="xl:col-span-2">
+        <div className="grid lg:grid-cols-3 gap-2 sm:gap-3">
+          <div className="lg:col-span-2">
             <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-slate-200">
-              <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-slate-700 text-base">
-                  <Calendar className="w-4 h-4" />
+              <CardHeader className="pb-1 sm:pb-2">
+                <CardTitle className="flex items-center gap-2 text-slate-700 text-sm sm:text-base">
+                  <Calendar className="w-3 sm:w-4 h-3 sm:h-4" />
                   Study Plan
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-3">
-                  <Calendar className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
-                  <h3 className="text-sm font-semibold mb-1">Build Your Study Plan</h3>
-                  <p className="text-muted-foreground mb-2 text-xs">
+                <div className="text-center py-2 sm:py-3">
+                  <Calendar className="w-5 sm:w-6 h-5 sm:h-6 text-muted-foreground mx-auto mb-1 sm:mb-2" />
+                  <h3 className="text-xs sm:text-sm font-semibold mb-0.5 sm:mb-1">Build Your Study Plan</h3>
+                  <p className="text-muted-foreground mb-1 sm:mb-2 text-xs">
                     Complete diagnostic test for personalized plan
                   </p>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1">
-                    <Brain className="w-3 h-3 mr-1" />
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-2 sm:px-3 py-0.5 sm:py-1">
+                    <Brain className="w-2.5 sm:w-3 h-2.5 sm:h-3 mr-0.5 sm:mr-1" />
                     Take Diagnostic
                   </Button>
                 </div>
@@ -225,27 +225,27 @@ export const RealPlatformDemo = () => {
             </Card>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             {/* Target Universities */}
             <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200">
-              <CardHeader className="pb-1">
+              <CardHeader className="pb-0.5 sm:pb-1">
                 <CardTitle className="text-emerald-700 text-xs">Target Universities</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-1">
-                <div className="p-1 bg-white rounded border border-emerald-200 text-center font-medium text-xs">Harvard</div>
-                <div className="p-1 bg-white rounded border border-emerald-200 text-center font-medium text-xs">MIT</div>
-                <div className="p-1 bg-white rounded border border-emerald-200 text-center font-medium text-xs">Stanford</div>
+              <CardContent className="space-y-0.5 sm:space-y-1">
+                <div className="p-0.5 sm:p-1 bg-white rounded border border-emerald-200 text-center font-medium text-xs">Harvard</div>
+                <div className="p-0.5 sm:p-1 bg-white rounded border border-emerald-200 text-center font-medium text-xs">MIT</div>
+                <div className="p-0.5 sm:p-1 bg-white rounded border border-emerald-200 text-center font-medium text-xs">Stanford</div>
               </CardContent>
             </Card>
 
             {/* Study Focus */}
             <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
-              <CardHeader className="pb-1">
+              <CardHeader className="pb-0.5 sm:pb-1">
                 <CardTitle className="text-red-700 flex items-center gap-1 text-xs">
                   🎯 Study Focus
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-1">
+              <CardContent className="space-y-0.5 sm:space-y-1">
                 <div className="flex justify-between items-center text-xs">
                   <span>Math - Algebra</span>
                   <span className="text-red-600 font-bold">35%</span>

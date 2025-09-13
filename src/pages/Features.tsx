@@ -63,17 +63,17 @@ const Features = () => {
       <AnimatedBackground className="opacity-80" />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-mesh">
-        <div className="container mx-auto px-6">
+      <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 bg-mesh">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 sm:mb-6 px-4">
               <span className="text-foreground">Everything You Need to</span>
               <br />
               <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
                 Excel on the SAT
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
               Comprehensive AI-powered SAT preparation that adapts to your unique learning style and helps you achieve your target SAT score.
             </p>
             <Link to="/auth/register">
@@ -87,22 +87,22 @@ const Features = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-16 bg-mesh">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      <section className="py-12 sm:py-16 bg-mesh">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group p-8 rounded-2xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 hover:scale-105"
+                className="group p-6 sm:p-8 rounded-2xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300 hover:scale-105"
               >
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary-variant/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <feature.icon className="w-7 h-7 text-primary" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary-variant/20 flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
-                <p className="text-muted-foreground mb-6">{feature.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{feature.title}</h3>
+                <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">{feature.description}</p>
                 <ul className="space-y-2">
                   {feature.benefits.map((benefit, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-sm">
+                    <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm">
                       <CheckCircle className="w-4 h-4 text-success" />
                       <span>{benefit}</span>
                     </li>

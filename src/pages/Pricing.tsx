@@ -89,16 +89,16 @@ const Pricing = () => {
       <AnimatedBackground className="opacity-80" />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-mesh">
-        <div className="container mx-auto px-6">
+      <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 bg-mesh">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 sm:mb-6 px-4">
               <span className="text-foreground">SAT Prep</span>{" "}
               <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
                 Pricing
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 px-4">
               Choose your SAT preparation plan. Limited free access. Upgrade for full prep experience.
             </p>
           </div>
@@ -106,32 +106,32 @@ const Pricing = () => {
       </section>
 
       {/* Pricing Plans */}
-      <section className="py-16 bg-mesh">
-        <div className="container mx-auto px-6">
+      <section className="py-12 sm:py-16 bg-mesh">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
               
               {/* Annual Plan - Best Value */}
-              <div className="relative p-8 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-semibold">
+              <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-primary/5 to-primary-variant/5 border border-primary/20">
+                <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
                     BEST VALUE
                   </span>
                 </div>
                 
-                <h3 className="text-2xl font-bold mb-2">{plans.annual.name}</h3>
+                <h3 className="text-xl sm:text-2xl font-bold mb-2">{plans.annual.name}</h3>
                 <div className="mb-2">
-                  <span className="text-5xl font-black">{plans.annual.price}</span>
-                  <span className="text-muted-foreground text-lg">{plans.annual.period}</span>
+                  <span className="text-4xl sm:text-5xl font-black">{plans.annual.price}</span>
+                  <span className="text-muted-foreground text-base sm:text-lg">{plans.annual.period}</span>
                 </div>
                 <div className="mb-2">
-                  <span className="text-muted-foreground">{plans.annual.billing}</span>
+                  <span className="text-muted-foreground text-sm sm:text-base">{plans.annual.billing}</span>
                 </div>
-                <div className="mb-6">
-                  <span className="text-sm text-success font-semibold">{plans.annual.savings}</span>
+                <div className="mb-4 sm:mb-6">
+                  <span className="text-xs sm:text-sm text-success font-semibold">{plans.annual.savings}</span>
                 </div>
                 
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
                     <Sparkles className="w-4 h-4" />
                     3-Day Free Trial
@@ -141,7 +141,7 @@ const Pricing = () => {
                 <Button 
                   onClick={() => handleStartTrial('annual')}
                   disabled={loadingPlan === 'annual'}
-                  className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-lg py-3 mb-4"
+                  className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-base sm:text-lg py-2.5 sm:py-3 mb-4"
                 >
                   {loadingPlan === 'annual' ? 'Loading...' : 'Start Free Trial'}
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -149,17 +149,17 @@ const Pricing = () => {
               </div>
 
               {/* Monthly Plan */}
-              <div className="relative p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-2xl font-bold mb-2">{plans.monthly.name}</h3>
+              <div className="relative p-6 sm:p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
+                <h3 className="text-xl sm:text-2xl font-bold mb-2">{plans.monthly.name}</h3>
                 <div className="mb-2">
-                  <span className="text-5xl font-black">{plans.monthly.price}</span>
-                  <span className="text-muted-foreground text-lg">{plans.monthly.period}</span>
+                  <span className="text-4xl sm:text-5xl font-black">{plans.monthly.price}</span>
+                  <span className="text-muted-foreground text-base sm:text-lg">{plans.monthly.period}</span>
                 </div>
-                <div className="mb-6">
-                  <span className="text-muted-foreground">{plans.monthly.billing}</span>
+                <div className="mb-4 sm:mb-6">
+                  <span className="text-muted-foreground text-sm sm:text-base">{plans.monthly.billing}</span>
                 </div>
                 
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6">
                   <div className="flex items-center gap-2 text-success font-semibold mb-1">
                     <Sparkles className="w-4 h-4" />
                     3-Day Free Trial
@@ -170,7 +170,7 @@ const Pricing = () => {
                   onClick={() => handleStartTrial('monthly')}
                   disabled={loadingPlan === 'monthly'}
                   variant="outline" 
-                  className="w-full text-lg py-3 mb-4"
+                  className="w-full text-base sm:text-lg py-2.5 sm:py-3 mb-4"
                 >
                   {loadingPlan === 'monthly' ? 'Loading...' : 'Start Free Trial'}
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -179,7 +179,7 @@ const Pricing = () => {
             </div>
             
             {/* Promo Code Link */}
-            <div className="text-center mt-8">
+            <div className="text-center mt-6 sm:mt-8">
               <button className="text-primary hover:text-primary/80 text-sm font-medium transition-colors">
                 + Add promo code
               </button>
