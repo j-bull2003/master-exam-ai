@@ -164,31 +164,47 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         throw new Error(authError.message || 'Registration failed');
       }
 
-      // Get the current user session to update profile
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) {
-        // Update profile with onboarding data and trial status
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .update({
-            full_name: formData.name,
-            exam_type: 'SAT', // Since we only do SAT
-            exam_date: formData.examDate?.toISOString().split('T')[0] || null,
-            target_university: formData.targetUniversities[0] || null,
-            target_universities: formData.targetUniversities,
-            subscription_status: 'trial',
-            trial_end_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days from now
-          })
-          .eq('user_id', session.user.id);
+      // Wait a moment for the session to be established
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-        if (profileError) {
-          console.error('Profile update error:', profileError);
-        }
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Please try again - session not established");
+
+      // Update profile with onboarding data and trial status
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          full_name: formData.name,
+          exam_type: 'SAT', // Since we only do SAT
+          exam_date: formData.examDate?.toISOString().split('T')[0] || null,
+          target_university: formData.targetUniversities[0] || null,
+          target_universities: formData.targetUniversities,
+          subscription_status: 'trial',
+          trial_end_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days from now
+        })
+        .eq('user_id', session.user.id);
+
+      if (profileError) {
+        console.error('Profile update error:', profileError);
       }
 
+      // Create checkout session for trial with card collection (no immediate charge)
+      const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
+        body: { 
+          priceId: PRICING_PLANS.annual.price_id,
+          mode: 'trial' // Special mode for trial
+        },
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+
+      if (error) throw error;
+
+      // Redirect to Stripe checkout to collect card details
+      window.open(data.url, '_blank');
+      
       toast({
         title: "Welcome to UniHack.ai!",
-        description: "Your 3-day free trial has started. Check your email to verify your account.",
+        description: "Complete your card setup to start your 3-day free trial.",
       });
 
       onComplete();

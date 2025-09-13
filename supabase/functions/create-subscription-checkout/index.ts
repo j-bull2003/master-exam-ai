@@ -32,9 +32,9 @@ serve(async (req) => {
     if (!user?.email) throw new Error("User not authenticated or email not available");
     logStep("User authenticated", { userId: user.id, email: user.email });
 
-    const { priceId } = await req.json();
+    const { priceId, mode } = await req.json();
     if (!priceId) throw new Error("Price ID is required");
-    logStep("Price ID provided", { priceId });
+    logStep("Price ID and mode provided", { priceId, mode });
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", { 
       apiVersion: "2025-08-27.basil" 
@@ -49,30 +49,42 @@ serve(async (req) => {
       logStep("No existing customer found, will create during checkout");
     }
 
-    const session = await stripe.checkout.sessions.create({
+    // Create checkout session configuration
+    const sessionConfig: any = {
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      mode: "subscription",
       success_url: `${req.headers.get("origin")}/dashboard?checkout=success`,
       cancel_url: `${req.headers.get("origin")}/dashboard?checkout=cancel`,
       metadata: {
         user_id: user.id,
         business_name: "Unihack"
-      },
-      subscription_data: {
+      }
+    };
+
+    // Handle trial mode (collect card details without immediate charge)
+    if (mode === 'trial') {
+      sessionConfig.mode = "setup";
+      sessionConfig.success_url = `${req.headers.get("origin")}/dashboard?trial_setup=true`;
+      logStep("Creating setup session for trial");
+    } else {
+      sessionConfig.mode = "subscription";
+      sessionConfig.line_items = [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ];
+      sessionConfig.subscription_data = {
         description: "Unihack SAT Platform Access",
         metadata: {
           user_id: user.id,
           business_name: "Unihack"
         }
-      }
-    });
+      };
+      logStep("Creating subscription session");
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionConfig);
 
     logStep("Checkout session created", { sessionId: session.id, url: session.url });
 
