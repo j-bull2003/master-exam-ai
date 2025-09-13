@@ -12,6 +12,7 @@ import { ArrowRight, ArrowLeft, User, Mail, Lock, Eye, EyeOff, CheckCircle, User
 import PaymentForm from '@/components/PaymentForm';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { addDays, format } from 'date-fns';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_51QEjGYLBctfCMRN8TJFZPn3I3GkgPJnZdpYSF0C5ePx8wvhv9x8MZnwmV3LDvLJu3zP1wJY6V8NlKFOe4mVl7JIY00hGRZDjsO');
 
@@ -37,6 +38,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   
   const totalSteps = 5; // Updated to include payment step
   const progress = (currentStep / totalSteps) * 100;
+  
+  // Calculate billing date (3 days after signup for free trial)
+  const today = new Date();
+  const billingDate = addDays(today, 3);
+  const formattedBillingDate = format(billingDate, 'MMMM do, yyyy');
 
   useEffect(() => {
     if (currentStep === 1) {
@@ -249,7 +255,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                       <Sparkles className="w-4 h-4" />
                       <span>3-Day Free Trial Included</span>
                     </div>
-                    <p className="text-xs text-success/80 mt-1">Cancel anytime during trial</p>
+                    <p className="text-xs text-success/80 mt-1">You'll be billed on {formattedBillingDate} • Cancel anytime during trial</p>
                   </div>
                   
                   <div className="space-y-2 text-xs">
@@ -314,7 +320,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                       <Sparkles className="w-4 h-4" />
                       <span>3-Day Free Trial Included</span>
                     </div>
-                    <p className="text-xs text-success/80 mt-1">Cancel anytime during trial</p>
+                    <p className="text-xs text-success/80 mt-1">You'll be billed on {formattedBillingDate} • Cancel anytime during trial</p>
                   </div>
                   
                   <div className="space-y-2 text-xs">
