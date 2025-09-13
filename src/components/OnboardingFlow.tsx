@@ -376,13 +376,13 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-foreground">Expert Group Classes</h4>
-                    <p className="text-sm text-muted-foreground">Live weekly sessions with SAT experts</p>
+                    <p className="text-sm text-accent font-medium">Live weekly sessions with SAT experts</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-right">
                     <div className="text-xl font-bold text-accent">+$50</div>
-                    <div className="text-sm text-muted-foreground">/week</div>
+                    <div className="text-sm text-accent/80">/week</div>
                   </div>
                   <Switch
                     checked={formData.groupClasses}
@@ -395,29 +395,29 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  <span>Live expert instruction</span>
+                  <span className="text-foreground font-medium">Live expert instruction</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  <span>Small group sizes (max 12)</span>
+                  <span className="text-foreground font-medium">Interactive Q&A sessions</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  <span>Q&A sessions</span>
+                  <span className="text-foreground font-medium">Recorded for replay</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  <span>Recorded sessions</span>
+                  <span className="text-foreground font-medium">Weekly homework review</span>
                 </div>
               </div>
               
               {formData.groupClasses && (
-                <div className="mt-4 p-4 bg-accent/10 rounded-xl border border-accent/20">
+                <div className="mt-4 p-4 bg-accent/15 rounded-xl border border-accent/30">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-5 h-5 text-accent" />
-                    <span className="text-accent font-semibold">Group Classes Added</span>
+                    <span className="text-accent font-bold">Group Classes Added</span>
                   </div>
-                  <p className="text-sm text-accent/80 mt-1">$50/week will be added to your subscription</p>
+                  <p className="text-sm text-accent font-medium mt-1">$50/week will be added to your subscription</p>
                 </div>
               )}
             </div>
