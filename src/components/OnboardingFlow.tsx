@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Switch } from '@/components/ui/switch';
-import { ArrowRight, ArrowLeft, User, Mail, Lock, Eye, EyeOff, CheckCircle, Users, Brain, Clock, Sparkles, Target, BookOpen } from 'lucide-react';
+import { ArrowRight, ArrowLeft, User, Mail, Lock, Eye, EyeOff, CheckCircle, Users, Brain, Clock, Sparkles, Target, BookOpen, Calculator, Award } from 'lucide-react';
 
 interface OnboardingFlowProps {
   onComplete?: () => void;
@@ -30,7 +30,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const totalSteps = 3;
+  const totalSteps = 4;
   const progress = (currentStep / totalSteps) * 100;
 
   useEffect(() => {
@@ -56,9 +56,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   const nextStep = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep(prev => Math.min(prev + 1, totalSteps));
-    }
+    if (currentStep === 1 && !validateStep(currentStep)) return;
+    setCurrentStep(prev => Math.min(prev + 1, totalSteps));
   };
 
   const prevStep = () => {
@@ -366,65 +365,201 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 </div>
               </div>
             </div>
-            
-            {/* Group Classes Add-on */}
-            <div className="border-2 border-dashed border-accent/30 rounded-2xl p-6 bg-gradient-to-r from-accent/5 to-accent/10 hover:border-accent/50 transition-all">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center">
-                    <Users className="w-6 h-6 text-accent" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-foreground">Expert Group Classes</h4>
-                    <p className="text-sm text-accent font-medium">Live weekly sessions with SAT experts</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="text-right">
-                    <div className="text-xl font-bold text-accent">+$50</div>
-                    <div className="text-sm text-accent/80">/week</div>
-                  </div>
-                  <Switch
-                    checked={formData.groupClasses}
-                    onCheckedChange={(checked) => handleInputChange('groupClasses', checked)}
-                    className="data-[state=checked]:bg-accent"
-                  />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  <span className="text-foreground font-medium">Live expert instruction</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  <span className="text-foreground font-medium">Interactive Q&A sessions</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  <span className="text-foreground font-medium">Recorded for replay</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  <span className="text-foreground font-medium">Weekly homework review</span>
-                </div>
-              </div>
-              
-              {formData.groupClasses && (
-                <div className="mt-4 p-4 bg-accent/15 rounded-xl border border-accent/30">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5 text-accent" />
-                    <span className="text-accent font-bold">Group Classes Added</span>
-                  </div>
-                  <p className="text-sm text-accent font-medium mt-1">$50/week will be added to your subscription</p>
-                </div>
-              )}
-            </div>
           </div>
         );
 
       case 3:
+        return (
+          <div className="space-y-6">
+            <div className="text-center space-y-2">
+              <h2 className="text-3xl font-bold text-foreground">Accelerate Your Success</h2>
+              <p className="text-muted-foreground">Join our elite SAT Group Mastery program for expert-led sessions</p>
+            </div>
+            
+            {/* Hero Stats */}
+            <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto mb-6">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">2x</div>
+                <div className="text-xs text-muted-foreground">Sessions/Week</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">$50</div>
+                <div className="text-xs text-muted-foreground">Per Week Total</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">120</div>
+                <div className="text-xs text-muted-foreground">Mins/Week</div>
+              </div>
+            </div>
+            
+            <div className="grid gap-6">
+              {/* Add Group Classes Option */}
+              <div 
+                onClick={() => handleInputChange('groupClasses', true)}
+                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                  formData.groupClasses 
+                    ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
+                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
+                }`}
+              >
+                {/* Premium Badge */}
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                    🎯 PREMIUM ADD-ON
+                  </div>
+                </div>
+                
+                {/* Selection Indicator */}
+                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                  formData.groupClasses 
+                    ? 'border-primary bg-primary' 
+                    : 'border-muted-foreground/30'
+                }`}>
+                  {formData.groupClasses && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="pt-4">
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Add Expert Group Classes</h3>
+                  <p className="text-lg text-primary font-semibold mb-4">2 Sessions Per Week • $50 Total</p>
+                  
+                  {/* Two Session Cards */}
+                  <div className="grid md:grid-cols-2 gap-4 mb-6">
+                    {/* Reading & Writing Session */}
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-8 h-8 bg-slate-600 rounded-lg flex items-center justify-center">
+                          <BookOpen className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-slate-900">Reading & Writing</h4>
+                          <p className="text-xs text-slate-600">60 minutes • Session 1</p>
+                        </div>
+                      </div>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-3 h-3 text-emerald-600" />
+                          <span className="text-slate-700">Evidence-based reading</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-3 h-3 text-emerald-600" />
+                          <span className="text-slate-700">Grammar mastery</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-3 h-3 text-emerald-600" />
+                          <span className="text-slate-700">Passage analysis</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Mathematics Session */}
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-8 h-8 bg-slate-600 rounded-lg flex items-center justify-center">
+                          <Calculator className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-slate-900">Mathematics</h4>
+                          <p className="text-xs text-slate-600">60 minutes • Session 2</p>
+                        </div>
+                      </div>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-3 h-3 text-emerald-600" />
+                          <span className="text-slate-700">Algebra & advanced math</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-3 h-3 text-emerald-600" />
+                          <span className="text-slate-700">Problem-solving strategies</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-3 h-3 text-emerald-600" />
+                          <span className="text-slate-700">Geometry & trigonometry</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Value Proposition */}
+                  <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Award className="w-5 h-5 text-emerald-600" />
+                      <span className="text-emerald-800 font-bold">Elite Small Group Learning</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4 text-emerald-600" />
+                        <span className="text-emerald-700">Expert SAT instructors</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Target className="w-4 h-4 text-emerald-600" />
+                        <span className="text-emerald-700">Personalized attention</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-emerald-600" />
+                        <span className="text-emerald-700">All sessions recorded</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <BookOpen className="w-4 h-4 text-emerald-600" />
+                        <span className="text-emerald-700">Homework review</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Skip Option */}
+              <div 
+                onClick={() => handleInputChange('groupClasses', false)}
+                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                  !formData.groupClasses 
+                    ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
+                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
+                }`}
+              >
+                {/* Selection Indicator */}
+                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                  !formData.groupClasses 
+                    ? 'border-primary bg-primary' 
+                    : 'border-muted-foreground/30'
+                }`}>
+                  {!formData.groupClasses && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <ArrowRight className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-2 text-foreground">Continue with Platform Only</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Start with your selected plan and add group classes later if needed.
+                    </p>
+                    <div className="text-sm text-primary">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4" />
+                        <span>Full platform access included</span>
+                      </div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <CheckCircle className="w-4 h-4" />
+                        <span>Add group classes anytime</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 4:
         return (
           <div className="space-y-6">
             <div className="text-center space-y-2">
