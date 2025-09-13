@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
-import { ArrowRight, ArrowLeft, User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { ArrowRight, ArrowLeft, User, Mail, Lock, Eye, EyeOff, CheckCircle, Users, Brain, Clock, Sparkles } from 'lucide-react';
 
 interface OnboardingFlowProps {
   onComplete?: () => void;
@@ -18,16 +19,19 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const { signUp } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    planType: 'annual' as 'annual' | 'monthly',
+    groupClasses: false,
+    diagnostic: true
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [currentStep, setCurrentStep] = useState(1);
 
-  const totalSteps = 1;
-  const progress = 100;
+  const totalSteps = 3;
+  const progress = (currentStep / totalSteps) * 100;
 
   useEffect(() => {
     if (currentStep === 1) {
@@ -69,8 +73,6 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   const handleCompleteSignup = async () => {
-    if (!validateStep(1)) return;
-    
     setIsLoading(true);
     try {
       console.log('Starting account creation...');
@@ -94,14 +96,46 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         }
       }
 
+      // Create subscription checkout if needed
+      if (formData.planType) {
+        try {
+          const priceId = formData.planType === 'annual' 
+            ? 'price_1QEjIsLBctfCMRN8GkkNjrFE' 
+            : 'price_1QEjI9LBctfCMRN8dM3Sx99m';
+            
+          const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
+            body: { priceId },
+          });
+
+          if (error) throw error;
+          
+          if (data?.url) {
+            window.open(data.url, '_blank');
+          }
+        } catch (error) {
+          console.error('Checkout error:', error);
+          toast({
+            title: "Payment Setup",
+            description: "Account created! Visit pricing page to complete subscription setup.",
+            variant: "default",
+          });
+        }
+      }
+
       toast({
         title: "Welcome to UniHack!",
-        description: "Your account is ready! You now have a 3-day free trial.",
+        description: `Account created! ${formData.diagnostic ? 'Taking you to diagnostic test.' : 'Taking you to dashboard.'}`,
       });
 
       // Wait for session to establish and call onComplete
       await new Promise(resolve => setTimeout(resolve, 1000));
-      onComplete?.();
+      
+      // Redirect based on choice
+      if (formData.diagnostic) {
+        window.location.href = '/diagnostic';
+      } else {
+        window.location.href = '/dashboard';
+      }
       
     } catch (error: any) {
       console.error('Account creation error:', error);
@@ -122,7 +156,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           <div className="space-y-6">
             <div className="text-center space-y-2">
               <h2 className="text-3xl font-bold text-foreground">Get Started</h2>
-              <p className="text-muted-foreground">Create your account and start your 3-day free trial</p>
+              <p className="text-muted-foreground">Create your account and start your SAT journey</p>
             </div>
           
             <div className="space-y-4">
@@ -186,6 +220,213 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           </div>
         );
 
+      case 2:
+        return (
+          <div className="space-y-6">
+            <div className="text-center space-y-2">
+              <h2 className="text-3xl font-bold text-foreground">Choose Your Plan</h2>
+              <p className="text-muted-foreground">Select the plan that works best for your SAT preparation</p>
+            </div>
+            
+            <div className="grid gap-4">
+              {/* Annual Plan */}
+              <div 
+                onClick={() => handleInputChange('planType', 'annual')}
+                className={`relative p-6 rounded-xl border-2 cursor-pointer transition-all ${
+                  formData.planType === 'annual' 
+                    ? 'border-primary bg-primary/5' 
+                    : 'border-border hover:border-primary/50'
+                }`}
+              >
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    BEST VALUE
+                  </span>
+                </div>
+                
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl font-bold">Annual Plan</h3>
+                    <p className="text-muted-foreground">Save $1,439.89/year</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-black">$39.99</div>
+                    <div className="text-muted-foreground">/month</div>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-lg p-3 mb-4">
+                  <div className="flex items-center gap-2 text-success font-semibold text-sm">
+                    <Sparkles className="w-4 h-4" />
+                    3-Day Free Trial Included
+                  </div>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span>Unlimited SAT practice questions</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span>AI-powered personalization</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span>Full-length SAT mock exams</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Monthly Plan */}
+              <div 
+                onClick={() => handleInputChange('planType', 'monthly')}
+                className={`p-6 rounded-xl border-2 cursor-pointer transition-all ${
+                  formData.planType === 'monthly' 
+                    ? 'border-primary bg-primary/5' 
+                    : 'border-border hover:border-primary/50'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl font-bold">Monthly Plan</h3>
+                    <p className="text-muted-foreground">Flexible monthly billing</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-black">$159.99</div>
+                    <div className="text-muted-foreground">/month</div>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-lg p-3 mb-4">
+                  <div className="flex items-center gap-2 text-success font-semibold text-sm">
+                    <Sparkles className="w-4 h-4" />
+                    3-Day Free Trial Included
+                  </div>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span>All features included</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span>Cancel anytime</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Group Classes Add-on */}
+            <div className="border rounded-xl p-4 bg-gradient-to-r from-accent/5 to-accent/10">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Users className="w-5 h-5 text-accent" />
+                  <div>
+                    <h4 className="font-semibold">Expert Group Classes</h4>
+                    <p className="text-sm text-muted-foreground">Live sessions with SAT experts + $50/week</p>
+                  </div>
+                </div>
+                <Switch
+                  checked={formData.groupClasses}
+                  onCheckedChange={(checked) => handleInputChange('groupClasses', checked)}
+                />
+              </div>
+              {formData.groupClasses && (
+                <div className="mt-3 p-3 bg-accent/10 rounded-lg">
+                  <p className="text-sm text-accent font-medium">+ $50/week will be added to your subscription</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="space-y-6">
+            <div className="text-center space-y-2">
+              <h2 className="text-3xl font-bold text-foreground">Ready to Start?</h2>
+              <p className="text-muted-foreground">Choose how you'd like to begin your SAT preparation</p>
+            </div>
+            
+            <div className="grid gap-4">
+              {/* Diagnostic Test Option */}
+              <div 
+                onClick={() => handleInputChange('diagnostic', true)}
+                className={`p-6 rounded-xl border-2 cursor-pointer transition-all ${
+                  formData.diagnostic 
+                    ? 'border-primary bg-primary/5' 
+                    : 'border-border hover:border-primary/50'
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <Brain className="w-6 h-6 text-primary mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">Take Diagnostic Test</h3>
+                    <p className="text-muted-foreground mb-3">
+                      Get a personalized assessment of your current SAT level and receive a tailored study plan.
+                    </p>
+                    <div className="flex items-center gap-2 text-sm text-primary">
+                      <Clock className="w-4 h-4" />
+                      <span>Takes about 30 minutes</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Skip to Dashboard Option */}
+              <div 
+                onClick={() => handleInputChange('diagnostic', false)}
+                className={`p-6 rounded-xl border-2 cursor-pointer transition-all ${
+                  !formData.diagnostic 
+                    ? 'border-primary bg-primary/5' 
+                    : 'border-border hover:border-primary/50'
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <ArrowRight className="w-6 h-6 text-primary mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">Skip to Dashboard</h3>
+                    <p className="text-muted-foreground mb-3">
+                      Go straight to your dashboard and start practicing with general SAT questions.
+                    </p>
+                    <div className="flex items-center gap-2 text-sm text-primary">
+                      <CheckCircle className="w-4 h-4" />
+                      <span>Start practicing immediately</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Summary */}
+            <div className="bg-muted/50 rounded-xl p-4">
+              <h4 className="font-semibold mb-2">Your Selection:</h4>
+              <div className="space-y-1 text-sm">
+                <div className="flex justify-between">
+                  <span>Plan:</span>
+                  <span className="font-medium">
+                    {formData.planType === 'annual' ? 'Annual ($39.99/mo)' : 'Monthly ($159.99/mo)'}
+                  </span>
+                </div>
+                {formData.groupClasses && (
+                  <div className="flex justify-between">
+                    <span>Group Classes:</span>
+                    <span className="font-medium">+$50/week</span>
+                  </div>
+                )}
+                <div className="flex justify-between">
+                  <span>Next Step:</span>
+                  <span className="font-medium">
+                    {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return null;
     }
@@ -230,14 +471,24 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 <span>Back</span>
               </Button>
 
-              <Button
-                onClick={handleCompleteSignup}
-                className="flex items-center space-x-2"
-                disabled={isLoading}
-              >
-                <span>{isLoading ? 'Creating Your Account...' : 'Start Free Trial'}</span>
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              {currentStep < totalSteps ? (
+                <Button
+                  onClick={nextStep}
+                  className="flex items-center space-x-2"
+                >
+                  <span>Continue</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleCompleteSignup}
+                  className="flex items-center space-x-2"
+                  disabled={isLoading}
+                >
+                  <span>{isLoading ? 'Creating Account...' : 'Complete Setup'}</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              )}
             </div>
 
             {currentStep === 1 && (
