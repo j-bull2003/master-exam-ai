@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Switch } from '@/components/ui/switch';
-import { ArrowRight, ArrowLeft, User, Mail, Lock, Eye, EyeOff, CheckCircle, Users, Brain, Clock, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowLeft, User, Mail, Lock, Eye, EyeOff, CheckCircle, Users, Brain, Clock, Sparkles, Target, BookOpen } from 'lucide-react';
 
 interface OnboardingFlowProps {
   onComplete?: () => void;
@@ -228,52 +228,76 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <p className="text-muted-foreground">Select the plan that works best for your SAT preparation</p>
             </div>
             
-            <div className="grid gap-4">
+            <div className="grid gap-6">
               {/* Annual Plan */}
               <div 
                 onClick={() => handleInputChange('planType', 'annual')}
-                className={`relative p-6 rounded-xl border-2 cursor-pointer transition-all ${
+                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
                   formData.planType === 'annual' 
-                    ? 'border-primary bg-primary/5' 
-                    : 'border-border hover:border-primary/50'
+                    ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
+                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-primary to-primary-variant text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    BEST VALUE
-                  </span>
-                </div>
-                
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold">Annual Plan</h3>
-                    <p className="text-muted-foreground">Save $1,439.89/year</p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-black">$39.99</div>
-                    <div className="text-muted-foreground">/month</div>
+                {/* Best Value Badge */}
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-primary to-primary-variant text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                    ✨ BEST VALUE
                   </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-lg p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold text-sm">
-                    <Sparkles className="w-4 h-4" />
-                    3-Day Free Trial Included
-                  </div>
+                {/* Selection Indicator */}
+                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                  formData.planType === 'annual' 
+                    ? 'border-primary bg-primary' 
+                    : 'border-muted-foreground/30'
+                }`}>
+                  {formData.planType === 'annual' && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  )}
                 </div>
                 
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success" />
-                    <span>Unlimited SAT practice questions</span>
+                <div className="pt-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold text-foreground">Annual Plan</h3>
+                      <p className="text-success font-semibold">Save $1,439.89/year</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-4xl font-black text-foreground">$39.99</span>
+                        <span className="text-lg text-muted-foreground">/mo</span>
+                      </div>
+                      <div className="text-sm text-muted-foreground">$479.99 billed annually</div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success" />
-                    <span>AI-powered personalization</span>
+                  
+                  <div className="bg-gradient-to-r from-success/15 to-success/5 border border-success/30 rounded-lg p-4 mb-6">
+                    <div className="flex items-center gap-2 text-success font-semibold">
+                      <Sparkles className="w-5 h-5" />
+                      <span>3-Day Free Trial Included</span>
+                    </div>
+                    <p className="text-sm text-success/80 mt-1">Cancel anytime during trial</p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success" />
-                    <span>Full-length SAT mock exams</span>
+                  
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Unlimited practice questions</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>AI-powered personalization</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Full-length mock exams</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>24/7 customer support</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -281,61 +305,119 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               {/* Monthly Plan */}
               <div 
                 onClick={() => handleInputChange('planType', 'monthly')}
-                className={`p-6 rounded-xl border-2 cursor-pointer transition-all ${
+                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
                   formData.planType === 'monthly' 
-                    ? 'border-primary bg-primary/5' 
-                    : 'border-border hover:border-primary/50'
+                    ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
+                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
+                {/* Selection Indicator */}
+                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                  formData.planType === 'monthly' 
+                    ? 'border-primary bg-primary' 
+                    : 'border-muted-foreground/30'
+                }`}>
+                  {formData.planType === 'monthly' && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  )}
+                </div>
+                
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <h3 className="text-xl font-bold">Monthly Plan</h3>
+                    <h3 className="text-2xl font-bold text-foreground">Monthly Plan</h3>
                     <p className="text-muted-foreground">Flexible monthly billing</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-black">$159.99</div>
-                    <div className="text-muted-foreground">/month</div>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-black text-foreground">$159.99</span>
+                      <span className="text-lg text-muted-foreground">/mo</span>
+                    </div>
+                    <div className="text-sm text-muted-foreground">$159.99 monthly</div>
                   </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-lg p-3 mb-4">
-                  <div className="flex items-center gap-2 text-success font-semibold text-sm">
-                    <Sparkles className="w-4 h-4" />
-                    3-Day Free Trial Included
+                <div className="bg-gradient-to-r from-success/15 to-success/5 border border-success/30 rounded-lg p-4 mb-6">
+                  <div className="flex items-center gap-2 text-success font-semibold">
+                    <Sparkles className="w-5 h-5" />
+                    <span>3-Day Free Trial Included</span>
                   </div>
+                  <p className="text-sm text-success/80 mt-1">Cancel anytime during trial</p>
                 </div>
                 
-                <div className="space-y-2 text-sm">
+                <div className="grid grid-cols-2 gap-3 text-sm">
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success" />
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
                     <span>All features included</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success" />
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
                     <span>Cancel anytime</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>No yearly commitment</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>Perfect for short-term prep</span>
                   </div>
                 </div>
               </div>
             </div>
             
             {/* Group Classes Add-on */}
-            <div className="border rounded-xl p-4 bg-gradient-to-r from-accent/5 to-accent/10">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-accent" />
+            <div className="border-2 border-dashed border-accent/30 rounded-2xl p-6 bg-gradient-to-r from-accent/5 to-accent/10 hover:border-accent/50 transition-all">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center">
+                    <Users className="w-6 h-6 text-accent" />
+                  </div>
                   <div>
-                    <h4 className="font-semibold">Expert Group Classes</h4>
-                    <p className="text-sm text-muted-foreground">Live sessions with SAT experts + $50/week</p>
+                    <h4 className="text-lg font-bold text-foreground">Expert Group Classes</h4>
+                    <p className="text-sm text-muted-foreground">Live weekly sessions with SAT experts</p>
                   </div>
                 </div>
-                <Switch
-                  checked={formData.groupClasses}
-                  onCheckedChange={(checked) => handleInputChange('groupClasses', checked)}
-                />
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <div className="text-xl font-bold text-accent">+$50</div>
+                    <div className="text-sm text-muted-foreground">/week</div>
+                  </div>
+                  <Switch
+                    checked={formData.groupClasses}
+                    onCheckedChange={(checked) => handleInputChange('groupClasses', checked)}
+                    className="data-[state=checked]:bg-accent"
+                  />
+                </div>
               </div>
+              
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  <span>Live expert instruction</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  <span>Small group sizes (max 12)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  <span>Q&A sessions</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                  <span>Recorded sessions</span>
+                </div>
+              </div>
+              
               {formData.groupClasses && (
-                <div className="mt-3 p-3 bg-accent/10 rounded-lg">
-                  <p className="text-sm text-accent font-medium">+ $50/week will be added to your subscription</p>
+                <div className="mt-4 p-4 bg-accent/10 rounded-xl border border-accent/20">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-accent" />
+                    <span className="text-accent font-semibold">Group Classes Added</span>
+                  </div>
+                  <p className="text-sm text-accent/80 mt-1">$50/week will be added to your subscription</p>
                 </div>
               )}
             </div>
@@ -350,26 +432,55 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <p className="text-muted-foreground">Choose how you'd like to begin your SAT preparation</p>
             </div>
             
-            <div className="grid gap-4">
+            <div className="grid gap-6">
               {/* Diagnostic Test Option */}
               <div 
                 onClick={() => handleInputChange('diagnostic', true)}
-                className={`p-6 rounded-xl border-2 cursor-pointer transition-all ${
+                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
                   formData.diagnostic 
-                    ? 'border-primary bg-primary/5' 
-                    : 'border-border hover:border-primary/50'
+                    ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
+                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
+                {/* Selection Indicator */}
+                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                  formData.diagnostic 
+                    ? 'border-primary bg-primary' 
+                    : 'border-muted-foreground/30'
+                }`}>
+                  {formData.diagnostic && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  )}
+                </div>
+                
                 <div className="flex items-start gap-4">
-                  <Brain className="w-6 h-6 text-primary mt-1" />
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Take Diagnostic Test</h3>
-                    <p className="text-muted-foreground mb-3">
+                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Brain className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-2 text-foreground">Take Diagnostic Test</h3>
+                    <p className="text-muted-foreground mb-4">
                       Get a personalized assessment of your current SAT level and receive a tailored study plan.
                     </p>
-                    <div className="flex items-center gap-2 text-sm text-primary">
-                      <Clock className="w-4 h-4" />
-                      <span>Takes about 30 minutes</span>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="flex items-center gap-2 text-primary">
+                        <Clock className="w-4 h-4" />
+                        <span>Takes about 30 minutes</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary">
+                        <Target className="w-4 h-4" />
+                        <span>Personalized study plan</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary">
+                        <CheckCircle className="w-4 h-4" />
+                        <span>Identify weak areas</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary">
+                        <CheckCircle className="w-4 h-4" />
+                        <span>Set target score</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -378,47 +489,93 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               {/* Skip to Dashboard Option */}
               <div 
                 onClick={() => handleInputChange('diagnostic', false)}
-                className={`p-6 rounded-xl border-2 cursor-pointer transition-all ${
+                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
                   !formData.diagnostic 
-                    ? 'border-primary bg-primary/5' 
-                    : 'border-border hover:border-primary/50'
+                    ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
+                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
+                {/* Selection Indicator */}
+                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                  !formData.diagnostic 
+                    ? 'border-primary bg-primary' 
+                    : 'border-muted-foreground/30'
+                }`}>
+                  {!formData.diagnostic && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  )}
+                </div>
+                
                 <div className="flex items-start gap-4">
-                  <ArrowRight className="w-6 h-6 text-primary mt-1" />
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Skip to Dashboard</h3>
-                    <p className="text-muted-foreground mb-3">
+                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <ArrowRight className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-2 text-foreground">Skip to Dashboard</h3>
+                    <p className="text-muted-foreground mb-4">
                       Go straight to your dashboard and start practicing with general SAT questions.
                     </p>
-                    <div className="flex items-center gap-2 text-sm text-primary">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Start practicing immediately</span>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="flex items-center gap-2 text-primary">
+                        <CheckCircle className="w-4 h-4" />
+                        <span>Start practicing immediately</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary">
+                        <ArrowRight className="w-4 h-4" />
+                        <span>Jump right in</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary">
+                        <BookOpen className="w-4 h-4" />
+                        <span>Access all features</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary">
+                        <Clock className="w-4 h-4" />
+                        <span>Take diagnostic later</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Summary */}
-            <div className="bg-muted/50 rounded-xl p-4">
-              <h4 className="font-semibold mb-2">Your Selection:</h4>
-              <div className="space-y-1 text-sm">
-                <div className="flex justify-between">
-                  <span>Plan:</span>
-                  <span className="font-medium">
+            {/* Enhanced Summary */}
+            <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6 border border-border/50">
+              <h4 className="text-lg font-bold mb-4 text-foreground">Your Selection Summary</h4>
+              <div className="grid gap-4">
+                <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                      <CheckCircle className="w-4 h-4 text-primary" />
+                    </div>
+                    <span className="font-medium">Plan Selected</span>
+                  </div>
+                  <span className="font-bold text-primary">
                     {formData.planType === 'annual' ? 'Annual ($39.99/mo)' : 'Monthly ($159.99/mo)'}
                   </span>
                 </div>
+                
                 {formData.groupClasses && (
-                  <div className="flex justify-between">
-                    <span>Group Classes:</span>
-                    <span className="font-medium">+$50/week</span>
+                  <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
+                        <Users className="w-4 h-4 text-accent" />
+                      </div>
+                      <span className="font-medium">Group Classes</span>
+                    </div>
+                    <span className="font-bold text-accent">+$50/week</span>
                   </div>
                 )}
-                <div className="flex justify-between">
-                  <span>Next Step:</span>
-                  <span className="font-medium">
+                
+                <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                      {formData.diagnostic ? <Brain className="w-4 h-4 text-primary" /> : <ArrowRight className="w-4 h-4 text-primary" />}
+                    </div>
+                    <span className="font-medium">Next Step</span>
+                  </div>
+                  <span className="font-bold text-primary">
                     {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
                   </span>
                 </div>
