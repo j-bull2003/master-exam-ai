@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { SubscriptionProvider } from "@/components/SubscriptionProvider";
 import { SupportChatbot } from "@/components/SupportChatbot";
 
 // Pages
@@ -37,7 +38,8 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <TooltipProvider>
+        <SubscriptionProvider>
+          <TooltipProvider>
           <Toaster />
           <Sonner />
           <BrowserRouter>
@@ -83,9 +85,10 @@ const App = () => {
           <FeedbackButton />
           <SupportChatbot />
         </BrowserRouter>
-    </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+          </TooltipProvider>
+        </SubscriptionProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 

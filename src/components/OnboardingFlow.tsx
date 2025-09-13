@@ -6,13 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { ArrowLeft, ArrowRight, User, Mail, Lock, CreditCard, Clock, Users, Star, Shield, Eye, EyeOff } from 'lucide-react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import PaymentForm from './PaymentForm';
+import { ArrowRight, User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 const stripePromise = loadStripe('pk_test_51S6XkiLBctfCMRN8TY7LTUnCCtZHT5zKt6Ygl3Q88Ys5Nqg5aGdK0y5lUzGcwkmRHzUgO1XYYhKOOyEaGNGz4fRT008IG5n3Bd');
 
@@ -22,21 +17,18 @@ interface OnboardingFlowProps {
 
 const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const { toast } = useToast();
-  const { signUp, signIn } = useAuth();
-  const [currentStep, setCurrentStep] = useState(1);
+  const { signUp } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
-    billingPeriod: 'monthly' as 'monthly' | 'yearly',
-    groupClasses: false
+    password: ''
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const totalSteps = 1;
-  const progress = (currentStep / totalSteps) * 100;
+  const progress = 100;
 
   useEffect(() => {
     if (currentStep === 1) {
@@ -78,57 +70,39 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   const handleCompleteSignup = async () => {
+    if (!validateStep(1)) return;
+    
     setIsLoading(true);
     try {
-      console.log('Starting free account creation...');
+      console.log('Starting account creation...');
       
-      // Create the user account with NO email confirmation
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
-          data: {
-            full_name: formData.name
-          }
-        }
-      });
+      // Create the user account
+      const { error: authError } = await signUp(
+        formData.email, 
+        formData.password, 
+        formData.name.split(' ')[0], 
+        formData.name.split(' ').slice(1).join(' ')
+      );
 
       if (authError) {
         console.error('Signup error:', authError);
         
-        // If user already exists, try to sign them in
+        // If user already exists, show appropriate message
         if (authError.message?.includes('already') || authError.message?.includes('User already registered')) {
-          console.log('User exists, signing in...');
-          const { error: signInError } = await supabase.auth.signInWithPassword({
-            email: formData.email,
-            password: formData.password
-          });
-          
-          if (signInError) {
-            throw new Error("Account exists but password is incorrect. Please try logging in instead.");
-          }
-          
-          toast({
-            title: "Welcome back!",
-            description: "Signing you in to your existing account...",
-          });
+          throw new Error("Account already exists. Please try logging in instead.");
         } else {
           throw authError;
         }
-      } else {
-        toast({
-          title: "Welcome to UniHack!",
-          description: "Your free account is ready!",
-        });
       }
 
-      // Wait for session to establish
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      toast({
+        title: "Welcome to UniHack!",
+        description: "Your account is ready! You now have a 3-day free trial.",
+      });
 
-      // Navigate to dashboard
-      console.log('Redirecting to dashboard...');
-      window.location.href = '/dashboard';
+      // Wait for session to establish and call onComplete
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      onComplete?.();
       
     } catch (error: any) {
       console.error('Account creation error:', error);
@@ -147,10 +121,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       case 1:
         return (
           <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-bold text-foreground">Get Started</h2>
-              <p className="text-muted-foreground">Create your free account and access the dashboard instantly</p>
-            </div>
+              <div className="text-center space-y-2">
+                <h2 className="text-3xl font-bold text-foreground">Get Started</h2>
+                <p className="text-muted-foreground">Create your account and start your 3-day free trial</p>
+              </div>
             
             <div className="space-y-4">
               <div>
@@ -220,8 +194,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   };
 
   return (
-    <Elements stripe={stripePromise}>
-      <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
         <div className="w-full max-w-2xl">
           {/* Logo */}
           <div className="text-center mb-8">
@@ -259,14 +232,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   <span>Back</span>
                 </Button>
 
-              <Button
-                onClick={handleCompleteSignup}
-                className="flex items-center space-x-2"
-                disabled={isLoading}
-              >
-                <span>{isLoading ? 'Creating Your Free Account...' : 'Create Free Account'}</span>
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+                <Button
+                  onClick={handleCompleteSignup}
+                  className="flex items-center space-x-2"
+                  disabled={isLoading}
+                >
+                  <span>{isLoading ? 'Creating Your Account...' : 'Start Free Trial'}</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
               </div>
 
               {currentStep === 1 && (
@@ -283,7 +256,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           </Card>
         </div>
       </div>
-    </Elements>
+    </div>
   );
 };
 

@@ -177,70 +177,43 @@ export type Database = {
       }
       profiles: {
         Row: {
-          avatar_id: string | null
-          created_at: string
-          email: string
+          created_at: string | null
+          email: string | null
           exam_date: string | null
           exam_type: string | null
-          exam_types: string[] | null
-          full_name: string
+          full_name: string | null
           id: string
           stripe_customer_id: string | null
-          study_mode: string | null
-          subscription_status:
-            | Database["public"]["Enums"]["subscription_status_enum"]
-            | null
-          target_course: string | null
-          target_courses: string[] | null
-          target_universities: string[] | null
-          target_university: string | null
-          trial_end_date: string | null
-          updated_at: string
-          user_id: string
+          subscription_end_date: string | null
+          subscription_status: string | null
+          trial_start_date: string | null
+          updated_at: string | null
         }
         Insert: {
-          avatar_id?: string | null
-          created_at?: string
-          email: string
+          created_at?: string | null
+          email?: string | null
           exam_date?: string | null
           exam_type?: string | null
-          exam_types?: string[] | null
-          full_name: string
-          id?: string
+          full_name?: string | null
+          id: string
           stripe_customer_id?: string | null
-          study_mode?: string | null
-          subscription_status?:
-            | Database["public"]["Enums"]["subscription_status_enum"]
-            | null
-          target_course?: string | null
-          target_courses?: string[] | null
-          target_universities?: string[] | null
-          target_university?: string | null
-          trial_end_date?: string | null
-          updated_at?: string
-          user_id: string
+          subscription_end_date?: string | null
+          subscription_status?: string | null
+          trial_start_date?: string | null
+          updated_at?: string | null
         }
         Update: {
-          avatar_id?: string | null
-          created_at?: string
-          email?: string
+          created_at?: string | null
+          email?: string | null
           exam_date?: string | null
           exam_type?: string | null
-          exam_types?: string[] | null
-          full_name?: string
+          full_name?: string | null
           id?: string
           stripe_customer_id?: string | null
-          study_mode?: string | null
-          subscription_status?:
-            | Database["public"]["Enums"]["subscription_status_enum"]
-            | null
-          target_course?: string | null
-          target_courses?: string[] | null
-          target_universities?: string[] | null
-          target_university?: string | null
-          trial_end_date?: string | null
-          updated_at?: string
-          user_id?: string
+          subscription_end_date?: string | null
+          subscription_status?: string | null
+          trial_start_date?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }

@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserProfile } from "@/hooks/useUserProfile";
+import { useSubscription } from "@/components/SubscriptionProvider";
 import {
   Calendar,
   Target,
@@ -40,9 +41,10 @@ const Dashboard = () => {
   const { toast } = useToast();
   const { user, loading: authLoading, signOut } = useAuth();
   const { profileData, isLoading: profileLoading, updateExamDate } = useUserProfile();
+  const { subscribed, loading: subscriptionLoading } = useSubscription();
   
-  // Auth state is managed by AuthContext
-  const hasAccess = !authLoading && user !== null;
+  // Auth state is managed by AuthContext - users now have access during trial period
+  const hasAccess = !authLoading && user !== null && (subscribed || !subscriptionLoading);
   const userEmail = user?.email || "";
 
   // Check if email is confirmed (Django users are always confirmed)
@@ -135,8 +137,8 @@ const Dashboard = () => {
     }
   };
 
-  // Show loading state only if auth is loading or if we have a user but profile is loading
-  if (authLoading || (user && profileLoading)) {
+  // Show loading state only if auth is loading or if we have a user but profile/subscription is loading
+  if (authLoading || (user && (profileLoading || subscriptionLoading))) {
     return (
       <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
         <div className="text-center">

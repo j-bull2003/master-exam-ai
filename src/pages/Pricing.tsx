@@ -1,10 +1,73 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Shield, ArrowRight, Sparkles } from "lucide-react";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Pricing = () => {
+  const { session } = useAuth();
+  const { toast } = useToast();
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
+  // Product configurations
+  const plans = {
+    annual: {
+      priceId: "price_1QEjIsLBctfCMRN8GkkNjrFE", // Replace with actual Stripe price ID
+      productId: "prod_annual",
+      name: "Annual Plan",
+      price: "$39.99",
+      period: "/mo",
+      billing: "$479.99 billed annually",
+      savings: "Save $1,439.89/year"
+    },
+    monthly: {
+      priceId: "price_1QEjI9LBctfCMRN8dM3Sx99m", // Replace with actual Stripe price ID  
+      productId: "prod_monthly",
+      name: "Monthly Plan", 
+      price: "$159.99",
+      period: "/mo",
+      billing: "$159.99 monthly",
+      savings: null
+    }
+  };
+
+  const handleStartTrial = async (planType: 'annual' | 'monthly') => {
+    if (!session) {
+      // Redirect to registration
+      window.location.href = '/auth/register';
+      return;
+    }
+
+    setLoadingPlan(planType);
+    try {
+      const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
+        body: { priceId: plans[planType].priceId },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (error) throw error;
+      
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Error creating checkout:', error);
+      toast({
+        title: "Error",
+        description: "Failed to start checkout process. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingPlan(null);
+    }
+  };
+
   const features = [
     "Unlimited SAT practice questions",
     "AI-powered personalization",
@@ -56,13 +119,16 @@ const Pricing = () => {
                   </span>
                 </div>
                 
-                <h3 className="text-2xl font-bold mb-2">Annual Plan</h3>
+                <h3 className="text-2xl font-bold mb-2">{plans.annual.name}</h3>
                 <div className="mb-2">
-                  <span className="text-5xl font-black">$39.99</span>
-                  <span className="text-muted-foreground text-lg">/mo</span>
+                  <span className="text-5xl font-black">{plans.annual.price}</span>
+                  <span className="text-muted-foreground text-lg">{plans.annual.period}</span>
+                </div>
+                <div className="mb-2">
+                  <span className="text-muted-foreground">{plans.annual.billing}</span>
                 </div>
                 <div className="mb-6">
-                  <span className="text-muted-foreground">$479.99 billed annually</span>
+                  <span className="text-sm text-success font-semibold">{plans.annual.savings}</span>
                 </div>
                 
                 <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
@@ -72,23 +138,25 @@ const Pricing = () => {
                   </div>
                 </div>
 
-                <Link to="/auth/register" className="block mb-4">
-                  <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-lg py-3">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
+                <Button 
+                  onClick={() => handleStartTrial('annual')}
+                  disabled={loadingPlan === 'annual'}
+                  className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-lg py-3 mb-4"
+                >
+                  {loadingPlan === 'annual' ? 'Loading...' : 'Start Free Trial'}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
               </div>
 
               {/* Monthly Plan */}
               <div className="relative p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/20 transition-all duration-300">
-                <h3 className="text-2xl font-bold mb-2">Monthly Plan</h3>
+                <h3 className="text-2xl font-bold mb-2">{plans.monthly.name}</h3>
                 <div className="mb-2">
-                  <span className="text-5xl font-black">$159.99</span>
-                  <span className="text-muted-foreground text-lg">/mo</span>
+                  <span className="text-5xl font-black">{plans.monthly.price}</span>
+                  <span className="text-muted-foreground text-lg">{plans.monthly.period}</span>
                 </div>
                 <div className="mb-6">
-                  <span className="text-muted-foreground">$159.99 monthly</span>
+                  <span className="text-muted-foreground">{plans.monthly.billing}</span>
                 </div>
                 
                 <div className="bg-gradient-to-r from-success/10 to-success/5 border border-success/20 rounded-xl p-4 mb-6">
@@ -98,12 +166,15 @@ const Pricing = () => {
                   </div>
                 </div>
 
-                <Link to="/auth/register" className="block mb-4">
-                  <Button variant="outline" className="w-full text-lg py-3">
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
+                <Button 
+                  onClick={() => handleStartTrial('monthly')}
+                  disabled={loadingPlan === 'monthly'}
+                  variant="outline" 
+                  className="w-full text-lg py-3 mb-4"
+                >
+                  {loadingPlan === 'monthly' ? 'Loading...' : 'Start Free Trial'}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
               </div>
             </div>
             
