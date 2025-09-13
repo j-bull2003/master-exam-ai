@@ -32,9 +32,9 @@ serve(async (req) => {
     if (!user?.email) throw new Error("User not authenticated or email not available");
     logStep("User authenticated", { userId: user.id, email: user.email });
 
-    const { priceId, mode } = await req.json();
+    const { priceId, mode, metadata } = await req.json();
     if (!priceId) throw new Error("Price ID is required");
-    logStep("Price ID and mode provided", { priceId, mode });
+    logStep("Request data received", { priceId, mode, metadata });
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", { 
       apiVersion: "2025-08-27.basil" 
@@ -57,7 +57,8 @@ serve(async (req) => {
       cancel_url: `${req.headers.get("origin")}/dashboard?checkout=cancel`,
       metadata: {
         user_id: user.id,
-        business_name: "Unihack"
+        business_name: "Unihack",
+        ...(metadata || {})
       }
     };
 
@@ -78,7 +79,8 @@ serve(async (req) => {
         description: "Unihack SAT Platform Access",
         metadata: {
           user_id: user.id,
-          business_name: "Unihack"
+          business_name: "Unihack",
+          ...(metadata || {})
         }
       };
       logStep("Creating subscription session");

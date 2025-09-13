@@ -170,17 +170,18 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error("Please try again - session not established");
 
-      // Update profile with onboarding data and trial status
+      // Update profile with comprehensive onboarding data
       const { error: profileError } = await supabase
         .from('profiles')
         .update({
           full_name: formData.name,
-          exam_type: 'SAT', // Since we only do SAT
+          email: formData.email,
+          exam_type: 'SAT',
           exam_date: formData.examDate?.toISOString().split('T')[0] || null,
-          target_university: formData.targetUniversities[0] || null,
-          target_universities: formData.targetUniversities,
+          target_university: formData.targetUniversities[0] || 'Harvard University',
+          target_universities: formData.targetUniversities.length > 0 ? formData.targetUniversities : ['Harvard University'],
           subscription_status: 'trial',
-          trial_end_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days from now
+          trial_end_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()
         })
         .eq('user_id', session.user.id);
 
@@ -188,23 +189,28 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         console.error('Profile update error:', profileError);
       }
 
-      // Create checkout session for trial with card collection (no immediate charge)
+      // Create Stripe checkout for trial (collects payment method)
       const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
         body: { 
           priceId: PRICING_PLANS.annual.price_id,
-          mode: 'trial' // Special mode for trial
+          mode: 'trial',
+          metadata: {
+            exam_date: formData.examDate?.toISOString().split('T')[0] || '',
+            target_university: formData.targetUniversities[0] || '',
+            target_score: formData.targetScore,
+            group_classes: formData.interestedInGroupClasses.toString()
+          }
         },
         headers: { Authorization: `Bearer ${session.access_token}` }
       });
 
       if (error) throw error;
 
-      // Redirect to Stripe checkout to collect card details
       window.open(data.url, '_blank');
       
       toast({
         title: "Welcome to UniHack.ai!",
-        description: `Your 3-day free trial has started${formData.interestedInGroupClasses ? ' with group classes access' : ''}!`,
+        description: `Your journey to ${formData.targetUniversities[0] || 'your dream university'} starts now!`,
       });
 
       onComplete();
@@ -242,37 +248,44 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error("Please try again - session not established");
 
-      // Update profile with onboarding data
+      // Update profile with comprehensive onboarding data
       const { error: profileError } = await supabase
         .from('profiles')
         .update({
           full_name: formData.name,
-          exam_type: 'SAT', // Since we only do SAT
+          email: formData.email,
+          exam_type: 'SAT',
           exam_date: formData.examDate?.toISOString().split('T')[0] || null,
-          target_university: formData.targetUniversities[0] || null,
-          target_universities: formData.targetUniversities,
+          target_university: formData.targetUniversities[0] || 'Harvard University',
+          target_universities: formData.targetUniversities.length > 0 ? formData.targetUniversities : ['Harvard University'],
           subscription_status: 'trial' // Will be updated to 'active' after successful payment
         })
         .eq('user_id', session.user.id);
 
       if (profileError) console.error('Profile update error:', profileError);
 
-      // Create checkout session
+      // Create checkout session with metadata
       const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
-        body: { priceId: PRICING_PLANS.annual.price_id },
+        body: { 
+          priceId: PRICING_PLANS.annual.price_id,
+          metadata: {
+            exam_date: formData.examDate?.toISOString().split('T')[0] || '',
+            target_university: formData.targetUniversities[0] || '',
+            target_score: formData.targetScore,
+            group_classes: formData.interestedInGroupClasses.toString()
+          }
+        },
         headers: { Authorization: `Bearer ${session.access_token}` }
       });
 
       if (error) throw error;
 
-      // Redirect to Stripe checkout
       window.open(data.url, '_blank');
       
-      // Complete onboarding after a short delay
       setTimeout(() => {
         toast({
           title: "Account created!",
-          description: "Redirecting to secure payment...",
+          description: `Starting your journey to ${formData.targetUniversities[0] || 'your dream university'}...`,
         });
         onComplete();
       }, 1000);
@@ -676,9 +689,39 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               </div>
             )}
 
-            {/* Step 4: Payment Options */}
+            {/* Step 4: Payment Options with Personal Summary */}
             {currentStep === 4 && (
               <div className="space-y-6">
+                {/* Personal Goal Summary */}
+                <div className="bg-gradient-to-r from-primary/10 to-primary-variant/10 p-6 rounded-lg border border-primary/20">
+                  <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                    <Target className="h-5 w-5 text-primary" />
+                    Your SAT Journey
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="flex flex-col">
+                      <span className="text-muted-foreground">Dream University</span>
+                      <span className="font-medium">{formData.targetUniversities[0] || 'Not selected'}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-muted-foreground">Target Score</span>
+                      <span className="font-medium">{formData.targetScore || 'Not set'}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-muted-foreground">Exam Date</span>
+                      <span className="font-medium">
+                        {formData.examDate ? formData.examDate.toLocaleDateString() : 'Not scheduled'}
+                      </span>
+                    </div>
+                  </div>
+                  {formData.interestedInGroupClasses && (
+                    <div className="mt-3 flex items-center gap-2 text-purple-700">
+                      <Users className="h-4 w-4" />
+                      <span className="text-sm font-medium">Including SAT Group Classes</span>
+                    </div>
+                  )}
+                </div>
+
                 {/* Free Trial Option */}
                 <div className="border-2 border-green-200 bg-green-50 p-6 rounded-lg">
                   <div className="flex items-center gap-3 mb-4">
@@ -687,7 +730,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     <Badge variant="secondary" className="bg-green-100 text-green-800">Recommended</Badge>
                   </div>
                   <p className="text-green-700 mb-4">
-                    Get full access to all SAT prep features for 3 days. No payment required to start.
+                    Start your journey to {formData.targetUniversities[0] || 'your dream university'} risk-free. 
+                    We'll collect your payment details to activate premium features after your trial.
                   </p>
                   <ul className="space-y-2 text-sm text-green-700 mb-4">
                     <li className="flex items-center gap-2">
@@ -696,7 +740,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4" />
-                      AI-powered personalization
+                      AI-powered personalization for your {formData.targetScore} goal
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4" />
@@ -704,15 +748,21 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4" />
-                      Detailed analytics
+                      Detailed analytics & progress tracking
                     </li>
+                    {formData.interestedInGroupClasses && (
+                      <li className="flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4" />
+                        Access to SAT Group Classes ($50/week)
+                      </li>
+                    )}
                   </ul>
                   <Button 
                     onClick={handleStartTrial}
                     disabled={isLoading}
                     className="w-full bg-green-600 hover:bg-green-700"
                   >
-                    {isLoading ? 'Creating Account...' : 'Start Free Trial'}
+                    {isLoading ? 'Setting Up Your Account...' : 'Start Free Trial'}
                     {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
                   </Button>
                 </div>
@@ -734,7 +784,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     <p className="text-sm text-purple-600">{PRICING_PLANS.annual.billed}</p>
                   </div>
                   <p className="text-purple-700 mb-4">
-                    Skip the trial and get immediate access to everything plus premium features.
+                    Skip the trial and get immediate access to everything. Perfect for students with upcoming 
+                    {formData.examDate ? ` exams on ${formData.examDate.toLocaleDateString()}` : ' SAT dates'}.
                   </p>
                   <Button 
                     onClick={handleUpgradeNow}
