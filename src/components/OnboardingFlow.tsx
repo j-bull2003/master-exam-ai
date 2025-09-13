@@ -657,11 +657,15 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                         <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
                           <CheckCircle className="w-4 h-4 text-primary" />
                         </div>
-                        <span className="font-medium text-foreground">Plan Selected</span>
+                        <div className="flex flex-col">
+                          <span className="font-medium text-foreground">Plan</span>
+                          <span className="font-medium text-foreground">Selected</span>
+                        </div>
                       </div>
-                      <span className="font-bold text-primary">
-                        {formData.planType === 'annual' ? 'Annual ($39.99/mo)' : 'Monthly ($159.99/mo)'}
-                      </span>
+                      <div className="text-right">
+                        <div className="font-bold text-primary">Annual</div>
+                        <div className="font-bold text-primary">($39.99/mo)</div>
+                      </div>
                     </div>
                     
                     {formData.groupClasses && (
@@ -670,9 +674,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                           <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
                             <Users className="w-4 h-4 text-primary" />
                           </div>
-                          <span className="font-medium text-foreground">Live Group Classes</span>
+                          <div className="flex flex-col">
+                            <span className="font-medium text-foreground">Group</span>
+                            <span className="font-medium text-foreground">Classes</span>
+                          </div>
                         </div>
-                        <span className="font-bold text-primary">+$50/week</span>
+                        <div className="text-right">
+                          <div className="font-bold text-primary">+$50/week</div>
+                        </div>
                       </div>
                     )}
                     
@@ -681,11 +690,15 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                         <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
                           {formData.diagnostic ? <Brain className="w-4 h-4 text-primary" /> : <ArrowRight className="w-4 h-4 text-primary" />}
                         </div>
-                        <span className="font-medium text-foreground">Next Step</span>
+                        <div className="flex flex-col">
+                          <span className="font-medium text-foreground">Next Step</span>
+                        </div>
                       </div>
-                      <span className="font-bold text-primary">
-                        {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
-                      </span>
+                      <div className="text-right">
+                        <div className="font-bold text-primary">
+                          {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
