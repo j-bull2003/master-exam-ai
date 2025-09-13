@@ -35,7 +35,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const totalSteps = 2;
+  const totalSteps = 1;
   const progress = (currentStep / totalSteps) * 100;
 
   useEffect(() => {
@@ -80,9 +80,9 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const handleCompleteSignup = async () => {
     setIsLoading(true);
     try {
-      console.log('Starting complete signup process...');
+      console.log('Starting free account creation...');
       
-      // Create the user account - NO EMAIL CONFIRMATION
+      // Create the user account with NO email confirmation
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -97,8 +97,8 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       if (authError) {
         console.error('Signup error:', authError);
         
-        // If user already exists, sign them in
-        if (authError.message?.includes('already') || authError.message?.includes('registered')) {
+        // If user already exists, try to sign them in
+        if (authError.message?.includes('already') || authError.message?.includes('User already registered')) {
           console.log('User exists, signing in...');
           const { error: signInError } = await supabase.auth.signInWithPassword({
             email: formData.email,
@@ -108,26 +108,32 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           if (signInError) {
             throw new Error("Account exists but password is incorrect. Please try logging in instead.");
           }
+          
+          toast({
+            title: "Welcome back!",
+            description: "Signing you in to your existing account...",
+          });
         } else {
           throw authError;
         }
+      } else {
+        toast({
+          title: "Welcome to UniHack!",
+          description: "Your free account is ready!",
+        });
       }
 
-      // Wait a moment for session to establish
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Wait for session to establish
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
-      toast({
-        title: "Welcome to UniHack!",
-        description: "Your account is ready. Taking you to the dashboard...",
-      });
-
-      // Redirect directly to dashboard
+      // Navigate to dashboard
+      console.log('Redirecting to dashboard...');
       window.location.href = '/dashboard';
       
     } catch (error: any) {
-      console.error('Signup error:', error);
+      console.error('Account creation error:', error);
       toast({
-        title: "Registration Failed",
+        title: "Account Creation Failed",
         description: error.message || 'Please try again',
         variant: "destructive",
       });
@@ -143,7 +149,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           <div className="space-y-6">
             <div className="text-center space-y-2">
               <h2 className="text-3xl font-bold text-foreground">Get Started</h2>
-              <p className="text-muted-foreground">Create your account in seconds</p>
+              <p className="text-muted-foreground">Create your free account and access the dashboard instantly</p>
             </div>
             
             <div className="space-y-4">
@@ -207,90 +213,6 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           </div>
         );
 
-      case 2:
-        return (
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <CreditCard className="mx-auto h-16 w-16 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">Complete Your Setup</h2>
-              <p className="text-muted-foreground">Choose your plan and add payment details</p>
-            </div>
-
-            {/* Quick Plan Selection */}
-            <div className="grid gap-3">
-              <div 
-                className={`p-3 border-2 rounded-lg cursor-pointer transition-all ${
-                  formData.billingPeriod === 'monthly' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
-                }`}
-                onClick={() => handleInputChange('billingPeriod', 'monthly')}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-4 h-4 rounded-full border-2 ${
-                      formData.billingPeriod === 'monthly' ? 'border-primary bg-primary' : 'border-gray-300'
-                    }`} />
-                    <span className="font-medium">Monthly</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="font-bold">$159.99/month</span>
-                    <Badge variant="secondary" className="ml-2 bg-green-100 text-green-800">3-Day Trial</Badge>
-                  </div>
-                </div>
-              </div>
-
-              <div 
-                className={`p-3 border-2 rounded-lg cursor-pointer transition-all ${
-                  formData.billingPeriod === 'yearly' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
-                }`}
-                onClick={() => handleInputChange('billingPeriod', 'yearly')}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-4 h-4 rounded-full border-2 ${
-                      formData.billingPeriod === 'yearly' ? 'border-primary bg-primary' : 'border-gray-300'
-                    }`} />
-                    <span className="font-medium">Yearly</span>
-                    <Badge className="bg-green-600 text-white text-xs">Save $1,440</Badge>
-                  </div>
-                  <div className="text-right">
-                    <span className="font-bold">$39.99/month</span>
-                    <div className="text-xs text-muted-foreground">$479.99/year</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Group Classes Add-on */}
-            <div 
-              className={`p-3 border rounded-lg cursor-pointer transition-all ${
-                formData.groupClasses ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
-              }`}
-              onClick={() => handleInputChange('groupClasses', !formData.groupClasses)}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <Checkbox 
-                    checked={formData.groupClasses}
-                    onChange={() => handleInputChange('groupClasses', !formData.groupClasses)}
-                  />
-                  <div>
-                    <span className="font-medium">Add Expert Group Classes</span>
-                    <p className="text-xs text-muted-foreground">Live sessions with SAT specialists</p>
-                  </div>
-                </div>
-                <span className="text-sm font-medium text-primary">+$50/week</span>
-              </div>
-            </div>
-
-            {/* Embedded Payment Form */}
-            <PaymentForm 
-              formData={formData}
-              onPaymentSuccess={() => window.location.href = '/dashboard'}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-            />
-          </div>
-        );
 
       default:
         return null;
@@ -337,16 +259,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   <span>Back</span>
                 </Button>
 
-              {currentStep < 2 && (
-                <Button
-                  onClick={currentStep === 1 ? handleCompleteSignup : nextStep}
-                  className="flex items-center space-x-2"
-                  disabled={isLoading}
-                >
-                  <span>{currentStep === 1 ? (isLoading ? 'Creating Account...' : 'Create Account & Continue') : 'Continue'}</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              )}
+              <Button
+                onClick={handleCompleteSignup}
+                className="flex items-center space-x-2"
+                disabled={isLoading}
+              >
+                <span>{isLoading ? 'Creating Your Free Account...' : 'Create Free Account'}</span>
+                <ArrowRight className="h-4 w-4" />
+              </Button>
               </div>
 
               {currentStep === 1 && (
