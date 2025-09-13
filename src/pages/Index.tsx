@@ -223,7 +223,7 @@ const Index = () => {
                   <CheckCircle className="w-4 h-4 text-success" />
                   <span className="text-success font-semibold">3-day free trial</span>
                 </div>
-                <div className="text-muted-foreground font-medium text-center">From $9.99/month (annual)</div>
+                <div className="text-muted-foreground font-medium text-center">From $39.99/month (annual)</div>
                 <div className="text-muted-foreground text-center">No setup fees • Cancel anytime</div>
               </div>
             ) : (
