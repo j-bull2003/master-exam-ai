@@ -333,10 +333,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                     </div>
                     <div className="text-right">
                       <div className="flex items-center space-x-2">
-                        <span className="text-xl font-bold">$1,320/year</span>
-                        <Badge className="bg-green-600 text-white">Save $600</Badge>
+                        <span className="text-xl font-bold">$39.99/month</span>
+                        <Badge className="bg-green-600 text-white">Save $1,440</Badge>
                       </div>
-                      <div className="text-sm text-muted-foreground">$110/month when paid yearly</div>
+                      <div className="text-sm text-muted-foreground">$479.99 billed annually</div>
                       <Badge variant="secondary" className="bg-green-100 text-green-800">3-Day Trial</Badge>
                     </div>
                   </div>
