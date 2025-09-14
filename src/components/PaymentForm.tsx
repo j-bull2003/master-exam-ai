@@ -366,6 +366,16 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
             <Lock className="h-4 w-4" />
             <span>Powered by Stripe • PCI DSS compliant</span>
           </div>
+
+          {/* Debug info */}
+          <div className="text-xs text-muted-foreground p-2 bg-muted rounded">
+            <p>Debug: Setup Intent: {setupIntent ? 'Ready' : 'Loading...'}</p>
+            <p>Stripe: {stripe ? 'Ready' : 'Not Ready'}</p>
+            <p>Name: {billingInfo.name.trim() ? 'OK' : 'Missing'}</p>
+            <p>Email: {billingInfo.email.trim() ? 'OK' : 'Missing'}</p>
+            <p>Address: {billingInfo.address.line1.trim() ? 'OK' : 'Missing'}</p>
+            <p>City: {billingInfo.address.city.trim() ? 'OK' : 'Missing'}</p>
+          </div>
         </div>
 
         <Button 

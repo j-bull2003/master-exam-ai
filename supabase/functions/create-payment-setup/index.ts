@@ -82,9 +82,9 @@ serve(async (req) => {
       const { payment_method_id, group_classes } = requestData;
 
       if (group_classes) {
-        // Create immediate payment for group classes
+        // Create immediate payment for group classes (TEST: $0.01)
         const paymentIntent = await stripe.paymentIntents.create({
-          amount: 5000, // $50
+          amount: 1, // $0.01 for testing
           currency: "usd",
           customer: customerId,
           payment_method: payment_method_id,
