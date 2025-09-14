@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import tobiasImage from "@/assets/tobias-oxford-clear.jpg";
 import zaynImage from "@/assets/zayn-oxford.jpg";
+import matthewImage from "@/assets/matthew-cambridge.jpg";
 
 const SATPrograms = () => {
   const scrollToSuccessStories = () => {
@@ -248,13 +249,13 @@ const SATPrograms = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {/* Dr. Tobias */}
               <div className="group">
                 <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
                   {/* Compact image frame */}
                   <div className="relative mb-6">
-                    <div className="w-full aspect-[3/4] max-w-[200px] mx-auto rounded-xl overflow-hidden border-3 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
+                    <div className="w-full aspect-[3/4] max-w-[180px] mx-auto rounded-xl overflow-hidden border-3 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
                       <img 
                         src={tobiasImage} 
                         alt="Dr. Tobias - Oxford Mathematics Graduate" 
@@ -267,7 +268,7 @@ const SATPrograms = () => {
                   </div>
                   
                   <div className="text-center">
-                    <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">Dr. Tobias</h3>
+                    <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Dr. Tobias</h3>
                     <div className="space-y-1 mb-4">
                       <p className="text-slate-600 font-medium text-sm">BSc, MSc, PhD Mathematics</p>
                       <p className="text-slate-600 font-medium text-sm">University of Oxford</p>
@@ -275,15 +276,13 @@ const SATPrograms = () => {
                     
                     <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-3 border border-slate-200/50 mb-4">
                       <p className="text-slate-700 text-xs leading-relaxed italic">
-                        "I specialize in making complex mathematical concepts accessible while building strong analytical reading skills. 
-                        Every SAT section requires logical reasoning—that's where I excel."
+                        "I specialize in making complex mathematical concepts accessible while building strong analytical reading skills."
                       </p>
                     </div>
                     
                     <div className="flex flex-wrap justify-center gap-2">
                       <Badge variant="secondary" className="text-xs">SAT Math</Badge>
                       <Badge variant="secondary" className="text-xs">Reading & Writing</Badge>
-                      <Badge variant="secondary" className="text-xs">Problem Solving</Badge>
                     </div>
                   </div>
                 </div>
@@ -294,7 +293,7 @@ const SATPrograms = () => {
                 <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
                   {/* Compact image frame */}
                   <div className="relative mb-6">
-                    <div className="w-full aspect-[3/4] max-w-[200px] mx-auto rounded-xl overflow-hidden border-3 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
+                    <div className="w-full aspect-[3/4] max-w-[180px] mx-auto rounded-xl overflow-hidden border-3 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
                       <img 
                         src={zaynImage} 
                         alt="Dr. Zayn - Oxford Mathematics Graduate" 
@@ -307,7 +306,7 @@ const SATPrograms = () => {
                   </div>
                   
                   <div className="text-center">
-                    <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">Dr. Zayn</h3>
+                    <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Dr. Zayn</h3>
                     <div className="space-y-1 mb-4">
                       <p className="text-slate-600 font-medium text-sm">BSc, MSc, PhD Mathematics</p>
                       <p className="text-slate-600 font-medium text-sm">University of Oxford</p>
@@ -315,15 +314,51 @@ const SATPrograms = () => {
                     
                     <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-3 border border-slate-200/50 mb-4">
                       <p className="text-slate-700 text-xs leading-relaxed italic">
-                        "My dual expertise in quantitative analysis and textual interpretation helps students master both SAT sections. 
-                        I transform test anxiety into strategic confidence."
+                        "My dual expertise in quantitative analysis and textual interpretation helps students master both SAT sections."
                       </p>
                     </div>
                     
                     <div className="flex flex-wrap justify-center gap-2">
                       <Badge variant="secondary" className="text-xs">SAT Math</Badge>
                       <Badge variant="secondary" className="text-xs">Reading & Writing</Badge>
-                      <Badge variant="secondary" className="text-xs">Test Strategy</Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dr. Matthew */}
+              <div className="group md:col-span-2 lg:col-span-1 mx-auto">
+                <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                  {/* Compact image frame */}
+                  <div className="relative mb-6">
+                    <div className="w-full aspect-[3/4] max-w-[180px] mx-auto rounded-xl overflow-hidden border-3 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
+                      <img 
+                        src={matthewImage} 
+                        alt="Dr. Matthew - Cambridge Mathematics Graduate" 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    </div>
+                    <div className="absolute -bottom-3 -right-3 w-12 h-12 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-xl border-3 border-white">
+                      <GraduationCap className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Dr. Matthew</h3>
+                    <div className="space-y-1 mb-4">
+                      <p className="text-slate-600 font-medium text-sm">PhD Pure Mathematics</p>
+                      <p className="text-slate-600 font-medium text-sm">University of Cambridge</p>
+                    </div>
+                    
+                    <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-3 border border-slate-200/50 mb-4">
+                      <p className="text-slate-700 text-xs leading-relaxed italic">
+                        "Pure mathematics training from Cambridge gives me unique insight into both abstract reasoning and practical problem-solving strategies."
+                      </p>
+                    </div>
+                    
+                    <div className="flex flex-wrap justify-center gap-2">
+                      <Badge variant="secondary" className="text-xs">SAT Math</Badge>
+                      <Badge variant="secondary" className="text-xs">Reading & Writing</Badge>
                     </div>
                   </div>
                 </div>
@@ -332,16 +367,16 @@ const SATPrograms = () => {
 
             {/* Combined expertise section */}
             <div className="mt-12 text-center">
-              <div className="bg-gradient-to-r from-slate-900/5 via-slate-800/5 to-slate-900/5 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 max-w-3xl mx-auto">
-                <h3 className="font-serif text-xl font-bold text-slate-900 mb-3">Complete SAT Mastery</h3>
+              <div className="bg-gradient-to-r from-slate-900/5 via-slate-800/5 to-slate-900/5 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 max-w-4xl mx-auto">
+                <h3 className="font-serif text-xl font-bold text-slate-900 mb-3">Elite Academic Excellence</h3>
                 <p className="text-slate-600 leading-relaxed mb-4 text-sm">
-                  Both Dr. Tobias and Dr. Zayn are expert coaches for all SAT sections—Math and Reading & Writing. 
-                  Their Oxford training ensures comprehensive coverage with the highest academic standards.
+                  Our coaches combine Oxford and Cambridge training to deliver unparalleled SAT preparation. 
+                  Each expert covers both Math and Reading & Writing with the highest academic standards.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <div className="flex items-center gap-2 text-slate-700">
                     <Award className="w-4 h-4 text-slate-600" />
-                    <span className="font-medium text-sm">Oxford Trained</span>
+                    <span className="font-medium text-sm">Oxbridge Trained</span>
                   </div>
                   <div className="flex items-center gap-2 text-slate-700">
                     <Target className="w-4 h-4 text-slate-600" />
