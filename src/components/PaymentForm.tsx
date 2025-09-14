@@ -27,7 +27,7 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
   React.useEffect(() => {
     const createSetupIntent = async () => {
       try {
-        console.log('Creating setup intent...');
+        console.log('PaymentForm: Starting setup intent creation...');
         
         // Wait for session to be available with retry logic
         let session = null;
@@ -36,18 +36,20 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
         
         while (!session && retries < maxRetries) {
           const { data: { session: currentSession } } = await supabase.auth.getSession();
+          console.log(`PaymentForm: Session check ${retries + 1}/${maxRetries}:`, !!currentSession);
+          
           if (currentSession) {
             session = currentSession;
             break;
           }
           
-          console.log(`No session found, retry ${retries + 1}/${maxRetries}`);
+          console.log(`PaymentForm: No session found, retry ${retries + 1}/${maxRetries}`);
           await new Promise(resolve => setTimeout(resolve, 500)); // Wait 500ms before retry
           retries++;
         }
         
         if (!session) {
-          console.log('No session found after retries');
+          console.log('PaymentForm: No session found after retries');
           toast({
             title: "Session Error",
             description: "Please try refreshing the page and logging in again.",
@@ -56,7 +58,12 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
           return;
         }
 
-        console.log('Session found, calling create-payment-setup...');
+        console.log('PaymentForm: Session found, calling create-payment-setup...');
+        console.log('PaymentForm: Request body:', {
+          action: 'create_setup_intent',
+          name: formData.name
+        });
+
         const { data, error } = await supabase.functions.invoke('create-payment-setup', {
           body: {
             action: 'create_setup_intent',
@@ -64,14 +71,22 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
           }
         });
 
+        console.log('PaymentForm: Function response:', { data, error });
+
         if (error) {
-          console.error('Setup intent error:', error);
+          console.error('PaymentForm: Setup intent error:', error);
           throw error;
         }
-        console.log('Setup intent created:', data);
+        
+        if (!data?.client_secret) {
+          console.error('PaymentForm: No client_secret in response:', data);
+          throw new Error('Invalid response from payment setup');
+        }
+        
+        console.log('PaymentForm: Setup intent created successfully:', data.client_secret);
         setSetupIntent(data.client_secret);
       } catch (error: any) {
-        console.error('Setup intent error:', error);
+        console.error('PaymentForm: Setup intent error:', error);
         toast({
           title: "Setup Error",
           description: error.message || 'Failed to initialize payment setup',
@@ -195,6 +210,9 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
         <CreditCard className="mx-auto h-16 w-16 text-primary" />
         <h2 className="text-3xl font-bold text-foreground">Payment Details</h2>
         <p className="text-muted-foreground">Secure payment processing with Stripe</p>
+        {!setupIntent && (
+          <p className="text-sm text-muted-foreground">Initializing payment form...</p>
+        )}
       </div>
 
       <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
