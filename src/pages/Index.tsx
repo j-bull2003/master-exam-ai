@@ -281,7 +281,7 @@ const Index = () => {
       <section className="py-4 sm:py-6 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-3 sm:mb-4">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2 text-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2 text-foreground">
               Trusted SAT Preparation Platform
             </h2>
             <p className="text-muted-foreground text-xs sm:text-sm px-4">Join thousands of students who've improved their SAT scores</p>
@@ -325,7 +325,7 @@ const Index = () => {
       <section className="py-6 sm:py-8 bg-background">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-6 sm:mb-8">
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-foreground px-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-foreground px-4">
               Why Students Choose UniHack for SAT Prep
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
@@ -368,7 +368,7 @@ const Index = () => {
               Live Platform Preview
             </div>
             
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-white leading-tight px-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-white leading-tight px-4">
               See Your Personalized
               <br />
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
@@ -424,7 +424,7 @@ const Index = () => {
               AI-Powered Analytics Engine
             </div>
             
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-foreground leading-tight">
               Deep-Dive Analytics That
               <br />
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
@@ -669,7 +669,7 @@ const Index = () => {
       <section className="py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 relative">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 text-foreground">
               Questions built by a team of 
               <span className="bg-gradient-to-r from-primary to-primary-variant bg-clip-text text-transparent"> educators, tutors, </span>
               and 
@@ -704,7 +704,7 @@ const Index = () => {
       <section className="py-20 bg-muted/20">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-foreground">
               Verified SAT Score Improvements
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -776,7 +776,7 @@ const Index = () => {
       <section className="pt-4 pb-4 ">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">
               <span className="text-foreground">Simple,</span>{" "}
               <span className="bg-gradient-to-r from-primary via-primary-variant to-primary-glow bg-clip-text text-transparent">
                 Transparent
