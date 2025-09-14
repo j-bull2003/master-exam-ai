@@ -639,24 +639,22 @@ const Index = () => {
                   </div>
 
                   {/* Personal AI Insights */}
-                  <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl p-4">
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                      <h5 className="font-bold text-foreground text-sm">🤖 Your AI Tutor Says</h5>
+                  <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-3">
+                    <div className="flex items-center gap-2 mb-3">
                       <div className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Personalized</div>
                     </div>
-                    <div className="space-y-3 text-xs">
-                      <div className="bg-white/50 rounded-lg p-3 border border-primary/10">
+                    <div className="space-y-2 text-xs">
+                      <div className="bg-white/50 rounded-lg p-2 border border-primary/10">
                         <div className="font-medium text-foreground mb-1">🎯 Today's Focus</div>
                         <div className="text-muted-foreground">Spend 25 minutes on linear equations in 2 variables. Start with substitution method.</div>
                       </div>
-                      <div className="bg-white/50 rounded-lg p-3 border border-green-200">
+                      <div className="bg-white/50 rounded-lg p-2 border border-green-200">
                         <div className="font-medium text-green-700 mb-1">💪 Strength to Leverage</div>
-                        <div className="text-green-600">Your textual evidence skills are exceptional. Apply this analytical thinking to word problems.</div>
+                        <div className="text-muted-foreground">Your textual evidence skills are exceptional. Apply this analytical thinking to word problems.</div>
                       </div>
-                      <div className="bg-white/50 rounded-lg p-3 border border-purple-200">
+                      <div className="bg-white/50 rounded-lg p-2 border border-purple-200">
                         <div className="font-medium text-purple-700 mb-1">🚀 Quick Win Opportunity</div>
-                        <div className="text-purple-600">You're 1 breakthrough away from 80%+ in probability. Focus on conditional scenarios.</div>
+                        <div className="text-muted-foreground">You're 1 breakthrough away from 80%+ in probability. Focus on conditional scenarios.</div>
                       </div>
                     </div>
                   </div>
