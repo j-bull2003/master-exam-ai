@@ -91,6 +91,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
+      // Redirect to home page after successful logout
+      window.location.href = '/';
     } catch (error) {
       console.error('Sign out error:', error);
     }
