@@ -450,7 +450,7 @@ const Index = () => {
                   <div className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-medium animate-pulse">Needs Focus</div>
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-foreground">Your Weakness</h3>
-                <p className="text-muted-foreground text-sm mb-4">Linear equations in 2 variables is holding you back</p>
+                <p className="text-muted-foreground text-sm mb-4">Heart of Algebra is holding you back</p>
                 <div className="text-2xl font-bold text-red-600 mb-1">64%</div>
                 <div className="text-xs text-muted-foreground">15 points below target</div>
                 <div className="mt-3 bg-gradient-to-r from-red-100 to-red-50 border border-red-200 rounded-lg p-3">
@@ -466,7 +466,7 @@ const Index = () => {
                   <div className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full font-medium">Top Strength</div>
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-foreground">Your Superpower</h3>
-                <p className="text-muted-foreground text-sm mb-4">Command of Evidence: Textual mastery</p>
+                <p className="text-muted-foreground text-sm mb-4">Information and Ideas mastery</p>
                 <div className="text-2xl font-bold text-green-600 mb-1">96%</div>
                 <div className="text-xs text-muted-foreground">maintain this excellence</div>
                 <div className="mt-3 bg-gradient-to-r from-green-100 to-green-50 border border-green-200 rounded-lg p-3">
@@ -593,8 +593,8 @@ const Index = () => {
                       <div className="bg-gradient-to-r from-red-50 to-red-100/50 border border-red-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300 animate-pulse">
                         <div className="flex justify-between items-center mb-3">
                           <div>
-                            <div className="font-bold text-slate-900 text-sm sm:text-base">Linear equations in 2 variables</div>
-                            <div className="text-xs sm:text-sm text-red-700 font-medium">Heart of Algebra • Needs immediate focus</div>
+                            <div className="font-bold text-slate-900 text-sm sm:text-base">Heart of Algebra</div>
+                            <div className="text-xs sm:text-sm text-red-700 font-medium">Linear equations & systems • Needs immediate focus</div>
                           </div>
                           <div className="text-right">
                             <div className="text-red-600 font-bold text-lg flex items-center gap-2">
