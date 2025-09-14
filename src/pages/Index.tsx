@@ -278,151 +278,268 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Live Analytics Dashboard Section */}
-      <section className="py-12 sm:py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-foreground">
-              Deep Dive Analytics That Rapidly Accelerate Your Score
+      {/* Revolutionary Analytics Intelligence Section */}
+      <section className="py-16 sm:py-24 relative overflow-hidden">
+        {/* Dynamic Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-background"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+        
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          {/* Header */}
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6 animate-fade-in">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium text-primary">Live Analytics Engine</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <span className="text-foreground">Revolutionary </span>
+              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Analytics Intelligence</span>
             </h2>
-            <p className="text-muted-foreground text-sm sm:text-base px-4">Real-time insights from our AI-powered SAT preparation platform</p>
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              Watch your SAT scores transform with AI-powered insights that identify exactly where you need improvement and accelerate your progress by up to 300% faster than traditional methods.
+            </p>
           </div>
-          
-          <div className="max-w-5xl mx-auto">
-            {/* Analytics Dashboard Container */}
-            <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 shadow-lg">
+
+          {/* Live Metrics Dashboard */}
+          <div className="max-w-7xl mx-auto mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
               
-              {/* Dashboard Header */}
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/30">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <BarChart3 className="w-4 h-4 text-primary" />
+              {/* Left: Score Projection */}
+              <div className="lg:col-span-1 space-y-6">
+                <div className="bg-gradient-to-br from-background/80 to-background/60 backdrop-blur-xl border border-border/30 rounded-3xl p-6 hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-foreground">Score Projection</h3>
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground">SAT Analytics Dashboard</h3>
-                    <p className="text-xs text-muted-foreground">Live platform insights • Updated real-time</p>
+                  
+                  {/* Current vs Target */}
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground text-sm">Current Score</span>
+                      <span className="text-2xl font-bold text-foreground">1380</span>
+                    </div>
+                    <div className="w-full bg-muted/30 rounded-full h-3">
+                      <div className="bg-gradient-to-r from-yellow-500 to-orange-500 h-3 rounded-full" style={{ width: '69%' }}></div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground text-sm">Target Score</span>
+                      <span className="text-2xl font-bold text-primary">1560</span>
+                    </div>
+                    <div className="w-full bg-muted/30 rounded-full h-3">
+                      <div className="bg-gradient-to-r from-primary to-accent h-3 rounded-full" style={{ width: '98%' }}></div>
+                    </div>
+                    
+                    <div className="pt-4 border-t border-border/20">
+                      <div className="flex items-center gap-2 text-green-600 mb-2">
+                        <TrendingUp className="w-4 h-4" />
+                        <span className="text-sm font-medium">+180 Point Improvement</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">Based on your current trajectory and 8 weeks of focused practice</p>
+                    </div>
                   </div>
                 </div>
-                <Badge variant="secondary" className="text-xs">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
-                  Live
-                </Badge>
+
+                {/* Breakthrough Metrics */}
+                <div className="bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-xl border border-primary/20 rounded-3xl p-6 hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                  <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-primary" />
+                    Breakthrough Metrics
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Accuracy Boost</span>
+                      <span className="text-primary font-bold">+23%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Speed Increase</span>
+                      <span className="text-green-600 font-bold">+31%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Weak Areas Fixed</span>
+                      <span className="text-blue-600 font-bold">12/15</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Study Efficiency</span>
+                      <span className="text-purple-600 font-bold">3.2x</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Compact Stats Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-                <div className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border border-emerald-500/20 rounded-xl p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Target className="w-4 h-4 text-emerald-600" />
-                    <span className="text-xs font-medium text-emerald-700">Accuracy Rate</span>
+              {/* Center: AI Performance Analysis */}
+              <div className="lg:col-span-2">
+                <div className="bg-gradient-to-br from-background/80 to-background/60 backdrop-blur-xl border border-border/30 rounded-3xl p-6 sm:p-8 hover:shadow-2xl transition-all duration-500 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-semibold text-foreground flex items-center gap-3">
+                      <Brain className="w-6 h-6 text-primary" />
+                      AI Performance Analysis
+                    </h3>
+                    <Badge variant="secondary" className="animate-pulse">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                      Real-time
+                    </Badge>
                   </div>
-                  <div className="text-xl font-bold text-emerald-700">{statsCounter.accuracy}%</div>
-                  <div className="text-xs text-emerald-600">+12% this month</div>
-                </div>
-                
-                <div className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border border-blue-500/20 rounded-xl p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Users className="w-4 h-4 text-blue-600" />
-                    <span className="text-xs font-medium text-blue-700">Active Students</span>
+
+                  {/* Performance Matrix */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    {/* Math Performance */}
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-foreground flex items-center gap-2">
+                        <Calculator className="w-4 h-4 text-blue-500" />
+                        Math Section Mastery
+                      </h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Algebra</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-20 bg-muted/30 rounded-full h-2">
+                              <div className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-1000 hover-scale" style={{ width: '92%' }}></div>
+                            </div>
+                            <span className="text-blue-600 font-bold text-sm">92%</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Geometry</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-20 bg-muted/30 rounded-full h-2">
+                              <div className="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full transition-all duration-1000 hover-scale" style={{ width: '87%' }}></div>
+                            </div>
+                            <span className="text-green-600 font-bold text-sm">87%</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Advanced Math</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-20 bg-muted/30 rounded-full h-2">
+                              <div className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full transition-all duration-1000 hover-scale" style={{ width: '78%' }}></div>
+                            </div>
+                            <span className="text-purple-600 font-bold text-sm">78%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Reading & Writing Performance */}
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-foreground flex items-center gap-2">
+                        <BookOpen className="w-4 h-4 text-green-500" />
+                        Reading & Writing Excellence
+                      </h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Information & Ideas</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-20 bg-muted/30 rounded-full h-2">
+                              <div className="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full transition-all duration-1000 hover-scale" style={{ width: '94%' }}></div>
+                            </div>
+                            <span className="text-green-600 font-bold text-sm">94%</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Craft & Structure</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-20 bg-muted/30 rounded-full h-2">
+                              <div className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-1000 hover-scale" style={{ width: '81%' }}></div>
+                            </div>
+                            <span className="text-orange-600 font-bold text-sm">81%</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Expression of Ideas</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-20 bg-muted/30 rounded-full h-2">
+                              <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full transition-all duration-1000 hover-scale" style={{ width: '89%' }}></div>
+                            </div>
+                            <span className="text-indigo-600 font-bold text-sm">89%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-xl font-bold text-blue-700">{statsCounter.students.toLocaleString()}+</div>
-                  <div className="text-xs text-blue-600">+127 this week</div>
-                </div>
-                
-                <div className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border border-purple-500/20 rounded-xl p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="w-4 h-4 text-purple-600" />
-                    <span className="text-xs font-medium text-purple-700">Questions Solved</span>
+
+                  {/* AI Insights */}
+                  <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-4 border border-primary/20">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mt-1">
+                        <Brain className="w-4 h-4 text-primary" />
+                      </div>
+                      <div>
+                        <h5 className="font-semibold text-foreground mb-2">AI Recommendation</h5>
+                        <p className="text-sm text-muted-foreground">
+                          Focus 60% of your next study session on Advanced Math concepts, particularly polynomial functions. Your Reading & Writing performance is excellent - maintain current momentum with 2 passages daily.
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-xl font-bold text-purple-700">{statsCounter.questions.toLocaleString()}+</div>
-                  <div className="text-xs text-purple-600">2.4K today</div>
-                </div>
-                
-                <div className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border border-orange-500/20 rounded-xl p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Award className="w-4 h-4 text-orange-600" />
-                    <span className="text-xs font-medium text-orange-700">Score Improvement</span>
-                  </div>
-                  <div className="text-xl font-bold text-orange-700">+185</div>
-                  <div className="text-xs text-orange-600">avg. points gained</div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Performance Breakdown */}
+          {/* Live Activity Stream */}
+          <div className="max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            <div className="bg-gradient-to-br from-background/80 to-background/60 backdrop-blur-xl border border-border/30 rounded-3xl p-6 hover:shadow-2xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-semibold text-foreground flex items-center gap-3">
+                  <Users className="w-6 h-6 text-primary" />
+                  Live Student Breakthroughs
+                </h3>
+                <div className="text-xs text-muted-foreground">Updates every 10 seconds</div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-background/40 rounded-xl p-4">
-                  <h4 className="text-sm font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <Calculator className="w-4 h-4 text-blue-500" />
-                    Math Section Performance
-                  </h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-muted-foreground">Algebra</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 bg-background/60 rounded-full h-2">
-                          <div className="bg-blue-500 h-2 rounded-full" style={{ width: '78%' }}></div>
-                        </div>
-                        <span className="text-blue-600 font-medium">78%</span>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gradient-to-r from-green-500/10 to-green-600/10 rounded-xl border border-green-500/20 hover:scale-105 transition-transform">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                      <div>
+                        <span className="text-sm font-medium text-foreground">Sarah M.</span>
+                        <div className="text-xs text-muted-foreground">Just scored 1540 on practice test</div>
                       </div>
                     </div>
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-muted-foreground">Geometry</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 bg-background/60 rounded-full h-2">
-                          <div className="bg-green-500 h-2 rounded-full" style={{ width: '85%' }}></div>
-                        </div>
-                        <span className="text-green-600 font-medium">85%</span>
+                    <div className="text-green-600 font-bold text-sm">+210 pts</div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between p-3 bg-gradient-to-r from-blue-500/10 to-blue-600/10 rounded-xl border border-blue-500/20 hover:scale-105 transition-transform">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                      <div>
+                        <span className="text-sm font-medium text-foreground">Alex K.</span>
+                        <div className="text-xs text-muted-foreground">Mastered quadratic equations</div>
                       </div>
                     </div>
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-muted-foreground">Statistics</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 bg-background/60 rounded-full h-2">
-                          <div className="bg-orange-500 h-2 rounded-full" style={{ width: '71%' }}></div>
-                        </div>
-                        <span className="text-orange-600 font-medium">71%</span>
-                      </div>
-                    </div>
+                    <div className="text-blue-600 font-bold text-sm">95% accuracy</div>
                   </div>
                 </div>
 
-                <div className="bg-background/40 rounded-xl p-4">
-                  <h4 className="text-sm font-semibold mb-3 text-foreground flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-green-500" />
-                    Reading & Writing Performance
-                  </h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-muted-foreground">Information & Ideas</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 bg-background/60 rounded-full h-2">
-                          <div className="bg-green-500 h-2 rounded-full" style={{ width: '82%' }}></div>
-                        </div>
-                        <span className="text-green-600 font-medium">82%</span>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gradient-to-r from-purple-500/10 to-purple-600/10 rounded-xl border border-purple-500/20 hover:scale-105 transition-transform">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
+                      <div>
+                        <span className="text-sm font-medium text-foreground">Maria L.</span>
+                        <div className="text-xs text-muted-foreground">Completed 50-day study streak</div>
                       </div>
                     </div>
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-muted-foreground">Craft & Structure</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 bg-background/60 rounded-full h-2">
-                          <div className="bg-blue-500 h-2 rounded-full" style={{ width: '76%' }}></div>
-                        </div>
-                        <span className="text-blue-600 font-medium">76%</span>
+                    <div className="text-purple-600 font-bold text-sm">🔥 50 days</div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between p-3 bg-gradient-to-r from-orange-500/10 to-orange-600/10 rounded-xl border border-orange-500/20 hover:scale-105 transition-transform">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                      <div>
+                        <span className="text-sm font-medium text-foreground">David R.</span>
+                        <div className="text-xs text-muted-foreground">Reading speed increased 40%</div>
                       </div>
                     </div>
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-muted-foreground">Expression of Ideas</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 bg-background/60 rounded-full h-2">
-                          <div className="bg-purple-500 h-2 rounded-full" style={{ width: '79%' }}></div>
-                        </div>
-                        <span className="text-purple-600 font-medium">79%</span>
-                      </div>
-                    </div>
+                    <div className="text-orange-600 font-bold text-sm">⚡ 40% faster</div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
