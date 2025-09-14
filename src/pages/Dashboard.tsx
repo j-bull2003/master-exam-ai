@@ -308,18 +308,18 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Smart Upsell - Subtle notification */}
+        {/* Smart Upsell - Small widget */}
         <div className="mb-4">
-          <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-3 text-sm">
+          <div className="bg-background/80 border border-muted rounded-md p-2 text-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-muted-foreground">
-                <Zap className="w-4 h-4 text-primary" />
-                <span>Want to accelerate your prep?</span>
-                <Link to="/group-classes" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Join group classes</Link>
-                <span>or</span>
-                <Link to="/consulting" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">get 1:1 coaching</Link>
+                <Zap className="w-3 h-3 text-primary" />
+                <span>Boost your scores:</span>
+                <Link to="/group-classes" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Group classes</Link>
+                <span>•</span>
+                <Link to="/consulting" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">1:1 coaching</Link>
               </div>
-              <button className="text-muted-foreground hover:text-foreground opacity-50 hover:opacity-100">×</button>
+              <button className="text-muted-foreground hover:text-foreground opacity-50 hover:opacity-100 text-xs">×</button>
             </div>
           </div>
         </div>
