@@ -308,14 +308,13 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Smart Upsell - Small widget */}
+        {/* Smart Upsell - Compact widget */}
         <div className="mb-4">
           <div className="bg-background/80 border border-muted rounded-md p-2 text-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Zap className="w-3 h-3 text-primary" />
-                <span>Boost your scores:</span>
-                <Link to="/group-classes" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Group classes</Link>
+                <Link to="/group-classes" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Live group classes</Link>
                 <span>•</span>
                 <Link to="/consulting" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">1:1 coaching</Link>
               </div>
