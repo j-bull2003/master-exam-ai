@@ -149,8 +149,10 @@ const Dashboard = () => {
     );
   }
 
-  // Redirect to login if not authenticated
-  if (!hasAccess) {
+  // Demo mode - bypass access checks for testing
+  const isDemoMode = true;
+  
+  if (!isDemoMode && !hasAccess) {
     return (
       <div className="min-h-screen bg-background bg-mesh flex items-center justify-center">
         <Card className="w-[400px]">
@@ -288,10 +290,18 @@ const Dashboard = () => {
       </header>
 
       <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 lg:py-8">
+        {/* Demo Mode Banner */}
+        <Alert className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+          <Zap className="h-4 w-4 text-blue-600" />
+          <AlertDescription className="text-blue-800">
+            <strong>Demo Mode</strong> - You're currently testing the platform. All features are available for exploration!
+          </AlertDescription>
+        </Alert>
+
         {/* Page Header */}
         <div className="mb-4 sm:mb-6 lg:mb-8 text-center px-2">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">
-            Welcome back, {profileData?.full_name || 'User'}! 👋
+            Welcome back, {profileData?.full_name || 'Demo User'}! 👋
           </h1>
           <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
             Ready to continue your SAT preparation?
