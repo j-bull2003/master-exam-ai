@@ -28,9 +28,31 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
     const createSetupIntent = async () => {
       try {
         console.log('Creating setup intent...');
-        const { data: { session } } = await supabase.auth.getSession();
+        
+        // Wait for session to be available with retry logic
+        let session = null;
+        let retries = 0;
+        const maxRetries = 10;
+        
+        while (!session && retries < maxRetries) {
+          const { data: { session: currentSession } } = await supabase.auth.getSession();
+          if (currentSession) {
+            session = currentSession;
+            break;
+          }
+          
+          console.log(`No session found, retry ${retries + 1}/${maxRetries}`);
+          await new Promise(resolve => setTimeout(resolve, 500)); // Wait 500ms before retry
+          retries++;
+        }
+        
         if (!session) {
-          console.log('No session found');
+          console.log('No session found after retries');
+          toast({
+            title: "Session Error",
+            description: "Please try refreshing the page and logging in again.",
+            variant: "destructive",
+          });
           return;
         }
 
