@@ -16,7 +16,7 @@ import {
   TrendingUp,
   Award
 } from "lucide-react";
-import tobiasImage from "@/assets/tobias-oxford.jpg";
+import tobiasImage from "@/assets/tobias-oxford-clear.jpg";
 import zaynImage from "@/assets/zayn-oxford.jpg";
 
 const SATPrograms = () => {
@@ -248,43 +248,42 @@ const SATPrograms = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
               {/* Dr. Tobias */}
               <div className="group">
-                <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
-                  {/* Elegant frame for image */}
-                  <div className="relative mb-8">
-                    <div className="w-full aspect-[4/5] rounded-xl overflow-hidden border-4 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
+                <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                  {/* Compact image frame */}
+                  <div className="relative mb-6">
+                    <div className="w-full aspect-[3/4] max-w-[200px] mx-auto rounded-xl overflow-hidden border-3 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
                       <img 
                         src={tobiasImage} 
                         alt="Dr. Tobias - Oxford Mathematics Graduate" 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                     </div>
-                    <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-xl border-4 border-white">
-                      <GraduationCap className="w-8 h-8 text-white" />
+                    <div className="absolute -bottom-3 -right-3 w-12 h-12 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-xl border-3 border-white">
+                      <GraduationCap className="w-6 h-6 text-white" />
                     </div>
                   </div>
                   
                   <div className="text-center">
-                    <h3 className="font-serif text-2xl font-bold text-slate-900 mb-2">Dr. Tobias</h3>
-                    <div className="space-y-1 mb-6">
-                      <p className="text-slate-600 font-medium">BSc Mathematics - University of Oxford</p>
-                      <p className="text-slate-600 font-medium">MSc Mathematics - University of Oxford</p>
-                      <p className="text-slate-600 font-medium">PhD Mathematics - University of Oxford</p>
+                    <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">Dr. Tobias</h3>
+                    <div className="space-y-1 mb-4">
+                      <p className="text-slate-600 font-medium text-sm">BSc, MSc, PhD Mathematics</p>
+                      <p className="text-slate-600 font-medium text-sm">University of Oxford</p>
                     </div>
                     
-                    <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-4 border border-slate-200/50">
-                      <p className="text-slate-700 text-sm leading-relaxed italic">
-                        "Mathematics is not about memorizing formulas—it's about developing logical thinking patterns that unlock any problem. 
-                        I help students see the elegant beauty in mathematical reasoning."
+                    <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-3 border border-slate-200/50 mb-4">
+                      <p className="text-slate-700 text-xs leading-relaxed italic">
+                        "I specialize in making complex mathematical concepts accessible while building strong analytical reading skills. 
+                        Every SAT section requires logical reasoning—that's where I excel."
                       </p>
                     </div>
                     
-                    <div className="mt-6 flex flex-wrap justify-center gap-2">
-                      <Badge variant="secondary" className="text-xs">Advanced Algebra</Badge>
-                      <Badge variant="secondary" className="text-xs">Problem Solving</Badge>
+                    <div className="flex flex-wrap justify-center gap-2">
                       <Badge variant="secondary" className="text-xs">SAT Math</Badge>
+                      <Badge variant="secondary" className="text-xs">Reading & Writing</Badge>
+                      <Badge variant="secondary" className="text-xs">Problem Solving</Badge>
                     </div>
                   </div>
                 </div>
@@ -292,39 +291,38 @@ const SATPrograms = () => {
 
               {/* Dr. Zayn */}
               <div className="group">
-                <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
-                  {/* Elegant frame for image */}
-                  <div className="relative mb-8">
-                    <div className="w-full aspect-[4/5] rounded-xl overflow-hidden border-4 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
+                <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                  {/* Compact image frame */}
+                  <div className="relative mb-6">
+                    <div className="w-full aspect-[3/4] max-w-[200px] mx-auto rounded-xl overflow-hidden border-3 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
                       <img 
                         src={zaynImage} 
                         alt="Dr. Zayn - Oxford Mathematics Graduate" 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                     </div>
-                    <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-xl border-4 border-white">
-                      <GraduationCap className="w-8 h-8 text-white" />
+                    <div className="absolute -bottom-3 -right-3 w-12 h-12 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-xl border-3 border-white">
+                      <GraduationCap className="w-6 h-6 text-white" />
                     </div>
                   </div>
                   
                   <div className="text-center">
-                    <h3 className="font-serif text-2xl font-bold text-slate-900 mb-2">Dr. Zayn</h3>
-                    <div className="space-y-1 mb-6">
-                      <p className="text-slate-600 font-medium">BSc Mathematics - University of Oxford</p>
-                      <p className="text-slate-600 font-medium">MSc Mathematics - University of Oxford</p>
-                      <p className="text-slate-600 font-medium">PhD Mathematics - University of Oxford</p>
+                    <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">Dr. Zayn</h3>
+                    <div className="space-y-1 mb-4">
+                      <p className="text-slate-600 font-medium text-sm">BSc, MSc, PhD Mathematics</p>
+                      <p className="text-slate-600 font-medium text-sm">University of Oxford</p>
                     </div>
                     
-                    <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-4 border border-slate-200/50">
-                      <p className="text-slate-700 text-sm leading-relaxed italic">
-                        "Every student has unique strengths waiting to be discovered. My approach combines rigorous academic excellence 
-                        with personalized strategies that transform mathematical anxiety into confidence."
+                    <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-3 border border-slate-200/50 mb-4">
+                      <p className="text-slate-700 text-xs leading-relaxed italic">
+                        "My dual expertise in quantitative analysis and textual interpretation helps students master both SAT sections. 
+                        I transform test anxiety into strategic confidence."
                       </p>
                     </div>
                     
-                    <div className="mt-6 flex flex-wrap justify-center gap-2">
-                      <Badge variant="secondary" className="text-xs">Data Analysis</Badge>
-                      <Badge variant="secondary" className="text-xs">Statistics</Badge>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      <Badge variant="secondary" className="text-xs">SAT Math</Badge>
+                      <Badge variant="secondary" className="text-xs">Reading & Writing</Badge>
                       <Badge variant="secondary" className="text-xs">Test Strategy</Badge>
                     </div>
                   </div>
@@ -333,26 +331,25 @@ const SATPrograms = () => {
             </div>
 
             {/* Combined expertise section */}
-            <div className="mt-16 text-center">
-              <div className="bg-gradient-to-r from-slate-900/5 via-slate-800/5 to-slate-900/5 backdrop-blur-sm rounded-2xl p-8 border border-slate-200/50 max-w-4xl mx-auto">
-                <h3 className="font-serif text-2xl font-bold text-slate-900 mb-4">Combined Oxford Excellence</h3>
-                <p className="text-slate-600 leading-relaxed mb-6">
-                  Together, Dr. Tobias and Dr. Zayn bring over 15 years of combined teaching experience from one of the world's 
-                  most prestigious mathematical institutions. Their collaborative approach ensures comprehensive coverage of all 
-                  SAT Math domains while maintaining the highest academic standards.
+            <div className="mt-12 text-center">
+              <div className="bg-gradient-to-r from-slate-900/5 via-slate-800/5 to-slate-900/5 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 max-w-3xl mx-auto">
+                <h3 className="font-serif text-xl font-bold text-slate-900 mb-3">Complete SAT Mastery</h3>
+                <p className="text-slate-600 leading-relaxed mb-4 text-sm">
+                  Both Dr. Tobias and Dr. Zayn are expert coaches for all SAT sections—Math and Reading & Writing. 
+                  Their Oxford training ensures comprehensive coverage with the highest academic standards.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <div className="flex items-center gap-2 text-slate-700">
-                    <Award className="w-5 h-5 text-slate-600" />
-                    <span className="font-medium">Oxford Trained</span>
+                    <Award className="w-4 h-4 text-slate-600" />
+                    <span className="font-medium text-sm">Oxford Trained</span>
                   </div>
                   <div className="flex items-center gap-2 text-slate-700">
-                    <Target className="w-5 h-5 text-slate-600" />
-                    <span className="font-medium">Results Focused</span>
+                    <Target className="w-4 h-4 text-slate-600" />
+                    <span className="font-medium text-sm">Full SAT Coverage</span>
                   </div>
                   <div className="flex items-center gap-2 text-slate-700">
-                    <Users className="w-5 h-5 text-slate-600" />
-                    <span className="font-medium">Personalized Approach</span>
+                    <Users className="w-4 h-4 text-slate-600" />
+                    <span className="font-medium text-sm">Personalized Approach</span>
                   </div>
                 </div>
               </div>
