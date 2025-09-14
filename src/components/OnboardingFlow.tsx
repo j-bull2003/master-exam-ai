@@ -386,57 +386,56 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 </div>
                 
                 <div className="pt-3">
-                  <h3 className="text-lg font-bold text-foreground mb-2">Add Expert Live Group Classes</h3>
-                  <p className="text-muted-foreground mb-3 text-sm">
-                    2x sessions per week (Reading and Writing and Maths) with expert instructors covering comprehensive SAT strategies
-                  </p>
-                  
-                  {/* Strategy Overview */}
-                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/30 rounded-lg p-3 mb-3">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Award className="w-4 h-4 text-primary" />
-                      <span className="text-foreground font-bold text-sm">Comprehensive SAT Strategy</span>
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                      <Users className="w-6 h-6 text-primary" />
                     </div>
-                    <div className="space-y-2 text-xs">
-                      <div className="flex items-center gap-2">
-                        <BookOpen className="w-3 h-3 text-primary flex-shrink-0" />
-                        <span className="text-foreground">Learn all tips, tricks and strategies for the highest score possible</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Calculator className="w-3 h-3 text-primary flex-shrink-0" />
-                        <span className="text-foreground">Master all SAT modules with expert guidance</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Target className="w-3 h-3 text-primary flex-shrink-0" />
-                        <span className="text-foreground">Personalized strategies for maximum improvement</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Users className="w-3 h-3 text-primary flex-shrink-0" />
-                        <span className="text-foreground">Small group sessions with expert instructors</span>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold mb-2 text-foreground">Add Group Classes</h3>
+                      <p className="text-muted-foreground mb-4">
+                        Join live expert-led sessions with small group of students to accelerate your progress.
+                      </p>
+                      <div className="text-sm text-primary">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4" />
+                          <span>2x weekly live sessions</span>
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Expert SAT instructors</span>
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Small group sizes (max 8)</span>
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Interactive Q&A sessions</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               
-              {/* Skip Option */}
+              {/* Platform Only Option */}
               <div 
                 onClick={() => handleInputChange('groupClasses', false)}
-                className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
                   !formData.groupClasses 
                     ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
                     : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
                 {/* Selection Indicator */}
-                <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 transition-all ${
+                <div className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 transition-all ${
                   !formData.groupClasses 
                     ? 'border-primary bg-primary' 
                     : 'border-muted-foreground/30'
                 }`}>
                   {!formData.groupClasses && (
                     <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
                   )}
                 </div>
@@ -474,122 +473,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               <h2 className="text-2xl font-bold text-foreground">Review Your Selection</h2>
               <p className="text-muted-foreground">Almost there! Review your choices and proceed to payment</p>
             </div>
-            <div className="text-center space-y-1 mb-4">
-              <h2 className="text-2xl font-bold text-foreground">Ready to Start?</h2>
-              <p className="text-muted-foreground text-sm">Choose how you'd like to begin your SAT preparation</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-              {/* Diagnostic Test Option */}
-              <div 
-                onClick={() => handleInputChange('diagnostic', true)}
-                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
-                  formData.diagnostic 
-                    ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
-                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
-                }`}
-              >
-                {/* Selection Indicator */}
-                <div className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 transition-all ${
-                  formData.diagnostic 
-                    ? 'border-primary bg-primary' 
-                    : 'border-muted-foreground/30'
-                }`}>
-                  {formData.diagnostic && (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="flex items-start gap-3 pt-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
-                    <Brain className="w-4 h-4 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold mb-2 text-foreground">Take Diagnostic Test</h3>
-                    <p className="text-muted-foreground mb-3 text-sm">
-                      Get a personalized assessment of your current SAT level and receive a tailored study plan.
-                    </p>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="flex items-center gap-2 text-primary">
-                        <Clock className="w-4 h-4" />
-                        <span>Takes about 30 minutes</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-primary">
-                        <Target className="w-4 h-4" />
-                        <span>Personalized study plan</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-primary">
-                        <CheckCircle className="w-4 h-4" />
-                        <span>Identify weak areas</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-primary">
-                        <CheckCircle className="w-4 h-4" />
-                        <span>Set target score</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Skip to Dashboard Option */}
-              <div 
-                onClick={() => handleInputChange('diagnostic', false)}
-                className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
-                  !formData.diagnostic 
-                    ? 'border-primary bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/20' 
-                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
-                }`}
-              >
-                {/* Selection Indicator */}
-                <div className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 transition-all ${
-                  !formData.diagnostic 
-                    ? 'border-primary bg-primary' 
-                    : 'border-muted-foreground/30'
-                }`}>
-                  {!formData.diagnostic && (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="flex items-start gap-3 pt-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
-                    <ArrowRight className="w-4 h-4 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold mb-2 text-foreground">Skip to Dashboard</h3>
-                    <p className="text-muted-foreground mb-3 text-sm">
-                      Go straight to your dashboard and start practicing with general SAT questions.
-                    </p>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="flex items-center gap-2 text-primary">
-                        <CheckCircle className="w-4 h-4" />
-                        <span>Start practicing immediately</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-primary">
-                        <ArrowRight className="w-4 h-4" />
-                        <span>Jump right in</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-primary">
-                        <BookOpen className="w-4 h-4" />
-                        <span>Access all features</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-primary">
-                        <Clock className="w-4 h-4" />
-                        <span>Take diagnostic later</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             
             {/* Enhanced Summary */}
-            <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-4 sm:p-6 border border-border/50">
-              <h4 className="text-lg font-bold mb-4 text-foreground">Your Selection Summary</h4>
+            <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6 border border-border/50">
+              <h4 className="text-lg font-bold mb-4 text-foreground">Your Plan Summary</h4>
               <div className="space-y-3">
                 <div className="flex items-center justify-between py-2">
                   <span className="font-medium text-foreground">Plan Selected</span>
@@ -606,11 +493,49 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 )}
                 
                 <div className="flex items-center justify-between py-2 border-t border-border/50">
-                  <span className="font-medium text-foreground">Next Step</span>
-                  <span className="font-bold text-primary">
-                    {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
-                  </span>
+                  <span className="font-medium text-foreground">Free Trial</span>
+                  <span className="font-bold text-success">3 Days</span>
                 </div>
+                
+                <div className="flex items-center justify-between py-2 border-t border-border/50">
+                  <span className="font-medium text-foreground">Billing Date</span>
+                  <span className="font-bold text-primary">{formattedBillingDate}</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Features Included */}
+            <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-6 border border-primary/20">
+              <h4 className="text-lg font-bold mb-4 text-foreground">What's Included</h4>
+              <div className="grid gap-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-foreground">AI-powered personalized practice</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-foreground">Unlimited practice questions</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-foreground">Full-length mock exams</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-foreground">Detailed performance analytics</span>
+                </div>
+                {formData.groupClasses && (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span className="text-foreground">2x weekly live classes</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span className="text-foreground">Expert SAT instructors</span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -619,87 +544,14 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       case 5:
         return (
           <Elements stripe={stripePromise}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 items-start">
-              {/* Left side - Payment Form */}
-              <div>
-                <PaymentForm 
-                  formData={formData}
-                  onPaymentSuccess={() => {
-                    toast({
-                      title: "Welcome to UniHack!",
-                      description: "Your account has been created successfully.",
-                    });
-                    if (onComplete) onComplete();
-                  }}
-                  isLoading={isLoading}
-                  setIsLoading={setIsLoading}
-                />
-              </div>
-              
-              {/* Right side - Summary */}
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-4 sm:p-6 border border-border/50">
-                  <h4 className="text-lg font-bold mb-4 text-foreground">Your Selection Summary</h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between py-2">
-                      <span className="font-medium text-foreground">Plan Selected</span>
-                      <span className="font-bold text-primary text-right">
-                        {formData.planType === 'annual' ? 'Annual ($39.99/mo)' : 'Monthly ($159.99/mo)'}
-                      </span>
-                    </div>
-                    
-                    {formData.groupClasses && (
-                      <div className="flex items-center justify-between py-2 border-t border-border/50">
-                        <span className="font-medium text-foreground">Group Classes</span>
-                        <span className="font-bold text-primary">+$50/week</span>
-                      </div>
-                    )}
-                    
-                    <div className="flex items-center justify-between py-2 border-t border-border/50">
-                      <span className="font-medium text-foreground">Next Step</span>
-                      <span className="font-bold text-primary">
-                        {formData.diagnostic ? 'Diagnostic Test' : 'Dashboard'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Features Included */}
-                <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-6 border border-primary/20">
-                  <h4 className="text-lg font-bold mb-4 text-foreground">What's Included</h4>
-                  <div className="grid gap-3 text-sm">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                      <span className="text-foreground">AI-powered personalized practice</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                      <span className="text-foreground">Unlimited practice questions</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                      <span className="text-foreground">Full-length mock exams</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                      <span className="text-foreground">Detailed performance analytics</span>
-                    </div>
-                    {formData.groupClasses && (
-                      <>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span className="text-foreground">2x weekly live classes</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                          <span className="text-foreground">Expert SAT instructors</span>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PaymentForm
+              formData={formData}
+              onPaymentSuccess={() => {
+                onComplete?.();
+              }}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
           </Elements>
         );
 
