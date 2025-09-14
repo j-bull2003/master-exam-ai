@@ -308,85 +308,20 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Upsell Banners */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          {/* Group Classes Upsell */}
-          <Card className="bg-gradient-to-br from-amber-50 to-orange-100 border-amber-200 hover:shadow-lg transition-all group cursor-pointer">
-            <Link to="/group-classes" className="block">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <Users className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-amber-800 mb-2">
-                      🚀 Supercharge Your Prep with Group Classes
-                    </h3>
-                    <p className="text-amber-700 text-sm mb-3">
-                      Join live expert-led sessions with small groups. 2x weekly classes with proven SAT strategies.
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-amber-600">
-                      <span className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" />
-                        Expert instructors
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" />
-                        Small groups (max 8)
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" />
-                        +150 avg score boost
-                      </span>
-                    </div>
-                    <div className="mt-3 flex items-center justify-between">
-                      <span className="text-amber-800 font-bold">Only $50/week</span>
-                      <ChevronRight className="w-4 h-4 text-amber-600 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Link>
-          </Card>
-
-          {/* 1:1 SAT Program Upsell */}
-          <Card className="bg-gradient-to-br from-purple-50 to-indigo-100 border-purple-200 hover:shadow-lg transition-all group cursor-pointer">
-            <Link to="/consulting" className="block">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <Trophy className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-purple-800 mb-2">
-                      🎯 1:1 Elite SAT Coaching Program
-                    </h3>
-                    <p className="text-purple-700 text-sm mb-3">
-                      Work directly with Oxford & Cambridge graduates. Personalized coaching for maximum score gains.
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-purple-600">
-                      <span className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" />
-                        Elite tutors
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" />
-                        Custom strategy
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" />
-                        +250 avg boost
-                      </span>
-                    </div>
-                    <div className="mt-3 flex items-center justify-between">
-                      <span className="text-purple-800 font-bold">From $2,899</span>
-                      <ChevronRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Link>
-          </Card>
+        {/* Smart Upsell - Subtle notification */}
+        <div className="mb-4">
+          <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-3 text-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Zap className="w-4 h-4 text-primary" />
+                <span>Want to accelerate your prep?</span>
+                <Link to="/group-classes" className="text-primary hover:underline font-medium">Join group classes</Link>
+                <span>or</span>
+                <Link to="/consulting" className="text-primary hover:underline font-medium">get 1:1 coaching</Link>
+              </div>
+              <button className="text-muted-foreground hover:text-foreground opacity-50 hover:opacity-100">×</button>
+            </div>
+          </div>
         </div>
 
         {/* Main content grid */}
