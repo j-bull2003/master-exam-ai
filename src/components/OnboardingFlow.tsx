@@ -545,7 +545,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
         return (
           <Elements stripe={stripePromise}>
             <PaymentForm
-              formData={formData}
+              formData={{
+                name: formData.name,
+                email: formData.email,
+                groupClasses: formData.groupClasses
+              }}
               onPaymentSuccess={() => {
                 onComplete?.();
               }}

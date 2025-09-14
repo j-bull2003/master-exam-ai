@@ -3,6 +3,7 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import { CreditCard, Shield, Lock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,6 +24,17 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
   const elements = useElements();
   const { toast } = useToast();
   const [setupIntent, setSetupIntent] = useState<string | null>(null);
+  const [billingInfo, setBillingInfo] = useState({
+    name: formData.name || '',
+    email: formData.email || '',
+    address: {
+      line1: '',
+      city: '',
+      state: '',
+      postal_code: '',
+      country: 'US'
+    }
+  });
 
   React.useEffect(() => {
     const createSetupIntent = async () => {
@@ -131,8 +143,15 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
         payment_method: {
           card: cardElement,
           billing_details: {
-            name: formData.name,
-            email: formData.email,
+            name: billingInfo.name,
+            email: billingInfo.email,
+            address: {
+              line1: billingInfo.address.line1,
+              city: billingInfo.address.city,
+              state: billingInfo.address.state,
+              postal_code: billingInfo.address.postal_code,
+              country: billingInfo.address.country,
+            },
           },
         },
       });
@@ -248,6 +267,89 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-4">
+          {/* Billing Information */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground">Billing Information</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Full Name</label>
+                <Input
+                  value={billingInfo.name}
+                  onChange={(e) => setBillingInfo(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="Enter full name"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Email Address</label>
+                <Input
+                  type="email"
+                  value={billingInfo.email}
+                  onChange={(e) => setBillingInfo(prev => ({ ...prev, email: e.target.value }))}
+                  placeholder="Enter email address"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Address</label>
+              <Input
+                value={billingInfo.address.line1}
+                onChange={(e) => setBillingInfo(prev => ({ 
+                  ...prev, 
+                  address: { ...prev.address, line1: e.target.value }
+                }))}
+                placeholder="Street address"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">City</label>
+                <Input
+                  value={billingInfo.address.city}
+                  onChange={(e) => setBillingInfo(prev => ({ 
+                    ...prev, 
+                    address: { ...prev.address, city: e.target.value }
+                  }))}
+                  placeholder="City"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">State</label>
+                <Input
+                  value={billingInfo.address.state}
+                  onChange={(e) => setBillingInfo(prev => ({ 
+                    ...prev, 
+                    address: { ...prev.address, state: e.target.value }
+                  }))}
+                  placeholder="State"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">ZIP Code</label>
+                <Input
+                  value={billingInfo.address.postal_code}
+                  onChange={(e) => setBillingInfo(prev => ({ 
+                    ...prev, 
+                    address: { ...prev.address, postal_code: e.target.value }
+                  }))}
+                  placeholder="ZIP"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Card Information */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Card Information</label>
             <div className="border rounded-lg p-4 bg-background">
@@ -268,7 +370,17 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
 
         <Button 
           type="submit"
-          disabled={isLoading || !stripe || !setupIntent}
+          disabled={
+            isLoading || 
+            !stripe || 
+            !setupIntent ||
+            !billingInfo.name.trim() ||
+            !billingInfo.email.trim() ||
+            !billingInfo.address.line1.trim() ||
+            !billingInfo.address.city.trim() ||
+            !billingInfo.address.state.trim() ||
+            !billingInfo.address.postal_code.trim()
+          }
           size="lg"
           className="w-full h-14 text-lg"
         >
