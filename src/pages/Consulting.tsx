@@ -16,6 +16,8 @@ import {
   TrendingUp,
   Award
 } from "lucide-react";
+import tobiasImage from "@/assets/tobias-oxford.jpg";
+import zaynImage from "@/assets/zayn-oxford.jpg";
 
 const SATPrograms = () => {
   const scrollToSuccessStories = () => {
@@ -218,6 +220,140 @@ const SATPrograms = () => {
                   <p className="text-slate-600 font-light text-sm max-w-sm mx-auto">
                     Start with a complimentary consultation to design your personalized roadmap
                   </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Coaches Section */}
+      <section className="py-20 bg-gradient-to-br from-white via-slate-50 to-white relative">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slate-900/10 to-slate-700/10 backdrop-blur-sm rounded-full text-sm font-medium text-slate-700 mb-8 border border-slate-200/50">
+                <GraduationCap className="w-4 h-4 mr-2 text-slate-700" />
+                Oxford Mathematics Excellence
+              </div>
+              
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-slate-900 leading-tight">
+                Meet Your
+                <br />
+                <span className="bg-gradient-to-r from-slate-600 via-slate-800 to-slate-900 bg-clip-text text-transparent">Expert Coaches</span>
+              </h2>
+              <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed px-4">
+                Learn from distinguished Oxford Mathematics graduates who combine academic excellence 
+                with proven teaching expertise to elevate your SAT performance.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+              {/* Dr. Tobias */}
+              <div className="group">
+                <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                  {/* Elegant frame for image */}
+                  <div className="relative mb-8">
+                    <div className="w-full aspect-[4/5] rounded-xl overflow-hidden border-4 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
+                      <img 
+                        src={tobiasImage} 
+                        alt="Dr. Tobias - Oxford Mathematics Graduate" 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    </div>
+                    <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-xl border-4 border-white">
+                      <GraduationCap className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <h3 className="font-serif text-2xl font-bold text-slate-900 mb-2">Dr. Tobias</h3>
+                    <div className="space-y-1 mb-6">
+                      <p className="text-slate-600 font-medium">BSc Mathematics - University of Oxford</p>
+                      <p className="text-slate-600 font-medium">MSc Mathematics - University of Oxford</p>
+                      <p className="text-slate-600 font-medium">PhD Mathematics - University of Oxford</p>
+                    </div>
+                    
+                    <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-4 border border-slate-200/50">
+                      <p className="text-slate-700 text-sm leading-relaxed italic">
+                        "Mathematics is not about memorizing formulas—it's about developing logical thinking patterns that unlock any problem. 
+                        I help students see the elegant beauty in mathematical reasoning."
+                      </p>
+                    </div>
+                    
+                    <div className="mt-6 flex flex-wrap justify-center gap-2">
+                      <Badge variant="secondary" className="text-xs">Advanced Algebra</Badge>
+                      <Badge variant="secondary" className="text-xs">Problem Solving</Badge>
+                      <Badge variant="secondary" className="text-xs">SAT Math</Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dr. Zayn */}
+              <div className="group">
+                <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                  {/* Elegant frame for image */}
+                  <div className="relative mb-8">
+                    <div className="w-full aspect-[4/5] rounded-xl overflow-hidden border-4 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
+                      <img 
+                        src={zaynImage} 
+                        alt="Dr. Zayn - Oxford Mathematics Graduate" 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    </div>
+                    <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-xl border-4 border-white">
+                      <GraduationCap className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <h3 className="font-serif text-2xl font-bold text-slate-900 mb-2">Dr. Zayn</h3>
+                    <div className="space-y-1 mb-6">
+                      <p className="text-slate-600 font-medium">BSc Mathematics - University of Oxford</p>
+                      <p className="text-slate-600 font-medium">MSc Mathematics - University of Oxford</p>
+                      <p className="text-slate-600 font-medium">PhD Mathematics - University of Oxford</p>
+                    </div>
+                    
+                    <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-4 border border-slate-200/50">
+                      <p className="text-slate-700 text-sm leading-relaxed italic">
+                        "Every student has unique strengths waiting to be discovered. My approach combines rigorous academic excellence 
+                        with personalized strategies that transform mathematical anxiety into confidence."
+                      </p>
+                    </div>
+                    
+                    <div className="mt-6 flex flex-wrap justify-center gap-2">
+                      <Badge variant="secondary" className="text-xs">Data Analysis</Badge>
+                      <Badge variant="secondary" className="text-xs">Statistics</Badge>
+                      <Badge variant="secondary" className="text-xs">Test Strategy</Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Combined expertise section */}
+            <div className="mt-16 text-center">
+              <div className="bg-gradient-to-r from-slate-900/5 via-slate-800/5 to-slate-900/5 backdrop-blur-sm rounded-2xl p-8 border border-slate-200/50 max-w-4xl mx-auto">
+                <h3 className="font-serif text-2xl font-bold text-slate-900 mb-4">Combined Oxford Excellence</h3>
+                <p className="text-slate-600 leading-relaxed mb-6">
+                  Together, Dr. Tobias and Dr. Zayn bring over 15 years of combined teaching experience from one of the world's 
+                  most prestigious mathematical institutions. Their collaborative approach ensures comprehensive coverage of all 
+                  SAT Math domains while maintaining the highest academic standards.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <Award className="w-5 h-5 text-slate-600" />
+                    <span className="font-medium">Oxford Trained</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <Target className="w-5 h-5 text-slate-600" />
+                    <span className="font-medium">Results Focused</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <Users className="w-5 h-5 text-slate-600" />
+                    <span className="font-medium">Personalized Approach</span>
+                  </div>
                 </div>
               </div>
             </div>
