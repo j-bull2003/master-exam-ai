@@ -278,22 +278,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Revolutionary Analytics Intelligence Section */}
-      <section className="py-16 sm:py-24 relative overflow-hidden">
-        {/* Dynamic Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-background"></div>
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      {/* Advanced Analytics Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          {/* Header */}
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6 animate-fade-in">
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-primary">Live Analytics Engine</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <span className="text-foreground">Revolutionary </span>
               <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Analytics Intelligence</span>
@@ -724,90 +715,98 @@ const Index = () => {
               </InteractiveCard>
             </div>
 
-            {/* Right Side - Analytics Dashboard Preview */}
+            {/* Right Side - Enhanced Analytics Dashboard Preview */}
             <div className="lg:sticky lg:top-8">
               <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/60 overflow-hidden card-layered">
                 {/* Dashboard Header */}
-                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6">
+                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-4 sm:p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
                       <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse delay-200"></div>
                       <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse delay-500"></div>
                     </div>
-                    <div className="text-white text-lg font-bold">AI Analytics Dashboard</div>
-                    <div className="flex items-center gap-2 bg-green-500/20 px-3 py-1 rounded-full">
+                    <div className="text-white text-sm sm:text-lg font-bold">AI Analytics Dashboard</div>
+                    <div className="flex items-center gap-2 bg-green-500/20 px-2 sm:px-3 py-1 rounded-full">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                       <span className="text-green-300 text-xs font-medium">Live</span>
                     </div>
                   </div>
                   
-                  {/* Quick Stats */}
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="text-center">
-                      <div className="text-emerald-400 text-2xl font-bold">87%</div>
+                  {/* Enhanced Quick Stats Grid */}
+                  <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                    <div className="text-center bg-white/10 rounded-xl p-3 backdrop-blur">
+                      <div className="text-emerald-400 text-xl sm:text-2xl font-bold">87%</div>
                       <div className="text-white/70 text-xs">Accuracy</div>
+                      <div className="text-emerald-400 text-xs font-medium">+12%</div>
                     </div>
-                    <div className="text-center">
-                      <div className="text-blue-400 text-2xl font-bold">1480</div>
+                    <div className="text-center bg-white/10 rounded-xl p-3 backdrop-blur">
+                      <div className="text-blue-400 text-xl sm:text-2xl font-bold">1480</div>
                       <div className="text-white/70 text-xs">Predicted</div>
+                      <div className="text-blue-400 text-xs font-medium">+220 pts</div>
                     </div>
-                    <div className="text-center">
-                      <div className="text-purple-400 text-2xl font-bold">+220</div>
+                    <div className="text-center bg-white/10 rounded-xl p-3 backdrop-blur">
+                      <div className="text-purple-400 text-xl sm:text-2xl font-bold">+220</div>
                       <div className="text-white/70 text-xs">Improvement</div>
+                      <div className="text-purple-400 text-xs font-medium">8 weeks</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-3 sm:p-4 lg:p-6">
-                  {/* SAT Subject Performance */}
+                <div className="p-4 sm:p-6">
+                  {/* SAT Subject Performance - Enhanced Layout */}
                   <div className="mb-6 sm:mb-8">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-2">
                       <h4 className="text-lg sm:text-xl font-bold text-slate-900">SAT Subject Breakdown</h4>
-                      <div className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full w-fit">Real-time Analysis</div>
+                      <div className="text-xs text-slate-500 bg-slate-100 px-3 py-1 rounded-full w-fit flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        Real-time Analysis
+                      </div>
                     </div>
                     
-                    <div className="space-y-3 sm:space-y-5">
-                      {/* Reading & Writing */}
-                      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100/50 border border-emerald-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-2 sm:mb-3">
-                          <div>
-                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Reading & Writing</div>
-                            <div className="text-xs sm:text-sm text-emerald-700 font-medium">Craft & Structure</div>
+                    <div className="grid grid-cols-1 gap-4">
+                      {/* Reading & Writing - Craft & Structure */}
+                      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100/50 border border-emerald-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="flex-1">
+                            <div className="font-bold text-slate-900 text-base">Reading & Writing</div>
+                            <div className="text-sm text-emerald-700 font-medium">Craft & Structure</div>
+                            <div className="text-xs text-emerald-600 mt-1">Literary devices, text structure, word choice</div>
                           </div>
-                          <div className="text-right">
-                            <div className="text-emerald-600 font-bold text-lg sm:text-xl">92%</div>
-                            <div className="flex items-center gap-1">
+                          <div className="text-right ml-4">
+                            <div className="text-emerald-600 font-bold text-xl">92%</div>
+                            <div className="flex items-center gap-1 justify-end">
                               <TrendingUp className="w-3 h-3 text-emerald-500" />
                               <span className="text-xs text-emerald-600 font-medium">+8%</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-emerald-200 rounded-full h-2 sm:h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[92%]"></div>
+                        <div className="w-full bg-emerald-200 rounded-full h-3 overflow-hidden mb-2">
+                          <div className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-3 rounded-full transition-all duration-1000 hover-scale" style={{ width: '92%' }}></div>
                         </div>
-                        <div className="mt-2 text-xs text-emerald-700 font-medium">✓ Strength Area</div>
+                        <div className="text-xs text-emerald-700 font-medium">✓ Strength Area</div>
                       </div>
                       
-                      {/* Heart of Algebra */}
-                      <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 border border-blue-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-2 sm:mb-3">
-                          <div>
-                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Heart of Algebra</div>
-                            <div className="text-xs sm:text-sm text-blue-700 font-medium">Linear Equations</div>
+                      {/* Heart of Algebra - Linear Equations */}
+                      <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 border border-blue-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="flex-1">
+                            <div className="font-bold text-slate-900 text-base">Heart of Algebra</div>
+                            <div className="text-sm text-blue-700 font-medium">Linear Equations</div>
+                            <div className="text-xs text-blue-600 mt-1">Systems, inequalities, graphing</div>
                           </div>
-                          <div className="text-right">
-                            <div className="text-blue-600 font-bold text-lg sm:text-xl">84%</div>
-                            <div className="flex items-center gap-1">
+                          <div className="text-right ml-4">
+                            <div className="text-blue-600 font-bold text-xl">84%</div>
+                            <div className="flex items-center gap-1 justify-end">
                               <TrendingUp className="w-3 h-3 text-blue-500" />
                               <span className="text-xs text-blue-600 font-medium">+5%</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-blue-200 rounded-full h-2 sm:h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[84%]"></div>
+                        <div className="w-full bg-blue-200 rounded-full h-3 overflow-hidden mb-2">
+                          <div className="bg-gradient-to-r from-blue-400 to-blue-600 h-3 rounded-full transition-all duration-1000 hover-scale" style={{ width: '84%' }}></div>
                         </div>
-                        <div className="mt-2 text-xs text-blue-700 font-medium">↗ Improving</div>
+                        <div className="text-xs text-blue-700 font-medium">↗ Improving</div>
                       </div>
                       
                       {/* Problem Solving & Data Analysis */}
