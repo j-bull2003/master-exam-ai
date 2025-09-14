@@ -18,7 +18,6 @@ const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [statsCounter, setStatsCounter] = useState({ students: 0, questions: 0, accuracy: 0 });
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 300);
@@ -162,12 +161,6 @@ const Index = () => {
     }
   ];
 
-  const mobileNavItems = [
-    { name: "SAT Practice", href: "/practice", icon: BookOpen, description: "Start practicing SAT questions" },
-    { name: "Mock Tests", href: "/mocks", icon: Clipboard, description: "Take full-length practice tests" },
-    { name: "Analytics", href: "/analytics", icon: BarChart3, description: "Track your progress" },
-    { name: "Sign Up", href: "/auth/register", icon: User, description: "Create your account" }
-  ];
 
   return (
     <div className="min-h-screen" data-bg="mesh" data-depth="1">
@@ -898,65 +891,6 @@ const Index = () => {
         </div>
       </footer>
 
-      {/* Mobile Navigation Overlay */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop */}
-          <div 
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-          
-          {/* Menu Panel */}
-          <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border rounded-t-2xl p-6 animate-slide-up">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold">Quick Access</h2>
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2"
-              >
-                <X className="w-5 h-5" />
-              </Button>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {mobileNavItems.map((item, index) => (
-                <Link 
-                  key={item.name}
-                  to={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block"
-                >
-                  <div className="p-4 rounded-xl border border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 text-center group">
-                    <item.icon className="w-8 h-8 mx-auto mb-2 text-primary group-hover:scale-110 transition-transform" />
-                    <h3 className="font-semibold text-sm mb-1">{item.name}</h3>
-                    <p className="text-xs text-muted-foreground">{item.description}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            
-            <div className="pt-4 border-t border-border">
-              <p className="text-center text-xs text-muted-foreground">
-                Get started with your SAT preparation journey
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Floating Action Button for Mobile */}
-      <div className="fixed bottom-6 right-6 z-40 lg:hidden">
-        <Button
-          onClick={() => setIsMobileMenuOpen(true)}
-          size="lg"
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-primary to-primary-variant shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200"
-        >
-          <Menu className="w-6 h-6" />
-        </Button>
-      </div>
     </div>
   );
 };
