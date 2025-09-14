@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Sparkles, Brain, Target, Shield, Clock, Zap, CheckCircle, ArrowRight, Users, TrendingUp, Award, Star, Quote, Menu, X, BookOpen, Clipboard, BarChart3, User, AlertCircle } from "lucide-react";
+import { Sparkles, Brain, Target, Shield, Clock, Zap, CheckCircle, ArrowRight, Users, TrendingUp, Award, Star, Quote, Menu, X, BookOpen, Clipboard, BarChart3, User, AlertCircle, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Header } from "@/components/Header";
 import { LogoMarquee } from "@/components/LogoMarquee";
@@ -277,101 +278,151 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Live Analytics & Stats Section */}
+      {/* Live Analytics Dashboard Section */}
       <section className="py-12 sm:py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-foreground">
-              Real-Time Platform Analytics
+              Deep Dive Analytics That Rapidly Accelerate Your Score
             </h2>
-            <p className="text-muted-foreground text-sm sm:text-base px-4">Live data from our SAT preparation platform</p>
+            <p className="text-muted-foreground text-sm sm:text-base px-4">Real-time insights from our AI-powered SAT preparation platform</p>
           </div>
           
-          <div className="max-w-6xl mx-auto">
-            {/* Stats Grid - More Compact */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-              <div className="text-center group">
-                <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 h-full">
-                  <Users className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
-                  <div className="text-xl sm:text-2xl font-bold text-foreground mb-1">
-                    {statsCounter.students.toLocaleString()}+
-                  </div>
-                  <div className="text-muted-foreground font-medium text-xs sm:text-sm">Active Students</div>
-                  <div className="text-xs text-primary mt-1">+127 this week</div>
-                </div>
-              </div>
+          <div className="max-w-5xl mx-auto">
+            {/* Analytics Dashboard Container */}
+            <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 shadow-lg">
               
-              <div className="text-center group">
-                <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 h-full">
-                  <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
-                  <div className="text-xl sm:text-2xl font-bold text-foreground mb-1">
-                    {statsCounter.questions.toLocaleString()}+
+              {/* Dashboard Header */}
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/30">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <BarChart3 className="w-4 h-4 text-primary" />
                   </div>
-                  <div className="text-muted-foreground font-medium text-xs sm:text-sm">Questions Solved</div>
-                  <div className="text-xs text-green-500 mt-1">Live activity</div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground">SAT Analytics Dashboard</h3>
+                    <p className="text-xs text-muted-foreground">Live platform insights • Updated real-time</p>
+                  </div>
                 </div>
+                <Badge variant="secondary" className="text-xs">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
+                  Live
+                </Badge>
               </div>
-              
-              <div className="text-center group">
-                <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 h-full">
-                  <Award className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
-                  <div className="text-xl sm:text-2xl font-bold text-foreground mb-1">
-                    {statsCounter.accuracy}%
+
+              {/* Compact Stats Grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+                <div className="bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border border-emerald-500/20 rounded-xl p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Target className="w-4 h-4 text-emerald-600" />
+                    <span className="text-xs font-medium text-emerald-700">Accuracy Rate</span>
                   </div>
-                  <div className="text-muted-foreground font-medium text-xs sm:text-sm">Avg. Score Improvement</div>
-                  <div className="text-xs text-blue-500 mt-1">+15% this month</div>
+                  <div className="text-xl font-bold text-emerald-700">{statsCounter.accuracy}%</div>
+                  <div className="text-xs text-emerald-600">+12% this month</div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-blue-500/5 to-blue-600/10 border border-blue-500/20 rounded-xl p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="w-4 h-4 text-blue-600" />
+                    <span className="text-xs font-medium text-blue-700">Active Students</span>
+                  </div>
+                  <div className="text-xl font-bold text-blue-700">{statsCounter.students.toLocaleString()}+</div>
+                  <div className="text-xs text-blue-600">+127 this week</div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-purple-500/5 to-purple-600/10 border border-purple-500/20 rounded-xl p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <TrendingUp className="w-4 h-4 text-purple-600" />
+                    <span className="text-xs font-medium text-purple-700">Questions Solved</span>
+                  </div>
+                  <div className="text-xl font-bold text-purple-700">{statsCounter.questions.toLocaleString()}+</div>
+                  <div className="text-xs text-purple-600">2.4K today</div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-orange-500/5 to-orange-600/10 border border-orange-500/20 rounded-xl p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Award className="w-4 h-4 text-orange-600" />
+                    <span className="text-xs font-medium text-orange-700">Score Improvement</span>
+                  </div>
+                  <div className="text-xl font-bold text-orange-700">+185</div>
+                  <div className="text-xs text-orange-600">avg. points gained</div>
                 </div>
               </div>
 
-              <div className="text-center group">
-                <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 h-full">
-                  <BarChart3 className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
-                  <div className="text-xl sm:text-2xl font-bold text-foreground mb-1">
-                    2.4K
-                  </div>
-                  <div className="text-muted-foreground font-medium text-xs sm:text-sm">Practice Sessions Today</div>
-                  <div className="text-xs text-orange-500 mt-1">Peak hours: 7-9 PM</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Activity Feed - Compact Boxed Layout */}
-            <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6">
-              <h3 className="text-lg sm:text-xl font-semibold mb-4 text-center text-foreground">Live Student Activity</h3>
+              {/* Performance Breakdown */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm p-3 bg-background/40 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-muted-foreground">Sarah completed Math</span>
+                <div className="bg-background/40 rounded-xl p-4">
+                  <h4 className="text-sm font-semibold mb-3 text-foreground flex items-center gap-2">
+                    <Calculator className="w-4 h-4 text-blue-500" />
+                    Math Section Performance
+                  </h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-muted-foreground">Algebra</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 bg-background/60 rounded-full h-2">
+                          <div className="bg-blue-500 h-2 rounded-full" style={{ width: '78%' }}></div>
+                        </div>
+                        <span className="text-blue-600 font-medium">78%</span>
+                      </div>
                     </div>
-                    <span className="text-xs text-primary">+45 pts</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm p-3 bg-background/40 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                      <span className="text-muted-foreground">Mike started Reading</span>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-muted-foreground">Geometry</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 bg-background/60 rounded-full h-2">
+                          <div className="bg-green-500 h-2 rounded-full" style={{ width: '85%' }}></div>
+                        </div>
+                        <span className="text-green-600 font-medium">85%</span>
+                      </div>
                     </div>
-                    <span className="text-xs text-muted-foreground">2m ago</span>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-muted-foreground">Statistics</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 bg-background/60 rounded-full h-2">
+                          <div className="bg-orange-500 h-2 rounded-full" style={{ width: '71%' }}></div>
+                        </div>
+                        <span className="text-orange-600 font-medium">71%</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm p-3 bg-background/40 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-                      <span className="text-muted-foreground">Emma scored 1540</span>
+
+                <div className="bg-background/40 rounded-xl p-4">
+                  <h4 className="text-sm font-semibold mb-3 text-foreground flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-green-500" />
+                    Reading & Writing Performance
+                  </h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-muted-foreground">Information & Ideas</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 bg-background/60 rounded-full h-2">
+                          <div className="bg-green-500 h-2 rounded-full" style={{ width: '82%' }}></div>
+                        </div>
+                        <span className="text-green-600 font-medium">82%</span>
+                      </div>
                     </div>
-                    <span className="text-xs text-success">Goal reached!</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm p-3 bg-background/40 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-                      <span className="text-muted-foreground">Alex finished test</span>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-muted-foreground">Craft & Structure</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 bg-background/60 rounded-full h-2">
+                          <div className="bg-blue-500 h-2 rounded-full" style={{ width: '76%' }}></div>
+                        </div>
+                        <span className="text-blue-600 font-medium">76%</span>
+                      </div>
                     </div>
-                    <span className="text-xs text-muted-foreground">5m ago</span>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-muted-foreground">Expression of Ideas</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 bg-background/60 rounded-full h-2">
+                          <div className="bg-purple-500 h-2 rounded-full" style={{ width: '79%' }}></div>
+                        </div>
+                        <span className="text-purple-600 font-medium">79%</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
