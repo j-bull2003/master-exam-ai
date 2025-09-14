@@ -243,10 +243,10 @@ const SATPrograms = () => {
                 <br />
                 <span className="bg-gradient-to-r from-slate-600 via-slate-800 to-slate-900 bg-clip-text text-transparent">Expert Coaches</span>
               </h2>
-              <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed px-4">
-                Learn from distinguished Oxford Mathematics graduates who combine academic excellence 
-                with proven teaching expertise to elevate your SAT performance.
-              </p>
+               <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed px-4">
+                 Learn from distinguished Oxford and Cambridge mathematics and English graduates who combine academic excellence 
+                 with proven teaching expertise to elevate your SAT performance.
+               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
