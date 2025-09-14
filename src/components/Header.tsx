@@ -84,20 +84,6 @@ export const Header = () => {
               Features
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
-            <Link 
-              to="/pricing" 
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
-            >
-              Pricing
-              <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
-            </Link>
-            <Link 
-              to="/about" 
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
-            >
-              About
-              <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
-            </Link>
             <Link
               to="/consulting"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
@@ -110,6 +96,20 @@ export const Header = () => {
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
             >
               Group Mastery
+              <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
+            </Link>
+            <Link 
+              to="/pricing" 
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
+            >
+              Pricing
+              <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
+            </Link>
+            <Link 
+              to="/about" 
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative group whitespace-nowrap"
+            >
+              About
               <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-200"></span>
             </Link>
           </div>
@@ -192,20 +192,6 @@ export const Header = () => {
                   >
                     Features
                   </Link>
-                  <Link 
-                    to="/pricing" 
-                    className="block text-base font-medium text-foreground hover:text-primary transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Pricing
-                  </Link>
-                  <Link 
-                    to="/about" 
-                    className="block text-base font-medium text-foreground hover:text-primary transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    About
-                  </Link>
                   <Link
                     to="/consulting"
                     className="block text-base font-medium text-foreground hover:text-primary transition-colors"
@@ -219,6 +205,20 @@ export const Header = () => {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Group Mastery
+                  </Link>
+                  <Link 
+                    to="/pricing" 
+                    className="block text-base font-medium text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Pricing
+                  </Link>
+                  <Link 
+                    to="/about" 
+                    className="block text-base font-medium text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    About
                   </Link>
                 </div>
               </div>
