@@ -427,7 +427,7 @@ const Index = () => {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
               Deep-Dive Analytics That
               <br />
-              <span className="text-primary">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
                 Rapidly Accelerate Your Score
               </span>
             </h2>
