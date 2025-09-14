@@ -187,7 +187,7 @@ const Index = () => {
 
             {/* Main Headline with enhanced typography */}
             {isLoaded ? (
-              <h1 className="text-4xl font-display font-bold leading-tight mb-6 animate-fade-in px-4" style={{ animationDelay: '0.1s' }}>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 animate-fade-in px-4" style={{ animationDelay: '0.1s' }}>
                 <span className="text-foreground block mb-2">Ace the SAT</span>
                 <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
                   with AI-Driven Precision
@@ -202,7 +202,7 @@ const Index = () => {
 
             {/* Subtext with better contrast */}
             {isLoaded ? (
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in px-4" style={{ animationDelay: '0.2s' }}>
+              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in px-4" style={{ animationDelay: '0.2s' }}>
                 Master the SAT with AI-powered precision. Personalized study plans. Adaptive practice. Expert-authored content.
               </p>
             ) : (
@@ -211,7 +211,7 @@ const Index = () => {
 
             {/* Enhanced pricing info with layered cards */}
             {isLoaded ? (
-            <div className="flex flex-col items-center justify-center gap-4 text-sm mb-8 animate-fade-in px-4" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-sm mb-8 animate-fade-in px-4" style={{ animationDelay: '0.3s' }}>
                 <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-2 hover:bg-success/15 transition-colors card-layered">
                   <CheckCircle className="w-4 h-4 text-success" />
                   <span className="text-success font-semibold">3-day free trial</span>
@@ -226,9 +226,9 @@ const Index = () => {
             {/* Enhanced CTA with magnetic button */}
             {isLoaded ? (
               <div className="mb-8 animate-fade-in px-4" style={{ animationDelay: '0.4s' }}>
-                <div className="flex flex-col gap-4 items-center justify-center">
-                  <Link to="/auth/register" className="w-full">
-                    <MagneticButton className="px-12 w-full">
+                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                  <Link to="/auth/register" className="w-full sm:w-auto">
+                    <MagneticButton className="px-12 w-full sm:w-auto">
                       {/* Enhanced shimmer effect */}
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
                       <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-base py-3">
@@ -271,20 +271,20 @@ const Index = () => {
       </section>
 
       {/* Live Stats Section */}
-      <section className="py-6 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+      <section className="py-6 sm:py-8 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-4">
-            <h2 className="text-2xl font-bold mb-2 text-foreground">
+          <div className="text-center mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-foreground">
               Trusted SAT Preparation Platform
             </h2>
-            <p className="text-muted-foreground text-sm px-4">Join thousands of students who've improved their SAT scores</p>
+            <p className="text-muted-foreground text-sm sm:text-base px-4">Join thousands of students who've improved their SAT scores</p>
           </div>
           
-          <div className="grid grid-cols-1 gap-4 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Users className="w-10 h-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                <div className="text-2xl font-bold text-foreground mb-1">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Users className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1">
                   {statsCounter.students.toLocaleString()}+
                 </div>
                 <div className="text-muted-foreground font-medium text-sm">SAT Students</div>
@@ -292,9 +292,9 @@ const Index = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <TrendingUp className="w-10 h-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                <div className="text-2xl font-bold text-foreground mb-1">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <TrendingUp className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1">
                   {statsCounter.questions.toLocaleString()}+
                 </div>
                 <div className="text-muted-foreground font-medium text-sm">Practice Questions</div>
@@ -302,9 +302,9 @@ const Index = () => {
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Award className="w-10 h-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                <div className="text-2xl font-bold text-foreground mb-1">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Award className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1">
                   {statsCounter.accuracy}%
                 </div>
                 <div className="text-muted-foreground font-medium text-sm">Score Improvement Rate</div>
@@ -315,13 +315,13 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-8 bg-background">
+      <section className="py-8 sm:py-12 bg-background">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold mb-4 text-foreground px-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-foreground px-4">
               Why Students Choose UniHack for SAT Prep
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
             </p>
           </div>
