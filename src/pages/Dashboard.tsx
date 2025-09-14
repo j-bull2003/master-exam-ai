@@ -315,9 +315,9 @@ const Dashboard = () => {
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Zap className="w-4 h-4 text-primary" />
                 <span>Want to accelerate your prep?</span>
-                <Link to="/group-classes" className="text-primary hover:underline font-medium">Join group classes</Link>
+                <Link to="/group-classes" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Join group classes</Link>
                 <span>or</span>
-                <Link to="/consulting" className="text-primary hover:underline font-medium">get 1:1 coaching</Link>
+                <Link to="/consulting" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">get 1:1 coaching</Link>
               </div>
               <button className="text-muted-foreground hover:text-foreground opacity-50 hover:opacity-100">×</button>
             </div>
