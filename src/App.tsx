@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { SubscriptionProvider } from "@/components/SubscriptionProvider";
 import { SupportChatbot } from "@/components/SupportChatbot";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 // Pages
 import Index from "./pages/Index";
@@ -34,6 +35,57 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const AppContent = () => {
+  useScrollToTop(); // This hook will scroll to top on route changes
+  
+  return (
+    <>
+      <Routes>
+        {/* Landing Page */}
+        <Route path="/" element={<Index />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/consulting" element={<Consulting />} />
+        <Route path="/group-classes" element={<GroupClasses />} />
+        <Route path="/group-classes/success" element={<GroupClassesSuccess />} />
+        
+        {/* Authentication */}
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
+        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+        
+        {/* Legacy routes for backwards compatibility */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        
+        {/* Core App Flow */}
+        <Route path="/get-started" element={<DiagnosticChoice />} />
+        <Route path="/exam-picker" element={<ExamPicker />} />
+        <Route path="/diagnostic" element={<Diagnostic />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        
+        {/* Practice & Assessment */}
+        <Route path="/practice" element={<Practice />} />
+        <Route path="/mocks" element={<Mocks />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/quiz" element={<Quiz />} />
+        
+        {/* Role-based Pages */}
+        <Route path="/tutor-studio" element={<TutorStudio />} />
+        <Route path="/admin" element={<Admin />} />
+        
+        {/* Catch-all */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <FeedbackButton />
+      <SupportChatbot />
+    </>
+  );
+};
+
 const App = () => {
   console.log('App component rendering');
   return (
@@ -41,52 +93,11 @@ const App = () => {
       <AuthProvider>
         <SubscriptionProvider>
           <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-        <Routes>
-          {/* Landing Page */}
-          <Route path="/" element={<Index />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/consulting" element={<Consulting />} />
-          <Route path="/group-classes" element={<GroupClasses />} />
-          <Route path="/group-classes/success" element={<GroupClassesSuccess />} />
-          
-          {/* Authentication */}
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
-          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-          
-          {/* Legacy routes for backwards compatibility */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          
-          {/* Core App Flow */}
-          <Route path="/get-started" element={<DiagnosticChoice />} />
-          <Route path="/exam-picker" element={<ExamPicker />} />
-          <Route path="/diagnostic" element={<Diagnostic />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          
-          {/* Practice & Assessment */}
-          <Route path="/practice" element={<Practice />} />
-          <Route path="/mocks" element={<Mocks />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/quiz" element={<Quiz />} />
-          
-          {/* Role-based Pages */}
-          <Route path="/tutor-studio" element={<TutorStudio />} />
-          <Route path="/admin" element={<Admin />} />
-          
-          {/* Catch-all */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <FeedbackButton />
-          <SupportChatbot />
-        </BrowserRouter>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AppContent />
+            </BrowserRouter>
           </TooltipProvider>
         </SubscriptionProvider>
       </AuthProvider>
