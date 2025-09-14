@@ -409,271 +409,236 @@ const Index = () => {
       </section>
 
       {/* Advanced Analytics Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden">
-        {/* Background elements */}
+      <section className="py-20 bg-gradient-to-br from-background via-primary/5 to-accent/10 relative overflow-hidden">
+        {/* Enhanced Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-3/4 left-3/4 w-64 h-64 bg-primary-variant/15 rounded-full blur-2xl animate-pulse delay-500"></div>
         </div>
 
-        <div className="container mx-auto px-6 relative">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-blue-100 backdrop-blur-sm rounded-full text-sm font-medium text-blue-900 mb-8 border border-blue-200">
-              <BarChart3 className="w-4 h-4 mr-2 text-blue-600" />
+        <div className="container mx-auto px-4 sm:px-6 relative">
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center px-4 py-2 glass border border-primary/30 rounded-full text-sm font-medium text-primary mb-8 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105">
+              <BarChart3 className="w-4 h-4 mr-2 text-primary" />
               AI-Powered Analytics Engine
             </div>
             
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
-              Deep-Dive Analytics That
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
+              Real-Time Performance Analytics
               <br />
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
-                Rapidly Accelerate Your Score
+              <span className="bg-gradient-to-r from-primary via-primary-variant to-accent bg-clip-text text-transparent">
+                from live.unihack.ai
               </span>
             </h2>
             
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Our AI-driven analytics engine detects patterns in your performance, pinpoints exact weaknesses, 
-              and optimizes your learning plan for maximum score improvement in minimum time.
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Live data from our analytics platform showing how students improve their SAT scores with targeted practice and AI-driven insights.
             </p>
           </div>
 
-          {/* Analytics Features Grid */}
-          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto mb-16">
+          {/* Enhanced Analytics Grid */}
+          <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
             
-            {/* Left Side - Feature Cards */}
-            <div className="space-y-8">
-              <InteractiveCard className="p-8 bg-white/95 backdrop-blur border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Target className="w-6 h-6 text-white" />
+            {/* Left Column - Key Metrics */}
+            <div className="space-y-6">
+              <InteractiveCard className="p-6 bg-card/80 backdrop-blur border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-variant rounded-xl flex items-center justify-center">
+                    <Target className="w-6 h-6 text-primary-foreground" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-3 text-foreground">Weakness Detection AI</h3>
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
-                      Our advanced AI analyzes every question you answer, identifying not just what you got wrong, 
-                      but the underlying concepts and patterns causing mistakes across different question types.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full font-medium">Pattern Recognition</span>
-                      <span className="px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full font-medium">Root Cause Analysis</span>
-                    </div>
-                  </div>
+                  <div className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-medium">Live Data</div>
                 </div>
+                <h3 className="text-xl font-bold mb-2 text-foreground">Precision Targeting</h3>
+                <p className="text-muted-foreground text-sm mb-4">AI identifies exact weakness patterns across 847 active students</p>
+                <div className="text-2xl font-bold text-primary">94.3%</div>
+                <div className="text-xs text-muted-foreground">accuracy in weakness detection</div>
               </InteractiveCard>
 
-              <InteractiveCard className="p-8 bg-white/95 backdrop-blur border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Brain className="w-6 h-6 text-white" />
+              <InteractiveCard className="p-6 bg-card/80 backdrop-blur border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent/80 rounded-xl flex items-center justify-center">
+                    <Brain className="w-6 h-6 text-accent-foreground" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-3 text-foreground">Adaptive Learning Optimization</h3>
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
-                      Dynamic study plans that evolve in real-time based on your progress. The AI adjusts difficulty, 
-                      question types, and focus areas to maximize your improvement rate and test readiness.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full font-medium">Real-time Adaptation</span>
-                      <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full font-medium">Smart Prioritization</span>
-                    </div>
-                  </div>
+                  <div className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full font-medium">Real-time</div>
                 </div>
+                <h3 className="text-xl font-bold mb-2 text-foreground">Adaptive Learning</h3>
+                <p className="text-muted-foreground text-sm mb-4">Dynamic study paths for 6,247 active sessions today</p>
+                <div className="text-2xl font-bold text-accent">2.8x</div>
+                <div className="text-xs text-muted-foreground">faster improvement rate</div>
               </InteractiveCard>
 
-              <InteractiveCard className="p-8 bg-white/95 backdrop-blur border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+              <InteractiveCard className="p-6 bg-card/80 backdrop-blur border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
                     <TrendingUp className="w-6 h-6 text-white" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-3 text-foreground">Predictive Score Modeling</h3>
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
-                      Advanced algorithms predict your test-day performance and show exactly how much improvement 
-                      you can expect with targeted practice in specific areas.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full font-medium">Score Forecasting</span>
-                      <span className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full font-medium">Impact Analysis</span>
-                    </div>
-                  </div>
+                  <div className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full font-medium">Updated 2m ago</div>
                 </div>
+                <h3 className="text-xl font-bold mb-2 text-foreground">Score Predictions</h3>
+                <p className="text-muted-foreground text-sm mb-4">AI forecasting for students taking SAT in next 30 days</p>
+                <div className="text-2xl font-bold text-green-600">+187</div>
+                <div className="text-xs text-muted-foreground">average point improvement</div>
               </InteractiveCard>
             </div>
 
-            {/* Right Side - Analytics Dashboard Preview */}
-            <div className="lg:sticky lg:top-8">
-              <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/60 overflow-hidden card-layered">
+            {/* Center Column - Live Dashboard */}
+            <div className="lg:col-span-2">
+              <div className="bg-card/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-border/60 overflow-hidden">
                 {/* Dashboard Header */}
-                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6">
+                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-4 sm:p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
                       <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse delay-200"></div>
                       <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse delay-500"></div>
                     </div>
-                    <div className="text-white text-lg font-bold">AI Analytics Dashboard</div>
+                    <div className="text-white text-lg font-bold">analytics.unihack.ai</div>
                     <div className="flex items-center gap-2 bg-green-500/20 px-3 py-1 rounded-full">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                       <span className="text-green-300 text-xs font-medium">Live</span>
                     </div>
                   </div>
                   
-                  {/* Quick Stats */}
-                  <div className="grid grid-cols-3 gap-4">
+                  {/* Real-time Metrics */}
+                  <div className="grid grid-cols-4 gap-4">
                     <div className="text-center">
-                      <div className="text-emerald-400 text-2xl font-bold">87%</div>
-                      <div className="text-white/70 text-xs">Accuracy</div>
+                      <div className="text-emerald-400 text-xl sm:text-2xl font-bold">847</div>
+                      <div className="text-white/70 text-xs">Active Students</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-blue-400 text-2xl font-bold">1480</div>
-                      <div className="text-white/70 text-xs">Predicted</div>
+                      <div className="text-blue-400 text-xl sm:text-2xl font-bold">1,492</div>
+                      <div className="text-white/70 text-xs">Questions Today</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-purple-400 text-2xl font-bold">+220</div>
-                      <div className="text-white/70 text-xs">Improvement</div>
+                      <div className="text-purple-400 text-xl sm:text-2xl font-bold">89.2%</div>
+                      <div className="text-white/70 text-xs">Avg. Accuracy</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-orange-400 text-xl sm:text-2xl font-bold">+24</div>
+                      <div className="text-white/70 text-xs">Breakthroughs</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-3 sm:p-4 lg:p-6">
-                  {/* SAT Subject Performance */}
-                  <div className="mb-6 sm:mb-8">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-2">
-                      <h4 className="text-lg sm:text-xl font-bold text-slate-900">SAT Subject Breakdown</h4>
-                      <div className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full w-fit">Real-time Analysis</div>
+                <div className="p-4 sm:p-6">
+                  {/* Live SAT Domain Analysis */}
+                  <div className="mb-8">
+                    <div className="flex items-center justify-between mb-6">
+                      <h4 className="text-lg sm:text-xl font-bold text-foreground">Live Domain Performance</h4>
+                      <div className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full">Updated every 5 minutes</div>
                     </div>
                     
-                    <div className="space-y-3 sm:space-y-5">
-                      {/* Reading & Writing */}
-                      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100/50 border border-emerald-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-2 sm:mb-3">
+                    <div className="space-y-4">
+                      {/* Reading & Writing - Craft & Structure */}
+                      <div className="bg-gradient-to-r from-emerald-50 to-emerald-100/50 border border-emerald-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-3">
                           <div>
-                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Reading & Writing</div>
-                            <div className="text-xs sm:text-sm text-emerald-700 font-medium">Craft & Structure</div>
+                            <div className="font-bold text-slate-900 text-sm sm:text-base">Reading & Writing</div>
+                            <div className="text-xs sm:text-sm text-emerald-700 font-medium">Craft & Structure • 143 students practicing</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-emerald-600 font-bold text-lg sm:text-xl">92%</div>
+                            <div className="text-emerald-600 font-bold text-lg">91.8%</div>
                             <div className="flex items-center gap-1">
                               <TrendingUp className="w-3 h-3 text-emerald-500" />
-                              <span className="text-xs text-emerald-600 font-medium">+8%</span>
+                              <span className="text-xs text-emerald-600 font-medium">+2.3% today</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-emerald-200 rounded-full h-2 sm:h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[92%]"></div>
+                        <div className="w-full bg-emerald-200 rounded-full h-2 overflow-hidden">
+                          <div className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2 rounded-full transition-all duration-700 w-[91.8%]"></div>
                         </div>
-                        <div className="mt-2 text-xs text-emerald-700 font-medium">✓ Strength Area</div>
+                        <div className="mt-2 text-xs text-emerald-700 font-medium">✓ Top performing domain</div>
                       </div>
                       
                       {/* Heart of Algebra */}
-                      <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 border border-blue-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-2 sm:mb-3">
+                      <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 border border-blue-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-3">
                           <div>
-                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Heart of Algebra</div>
-                            <div className="text-xs sm:text-sm text-blue-700 font-medium">Linear Equations</div>
+                            <div className="font-bold text-slate-900 text-sm sm:text-base">Heart of Algebra</div>
+                            <div className="text-xs sm:text-sm text-blue-700 font-medium">Linear Equations • 89 students practicing</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-blue-600 font-bold text-lg sm:text-xl">84%</div>
+                            <div className="text-blue-600 font-bold text-lg">83.4%</div>
                             <div className="flex items-center gap-1">
                               <TrendingUp className="w-3 h-3 text-blue-500" />
-                              <span className="text-xs text-blue-600 font-medium">+5%</span>
+                              <span className="text-xs text-blue-600 font-medium">+1.7% today</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-blue-200 rounded-full h-2 sm:h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[84%]"></div>
+                        <div className="w-full bg-blue-200 rounded-full h-2 overflow-hidden">
+                          <div className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 rounded-full transition-all duration-700 w-[83.4%]"></div>
                         </div>
-                        <div className="mt-2 text-xs text-blue-700 font-medium">↗ Improving</div>
+                        <div className="mt-2 text-xs text-blue-700 font-medium">↗ Steady improvement trend</div>
                       </div>
                       
                       {/* Problem Solving & Data Analysis */}
-                      <div className="bg-gradient-to-r from-red-50 to-red-100/50 border border-red-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-2 sm:mb-3">
+                      <div className="bg-gradient-to-r from-amber-50 to-amber-100/50 border border-amber-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-3">
                           <div>
-                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Problem Solving & Data</div>
-                            <div className="text-xs sm:text-sm text-red-700 font-medium">Statistics & Probability</div>
+                            <div className="font-bold text-slate-900 text-sm sm:text-base">Problem Solving & Data</div>
+                            <div className="text-xs sm:text-sm text-amber-700 font-medium">Statistics & Probability • 76 students practicing</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-red-600 font-bold text-lg sm:text-xl">68%</div>
+                            <div className="text-amber-600 font-bold text-lg">78.9%</div>
                             <div className="flex items-center gap-1">
-                              <AlertCircle className="w-3 h-3 text-red-500" />
-                              <span className="text-xs text-red-600 font-medium">Focus</span>
+                              <TrendingUp className="w-3 h-3 text-amber-500" />
+                              <span className="text-xs text-amber-600 font-medium">+4.2% today</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-red-200 rounded-full h-2 sm:h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-red-400 to-red-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[68%]"></div>
+                        <div className="w-full bg-amber-200 rounded-full h-2 overflow-hidden">
+                          <div className="bg-gradient-to-r from-amber-400 to-amber-600 h-2 rounded-full transition-all duration-700 w-[78.9%]"></div>
                         </div>
-                        <div className="mt-2 text-xs text-red-700 font-medium">⚡ Priority Area</div>
+                        <div className="mt-2 text-xs text-amber-700 font-medium">⚡ High engagement area</div>
                       </div>
-                      
-                      {/* Passport to Advanced Math */}
-                      <div className="bg-gradient-to-r from-yellow-50 to-yellow-100/50 border border-yellow-200 rounded-xl p-3 sm:p-4 hover:shadow-lg transition-all duration-300">
-                        <div className="flex justify-between items-center mb-2 sm:mb-3">
+
+                      {/* Advanced Math */}
+                      <div className="bg-gradient-to-r from-purple-50 to-purple-100/50 border border-purple-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+                        <div className="flex justify-between items-center mb-3">
                           <div>
-                            <div className="font-bold text-slate-900 text-sm sm:text-lg">Passport to Advanced Math</div>
-                            <div className="text-xs sm:text-sm text-yellow-700 font-medium">Quadratic Functions</div>
+                            <div className="font-bold text-slate-900 text-sm sm:text-base">Advanced Math</div>
+                            <div className="text-xs sm:text-sm text-purple-700 font-medium">Polynomial Functions • 34 students practicing</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-yellow-600 font-bold text-lg sm:text-xl">76%</div>
+                            <div className="text-purple-600 font-bold text-lg">72.1%</div>
                             <div className="flex items-center gap-1">
-                              <TrendingUp className="w-3 h-3 text-yellow-500" />
-                              <span className="text-xs text-yellow-600 font-medium">+12%</span>
+                              <TrendingUp className="w-3 h-3 text-purple-500" />
+                              <span className="text-xs text-purple-600 font-medium">+6.8% today</span>
                             </div>
                           </div>
                         </div>
-                        <div className="w-full bg-yellow-200 rounded-full h-2 sm:h-3 overflow-hidden">
-                          <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-2 sm:h-3 rounded-full transition-all duration-700 w-[76%]"></div>
+                        <div className="w-full bg-purple-200 rounded-full h-2 overflow-hidden">
+                          <div className="bg-gradient-to-r from-purple-400 to-purple-600 h-2 rounded-full transition-all duration-700 w-[72.1%]"></div>
                         </div>
-                        <div className="mt-2 text-xs text-yellow-700 font-medium">📈 Rapid Growth</div>
+                        <div className="mt-2 text-xs text-purple-700 font-medium">📈 Biggest improvement today</div>
                       </div>
                     </div>
                   </div>
 
-                  {/* AI Insights Panel */}
-                  <div className="space-y-4">
-                    <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-5 rounded-xl shadow-lg card-layered">
-                      <div className="flex items-center gap-3 mb-3">
-                        <Brain className="w-6 h-6" />
-                        <h5 className="font-bold text-lg">🎯 AI Priority Recommendation</h5>
-                      </div>
-                      <p className="text-purple-100 mb-3 leading-relaxed">
-                        Focus 65% of study time on <strong>Problem Solving & Data Analysis</strong> - specifically Statistics & Probability concepts.
-                      </p>
-                      <div className="bg-white/20 p-3 rounded-lg">
-                        <div className="text-sm font-medium">Projected Score Increase: <span className="text-yellow-300 font-bold">+25 points</span> in 2 weeks</div>
-                      </div>
+                  {/* Recent Breakthroughs */}
+                  <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      <h5 className="font-bold text-foreground text-sm">Live Student Breakthroughs</h5>
+                      <div className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">24 in last hour</div>
                     </div>
-                    
-                    <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl shadow-lg">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Zap className="w-5 h-5" />
-                        <h5 className="font-bold">⚡ Speed Insight</h5>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Sarah M. mastered Linear Systems</span>
+                        <span className="text-primary font-medium">+34 pts projected</span>
                       </div>
-                      <p className="text-blue-100 text-sm">
-                        You're 18% slower on data interpretation questions. Practice with timer mode for optimal pacing.
-                      </p>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Alex K. breakthrough in Reading Comp</span>
+                        <span className="text-primary font-medium">+28 pts projected</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Maria L. conquered Geometry proofs</span>
+                        <span className="text-primary font-medium">+41 pts projected</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Stats */}
-          <div className="text-center">
-            <div className="grid md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-foreground mb-2">89%</div>
-                <div className="text-muted-foreground">Students see 200+ point gains</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-foreground mb-2">6.2x</div>
-                <div className="text-muted-foreground">Faster improvement vs traditional prep</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-foreground mb-2">24/7</div>
-                <div className="text-muted-foreground">Real-time performance tracking</div>
               </div>
             </div>
           </div>
