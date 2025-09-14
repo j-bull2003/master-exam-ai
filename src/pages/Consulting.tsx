@@ -296,7 +296,7 @@ const SATPrograms = () => {
                     <div className="w-full aspect-[3/4] max-w-[180px] mx-auto rounded-xl overflow-hidden border-3 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
                       <img 
                         src={zaynImage} 
-                        alt="Dr. Zayn - Oxford Mathematics Graduate" 
+                        alt="Zayn - Oxford Mathematics Graduate" 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                     </div>
@@ -306,9 +306,9 @@ const SATPrograms = () => {
                   </div>
                   
                   <div className="text-center">
-                    <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Dr. Zayn</h3>
+                    <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Zayn</h3>
                     <div className="space-y-1 mb-4">
-                      <p className="text-slate-600 font-medium text-sm">BSc, MSc, PhD Mathematics</p>
+                      <p className="text-slate-600 font-medium text-sm">BSc, MSc Mathematics</p>
                       <p className="text-slate-600 font-medium text-sm">University of Oxford</p>
                     </div>
                     
@@ -346,7 +346,7 @@ const SATPrograms = () => {
                   <div className="text-center">
                     <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Dr. Matthew</h3>
                     <div className="space-y-1 mb-4">
-                      <p className="text-slate-600 font-medium text-sm">PhD Pure Mathematics</p>
+                      <p className="text-slate-600 font-medium text-sm">BSc, MSc, PhD Mathematics</p>
                       <p className="text-slate-600 font-medium text-sm">University of Cambridge</p>
                     </div>
                     
