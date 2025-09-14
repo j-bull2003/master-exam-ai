@@ -28,6 +28,7 @@ import Profile from "./pages/Profile";
 import Quiz from "./routes/Quiz";
 import TutorStudio from "./pages/TutorStudio";
 import Admin from "./pages/Admin";
+import DiagnosticChoice from "./components/DiagnosticChoice";
 import FeedbackButton from "@/components/FeedbackButton";
 import NotFound from "./pages/NotFound";
 
@@ -64,6 +65,7 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           
           {/* Core App Flow */}
+          <Route path="/get-started" element={<DiagnosticChoice />} />
           <Route path="/exam-picker" element={<ExamPicker />} />
           <Route path="/diagnostic" element={<Diagnostic />} />
           <Route path="/dashboard" element={<Dashboard />} />

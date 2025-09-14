@@ -469,7 +469,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
 
       case 4:
         return (
-          <div className="space-y-4">
+          <div className="space-y-6">
+            <div className="text-center space-y-2">
+              <h2 className="text-2xl font-bold text-foreground">Review Your Selection</h2>
+              <p className="text-muted-foreground">Almost there! Review your choices and proceed to payment</p>
+            </div>
             <div className="text-center space-y-1 mb-4">
               <h2 className="text-2xl font-bold text-foreground">Ready to Start?</h2>
               <p className="text-muted-foreground text-sm">Choose how you'd like to begin your SAT preparation</p>
