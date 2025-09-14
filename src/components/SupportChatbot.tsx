@@ -19,10 +19,11 @@ interface SuggestedQuestion {
 }
 
 const suggestedQuestions: SuggestedQuestion[] = [
-  { text: "What exams do you support?", category: "Exams" },
-  { text: "What are your pricing plans?", category: "Pricing" },
-  { text: "How do I reset my password?", category: "Account" },
-  { text: "How do mock tests work?", category: "Features" }
+  { text: "How does SAT prep work?", category: "SAT" },
+  { text: "What's included in the 3-day free trial?", category: "Pricing" },
+  { text: "How do I track my SAT progress?", category: "Features" },
+  { text: "Can I change my study plan?", category: "Account" },
+  { text: "What SAT score improvements can I expect?", category: "Results" }
 ];
 
 export const SupportChatbot: React.FC = () => {
@@ -30,7 +31,7 @@ export const SupportChatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hi! I'm here to help you with any questions about our exam prep platform. You can ask me about pricing, features, account issues, or anything else!",
+      text: "Hi! I'm here to help you with your SAT preparation journey. Ask me about our AI-powered study plans, practice tests, score improvement strategies, or anything else!",
       isBot: true,
       timestamp: new Date()
     }
@@ -79,7 +80,7 @@ export const SupportChatbot: React.FC = () => {
         addMessage(answer.answer, true);
       } else {
         addMessage(
-          "I couldn't find a specific answer to your question. For personalized support, please contact our team at support@examprep.com and we'll get back to you within 24 hours!",
+          "I couldn't find a specific answer to your question. For personalized SAT prep support, please contact our team at support@unihack.ai and we'll help you achieve your target score!",
           true
         );
       }
@@ -102,18 +103,18 @@ export const SupportChatbot: React.FC = () => {
       {/* Floating Button */}
       <Button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-[9999] ${
+        className={`fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-[9999] ${
           isOpen ? 'scale-0' : 'scale-100'
         }`}
         size="icon"
-        title="Help & Support"
+        title="SAT Help & Support"
       >
-        <MessageCircle className="h-6 w-6" />
+        <MessageCircle className="h-7 w-7" />
       </Button>
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-background border rounded-2xl shadow-2xl z-[9999] flex flex-col">
+        <div className="fixed bottom-6 right-6 w-[420px] h-[600px] bg-background border rounded-2xl shadow-2xl z-[9999] flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b bg-primary/5 rounded-t-2xl">
             <div className="flex items-center gap-2">
@@ -121,8 +122,8 @@ export const SupportChatbot: React.FC = () => {
                 <HelpCircle className="h-4 w-4 text-primary-foreground" />
               </div>
               <div>
-                <h3 className="font-semibold text-sm">Help & Support</h3>
-                <p className="text-xs text-muted-foreground">Usually responds instantly</p>
+                <h3 className="font-semibold text-sm">SAT Support</h3>
+                <p className="text-xs text-muted-foreground">Get instant help with your SAT prep</p>
               </div>
             </div>
             <Button
@@ -174,7 +175,7 @@ export const SupportChatbot: React.FC = () => {
               {/* Suggested Questions (only show at start) */}
               {messages.length === 1 && (
                 <div className="space-y-2">
-                  <p className="text-xs text-muted-foreground">Popular questions:</p>
+                  <p className="text-xs text-muted-foreground">Quick SAT questions:</p>
                   <div className="flex flex-wrap gap-2">
                     {suggestedQuestions.map((suggestion, index) => (
                       <Badge
