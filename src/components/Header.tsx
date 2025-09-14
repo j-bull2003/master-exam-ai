@@ -2,21 +2,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CommandPalette } from "@/components/CommandPalette";
-import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
-import { Search, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Instagram, Linkedin } from "lucide-react";
 
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 export const Header = () => {
-  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useKeyboardShortcuts({
-    onCommandPaletteOpen: () => setCommandPaletteOpen(true),
-  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,21 +107,8 @@ export const Header = () => {
             </Link>
           </div>
 
-          {/* Command Palette Button & CTA Buttons */}
+          {/* CTA Buttons */}
           <div className="flex items-center gap-2">
-            {/* Command Palette Trigger */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setCommandPaletteOpen(true)}
-              className="hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-border/50 px-3 py-2 glass-subtle"
-            >
-              <Search className="w-4 h-4" />
-              <span className="text-xs">Search</span>
-              <div className="flex items-center gap-1 ml-2">
-                <kbd className="kbd">⌘K</kbd>
-              </div>
-            </Button>
             
             {/* Desktop CTA Buttons */}
             <Link to="/auth/login" className="hidden md:block">
@@ -223,21 +203,6 @@ export const Header = () => {
                 </div>
               </div>
               
-              {/* Search */}
-              <div className="pt-4 border-t border-border">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start gap-2 text-muted-foreground hover:text-foreground"
-                  onClick={() => {
-                    setCommandPaletteOpen(true);
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  <Search className="w-4 h-4" />
-                  Search
-                </Button>
-              </div>
-              
               {/* Social Links */}
               <div className="pt-4 border-t border-border">
                 <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">Follow Us</h3>
@@ -263,29 +228,15 @@ export const Header = () => {
             </div>
             
             {/* Bottom CTA */}
-            <div className="p-6 border-t border-border space-y-3">
-              <Button
-                variant="ghost"
-                className="w-full justify-start gap-2 text-muted-foreground hover:text-foreground"
-                onClick={() => {
-                  setCommandPaletteOpen(true);
-                  setMobileMenuOpen(false);
-                }}
-              >
-                <Search className="w-4 h-4" />
-                Search
-              </Button>
+            <div className="p-6 border-t border-border">
+              <div className="text-center text-sm text-muted-foreground">
+                Connect with us on social media
+              </div>
             </div>
           </div>
         </div>
       </div>
     )}
-
-    {/* Command Palette */}
-    <CommandPalette 
-      open={commandPaletteOpen} 
-      setOpen={setCommandPaletteOpen} 
-    />
     </>
   );
 };
