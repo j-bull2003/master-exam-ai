@@ -712,7 +712,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           <img 
             src="/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png" 
             alt="UniHack.ai" 
-            className="h-20 w-auto mx-auto mb-4"
+            className="h-32 w-auto mx-auto mb-4"
           />
           <h1 className="text-2xl font-bold text-foreground">Welcome to UniHack</h1>
           <p className="text-muted-foreground">Your AI-powered SAT prep starts here</p>
