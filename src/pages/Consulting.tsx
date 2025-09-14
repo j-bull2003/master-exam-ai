@@ -235,7 +235,7 @@ const SATPrograms = () => {
             <div className="text-center mb-16">
               <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slate-900/10 to-slate-700/10 backdrop-blur-sm rounded-full text-sm font-medium text-slate-700 mb-8 border border-slate-200/50">
                 <GraduationCap className="w-4 h-4 mr-2 text-slate-700" />
-                SAT Excellence
+                Distinguished Oxford and Cambridge Graduates in Mathematics and English
               </div>
               
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-slate-900 leading-tight">
