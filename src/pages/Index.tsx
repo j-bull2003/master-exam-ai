@@ -493,7 +493,10 @@ const Index = () => {
                       <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse delay-200"></div>
                       <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse delay-500"></div>
                     </div>
-                    <div className="text-white text-lg font-bold">analytics.unihack.ai</div>
+                    <div className="flex items-center gap-2">
+                      <img src={uniHackLogo} alt="UniHack" className="w-6 h-6" />
+                      <span className="text-white text-lg font-bold">Analytics Dashboard</span>
+                    </div>
                     <div className="flex items-center gap-2 bg-green-500/20 px-3 py-1 rounded-full">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                       <span className="text-green-300 text-xs font-medium">Live</span>
