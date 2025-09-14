@@ -182,8 +182,8 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge with enhanced glassmorphism */}
             {isLoaded ? (
-              <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium mb-4 sm:mb-6 mt-8 sm:mt-12 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
-                <Sparkles className="w-3 sm:w-4 h-3 sm:h-4 text-primary group-hover:animate-pulse" />
+              <div className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 text-sm font-medium mb-6 mt-12 shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105 group animate-fade-in card-layered">
+                <Sparkles className="w-4 h-4 text-primary group-hover:animate-pulse" />
                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-semibold">
                   Master the SAT in just 10 minutes daily
                 </span>
@@ -194,8 +194,8 @@ const Index = () => {
 
             {/* Main Headline with enhanced typography */}
             {isLoaded ? (
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold leading-tight mb-4 sm:mb-6 animate-fade-in px-2" style={{ animationDelay: '0.1s' }}>
-                <span className="text-foreground block mb-1 sm:mb-2">Ace the SAT</span>
+              <h1 className="text-4xl font-display font-bold leading-tight mb-6 animate-fade-in px-4" style={{ animationDelay: '0.1s' }}>
+                <span className="text-foreground block mb-2">Ace the SAT</span>
                 <span className="bg-gradient-to-r from-primary via-primary-variant to-primary/80 bg-clip-text text-transparent">
                   with AI-Driven Precision
                 </span>
@@ -209,7 +209,7 @@ const Index = () => {
 
             {/* Subtext with better contrast */}
             {isLoaded ? (
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mb-4 sm:mb-6 max-w-2xl mx-auto animate-fade-in px-4" style={{ animationDelay: '0.2s' }}>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto animate-fade-in px-4" style={{ animationDelay: '0.2s' }}>
                 Master the SAT with AI-powered precision. Personalized study plans. Adaptive practice. Expert-authored content.
               </p>
             ) : (
@@ -218,9 +218,9 @@ const Index = () => {
 
             {/* Enhanced pricing info with layered cards */}
             {isLoaded ? (
-            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-6 text-xs sm:text-sm mb-6 sm:mb-8 animate-fade-in px-4" style={{ animationDelay: '0.3s' }}>
-                <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-2 sm:px-3 py-1 sm:py-1.5 hover:bg-success/15 transition-colors card-layered">
-                  <CheckCircle className="w-3 sm:w-4 h-3 sm:h-4 text-success" />
+            <div className="flex flex-col items-center justify-center gap-4 text-sm mb-8 animate-fade-in px-4" style={{ animationDelay: '0.3s' }}>
+                <div className="flex items-center gap-2 glass border border-success/30 rounded-full px-3 py-2 hover:bg-success/15 transition-colors card-layered">
+                  <CheckCircle className="w-4 h-4 text-success" />
                   <span className="text-success font-semibold">3-day free trial</span>
                 </div>
                 <div className="text-muted-foreground font-medium text-center">From $39.99/month (annual)</div>
@@ -232,15 +232,15 @@ const Index = () => {
 
             {/* Enhanced CTA with magnetic button */}
             {isLoaded ? (
-              <div className="mb-6 sm:mb-8 animate-fade-in px-4" style={{ animationDelay: '0.4s' }}>
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center">
-                  <Link to="/auth/register" className="w-full sm:w-auto">
-                    <MagneticButton className="px-6 sm:px-8 md:px-12 w-full sm:w-auto">
+              <div className="mb-8 animate-fade-in px-4" style={{ animationDelay: '0.4s' }}>
+                <div className="flex flex-col gap-4 items-center justify-center">
+                  <Link to="/auth/register" className="w-full">
+                    <MagneticButton className="px-12 w-full">
                       {/* Enhanced shimmer effect */}
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] group-hover:transition-transform group-hover:duration-1000" />
-                      <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-sm sm:text-base py-2 sm:py-3">
+                      <Button className="w-full bg-gradient-to-r from-primary to-primary-variant hover:scale-105 transition-transform text-base py-3">
                         Start Free Trial
-                        <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 ml-2" />
+                        <ArrowRight className="w-5 h-5 ml-2" />
                       </Button>
                     </MagneticButton>
                   </Link>
@@ -254,16 +254,16 @@ const Index = () => {
             {/* University Logos Carousel with enhanced presentation */}
             {isLoaded ? (
               <div className="animate-fade-in px-4" style={{ animationDelay: '0.7s' }}>
-                <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-8 sm:mb-12">
+                <p className="text-sm font-medium text-muted-foreground mb-12">
                   Trusted by students preparing for top US universities
                 </p>
                 <div 
                   className="relative"
-                  style={{ minHeight: '48px sm:72px' }}
+                  style={{ minHeight: '72px' }}
                 >
                   {/* Subtle gradient overlays for better integration */}
-                  <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-                  <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+                  <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
                   <LogoMarquee />
                 </div>
               </div>
@@ -278,43 +278,43 @@ const Index = () => {
       </section>
 
       {/* Live Stats Section */}
-      <section className="py-4 sm:py-6 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-3 sm:mb-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2 text-foreground">
+      <section className="py-6 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-4">
+            <h2 className="text-2xl font-bold mb-2 text-foreground">
               Trusted SAT Preparation Platform
             </h2>
-            <p className="text-muted-foreground text-xs sm:text-sm px-4">Join thousands of students who've improved their SAT scores</p>
+            <p className="text-muted-foreground text-sm px-4">Join thousands of students who've improved their SAT scores</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 md:gap-4 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 gap-4 max-w-3xl mx-auto">
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-2 sm:p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Users className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-primary mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform" />
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-1">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Users className="w-10 h-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl font-bold text-foreground mb-1">
                   {statsCounter.students.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium text-xs sm:text-sm">SAT Students</div>
+                <div className="text-muted-foreground font-medium text-sm">SAT Students</div>
               </div>
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-2 sm:p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-primary mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform" />
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-1">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <TrendingUp className="w-10 h-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl font-bold text-foreground mb-1">
                   {statsCounter.questions.toLocaleString()}+
                 </div>
-                <div className="text-muted-foreground font-medium text-xs sm:text-sm">Practice Questions</div>
+                <div className="text-muted-foreground font-medium text-sm">Practice Questions</div>
               </div>
             </div>
             
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-2 sm:p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Award className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-primary mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform" />
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-1">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Award className="w-10 h-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                <div className="text-2xl font-bold text-foreground mb-1">
                   {statsCounter.accuracy}%
                 </div>
-                <div className="text-muted-foreground font-medium text-xs sm:text-sm">Score Improvement Rate</div>
+                <div className="text-muted-foreground font-medium text-sm">Score Improvement Rate</div>
               </div>
             </div>
           </div>
@@ -322,13 +322,13 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-6 sm:py-8 bg-background">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-foreground px-4">
+      <section className="py-8 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold mb-4 text-foreground px-4">
               Why Students Choose UniHack for SAT Prep
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto px-4">
               Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
             </p>
           </div>
