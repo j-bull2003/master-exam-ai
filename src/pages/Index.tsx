@@ -175,7 +175,7 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 relative overflow-hidden bg-mesh" data-bg="mesh">
+      <section className="pt-16 sm:pt-20 pb-8 sm:pb-10 relative overflow-hidden bg-mesh" data-bg="mesh">
         {/* Animated background */}
         <AnimatedBackground className="opacity-80" />
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -278,18 +278,18 @@ const Index = () => {
       </section>
 
       {/* Live Stats Section */}
-      <section className="py-12 sm:py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+      <section className="py-6 sm:py-8 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-foreground">
+          <div className="text-center mb-4 sm:mb-6">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
               Trusted SAT Preparation Platform
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base px-4">Join thousands of students who've improved their SAT scores with our proven methods</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6 max-w-4xl mx-auto">
             <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 md:p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-3 sm:p-4 md:p-5 hover:shadow-lg transition-all duration-300 hover:scale-105">
                 <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
                 <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1 sm:mb-2">
                   {statsCounter.students.toLocaleString()}+
@@ -322,13 +322,13 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 sm:py-16 bg-background">
+      <section className="py-6 sm:py-8 bg-background">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground px-4">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-foreground px-4">
               Why Students Choose UniHack for SAT Prep
             </h2>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
               Advanced AI technology that adapts to your learning style and maximizes your SAT score potential.
             </p>
           </div>
@@ -342,7 +342,7 @@ const Index = () => {
                 className="text-center group hover:border-primary/20"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="p-4 sm:p-6 md:p-8">
+                <div className="p-3 sm:p-4 md:p-5">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-3 sm:mb-4 md:mb-6 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-all duration-300 group-hover:scale-110">
                     <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary group-hover:scale-110 transition-transform" />
                   </div>
