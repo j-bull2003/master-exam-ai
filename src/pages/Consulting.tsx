@@ -42,7 +42,7 @@ const SATPrograms = () => {
       "Practice test analysis & strategy refinement"
     ],
     duration: "12-16 weeks",
-    price: "$2,499",
+    price: "$2,899",
     originalPrice: "$4,999",
     badge: "Limited Time Offer",
     guarantee: "200+ SCORE INCREASE OR MONEY BACK"
