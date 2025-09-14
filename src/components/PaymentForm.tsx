@@ -397,6 +397,20 @@ const PaymentForm = ({ formData, onPaymentSuccess, isLoading, setIsLoading }: Pa
           {isLoading ? 'Processing Payment...' : 'Complete Setup & Start Trial →'}
         </Button>
 
+        {/* TEMPORARY: Skip payment for testing */}
+        <Button 
+          type="button"
+          onClick={() => {
+            console.log('Skipping payment for testing...');
+            onPaymentSuccess();
+          }}
+          variant="outline"
+          size="lg"
+          className="w-full h-14 text-lg"
+        >
+          Skip Payment (Testing Only) →
+        </Button>
+
         <p className="text-xs text-muted-foreground text-center">
           Secure payment • Cancel anytime • No hidden fees
         </p>
