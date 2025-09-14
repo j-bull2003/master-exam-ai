@@ -287,84 +287,89 @@ const Index = () => {
             <p className="text-muted-foreground text-sm sm:text-base px-4">Live data from our SAT preparation platform</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto">
-            <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Users className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1 sm:mb-2">
-                  {statsCounter.students.toLocaleString()}+
+          <div className="max-w-6xl mx-auto">
+            {/* Stats Grid - More Compact */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+              <div className="text-center group">
+                <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 h-full">
+                  <Users className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
+                  <div className="text-xl sm:text-2xl font-bold text-foreground mb-1">
+                    {statsCounter.students.toLocaleString()}+
+                  </div>
+                  <div className="text-muted-foreground font-medium text-xs sm:text-sm">Active Students</div>
+                  <div className="text-xs text-primary mt-1">+127 this week</div>
                 </div>
-                <div className="text-muted-foreground font-medium text-xs sm:text-sm">Active Students</div>
-                <div className="text-xs text-primary mt-1">+127 this week</div>
               </div>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1 sm:mb-2">
-                  {statsCounter.questions.toLocaleString()}+
+              
+              <div className="text-center group">
+                <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 h-full">
+                  <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
+                  <div className="text-xl sm:text-2xl font-bold text-foreground mb-1">
+                    {statsCounter.questions.toLocaleString()}+
+                  </div>
+                  <div className="text-muted-foreground font-medium text-xs sm:text-sm">Questions Solved</div>
+                  <div className="text-xs text-green-500 mt-1">Live activity</div>
                 </div>
-                <div className="text-muted-foreground font-medium text-xs sm:text-sm">Questions Solved</div>
-                <div className="text-xs text-green-500 mt-1">Live activity</div>
               </div>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <Award className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1 sm:mb-2">
-                  {statsCounter.accuracy}%
+              
+              <div className="text-center group">
+                <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 h-full">
+                  <Award className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
+                  <div className="text-xl sm:text-2xl font-bold text-foreground mb-1">
+                    {statsCounter.accuracy}%
+                  </div>
+                  <div className="text-muted-foreground font-medium text-xs sm:text-sm">Avg. Score Improvement</div>
+                  <div className="text-xs text-blue-500 mt-1">+15% this month</div>
                 </div>
-                <div className="text-muted-foreground font-medium text-xs sm:text-sm">Avg. Score Improvement</div>
-                <div className="text-xs text-blue-500 mt-1">+15% this month</div>
+              </div>
+
+              <div className="text-center group">
+                <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 h-full">
+                  <BarChart3 className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
+                  <div className="text-xl sm:text-2xl font-bold text-foreground mb-1">
+                    2.4K
+                  </div>
+                  <div className="text-muted-foreground font-medium text-xs sm:text-sm">Practice Sessions Today</div>
+                  <div className="text-xs text-orange-500 mt-1">Peak hours: 7-9 PM</div>
+                </div>
               </div>
             </div>
 
-            <div className="text-center group">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <BarChart3 className="w-8 h-8 sm:w-10 sm:h-10 text-primary mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-2xl sm:text-3xl font-bold text-foreground mb-1 sm:mb-2">
-                  2.4K
-                </div>
-                <div className="text-muted-foreground font-medium text-xs sm:text-sm">Practice Sessions Today</div>
-                <div className="text-xs text-orange-500 mt-1">Peak hours: 7-9 PM</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Real-time Activity Feed */}
-          <div className="mt-8 sm:mt-12 max-w-4xl mx-auto">
+            {/* Activity Feed - Compact Boxed Layout */}
             <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-4 sm:p-6">
               <h3 className="text-lg sm:text-xl font-semibold mb-4 text-center text-foreground">Live Student Activity</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-muted-foreground">Sarah from California completed Math Practice</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm p-3 bg-background/40 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <span className="text-muted-foreground">Sarah completed Math</span>
+                    </div>
+                    <span className="text-xs text-primary">+45 pts</span>
                   </div>
-                  <span className="text-xs text-primary">+45 points</span>
+                  <div className="flex items-center justify-between text-sm p-3 bg-background/40 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                      <span className="text-muted-foreground">Mike started Reading</span>
+                    </div>
+                    <span className="text-xs text-muted-foreground">2m ago</span>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                    <span className="text-muted-foreground">Mike from Texas started Reading & Writing section</span>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm p-3 bg-background/40 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                      <span className="text-muted-foreground">Emma scored 1540</span>
+                    </div>
+                    <span className="text-xs text-success">Goal reached!</span>
                   </div>
-                  <span className="text-xs text-muted-foreground">2 min ago</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-                    <span className="text-muted-foreground">Emma from New York achieved 95% accuracy</span>
+                  <div className="flex items-center justify-between text-sm p-3 bg-background/40 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+                      <span className="text-muted-foreground">Alex finished test</span>
+                    </div>
+                    <span className="text-xs text-muted-foreground">5m ago</span>
                   </div>
-                  <span className="text-xs text-green-500">New personal best!</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-                    <span className="text-muted-foreground">Alex from Florida completed full Mock Test</span>
-                  </div>
-                  <span className="text-xs text-primary">1520 score</span>
                 </div>
               </div>
             </div>
