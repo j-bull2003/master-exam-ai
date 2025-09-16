@@ -562,7 +562,7 @@ export default function GroupClasses() {
               <CardContent className="p-4 sm:p-6 text-center">
                 <Target className="w-6 h-6 sm:w-8 sm:h-8 text-slate-700 mx-auto mb-2 sm:mb-3" />
                 <h3 className="font-serif font-semibold text-slate-900 mb-1 sm:mb-2 text-sm sm:text-base">Small Groups</h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-light">Maximum 8 students for personalized attention</p>
+                <p className="text-xs sm:text-sm text-slate-600 font-light">Personalized attention in small group setting</p>
               </CardContent>
             </Card>
           </div>
@@ -601,7 +601,7 @@ export default function GroupClasses() {
                   Intimate Groups
                 </h3>
                 <p className="text-slate-600 font-light leading-relaxed">
-                  Maximum 8 students per group ensures personalized attention and optimal learning environment for each student.
+                  Small group setting ensures personalized attention and optimal learning environment for each student.
                 </p>
               </CardContent>
             </Card>
@@ -686,7 +686,7 @@ export default function GroupClasses() {
                 </div>
                 <div>
                   <h4 className="font-serif font-semibold text-slate-900 mb-1">Small Group Environment</h4>
-                  <span className="text-slate-700 font-light">Maximum 8 students for personalized attention and interaction</span>
+                  <span className="text-slate-700 font-light">Small group setting for personalized attention and interaction</span>
                 </div>
               </div>
               <div className="flex items-start gap-4">
