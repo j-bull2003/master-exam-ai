@@ -70,7 +70,7 @@ export default function GroupClasses() {
           <div className="max-w-6xl mx-auto text-center">
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slate-900/10 to-slate-700/10 backdrop-blur-sm rounded-full text-sm font-medium text-slate-700 mb-8 border border-slate-200/50">
               <div className="w-2 h-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mr-3 animate-pulse"></div>
-              Small Group Excellence
+              Premium SAT Preparation
             </div>
             
             <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl font-bold mb-6 leading-[0.9] text-slate-900 tracking-tight">
@@ -82,7 +82,7 @@ export default function GroupClasses() {
             </h1>
             
             <p className="text-lg sm:text-xl md:text-2xl text-slate-600 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed font-light px-4">
-              Join an elite small group of motivated students for expert instruction in 
+              Join motivated students for expert instruction in 
               <em className="font-serif text-slate-800"> Reading & Writing </em> and 
               <em className="font-serif text-slate-800"> Mathematics</em>
             </p>
@@ -214,7 +214,7 @@ export default function GroupClasses() {
             {/* Premium badge */}
             <div className="absolute top-4 right-4 z-10">
               <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg">
-                Small Groups Only
+                Premium Program
               </div>
             </div>
             
@@ -225,7 +225,7 @@ export default function GroupClasses() {
               
               <h3 className="font-serif text-2xl sm:text-4xl font-bold mb-4 text-slate-900">SAT Group Mastery</h3>
               <p className="text-base text-slate-600 mb-6 max-w-xl mx-auto font-light">
-                Comprehensive SAT preparation with expert instruction in small group setting
+                Comprehensive SAT preparation with expert instruction and personalized attention
               </p>
               
               <div className="mb-6">
@@ -424,9 +424,8 @@ export default function GroupClasses() {
               
               {/* Enhanced Interactive Chat */}
               <div className="bg-slate-700 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
-                <div className="text-white text-xs sm:text-sm font-medium mb-3 border-b border-slate-600 pb-2 flex items-center justify-between">
+                <div className="text-white text-xs sm:text-sm font-medium mb-3 border-b border-slate-600 pb-2">
                   <span>Live Discussion (Private to Group)</span>
-                  <span className="text-xs text-slate-400">8 participants</span>
                 </div>
                 <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm max-h-32 sm:max-h-40 overflow-y-auto">
                   <div className="text-slate-300">
@@ -561,8 +560,8 @@ export default function GroupClasses() {
             <Card className="border border-slate-200/50 bg-white/80 backdrop-blur-sm shadow-lg">
               <CardContent className="p-4 sm:p-6 text-center">
                 <Target className="w-6 h-6 sm:w-8 sm:h-8 text-slate-700 mx-auto mb-2 sm:mb-3" />
-                <h3 className="font-serif font-semibold text-slate-900 mb-1 sm:mb-2 text-sm sm:text-base">Small Groups</h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-light">Personalized attention in small group setting</p>
+                <h3 className="font-serif font-semibold text-slate-900 mb-1 sm:mb-2 text-sm sm:text-base">Expert Instruction</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-light">Personalized attention and focused learning</p>
               </CardContent>
             </Card>
           </div>
@@ -578,7 +577,7 @@ export default function GroupClasses() {
             <span className="text-slate-600">Group Mastery?</span>
           </h2>
           <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed px-4 text-center mb-16">
-            Experience the perfect balance of personalized attention and collaborative learning in our expertly designed small group environment.
+            Experience the perfect balance of personalized attention and collaborative learning in our expertly designed program.
           </p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -598,10 +597,10 @@ export default function GroupClasses() {
               <CardContent className="p-8">
                 <Users className="w-12 h-12 text-slate-700 mb-4" />
                 <h3 className="text-xl font-serif font-semibold text-slate-900 mb-3">
-                  Intimate Groups
+                  Focused Learning
                 </h3>
                 <p className="text-slate-600 font-light leading-relaxed">
-                  Small group setting ensures personalized attention and optimal learning environment for each student.
+                  Carefully structured classes ensure personalized attention and optimal learning environment for each student.
                 </p>
               </CardContent>
             </Card>
@@ -685,8 +684,8 @@ export default function GroupClasses() {
                   <Check className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-serif font-semibold text-slate-900 mb-1">Small Group Environment</h4>
-                  <span className="text-slate-700 font-light">Small group setting for personalized attention and interaction</span>
+                  <h4 className="font-serif font-semibold text-slate-900 mb-1">Interactive Learning</h4>
+                  <span className="text-slate-700 font-light">Engaging environment for personalized attention and interaction</span>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -776,7 +775,7 @@ export default function GroupClasses() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 text-slate-400 px-4">
               {[
-                { icon: Users, text: "Small Groups" },
+                { icon: Users, text: "Expert Instruction" },
                 { icon: Target, text: "Expert Coaching" },
                 { icon: Check, text: "Proven Results" }
               ].map((item, idx) => (
