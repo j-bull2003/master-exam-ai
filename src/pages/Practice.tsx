@@ -331,21 +331,24 @@ const Practice = () => {
                           </Badge>
                         </div>
                         
-                        <Button variant="outline" className="w-full" size="sm">
-                          <Target className="h-4 w-4 mr-2" />
-                          Practice This Domain
-                        </Button>
+                        <Link to={`/practice/play?domain=${encodeURIComponent(domain.name)}&n=10`}>
+                          <Button variant="outline" className="w-full" size="sm">
+                            <Target className="h-4 w-4 mr-2" />
+                            Practice This Domain
+                          </Button>
+                        </Link>
                         
                         <div className="border-t pt-3">
                           <p className="text-sm font-medium text-muted-foreground mb-2">Practice a subdomain:</p>
                           <div className="space-y-1">
                             {domain.subdomains.map((subdomain, subIndex) => (
-                              <button
+                              <Link
                                 key={subIndex}
+                                to={`/practice/play?domain=${encodeURIComponent(domain.name)}&subdomain=${encodeURIComponent(subdomain)}&n=10`}
                                 className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
                               >
                                 {subdomain}
-                              </button>
+                              </Link>
                             ))}
                           </div>
                         </div>
@@ -412,21 +415,24 @@ const Practice = () => {
                           </Badge>
                         </div>
                         
-                        <Button variant="outline" className="w-full" size="sm">
-                          <Target className="h-4 w-4 mr-2" />
-                          Practice This Domain
-                        </Button>
+                        <Link to={`/practice/play?domain=${encodeURIComponent(domain.name)}&n=10`}>
+                          <Button variant="outline" className="w-full" size="sm">
+                            <Target className="h-4 w-4 mr-2" />
+                            Practice This Domain
+                          </Button>
+                        </Link>
                         
                         <div className="border-t pt-3">
                           <p className="text-sm font-medium text-muted-foreground mb-2">Practice a subdomain:</p>
                           <div className="space-y-1">
                             {domain.subdomains.map((subdomain, subIndex) => (
-                              <button
+                              <Link
                                 key={subIndex}
+                                to={`/practice/play?domain=${encodeURIComponent(domain.name)}&subdomain=${encodeURIComponent(subdomain)}&n=10`}
                                 className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
                               >
                                 {subdomain}
-                              </button>
+                              </Link>
                             ))}
                           </div>
                         </div>

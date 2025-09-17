@@ -32,6 +32,7 @@ import Admin from "./pages/Admin";
 import DiagnosticChoice from "./components/DiagnosticChoice";
 import FeedbackButton from "@/components/FeedbackButton";
 import NotFound from "./pages/NotFound";
+import PracticePlay from "./pages/PracticePlay";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,7 @@ const AppContent = () => {
         
         {/* Practice & Assessment */}
         <Route path="/practice" element={<Practice />} />
+        <Route path="/practice/play" element={<PracticePlay />} />
         <Route path="/mocks" element={<Mocks />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/profile" element={<Profile />} />
