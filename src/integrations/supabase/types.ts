@@ -310,6 +310,54 @@ export type Database = {
           },
         ]
       }
+      sat_questions: {
+        Row: {
+          category: string | null
+          choice_a: string | null
+          choice_b: string | null
+          choice_c: string | null
+          choice_d: string | null
+          correct_choice: string | null
+          difficulty: string | null
+          domain: string | null
+          explanation_html: string | null
+          id: string
+          source: string | null
+          stem_html: string | null
+          subdomain: string | null
+        }
+        Insert: {
+          category?: string | null
+          choice_a?: string | null
+          choice_b?: string | null
+          choice_c?: string | null
+          choice_d?: string | null
+          correct_choice?: string | null
+          difficulty?: string | null
+          domain?: string | null
+          explanation_html?: string | null
+          id: string
+          source?: string | null
+          stem_html?: string | null
+          subdomain?: string | null
+        }
+        Update: {
+          category?: string | null
+          choice_a?: string | null
+          choice_b?: string | null
+          choice_c?: string | null
+          choice_d?: string | null
+          correct_choice?: string | null
+          difficulty?: string | null
+          domain?: string | null
+          explanation_html?: string | null
+          id?: string
+          source?: string | null
+          stem_html?: string | null
+          subdomain?: string | null
+        }
+        Relationships: []
+      }
       sections: {
         Row: {
           created_at: string
