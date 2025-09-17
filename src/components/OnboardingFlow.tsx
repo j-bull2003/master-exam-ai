@@ -406,10 +406,6 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                         </div>
                         <div className="flex items-center gap-2 mt-1">
                           <CheckCircle className="w-4 h-4" />
-                          <span>Small group sizes (max 8)</span>
-                        </div>
-                        <div className="flex items-center gap-2 mt-1">
-                          <CheckCircle className="w-4 h-4" />
                           <span>Interactive Q&A sessions</span>
                         </div>
                       </div>
