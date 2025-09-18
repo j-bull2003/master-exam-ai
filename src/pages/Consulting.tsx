@@ -248,7 +248,7 @@ const SATPrograms = () => {
                </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto justify-items-center">
               {/* Dr. Tobias */}
               <div className="group">
                 <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
@@ -267,7 +267,7 @@ const SATPrograms = () => {
                   </div>
                   
                   <div className="text-center">
-                    <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Dr. Tobias</h3>
+                    <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Tobias</h3>
                     <div className="space-y-1 mb-4">
                       <p className="text-slate-600 font-medium text-sm">BSc, MSc, PhD Mathematics</p>
                       <p className="text-slate-600 font-medium text-sm">University of Oxford</p>
