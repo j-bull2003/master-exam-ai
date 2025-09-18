@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import tobiasImage from "@/assets/tobias-oxford-clear.jpg";
 import zaynImage from "@/assets/zayn-oxford.jpg";
-import matthewImage from "@/assets/matthew-cambridge.jpg";
 
 const SATPrograms = () => {
   const scrollToSuccessStories = () => {
@@ -326,43 +325,6 @@ const SATPrograms = () => {
                 </div>
               </div>
 
-              {/* Dr. Matthew */}
-              <div className="group md:col-span-2 lg:col-span-1 mx-auto">
-                <div className="bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
-                  {/* Compact image frame */}
-                  <div className="relative mb-6">
-                    <div className="w-full aspect-[3/4] max-w-[180px] mx-auto rounded-xl overflow-hidden border-3 border-slate-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
-                      <img 
-                        src={matthewImage} 
-                        alt="Dr. Matthew - Cambridge Mathematics Graduate" 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                    </div>
-                    <div className="absolute -bottom-3 -right-3 w-12 h-12 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-xl border-3 border-white">
-                      <GraduationCap className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">Dr. Matthew</h3>
-                    <div className="space-y-1 mb-4">
-                      <p className="text-slate-600 font-medium text-sm">BSc, MSc, PhD Mathematics</p>
-                      <p className="text-slate-600 font-medium text-sm">University of Cambridge</p>
-                    </div>
-                    
-                    <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl p-3 border border-slate-200/50 mb-4">
-                      <p className="text-slate-700 text-xs leading-relaxed italic">
-                        "Pure mathematics training from Cambridge gives me unique insight into both abstract reasoning and practical problem-solving strategies."
-                      </p>
-                    </div>
-                    
-                    <div className="flex flex-wrap justify-center gap-2">
-                      <Badge variant="secondary" className="text-xs">SAT Math</Badge>
-                      <Badge variant="secondary" className="text-xs">Reading & Writing</Badge>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Combined expertise section */}
