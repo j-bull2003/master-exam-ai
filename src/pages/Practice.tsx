@@ -499,7 +499,6 @@ const Practice = () => {
 
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {mathDomains.map((domain, index) => (
                   <Card key={index} className={`transition-all duration-200 ${domain.color}`}>
