@@ -97,6 +97,11 @@ const PracticePlay = () => {
     
     setAnswers(prev => ({ ...prev, [currentIndex]: selectedAnswer }));
     setSubmittedAnswers(prev => ({ ...prev, [currentIndex]: true }));
+    
+    // If answer is correct, automatically show explanation
+    if (selectedAnswer === currentQuestion?.correct_choice) {
+      setShowExplanation(prev => ({ ...prev, [currentIndex]: true }));
+    }
   };
 
   const handleTryAgain = () => {
