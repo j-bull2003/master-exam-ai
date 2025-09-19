@@ -405,7 +405,7 @@ const PracticePlay = () => {
           
           <Button 
             onClick={handleNext}
-            disabled={!showAnswerExplanation}
+            disabled={!isSubmitted || (!isCorrect && !showAnswerExplanation)}
           >
             {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
             <ArrowRight className="h-4 w-4 ml-2" />
