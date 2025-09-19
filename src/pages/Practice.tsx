@@ -406,7 +406,6 @@ const Practice = () => {
             </div>
 
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice by Individual Domain</h3>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {readingWritingDomains.map((domain, index) => (
@@ -542,7 +541,6 @@ const Practice = () => {
             </div>
 
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice by Individual Domain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {mathDomains.map((domain, index) => (
                   <Card key={index} className={`transition-all duration-200 ${domain.color}`}>
