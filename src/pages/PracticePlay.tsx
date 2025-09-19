@@ -40,8 +40,16 @@ const PracticePlay = () => {
           return;
         }
 
-        const shuffledQuestions = shuffle(fetchedQuestions).slice(0, n);
-        setQuestions(shuffledQuestions);
+        // Sort questions by difficulty: easy -> medium -> hard
+        const difficultyOrder = { 'easy': 1, 'medium': 2, 'hard': 3 };
+        const sortedQuestions = fetchedQuestions
+          .sort((a, b) => {
+            const orderA = difficultyOrder[a.difficulty.toLowerCase() as keyof typeof difficultyOrder] || 999;
+            const orderB = difficultyOrder[b.difficulty.toLowerCase() as keyof typeof difficultyOrder] || 999;
+            return orderA - orderB;
+          })
+          .slice(0, n);
+        setQuestions(sortedQuestions);
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load questions");
