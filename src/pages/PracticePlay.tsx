@@ -334,6 +334,23 @@ const PracticePlay = () => {
               </div>
             )}
 
+            {/* Correctness Feedback */}
+            {isSubmitted && !showAnswerExplanation && (
+              <div className="text-center mb-6">
+                {isCorrect ? (
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-lg text-green-700 font-medium">
+                    <CheckCircle className="h-5 w-5" />
+                    Correct!
+                  </div>
+                ) : (
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-lg text-red-700 font-medium">
+                    <XCircle className="h-5 w-5" />
+                    Incorrect!
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Try Again or Show Answer Options */}
             {isSubmitted && !showAnswerExplanation && (
               <div className="flex justify-center gap-4 mb-4">
