@@ -16,6 +16,7 @@ const PracticePlay = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [submittedAnswers, setSubmittedAnswers] = useState<Record<number, boolean>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showSummary, setShowSummary] = useState(false);
@@ -60,19 +61,27 @@ const PracticePlay = () => {
 
   const currentQuestion = questions[currentIndex];
   const isAnswered = currentIndex in answers;
+  const isSubmitted = currentIndex in submittedAnswers;
   const isCorrect = isAnswered && answers[currentIndex] === currentQuestion?.correct_choice;
 
   const handleAnswerSelect = (choice: string) => {
-    if (isAnswered) return;
+    if (isSubmitted) return;
     
     setSelectedAnswer(choice);
-    setAnswers(prev => ({ ...prev, [currentIndex]: choice }));
+  };
+
+  const handleSubmit = () => {
+    if (!selectedAnswer) return;
+    
+    setAnswers(prev => ({ ...prev, [currentIndex]: selectedAnswer }));
+    setSubmittedAnswers(prev => ({ ...prev, [currentIndex]: true }));
   };
 
   const handleNext = () => {
     if (currentIndex < questions.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setSelectedAnswer(answers[currentIndex + 1] || null);
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      setSelectedAnswer(answers[nextIndex] || null);
     } else {
       setShowSummary(true);
     }
@@ -80,8 +89,9 @@ const PracticePlay = () => {
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      setSelectedAnswer(answers[currentIndex - 1] || null);
+      const prevIndex = currentIndex - 1;
+      setCurrentIndex(prevIndex);
+      setSelectedAnswer(answers[prevIndex] || null);
     }
   };
 
@@ -240,7 +250,7 @@ const PracticePlay = () => {
               {choices.map((choice) => {
                 const isSelected = selectedAnswer === choice.letter;
                 const isCorrectChoice = choice.letter === currentQuestion.correct_choice;
-                const showCorrectness = isAnswered;
+                const showCorrectness = isSubmitted;
                 
                 let buttonClass = "w-full text-left p-4 border rounded-lg transition-all duration-200 ";
                 
@@ -264,7 +274,7 @@ const PracticePlay = () => {
                   <button
                     key={choice.letter}
                     onClick={() => handleAnswerSelect(choice.letter)}
-                    disabled={isAnswered}
+                    disabled={isSubmitted}
                     className={buttonClass}
                   >
                     <div className="flex items-start gap-3">
@@ -295,8 +305,17 @@ const PracticePlay = () => {
               })}
             </div>
 
+            {/* Submit Button */}
+            {selectedAnswer && !isSubmitted && (
+              <div className="flex justify-center mb-4">
+                <Button onClick={handleSubmit} size="lg">
+                  Submit Answer
+                </Button>
+              </div>
+            )}
+
             {/* Explanation */}
-            {isAnswered && currentQuestion.explanation_html && (
+            {isSubmitted && currentQuestion.explanation_html && (
               <div className="border-t pt-4">
                 <h4 className="font-medium mb-2">Explanation:</h4>
                 <div 
@@ -321,7 +340,7 @@ const PracticePlay = () => {
           
           <Button 
             onClick={handleNext}
-            disabled={!isAnswered}
+            disabled={!isSubmitted}
           >
             {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
             <ArrowRight className="h-4 w-4 ml-2" />
