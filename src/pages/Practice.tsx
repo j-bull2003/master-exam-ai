@@ -154,13 +154,13 @@ const Practice = () => {
   const getDifficultyIcon = () => {
     switch (difficulty) {
       case 'easy':
-        return <CheckCircle className="h-4 w-4 text-green-600" />;
+        return <div className="w-3 h-3 rounded-full bg-green-500"></div>;
       case 'medium':
-        return <Circle className="h-4 w-4 text-yellow-600" />;
+        return <div className="w-3 h-3 rounded-full bg-yellow-500"></div>;
       case 'hard':
-        return <AlertCircle className="h-4 w-4 text-red-600" />;
+        return <div className="w-3 h-3 rounded-full bg-red-500"></div>;
       default:
-        return <Grid3X3 className="h-4 w-4 text-blue-600" />;
+        return <div className="w-3 h-3 rounded-full bg-blue-500"></div>;
     }
   };
 
