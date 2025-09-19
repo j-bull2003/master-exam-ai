@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useToast } from "@/hooks/use-toast";
 import { 
   PlayCircle, 
   BookOpen, 
@@ -26,19 +25,7 @@ const Practice = () => {
   const [selectedSection, setSelectedSection] = useState<"reading-writing" | "math" | null>(null);
   const [difficulty, setDifficulty] = useState<string>("all");
   const [isShuffled, setIsShuffled] = useState(false);
-  const [questionLimit, setQuestionLimit] = useState<string>("all");
-  const { toast } = useToast();
-
-  // Show toast when settings change
-  useEffect(() => {
-    if (selectedSection) {
-      toast({
-        title: "Settings Updated",
-        description: `Difficulty: ${difficulty === 'all' ? 'All Levels' : difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}, Order: ${isShuffled ? 'Shuffled' : 'By Difficulty'}, Limit: ${questionLimit === 'all' ? 'All Questions' : questionLimit + ' Questions'}`,
-        duration: 2000,
-      });
-    }
-  }, [difficulty, isShuffled, questionLimit, selectedSection, toast]);
+  const [questionLimit] = useState<string>("all"); // Always use all questions
 
   // SAT Reading and Writing domains
   const readingWritingDomains = [
@@ -365,28 +352,7 @@ const Practice = () => {
             </div>
 
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Additional Settings</h3>
-              <Card className="mb-6">
-                <CardContent className="p-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="limit">Number of Questions</Label>
-                    <Select value={questionLimit} onValueChange={setQuestionLimit}>
-                      <SelectTrigger className="w-full bg-background/95 backdrop-blur border-2 z-40">
-                        <SelectValue placeholder="Select amount" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-background border-2 shadow-lg z-40">
-                        <SelectItem value="all">All Questions</SelectItem>
-                        <SelectItem value="10">10 Questions</SelectItem>
-                        <SelectItem value="20">20 Questions</SelectItem>
-                        <SelectItem value="50">50 Questions</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div>
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {readingWritingDomains.map((domain, index) => (
@@ -496,28 +462,7 @@ const Practice = () => {
               </div>
             </div>
 
-            <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Additional Settings</h3>
-              <Card className="mb-6">
-                <CardContent className="p-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="limit">Number of Questions</Label>
-                    <Select value={questionLimit} onValueChange={setQuestionLimit}>
-                      <SelectTrigger className="w-full bg-background/95 backdrop-blur border-2 z-40">
-                        <SelectValue placeholder="Select amount" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-background border-2 shadow-lg z-40">
-                        <SelectItem value="all">All Questions</SelectItem>
-                        <SelectItem value="10">10 Questions</SelectItem>
-                        <SelectItem value="20">20 Questions</SelectItem>
-                        <SelectItem value="50">50 Questions</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
             <div>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
