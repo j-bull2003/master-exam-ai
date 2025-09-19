@@ -17,6 +17,7 @@ const PracticePlay = () => {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [submittedAnswers, setSubmittedAnswers] = useState<Record<number, boolean>>({});
+  const [showExplanation, setShowExplanation] = useState<Record<number, boolean>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showSummary, setShowSummary] = useState(false);
@@ -62,6 +63,7 @@ const PracticePlay = () => {
   const currentQuestion = questions[currentIndex];
   const isAnswered = currentIndex in answers;
   const isSubmitted = currentIndex in submittedAnswers;
+  const showAnswerExplanation = currentIndex in showExplanation;
   const isCorrect = isAnswered && answers[currentIndex] === currentQuestion?.correct_choice;
 
   const handleAnswerSelect = (choice: string) => {
@@ -75,6 +77,24 @@ const PracticePlay = () => {
     
     setAnswers(prev => ({ ...prev, [currentIndex]: selectedAnswer }));
     setSubmittedAnswers(prev => ({ ...prev, [currentIndex]: true }));
+  };
+
+  const handleTryAgain = () => {
+    setSelectedAnswer(null);
+    setSubmittedAnswers(prev => {
+      const newState = { ...prev };
+      delete newState[currentIndex];
+      return newState;
+    });
+    setAnswers(prev => {
+      const newState = { ...prev };
+      delete newState[currentIndex];
+      return newState;
+    });
+  };
+
+  const handleShowAnswer = () => {
+    setShowExplanation(prev => ({ ...prev, [currentIndex]: true }));
   };
 
   const handleNext = () => {
@@ -250,7 +270,7 @@ const PracticePlay = () => {
               {choices.map((choice) => {
                 const isSelected = selectedAnswer === choice.letter;
                 const isCorrectChoice = choice.letter === currentQuestion.correct_choice;
-                const showCorrectness = isSubmitted;
+                const showCorrectness = showAnswerExplanation;
                 
                 let buttonClass = "w-full text-left p-4 border rounded-lg transition-all duration-200 ";
                 
@@ -314,8 +334,20 @@ const PracticePlay = () => {
               </div>
             )}
 
+            {/* Try Again or Show Answer Options */}
+            {isSubmitted && !showAnswerExplanation && (
+              <div className="flex justify-center gap-4 mb-4">
+                <Button variant="outline" onClick={handleTryAgain} size="lg">
+                  Try Again
+                </Button>
+                <Button onClick={handleShowAnswer} size="lg">
+                  See Answer & Explanation
+                </Button>
+              </div>
+            )}
+
             {/* Explanation */}
-            {isSubmitted && currentQuestion.explanation_html && (
+            {showAnswerExplanation && currentQuestion.explanation_html && (
               <div className="border-t pt-4">
                 <h4 className="font-medium mb-2">Explanation:</h4>
                 <div 
@@ -340,7 +372,7 @@ const PracticePlay = () => {
           
           <Button 
             onClick={handleNext}
-            disabled={!isSubmitted}
+            disabled={!showAnswerExplanation}
           >
             {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
             <ArrowRight className="h-4 w-4 ml-2" />
