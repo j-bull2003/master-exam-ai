@@ -28,7 +28,6 @@ const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 const Practice = () => {
   const [selectedSection, setSelectedSection] = useState<"reading-writing" | "math" | null>(null);
   const [difficulty, setDifficulty] = useState<string>("all");
-  const [isShuffled, setIsShuffled] = useState(false);
   const [questionLimit] = useState<string>("all"); // Always use all questions
 
   // SAT Reading and Writing domains
@@ -146,7 +145,8 @@ const Practice = () => {
     params.set('domain', domain);
     if (subdomain) params.set('subdomain', subdomain);
     if (difficulty !== 'all') params.set('difficulty', difficulty);
-    if (isShuffled) params.set('shuffle', 'true');
+    // When difficulty is "all", automatically shuffle the questions
+    if (difficulty === 'all') params.set('shuffle', 'true');
     if (questionLimit !== 'all') params.set('n', questionLimit);
     return `/practice/play?${params.toString()}`;
   };
@@ -349,7 +349,7 @@ const Practice = () => {
               </div>
               
               {/* Quick Settings */}
-              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <div className="flex justify-end w-full sm:w-auto">
                 <div className="space-y-1">
                   <Label className="text-xs text-muted-foreground">Difficulty</Label>
                   <Select value={difficulty} onValueChange={setDifficulty}>
@@ -357,26 +357,12 @@ const Practice = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background border-2 shadow-lg z-50">
-                      <SelectItem value="all">All Levels</SelectItem>
+                      <SelectItem value="all">All Levels (Shuffled)</SelectItem>
                       <SelectItem value="easy">Easy</SelectItem>
                       <SelectItem value="medium">Medium</SelectItem>
                       <SelectItem value="hard">Hard</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
-                
-                <div className="space-y-1">
-                  <Label className="text-xs text-muted-foreground">Order</Label>
-                  <div className="flex items-center space-x-2 p-2 border rounded-md bg-background/95">
-                    <Switch
-                      checked={isShuffled}
-                      onCheckedChange={setIsShuffled}
-                      className="scale-75"
-                    />
-                    <Label className="text-sm">
-                      {isShuffled ? "Shuffled" : "By Difficulty"}
-                    </Label>
-                  </div>
                 </div>
               </div>
             </div>
@@ -465,7 +451,7 @@ const Practice = () => {
               </div>
               
               {/* Quick Settings */}
-              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <div className="flex justify-end w-full sm:w-auto">
                 <div className="space-y-1">
                   <Label className="text-xs text-muted-foreground">Difficulty</Label>
                   <Select value={difficulty} onValueChange={setDifficulty}>
@@ -473,26 +459,12 @@ const Practice = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background border-2 shadow-lg z-50">
-                      <SelectItem value="all">All Levels</SelectItem>
+                      <SelectItem value="all">All Levels (Shuffled)</SelectItem>
                       <SelectItem value="easy">Easy</SelectItem>
                       <SelectItem value="medium">Medium</SelectItem>
                       <SelectItem value="hard">Hard</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
-                
-                <div className="space-y-1">
-                  <Label className="text-xs text-muted-foreground">Order</Label>
-                  <div className="flex items-center space-x-2 p-2 border rounded-md bg-background/95">
-                    <Switch
-                      checked={isShuffled}
-                      onCheckedChange={setIsShuffled}
-                      className="scale-75"
-                    />
-                    <Label className="text-sm">
-                      {isShuffled ? "Shuffled" : "By Difficulty"}
-                    </Label>
-                  </div>
                 </div>
               </div>
             </div>

@@ -44,11 +44,12 @@ const PracticePlay = () => {
 
         let processedQuestions = fetchedQuestions;
 
-        // Apply sorting/shuffling based on user preference
-        if (isShuffled) {
+        // Apply sorting/shuffling based on difficulty setting
+        if (difficulty === 'all' || isShuffled) {
+          // For "all levels" or explicit shuffle, randomize the questions
           processedQuestions = shuffle(fetchedQuestions);
         } else {
-          // Sort questions by difficulty: easy -> medium -> hard
+          // For specific difficulties, sort by difficulty level
           const difficultyOrder = { 'easy': 1, 'medium': 2, 'hard': 3 };
           processedQuestions = fetchedQuestions.sort((a, b) => {
             const orderA = difficultyOrder[a.difficulty.toLowerCase() as keyof typeof difficultyOrder] || 999;
