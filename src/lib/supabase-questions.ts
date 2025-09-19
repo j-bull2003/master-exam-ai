@@ -17,14 +17,22 @@ export interface SATQuestion {
 }
 
 export const fetchQuestions = async (
-  domain: string,
+  domain?: string,
   subdomain?: string,
-  difficulty?: string
+  difficulty?: string,
+  category?: string
 ): Promise<SATQuestion[]> => {
   let query = supabase
     .from('sat_questions' as any)
-    .select('*')
-    .eq('domain', domain);
+    .select('*');
+
+  // If category is provided, filter by category (for "all questions" functionality)
+  if (category) {
+    query = query.eq('category', category);
+  } else if (domain) {
+    // Otherwise filter by domain
+    query = query.eq('domain', domain);
+  }
 
   if (subdomain) {
     query = query.eq('subdomain', subdomain);

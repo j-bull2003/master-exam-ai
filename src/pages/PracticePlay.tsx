@@ -10,6 +10,7 @@ const PracticePlay = () => {
   const [searchParams] = useSearchParams();
   const domain = searchParams.get('domain');
   const subdomain = searchParams.get('subdomain');
+  const category = searchParams.get('category');
   const difficulty = searchParams.get('difficulty');
   const isShuffled = searchParams.get('shuffle') === 'true';
   const n = parseInt(searchParams.get('n') || '0'); // 0 means all questions
@@ -26,15 +27,15 @@ const PracticePlay = () => {
 
   useEffect(() => {
     const loadQuestions = async () => {
-      if (!domain) {
-        setError("Domain parameter is required");
+      if (!domain && !category) {
+        setError("Domain or category parameter is required");
         setLoading(false);
         return;
       }
 
       try {
         setLoading(true);
-        const fetchedQuestions = await fetchQuestions(domain, subdomain || undefined, difficulty || undefined);
+        const fetchedQuestions = await fetchQuestions(domain || undefined, subdomain || undefined, difficulty || undefined, category || undefined);
         
         if (fetchedQuestions.length === 0) {
           setError("No questions found for this selection.");
@@ -70,7 +71,7 @@ const PracticePlay = () => {
     };
 
     loadQuestions();
-  }, [domain, subdomain, difficulty, isShuffled, n]);
+  }, [domain, subdomain, category, difficulty, isShuffled, n]);
 
   useEffect(() => {
     // MathJax rendering after question changes
@@ -272,7 +273,7 @@ const PracticePlay = () => {
           <CardHeader>
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h2 className="text-lg font-semibold">{domain}</h2>
+                <h2 className="text-lg font-semibold">{category || domain}</h2>
                 {subdomain && <p className="text-sm text-muted-foreground">{subdomain}</p>}
               </div>
               <Badge variant="outline">{currentQuestion.difficulty}</Badge>

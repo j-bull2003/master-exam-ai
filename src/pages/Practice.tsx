@@ -140,9 +140,14 @@ const Practice = () => {
     }
   ];
 
-  const buildPracticeUrl = (domain: string, subdomain?: string) => {
+  const buildPracticeUrl = (domain: string, subdomain?: string, isAllQuestions?: boolean) => {
     const params = new URLSearchParams();
-    params.set('domain', domain);
+    if (isAllQuestions) {
+      // Use category instead of domain for "all questions" functionality
+      params.set('category', domain);
+    } else {
+      params.set('domain', domain);
+    }
     if (subdomain) params.set('subdomain', subdomain);
     if (difficulty !== 'all') params.set('difficulty', difficulty);
     // When difficulty is "all", automatically shuffle the questions
@@ -368,27 +373,27 @@ const Practice = () => {
             </div>
 
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice All Reading & Writing Questions</h3>
-              <Card className="mb-6 bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20">
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice All Questions</h3>
+              <Card className="mb-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-lg">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-lg font-semibold text-blue-700">All Reading & Writing Domains</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <h4 className="text-lg font-semibold text-white">All Reading & Writing Questions</h4>
+                        <p className="text-blue-100 text-sm">
                           Practice questions from all Reading & Writing domains combined.
                         </p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-blue-100 text-sm mt-1">
                           Includes Information and Ideas, Craft and Structure, Expression of Ideas, and Standard English Conventions.
                         </p>
                       </div>
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white border-white/30">
                         All Domains
                       </Badge>
                     </div>
                     
-                    <Link to={buildPracticeUrl("Reading and Writing")}>
-                      <Button variant="outline" className="w-full justify-center" size="sm">
+                    <Link to={buildPracticeUrl("Reading and Writing", undefined, true)}>
+                      <Button variant="secondary" className="w-full justify-center bg-white/20 hover:bg-white/30 text-white border-white/30" size="sm">
                         <div className="flex items-center gap-2">
                           {getDifficultyIcon()}
                           <span>Practice All Reading & Writing</span>
@@ -401,7 +406,7 @@ const Practice = () => {
             </div>
 
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice by Individual Domain</h3>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {readingWritingDomains.map((domain, index) => (
@@ -504,27 +509,27 @@ const Practice = () => {
 
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice All Math Questions</h3>
-              <Card className="mb-6 bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20">
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice All Questions</h3>
+              <Card className="mb-6 bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-0 shadow-lg">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-lg font-semibold text-emerald-700">All Math Domains</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <h4 className="text-lg font-semibold text-white">All Math Questions</h4>
+                        <p className="text-emerald-100 text-sm">
                           Practice questions from all Math domains combined.
                         </p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-emerald-100 text-sm mt-1">
                           Includes Algebra, Advanced Math, Problem-Solving and Data Analysis, and Geometry and Trigonometry.
                         </p>
                       </div>
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white border-white/30">
                         All Domains
                       </Badge>
                     </div>
                     
-                    <Link to={buildPracticeUrl("Math")}>
-                      <Button variant="outline" className="w-full justify-center" size="sm">
+                    <Link to={buildPracticeUrl("Math", undefined, true)}>
+                      <Button variant="secondary" className="w-full justify-center bg-white/20 hover:bg-white/30 text-white border-white/30" size="sm">
                         <div className="flex items-center gap-2">
                           {getDifficultyIcon()}
                           <span>Practice All Math</span>
@@ -537,6 +542,7 @@ const Practice = () => {
             </div>
 
             <div>
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice by Individual Domain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {mathDomains.map((domain, index) => (
                   <Card key={index} className={`transition-all duration-200 ${domain.color}`}>
