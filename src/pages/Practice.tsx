@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { useToast } from "@/hooks/use-toast";
 import { 
   PlayCircle, 
   BookOpen, 
@@ -26,6 +27,18 @@ const Practice = () => {
   const [difficulty, setDifficulty] = useState<string>("all");
   const [isShuffled, setIsShuffled] = useState(false);
   const [questionLimit, setQuestionLimit] = useState<string>("all");
+  const { toast } = useToast();
+
+  // Show toast when settings change
+  useEffect(() => {
+    if (selectedSection) {
+      toast({
+        title: "Settings Updated",
+        description: `Difficulty: ${difficulty === 'all' ? 'All Levels' : difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}, Order: ${isShuffled ? 'Shuffled' : 'By Difficulty'}, Limit: ${questionLimit === 'all' ? 'All Questions' : questionLimit + ' Questions'}`,
+        duration: 2000,
+      });
+    }
+  }, [difficulty, isShuffled, questionLimit, selectedSection, toast]);
 
   // SAT Reading and Writing domains
   const readingWritingDomains = [
@@ -296,6 +309,17 @@ const Practice = () => {
         {/* Domain Selection - Reading and Writing */}
         {selectedSection === "reading-writing" && (
           <div className="space-y-6">
+            {/* Back Button */}
+            <div className="flex justify-start">
+              <Button 
+                variant="outline" 
+                onClick={() => setSelectedSection(null)}
+                className="mb-4"
+              >
+                ← Back to Sections
+              </Button>
+            </div>
+
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-500/20 rounded-lg">
@@ -303,76 +327,60 @@ const Practice = () => {
                 </div>
                 <div>
                   <h2 className="text-xl sm:text-2xl font-bold">Reading and Writing</h2>
-                  <p className="text-sm sm:text-base text-muted-foreground">Practice the section with AI-powered support.</p>
+                  <p className="text-sm sm:text-base text-muted-foreground">Configure your practice settings below.</p>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                <Button 
-                  size="lg" 
-                  className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
-                >
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  <span className="hidden sm:inline">Launch AI Practice</span>
-                  <span className="sm:hidden">AI Practice</span>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  onClick={() => setSelectedSection(null)}
-                  className="w-full sm:w-auto"
-                >
-                  Back to Sections
-                </Button>
+              
+              {/* Quick Settings */}
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <div className="space-y-1">
+                  <Label className="text-xs text-muted-foreground">Difficulty</Label>
+                  <Select value={difficulty} onValueChange={setDifficulty}>
+                    <SelectTrigger className="w-full sm:w-32 bg-background/95 backdrop-blur border-2 z-50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-2 shadow-lg z-50">
+                      <SelectItem value="all">All Levels</SelectItem>
+                      <SelectItem value="easy">Easy</SelectItem>
+                      <SelectItem value="medium">Medium</SelectItem>
+                      <SelectItem value="hard">Hard</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-1">
+                  <Label className="text-xs text-muted-foreground">Order</Label>
+                  <div className="flex items-center space-x-2 p-2 border rounded-md bg-background/95">
+                    <Switch
+                      checked={isShuffled}
+                      onCheckedChange={setIsShuffled}
+                      className="scale-75"
+                    />
+                    <Label className="text-sm">
+                      {isShuffled ? "Shuffled" : "By Difficulty"}
+                    </Label>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice Settings</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Additional Settings</h3>
               <Card className="mb-6">
                 <CardContent className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="difficulty">Difficulty Level</Label>
-                      <Select value={difficulty} onValueChange={setDifficulty}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select difficulty" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Levels</SelectItem>
-                          <SelectItem value="easy">Easy Only</SelectItem>
-                          <SelectItem value="medium">Medium Only</SelectItem>
-                          <SelectItem value="hard">Hard Only</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="limit">Number of Questions</Label>
-                      <Select value={questionLimit} onValueChange={setQuestionLimit}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select amount" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Questions</SelectItem>
-                          <SelectItem value="10">10 Questions</SelectItem>
-                          <SelectItem value="20">20 Questions</SelectItem>
-                          <SelectItem value="50">50 Questions</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="shuffle">Question Order</Label>
-                      <div className="flex items-center space-x-2">
-                        <Switch
-                          id="shuffle"
-                          checked={isShuffled}
-                          onCheckedChange={setIsShuffled}
-                        />
-                        <Label htmlFor="shuffle" className="text-sm">
-                          {isShuffled ? "Shuffled" : "By Difficulty"}
-                        </Label>
-                      </div>
-                    </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="limit">Number of Questions</Label>
+                    <Select value={questionLimit} onValueChange={setQuestionLimit}>
+                      <SelectTrigger className="w-full bg-background/95 backdrop-blur border-2 z-40">
+                        <SelectValue placeholder="Select amount" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background border-2 shadow-lg z-40">
+                        <SelectItem value="all">All Questions</SelectItem>
+                        <SelectItem value="10">10 Questions</SelectItem>
+                        <SelectItem value="20">20 Questions</SelectItem>
+                        <SelectItem value="50">50 Questions</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </CardContent>
               </Card>
@@ -433,6 +441,17 @@ const Practice = () => {
         {/* Domain Selection - Math */}
         {selectedSection === "math" && (
           <div className="space-y-6">
+            {/* Back Button */}
+            <div className="flex justify-start">
+              <Button 
+                variant="outline" 
+                onClick={() => setSelectedSection(null)}
+                className="mb-4"
+              >
+                ← Back to Sections
+              </Button>
+            </div>
+
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-emerald-500/20 rounded-lg">
@@ -440,76 +459,60 @@ const Practice = () => {
                 </div>
                 <div>
                   <h2 className="text-xl sm:text-2xl font-bold">Math</h2>
-                  <p className="text-sm sm:text-base text-muted-foreground">Practice the section with AI-powered support.</p>
+                  <p className="text-sm sm:text-base text-muted-foreground">Configure your practice settings below.</p>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                <Button 
-                  size="lg" 
-                  className="bg-emerald-600 hover:bg-emerald-700 w-full sm:w-auto"
-                >
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  <span className="hidden sm:inline">Launch AI Practice</span>
-                  <span className="sm:hidden">AI Practice</span>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  onClick={() => setSelectedSection(null)}
-                  className="w-full sm:w-auto"
-                >
-                  Back to Sections
-                </Button>
+              
+              {/* Quick Settings */}
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <div className="space-y-1">
+                  <Label className="text-xs text-muted-foreground">Difficulty</Label>
+                  <Select value={difficulty} onValueChange={setDifficulty}>
+                    <SelectTrigger className="w-full sm:w-32 bg-background/95 backdrop-blur border-2 z-50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-2 shadow-lg z-50">
+                      <SelectItem value="all">All Levels</SelectItem>
+                      <SelectItem value="easy">Easy</SelectItem>
+                      <SelectItem value="medium">Medium</SelectItem>
+                      <SelectItem value="hard">Hard</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-1">
+                  <Label className="text-xs text-muted-foreground">Order</Label>
+                  <div className="flex items-center space-x-2 p-2 border rounded-md bg-background/95">
+                    <Switch
+                      checked={isShuffled}
+                      onCheckedChange={setIsShuffled}
+                      className="scale-75"
+                    />
+                    <Label className="text-sm">
+                      {isShuffled ? "Shuffled" : "By Difficulty"}
+                    </Label>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice Settings</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Additional Settings</h3>
               <Card className="mb-6">
                 <CardContent className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="difficulty">Difficulty Level</Label>
-                      <Select value={difficulty} onValueChange={setDifficulty}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select difficulty" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Levels</SelectItem>
-                          <SelectItem value="easy">Easy Only</SelectItem>
-                          <SelectItem value="medium">Medium Only</SelectItem>
-                          <SelectItem value="hard">Hard Only</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="limit">Number of Questions</Label>
-                      <Select value={questionLimit} onValueChange={setQuestionLimit}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select amount" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Questions</SelectItem>
-                          <SelectItem value="10">10 Questions</SelectItem>
-                          <SelectItem value="20">20 Questions</SelectItem>
-                          <SelectItem value="50">50 Questions</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="shuffle">Question Order</Label>
-                      <div className="flex items-center space-x-2">
-                        <Switch
-                          id="shuffle"
-                          checked={isShuffled}
-                          onCheckedChange={setIsShuffled}
-                        />
-                        <Label htmlFor="shuffle" className="text-sm">
-                          {isShuffled ? "Shuffled" : "By Difficulty"}
-                        </Label>
-                      </div>
-                    </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="limit">Number of Questions</Label>
+                    <Select value={questionLimit} onValueChange={setQuestionLimit}>
+                      <SelectTrigger className="w-full bg-background/95 backdrop-blur border-2 z-40">
+                        <SelectValue placeholder="Select amount" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background border-2 shadow-lg z-40">
+                        <SelectItem value="all">All Questions</SelectItem>
+                        <SelectItem value="10">10 Questions</SelectItem>
+                        <SelectItem value="20">20 Questions</SelectItem>
+                        <SelectItem value="50">50 Questions</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </CardContent>
               </Card>
