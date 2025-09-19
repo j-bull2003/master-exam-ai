@@ -270,12 +270,14 @@ const PracticePlay = () => {
               {choices.map((choice) => {
                 const isSelected = selectedAnswer === choice.letter;
                 const isCorrectChoice = choice.letter === currentQuestion.correct_choice;
-                const showCorrectness = showAnswerExplanation;
+                const showCorrectness = showAnswerExplanation || (isSubmitted && !showAnswerExplanation);
                 
                 let buttonClass = "w-full text-left p-4 border rounded-lg transition-all duration-200 ";
                 
                 if (showCorrectness) {
-                  if (isCorrectChoice) {
+                  if (isCorrectChoice && showAnswerExplanation) {
+                    buttonClass += "bg-green-500/10 border-green-500/50 text-green-700";
+                  } else if (isSelected && isCorrectChoice) {
                     buttonClass += "bg-green-500/10 border-green-500/50 text-green-700";
                   } else if (isSelected && !isCorrectChoice) {
                     buttonClass += "bg-red-500/10 border-red-500/50 text-red-700";
@@ -299,15 +301,19 @@ const PracticePlay = () => {
                   >
                     <div className="flex items-start gap-3">
                       <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-medium ${
-                        showCorrectness && isCorrectChoice 
+                        showCorrectness && isCorrectChoice && showAnswerExplanation
                           ? 'bg-green-500 border-green-500 text-white' 
+                          : showCorrectness && isSelected && isCorrectChoice
+                          ? 'bg-green-500 border-green-500 text-white'
                           : showCorrectness && isSelected && !isCorrectChoice
                           ? 'bg-red-500 border-red-500 text-white'
                           : isSelected 
                           ? 'bg-primary border-primary text-white' 
                           : 'border-muted-foreground'
                       }`}>
-                        {showCorrectness && isCorrectChoice ? (
+                        {showCorrectness && isCorrectChoice && showAnswerExplanation ? (
+                          <CheckCircle className="h-4 w-4" />
+                        ) : showCorrectness && isSelected && isCorrectChoice ? (
                           <CheckCircle className="h-4 w-4" />
                         ) : showCorrectness && isSelected && !isCorrectChoice ? (
                           <XCircle className="h-4 w-4" />
@@ -331,23 +337,6 @@ const PracticePlay = () => {
                 <Button onClick={handleSubmit} size="lg">
                   Submit Answer
                 </Button>
-              </div>
-            )}
-
-            {/* Correctness Feedback */}
-            {isSubmitted && !showAnswerExplanation && (
-              <div className="text-center mb-6">
-                {isCorrect ? (
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-lg text-green-700 font-medium">
-                    <CheckCircle className="h-5 w-5" />
-                    Correct!
-                  </div>
-                ) : (
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-lg text-red-700 font-medium">
-                    <XCircle className="h-5 w-5" />
-                    Incorrect!
-                  </div>
-                )}
               </div>
             )}
 
