@@ -410,7 +410,6 @@ const Practice = () => {
                               {getDifficultyIcon()}
                               <Target className="h-4 w-4" />
                               <span>Practice This Domain</span>
-                              <span className="text-xs text-muted-foreground">({getDifficultyText()})</span>
                             </div>
                           </Button>
                         </Link>
@@ -427,7 +426,6 @@ const Practice = () => {
                                 <div className="flex items-center gap-2">
                                   {getDifficultyIcon()}
                                   <span>{subdomain}</span>
-                                  <span className="text-xs text-muted-foreground ml-auto">({getDifficultyText()})</span>
                                 </div>
                               </Link>
                             ))}
@@ -529,7 +527,6 @@ const Practice = () => {
                               {getDifficultyIcon()}
                               <Target className="h-4 w-4" />
                               <span>Practice This Domain</span>
-                              <span className="text-xs text-muted-foreground">({getDifficultyText()})</span>
                             </div>
                           </Button>
                         </Link>
@@ -546,7 +543,6 @@ const Practice = () => {
                                 <div className="flex items-center gap-2">
                                   {getDifficultyIcon()}
                                   <span>{subdomain}</span>
-                                  <span className="text-xs text-muted-foreground ml-auto">({getDifficultyText()})</span>
                                 </div>
                               </Link>
                             ))}
