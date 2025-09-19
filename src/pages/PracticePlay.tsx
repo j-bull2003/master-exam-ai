@@ -97,13 +97,6 @@ const PracticePlay = () => {
     
     setAnswers(prev => ({ ...prev, [currentIndex]: selectedAnswer }));
     setSubmittedAnswers(prev => ({ ...prev, [currentIndex]: true }));
-    
-    // If answer is correct, automatically move to next question after a short delay
-    if (selectedAnswer === currentQuestion?.correct_choice) {
-      setTimeout(() => {
-        handleNext();
-      }, 1000);
-    }
   };
 
   const handleTryAgain = () => {
@@ -367,8 +360,17 @@ const PracticePlay = () => {
               </div>
             )}
 
-            {/* Try Again or Show Answer Options */}
-            {isSubmitted && !showAnswerExplanation && (
+            {/* Success Message or Try Again/Show Answer Options */}
+            {isSubmitted && isCorrect && (
+              <div className="flex flex-col items-center gap-3 mb-4">
+                <div className="flex items-center gap-2 text-green-600 font-medium">
+                  <CheckCircle className="h-5 w-5" />
+                  <span>Great job! You got it right!</span>
+                </div>
+              </div>
+            )}
+
+            {isSubmitted && !isCorrect && !showAnswerExplanation && (
               <div className="flex justify-center gap-4 mb-4">
                 <Button variant="outline" onClick={handleTryAgain} size="lg">
                   Try Again
