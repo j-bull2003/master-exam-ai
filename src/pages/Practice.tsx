@@ -357,7 +357,7 @@ const Practice = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background border-2 shadow-lg z-50">
-                      <SelectItem value="all">All Levels (Shuffled)</SelectItem>
+                      <SelectItem value="all">Shuffled</SelectItem>
                       <SelectItem value="easy">Easy</SelectItem>
                       <SelectItem value="medium">Medium</SelectItem>
                       <SelectItem value="hard">Hard</SelectItem>
@@ -459,7 +459,7 @@ const Practice = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background border-2 shadow-lg z-50">
-                      <SelectItem value="all">All Levels (Shuffled)</SelectItem>
+                      <SelectItem value="all">Shuffled</SelectItem>
                       <SelectItem value="easy">Easy</SelectItem>
                       <SelectItem value="medium">Medium</SelectItem>
                       <SelectItem value="hard">Hard</SelectItem>
