@@ -97,6 +97,13 @@ const PracticePlay = () => {
     
     setAnswers(prev => ({ ...prev, [currentIndex]: selectedAnswer }));
     setSubmittedAnswers(prev => ({ ...prev, [currentIndex]: true }));
+    
+    // If answer is correct, automatically move to next question after a short delay
+    if (selectedAnswer === currentQuestion?.correct_choice) {
+      setTimeout(() => {
+        handleNext();
+      }, 1000);
+    }
   };
 
   const handleTryAgain = () => {
