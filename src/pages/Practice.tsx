@@ -504,7 +504,6 @@ const Practice = () => {
               </div>
             </div>
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice All Questions</h3>
               <Card className="mb-6 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border-emerald-500/30 shadow-md hover:shadow-lg transition-all duration-200">
                 <CardContent className="p-6">
                   <div className="space-y-4">
