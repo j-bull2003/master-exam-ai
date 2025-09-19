@@ -10,6 +10,8 @@ const PracticePlay = () => {
   const [searchParams] = useSearchParams();
   const domain = searchParams.get('domain');
   const subdomain = searchParams.get('subdomain');
+  const difficulty = searchParams.get('difficulty');
+  const isShuffled = searchParams.get('shuffle') === 'true';
   const n = parseInt(searchParams.get('n') || '0'); // 0 means all questions
 
   const [questions, setQuestions] = useState<SATQuestion[]>([]);
@@ -32,7 +34,7 @@ const PracticePlay = () => {
 
       try {
         setLoading(true);
-        const fetchedQuestions = await fetchQuestions(domain, subdomain || undefined);
+        const fetchedQuestions = await fetchQuestions(domain, subdomain || undefined, difficulty || undefined);
         
         if (fetchedQuestions.length === 0) {
           setError("No questions found for this selection.");
@@ -40,17 +42,23 @@ const PracticePlay = () => {
           return;
         }
 
-        // Sort questions by difficulty: easy -> medium -> hard
-        const difficultyOrder = { 'easy': 1, 'medium': 2, 'hard': 3 };
-        const sortedQuestions = fetchedQuestions
-          .sort((a, b) => {
+        let processedQuestions = fetchedQuestions;
+
+        // Apply sorting/shuffling based on user preference
+        if (isShuffled) {
+          processedQuestions = shuffle(fetchedQuestions);
+        } else {
+          // Sort questions by difficulty: easy -> medium -> hard
+          const difficultyOrder = { 'easy': 1, 'medium': 2, 'hard': 3 };
+          processedQuestions = fetchedQuestions.sort((a, b) => {
             const orderA = difficultyOrder[a.difficulty.toLowerCase() as keyof typeof difficultyOrder] || 999;
             const orderB = difficultyOrder[b.difficulty.toLowerCase() as keyof typeof difficultyOrder] || 999;
             return orderA - orderB;
           });
+        }
         
         // Only slice if n > 0 (specific number requested), otherwise use all questions
-        const finalQuestions = n > 0 ? sortedQuestions.slice(0, n) : sortedQuestions;
+        const finalQuestions = n > 0 ? processedQuestions.slice(0, n) : processedQuestions;
         setQuestions(finalQuestions);
         setError(null);
       } catch (err) {
@@ -61,7 +69,7 @@ const PracticePlay = () => {
     };
 
     loadQuestions();
-  }, [domain, subdomain, n]);
+  }, [domain, subdomain, difficulty, isShuffled, n]);
 
   useEffect(() => {
     // MathJax rendering after question changes

@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { 
   PlayCircle, 
   BookOpen, 
@@ -20,6 +23,9 @@ const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
 
 const Practice = () => {
   const [selectedSection, setSelectedSection] = useState<"reading-writing" | "math" | null>(null);
+  const [difficulty, setDifficulty] = useState<string>("all");
+  const [isShuffled, setIsShuffled] = useState(false);
+  const [questionLimit, setQuestionLimit] = useState<string>("all");
 
   // SAT Reading and Writing domains
   const readingWritingDomains = [
@@ -130,6 +136,16 @@ const Practice = () => {
       textColor: "text-teal-700"
     }
   ];
+
+  const buildPracticeUrl = (domain: string, subdomain?: string) => {
+    const params = new URLSearchParams();
+    params.set('domain', domain);
+    if (subdomain) params.set('subdomain', subdomain);
+    if (difficulty !== 'all') params.set('difficulty', difficulty);
+    if (isShuffled) params.set('shuffle', 'true');
+    if (questionLimit !== 'all') params.set('n', questionLimit);
+    return `/practice/play?${params.toString()}`;
+  };
 
   return (
     <div className="min-h-screen bg-background bg-mesh">
@@ -310,6 +326,59 @@ const Practice = () => {
             </div>
 
             <div>
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice Settings</h3>
+              <Card className="mb-6">
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="difficulty">Difficulty Level</Label>
+                      <Select value={difficulty} onValueChange={setDifficulty}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select difficulty" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Levels</SelectItem>
+                          <SelectItem value="easy">Easy Only</SelectItem>
+                          <SelectItem value="medium">Medium Only</SelectItem>
+                          <SelectItem value="hard">Hard Only</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="limit">Number of Questions</Label>
+                      <Select value={questionLimit} onValueChange={setQuestionLimit}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select amount" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Questions</SelectItem>
+                          <SelectItem value="10">10 Questions</SelectItem>
+                          <SelectItem value="20">20 Questions</SelectItem>
+                          <SelectItem value="50">50 Questions</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="shuffle">Question Order</Label>
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          id="shuffle"
+                          checked={isShuffled}
+                          onCheckedChange={setIsShuffled}
+                        />
+                        <Label htmlFor="shuffle" className="text-sm">
+                          {isShuffled ? "Shuffled" : "By Difficulty"}
+                        </Label>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {readingWritingDomains.map((domain, index) => (
@@ -331,7 +400,7 @@ const Practice = () => {
                           </Badge>
                         </div>
                         
-                        <Link to={`/practice/play?domain=${encodeURIComponent(domain.name)}`}>
+                        <Link to={buildPracticeUrl(domain.name)}>
                           <Button variant="outline" className="w-full" size="sm">
                             <Target className="h-4 w-4 mr-2" />
                             Practice This Domain
@@ -344,7 +413,7 @@ const Practice = () => {
                             {domain.subdomains.map((subdomain, subIndex) => (
                               <Link
                                 key={subIndex}
-                                to={`/practice/play?domain=${encodeURIComponent(domain.name)}&subdomain=${encodeURIComponent(subdomain)}`}
+                                to={buildPracticeUrl(domain.name, subdomain)}
                                 className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
                               >
                                 {subdomain}
@@ -394,6 +463,59 @@ const Practice = () => {
             </div>
 
             <div>
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice Settings</h3>
+              <Card className="mb-6">
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="difficulty">Difficulty Level</Label>
+                      <Select value={difficulty} onValueChange={setDifficulty}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select difficulty" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Levels</SelectItem>
+                          <SelectItem value="easy">Easy Only</SelectItem>
+                          <SelectItem value="medium">Medium Only</SelectItem>
+                          <SelectItem value="hard">Hard Only</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="limit">Number of Questions</Label>
+                      <Select value={questionLimit} onValueChange={setQuestionLimit}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select amount" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Questions</SelectItem>
+                          <SelectItem value="10">10 Questions</SelectItem>
+                          <SelectItem value="20">20 Questions</SelectItem>
+                          <SelectItem value="50">50 Questions</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="shuffle">Question Order</Label>
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          id="shuffle"
+                          checked={isShuffled}
+                          onCheckedChange={setIsShuffled}
+                        />
+                        <Label htmlFor="shuffle" className="text-sm">
+                          {isShuffled ? "Shuffled" : "By Difficulty"}
+                        </Label>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {mathDomains.map((domain, index) => (
@@ -415,7 +537,7 @@ const Practice = () => {
                           </Badge>
                         </div>
                         
-                        <Link to={`/practice/play?domain=${encodeURIComponent(domain.name)}`}>
+                        <Link to={buildPracticeUrl(domain.name)}>
                           <Button variant="outline" className="w-full" size="sm">
                             <Target className="h-4 w-4 mr-2" />
                             Practice This Domain
@@ -428,7 +550,7 @@ const Practice = () => {
                             {domain.subdomains.map((subdomain, subIndex) => (
                               <Link
                                 key={subIndex}
-                                to={`/practice/play?domain=${encodeURIComponent(domain.name)}&subdomain=${encodeURIComponent(subdomain)}`}
+                                to={buildPracticeUrl(domain.name, subdomain)}
                                 className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
                               >
                                 {subdomain}

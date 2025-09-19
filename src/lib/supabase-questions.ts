@@ -18,7 +18,8 @@ export interface SATQuestion {
 
 export const fetchQuestions = async (
   domain: string,
-  subdomain?: string
+  subdomain?: string,
+  difficulty?: string
 ): Promise<SATQuestion[]> => {
   let query = supabase
     .from('sat_questions' as any)
@@ -27,6 +28,10 @@ export const fetchQuestions = async (
 
   if (subdomain) {
     query = query.eq('subdomain', subdomain);
+  }
+
+  if (difficulty && difficulty !== 'all') {
+    query = query.ilike('difficulty', difficulty);
   }
 
   const { data, error } = await query;
