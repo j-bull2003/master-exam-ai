@@ -16,7 +16,11 @@ import {
   Calculator,
   LogOut,
   Sparkles,
-  Target
+  Target,
+  CheckCircle,
+  Circle,
+  AlertCircle,
+  Grid3X3
 } from "lucide-react";
 
 const uniHackLogo = "/lovable-uploads/b9dbc3d9-034b-4089-a5b2-b96c23476bcf.png";
@@ -145,6 +149,32 @@ const Practice = () => {
     if (isShuffled) params.set('shuffle', 'true');
     if (questionLimit !== 'all') params.set('n', questionLimit);
     return `/practice/play?${params.toString()}`;
+  };
+
+  const getDifficultyIcon = () => {
+    switch (difficulty) {
+      case 'easy':
+        return <CheckCircle className="h-4 w-4 text-green-600" />;
+      case 'medium':
+        return <Circle className="h-4 w-4 text-yellow-600" />;
+      case 'hard':
+        return <AlertCircle className="h-4 w-4 text-red-600" />;
+      default:
+        return <Grid3X3 className="h-4 w-4 text-blue-600" />;
+    }
+  };
+
+  const getDifficultyText = () => {
+    switch (difficulty) {
+      case 'easy':
+        return 'Easy Only';
+      case 'medium':
+        return 'Medium Only';
+      case 'hard':
+        return 'Hard Only';
+      default:
+        return 'All Levels';
+    }
   };
 
   return (
@@ -375,9 +405,13 @@ const Practice = () => {
                         </div>
                         
                         <Link to={buildPracticeUrl(domain.name)}>
-                          <Button variant="outline" className="w-full" size="sm">
-                            <Target className="h-4 w-4 mr-2" />
-                            Practice This Domain
+                          <Button variant="outline" className="w-full justify-start" size="sm">
+                            <div className="flex items-center gap-2">
+                              {getDifficultyIcon()}
+                              <Target className="h-4 w-4" />
+                              <span>Practice This Domain</span>
+                              <span className="text-xs text-muted-foreground">({getDifficultyText()})</span>
+                            </div>
                           </Button>
                         </Link>
                         
@@ -388,9 +422,13 @@ const Practice = () => {
                               <Link
                                 key={subIndex}
                                 to={buildPracticeUrl(domain.name, subdomain)}
-                                className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
+                                className="text-sm hover:bg-muted/50 hover:text-foreground rounded p-2 block w-full text-left transition-colors"
                               >
-                                {subdomain}
+                                <div className="flex items-center gap-2">
+                                  {getDifficultyIcon()}
+                                  <span>{subdomain}</span>
+                                  <span className="text-xs text-muted-foreground ml-auto">({getDifficultyText()})</span>
+                                </div>
                               </Link>
                             ))}
                           </div>
@@ -486,9 +524,13 @@ const Practice = () => {
                         </div>
                         
                         <Link to={buildPracticeUrl(domain.name)}>
-                          <Button variant="outline" className="w-full" size="sm">
-                            <Target className="h-4 w-4 mr-2" />
-                            Practice This Domain
+                          <Button variant="outline" className="w-full justify-start" size="sm">
+                            <div className="flex items-center gap-2">
+                              {getDifficultyIcon()}
+                              <Target className="h-4 w-4" />
+                              <span>Practice This Domain</span>
+                              <span className="text-xs text-muted-foreground">({getDifficultyText()})</span>
+                            </div>
                           </Button>
                         </Link>
                         
@@ -499,9 +541,13 @@ const Practice = () => {
                               <Link
                                 key={subIndex}
                                 to={buildPracticeUrl(domain.name, subdomain)}
-                                className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
+                                className="text-sm hover:bg-muted/50 hover:text-foreground rounded p-2 block w-full text-left transition-colors"
                               >
-                                {subdomain}
+                                <div className="flex items-center gap-2">
+                                  {getDifficultyIcon()}
+                                  <span>{subdomain}</span>
+                                  <span className="text-xs text-muted-foreground ml-auto">({getDifficultyText()})</span>
+                                </div>
                               </Link>
                             ))}
                           </div>
