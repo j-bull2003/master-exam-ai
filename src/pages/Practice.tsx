@@ -405,10 +405,9 @@ const Practice = () => {
                         </div>
                         
                         <Link to={buildPracticeUrl(domain.name)}>
-                          <Button variant="outline" className="w-full justify-start" size="sm">
+                          <Button variant="outline" className="w-full justify-center" size="sm">
                             <div className="flex items-center gap-2">
                               {getDifficultyIcon()}
-                              <Target className="h-4 w-4" />
                               <span>Practice This Domain</span>
                             </div>
                           </Button>
@@ -522,10 +521,9 @@ const Practice = () => {
                         </div>
                         
                         <Link to={buildPracticeUrl(domain.name)}>
-                          <Button variant="outline" className="w-full justify-start" size="sm">
+                          <Button variant="outline" className="w-full justify-center" size="sm">
                             <div className="flex items-center gap-2">
                               {getDifficultyIcon()}
-                              <Target className="h-4 w-4" />
                               <span>Practice This Domain</span>
                             </div>
                           </Button>
