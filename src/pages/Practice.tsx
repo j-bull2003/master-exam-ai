@@ -368,6 +368,39 @@ const Practice = () => {
             </div>
 
             <div>
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice All Reading & Writing Questions</h3>
+              <Card className="mb-6 bg-gradient-to-br from-blue-500/5 to-blue-600/10 border-blue-500/20">
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="text-lg font-semibold text-blue-700">All Reading & Writing Domains</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Practice questions from all Reading & Writing domains combined.
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Includes Information and Ideas, Craft and Structure, Expression of Ideas, and Standard English Conventions.
+                        </p>
+                      </div>
+                      <Badge variant="secondary" className="text-xs">
+                        All Domains
+                      </Badge>
+                    </div>
+                    
+                    <Link to={buildPracticeUrl("Reading and Writing")}>
+                      <Button variant="outline" className="w-full justify-center" size="sm">
+                        <div className="flex items-center gap-2">
+                          {getDifficultyIcon()}
+                          <span>Practice All Reading & Writing</span>
+                        </div>
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
@@ -470,6 +503,39 @@ const Practice = () => {
             </div>
 
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
+            <div>
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice All Math Questions</h3>
+              <Card className="mb-6 bg-gradient-to-br from-emerald-500/5 to-emerald-600/10 border-emerald-500/20">
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="text-lg font-semibold text-emerald-700">All Math Domains</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Practice questions from all Math domains combined.
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Includes Algebra, Advanced Math, Problem-Solving and Data Analysis, and Geometry and Trigonometry.
+                        </p>
+                      </div>
+                      <Badge variant="secondary" className="text-xs">
+                        All Domains
+                      </Badge>
+                    </div>
+                    
+                    <Link to={buildPracticeUrl("Math")}>
+                      <Button variant="outline" className="w-full justify-center" size="sm">
+                        <div className="flex items-center gap-2">
+                          {getDifficultyIcon()}
+                          <span>Practice All Math</span>
+                        </div>
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
             <div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {mathDomains.map((domain, index) => (
