@@ -29,7 +29,7 @@ export const fetchQuestions = async (
     query = query.eq('subdomain', subdomain);
   }
 
-  const { data, error } = await query.limit(100);
+  const { data, error } = await query;
 
   if (error) {
     throw new Error(`Failed to fetch questions: ${error.message}`);
