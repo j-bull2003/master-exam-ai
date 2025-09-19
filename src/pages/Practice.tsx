@@ -374,26 +374,26 @@ const Practice = () => {
 
             <div>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice All Questions</h3>
-              <Card className="mb-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-lg">
+              <Card className="mb-6 bg-gradient-to-br from-blue-500/20 to-purple-500/20 border-blue-500/30 shadow-md hover:shadow-lg transition-all duration-200">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-lg font-semibold text-white">All Reading & Writing Questions</h4>
-                        <p className="text-blue-100 text-sm">
+                        <h4 className="text-lg font-semibold text-blue-800 dark:text-blue-200">All Reading & Writing Questions</h4>
+                        <p className="text-sm text-muted-foreground">
                           Practice questions from all Reading & Writing domains combined.
                         </p>
-                        <p className="text-blue-100 text-sm mt-1">
+                        <p className="text-sm text-muted-foreground mt-1">
                           Includes Information and Ideas, Craft and Structure, Expression of Ideas, and Standard English Conventions.
                         </p>
                       </div>
-                      <Badge variant="secondary" className="text-xs bg-white/20 text-white border-white/30">
+                      <Badge variant="secondary" className="text-xs bg-blue-500/20 text-blue-800 border-blue-500/30">
                         All Domains
                       </Badge>
                     </div>
                     
                     <Link to={buildPracticeUrl("Reading and Writing", undefined, true)}>
-                      <Button variant="secondary" className="w-full justify-center bg-white/20 hover:bg-white/30 text-white border-white/30" size="sm">
+                      <Button variant="outline" className="w-full justify-center border-blue-500/50 hover:bg-blue-500/10 hover:border-blue-500/70" size="sm">
                         <div className="flex items-center gap-2">
                           {getDifficultyIcon()}
                           <span>Practice All Reading & Writing</span>
@@ -510,26 +510,26 @@ const Practice = () => {
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Targeted Practice by Domain & Subdomain</h3>
             <div>
               <h3 className="text-lg sm:text-xl font-semibold mb-4">Practice All Questions</h3>
-              <Card className="mb-6 bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-0 shadow-lg">
+              <Card className="mb-6 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border-emerald-500/30 shadow-md hover:shadow-lg transition-all duration-200">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-lg font-semibold text-white">All Math Questions</h4>
-                        <p className="text-emerald-100 text-sm">
+                        <h4 className="text-lg font-semibold text-emerald-800 dark:text-emerald-200">All Math Questions</h4>
+                        <p className="text-sm text-muted-foreground">
                           Practice questions from all Math domains combined.
                         </p>
-                        <p className="text-emerald-100 text-sm mt-1">
+                        <p className="text-sm text-muted-foreground mt-1">
                           Includes Algebra, Advanced Math, Problem-Solving and Data Analysis, and Geometry and Trigonometry.
                         </p>
                       </div>
-                      <Badge variant="secondary" className="text-xs bg-white/20 text-white border-white/30">
+                      <Badge variant="secondary" className="text-xs bg-emerald-500/20 text-emerald-800 border-emerald-500/30">
                         All Domains
                       </Badge>
                     </div>
                     
                     <Link to={buildPracticeUrl("Math", undefined, true)}>
-                      <Button variant="secondary" className="w-full justify-center bg-white/20 hover:bg-white/30 text-white border-white/30" size="sm">
+                      <Button variant="outline" className="w-full justify-center border-emerald-500/50 hover:bg-emerald-500/10 hover:border-emerald-500/70" size="sm">
                         <div className="flex items-center gap-2">
                           {getDifficultyIcon()}
                           <span>Practice All Math</span>
