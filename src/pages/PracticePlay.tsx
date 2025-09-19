@@ -10,7 +10,7 @@ const PracticePlay = () => {
   const [searchParams] = useSearchParams();
   const domain = searchParams.get('domain');
   const subdomain = searchParams.get('subdomain');
-  const n = parseInt(searchParams.get('n') || '10');
+  const n = parseInt(searchParams.get('n') || '0'); // 0 means all questions
 
   const [questions, setQuestions] = useState<SATQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -47,9 +47,11 @@ const PracticePlay = () => {
             const orderA = difficultyOrder[a.difficulty.toLowerCase() as keyof typeof difficultyOrder] || 999;
             const orderB = difficultyOrder[b.difficulty.toLowerCase() as keyof typeof difficultyOrder] || 999;
             return orderA - orderB;
-          })
-          .slice(0, n);
-        setQuestions(sortedQuestions);
+          });
+        
+        // Only slice if n > 0 (specific number requested), otherwise use all questions
+        const finalQuestions = n > 0 ? sortedQuestions.slice(0, n) : sortedQuestions;
+        setQuestions(finalQuestions);
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load questions");

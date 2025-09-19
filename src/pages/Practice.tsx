@@ -331,7 +331,7 @@ const Practice = () => {
                           </Badge>
                         </div>
                         
-                        <Link to={`/practice/play?domain=${encodeURIComponent(domain.name)}&n=10`}>
+                        <Link to={`/practice/play?domain=${encodeURIComponent(domain.name)}`}>
                           <Button variant="outline" className="w-full" size="sm">
                             <Target className="h-4 w-4 mr-2" />
                             Practice This Domain
@@ -344,7 +344,7 @@ const Practice = () => {
                             {domain.subdomains.map((subdomain, subIndex) => (
                               <Link
                                 key={subIndex}
-                                to={`/practice/play?domain=${encodeURIComponent(domain.name)}&subdomain=${encodeURIComponent(subdomain)}&n=10`}
+                                to={`/practice/play?domain=${encodeURIComponent(domain.name)}&subdomain=${encodeURIComponent(subdomain)}`}
                                 className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
                               >
                                 {subdomain}
@@ -415,7 +415,7 @@ const Practice = () => {
                           </Badge>
                         </div>
                         
-                        <Link to={`/practice/play?domain=${encodeURIComponent(domain.name)}&n=10`}>
+                        <Link to={`/practice/play?domain=${encodeURIComponent(domain.name)}`}>
                           <Button variant="outline" className="w-full" size="sm">
                             <Target className="h-4 w-4 mr-2" />
                             Practice This Domain
@@ -428,7 +428,7 @@ const Practice = () => {
                             {domain.subdomains.map((subdomain, subIndex) => (
                               <Link
                                 key={subIndex}
-                                to={`/practice/play?domain=${encodeURIComponent(domain.name)}&subdomain=${encodeURIComponent(subdomain)}&n=10`}
+                                to={`/practice/play?domain=${encodeURIComponent(domain.name)}&subdomain=${encodeURIComponent(subdomain)}`}
                                 className="text-sm text-blue-600 hover:text-blue-800 hover:underline block w-full text-left"
                               >
                                 {subdomain}
