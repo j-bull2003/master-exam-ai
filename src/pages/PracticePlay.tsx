@@ -76,9 +76,11 @@ const PracticePlay = () => {
   useEffect(() => {
     // MathJax rendering after question changes
     if (typeof window !== 'undefined' && (window as any).MathJax && questions[currentIndex]) {
-      (window as any).MathJax.typesetPromise?.();
+      setTimeout(() => {
+        (window as any).MathJax.typesetPromise?.();
+      }, 100);
     }
-  }, [currentIndex, questions, selectedAnswer]);
+  }, [currentIndex, questions, selectedAnswer, showExplanation]);
 
   const currentQuestion = questions[currentIndex];
   const isAnswered = currentIndex in answers;
@@ -286,7 +288,7 @@ const PracticePlay = () => {
           </CardHeader>
           <CardContent>
             <div 
-              className="prose prose-sm max-w-none mb-6"
+              className="prose prose-sm max-w-none mb-6 math-content"
               dangerouslySetInnerHTML={{ __html: currentQuestion.stem_html }}
             />
 
@@ -347,7 +349,7 @@ const PracticePlay = () => {
                         )}
                       </div>
                       <div 
-                        className="flex-1"
+                        className="flex-1 math-content"
                         dangerouslySetInnerHTML={{ __html: choice.text }}
                       />
                     </div>
@@ -391,7 +393,7 @@ const PracticePlay = () => {
               <div className="border-t pt-4">
                 <h4 className="font-medium mb-2">Explanation:</h4>
                 <div 
-                  className="prose prose-sm max-w-none"
+                  className="prose prose-sm max-w-none math-content"
                   dangerouslySetInnerHTML={{ __html: currentQuestion.explanation_html }}
                 />
               </div>

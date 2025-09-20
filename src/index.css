@@ -499,6 +499,34 @@
     margin-bottom: var(--spacing-2);
   }
 
+  /* === MathML and Mathematical Content === */
+  .math-content math {
+    display: inline-block;
+    vertical-align: baseline;
+    font-family: 'Times New Roman', 'STIX Two Math', serif;
+    font-size: 1.1em;
+  }
+
+  .math-content math * {
+    font-family: inherit;
+  }
+
+  /* Ensure brackets and parentheses are properly sized */
+  .math-content math mo {
+    font-size: 1.2em;
+  }
+
+  /* Style fractions nicely */
+  .math-content math mfrac {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  /* Improve readability of mathematical expressions */
+  .math-content math mrow {
+    white-space: nowrap;
+  }
+
   .empty-state-description {
     font-size: var(--font-size-sm);
     color: hsl(var(--muted-foreground));
