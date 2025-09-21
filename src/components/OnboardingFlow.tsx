@@ -67,15 +67,9 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const nextStep = async () => {
+  const nextStep = () => {
     if (currentStep === 1 && !validateStep(currentStep)) return;
-    
-    // Create user account after completing step 1 (account details)
-    if (currentStep === 1 && !userCreated) {
-      await handleCreateAccount();
-    } else {
-      setCurrentStep(prev => Math.min(prev + 1, totalSteps));
-    }
+    setCurrentStep(prev => Math.min(prev + 1, totalSteps));
   };
 
   const prevStep = () => {
@@ -89,7 +83,7 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     }
   };
 
-  const handleCreateAccount = async () => {
+  const handleCompleteSignup = async () => {
     setIsLoading(true);
     try {
       console.log('Creating user account...');
@@ -117,11 +111,11 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       setUserCreated(true);
       toast({
         title: "Account Created!",
-        description: "Your account has been created successfully. Continue to select your plan.",
+        description: "Your account has been created successfully. Continue with payment setup or skip to dashboard.",
       });
 
-      // Move to next step
-      setCurrentStep(prev => prev + 1);
+      // Move to payment step
+      setCurrentStep(5);
       
     } catch (error: any) {
       console.error('Account creation error:', error);
@@ -627,20 +621,21 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 <Button
                   onClick={nextStep}
                   className="flex items-center justify-center space-x-2 w-full sm:w-auto"
-                  disabled={isLoading}
                 >
-                  <span>{currentStep === 1 && !userCreated ? (isLoading ? 'Creating Account...' : 'Create Account') : 'Continue'}</span>
+                  <span>Continue</span>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               ) : currentStep === 4 ? (
+                <Button
+                  onClick={handleCompleteSignup}
+                  className="flex items-center justify-center space-x-2 w-full sm:w-auto"
+                  disabled={isLoading}
+                >
+                  <span className="text-center">{isLoading ? 'Creating Account...' : 'Create Account & Continue'}</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              ) : currentStep === 5 ? (
                 <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                  <Button
-                    onClick={nextStep}
-                    className="flex items-center justify-center space-x-2"
-                  >
-                    <span>Set Up Payment</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
                   <Button
                     variant="outline"
                     onClick={handleSkipToDashboard}
