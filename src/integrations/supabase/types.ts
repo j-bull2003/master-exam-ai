@@ -181,8 +181,10 @@ export type Database = {
           email: string | null
           exam_date: string | null
           exam_type: string | null
+          first_name: string | null
           full_name: string | null
           id: string
+          last_name: string | null
           stripe_customer_id: string | null
           subscription_end_date: string | null
           subscription_status: string | null
@@ -194,8 +196,10 @@ export type Database = {
           email?: string | null
           exam_date?: string | null
           exam_type?: string | null
+          first_name?: string | null
           full_name?: string | null
           id: string
+          last_name?: string | null
           stripe_customer_id?: string | null
           subscription_end_date?: string | null
           subscription_status?: string | null
@@ -207,8 +211,10 @@ export type Database = {
           email?: string | null
           exam_date?: string | null
           exam_type?: string | null
+          first_name?: string | null
           full_name?: string | null
           id?: string
+          last_name?: string | null
           stripe_customer_id?: string | null
           subscription_end_date?: string | null
           subscription_status?: string | null
