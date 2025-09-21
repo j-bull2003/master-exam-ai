@@ -109,10 +109,10 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       console.log('Account created successfully');
       toast({
         title: "Account Created!",
-        description: "Please complete payment setup to finalize your registration.",
+        description: "You're now signed up! Continue with payment setup.",
       });
 
-      // Move to payment step
+      // Move to payment step immediately
       setCurrentStep(5);
       
     } catch (error: any) {

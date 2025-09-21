@@ -1,7 +1,15 @@
-import SimpleRegister from "./SimpleRegister";
+import OnboardingFlow from "@/components/OnboardingFlow";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  return <SimpleRegister />;
+  const navigate = useNavigate();
+
+  const handleOnboardingComplete = () => {
+    // After successful registration and payment setup, redirect to dashboard
+    navigate("/dashboard");
+  };
+
+  return <OnboardingFlow onComplete={handleOnboardingComplete} />;
 };
 
 export default Register;

@@ -74,8 +74,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             first_name: firstName,
             last_name: lastName,
             full_name: firstName && lastName ? `${firstName} ${lastName}` : firstName || '',
-          },
-          emailRedirectTo: undefined // Disable email confirmation
+          }
+          // Remove emailRedirectTo completely to disable email confirmation
         }
       });
       
@@ -83,11 +83,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         return { error };
       }
 
-      // Check if user was created successfully and is confirmed
-      if (data.user && !data.user.email_confirmed_at) {
-        // For development - auto-confirm the user if email confirmation is disabled
-        console.log('User created successfully without email confirmation');
-      }
+      // The user should be automatically confirmed without email verification
+      console.log('User created successfully:', data.user?.email);
       
       return { error: null };
     } catch (error: any) {
