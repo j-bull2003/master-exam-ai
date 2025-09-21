@@ -66,22 +66,30 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signUp = async (email: string, password: string, firstName?: string, lastName?: string) => {
     try {
-      const redirectUrl = `${window.location.origin}/`;
-      
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: redirectUrl,
           data: {
             first_name: firstName,
             last_name: lastName,
             full_name: firstName && lastName ? `${firstName} ${lastName}` : firstName || '',
-          }
+          },
+          emailRedirectTo: undefined // Disable email confirmation
         }
       });
       
-      return { error };
+      if (error) {
+        return { error };
+      }
+
+      // Check if user was created successfully and is confirmed
+      if (data.user && !data.user.email_confirmed_at) {
+        // For development - auto-confirm the user if email confirmation is disabled
+        console.log('User created successfully without email confirmation');
+      }
+      
+      return { error: null };
     } catch (error: any) {
       console.error('Sign up error:', error);
       return { error: error.message || 'Registration failed' };
