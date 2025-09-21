@@ -13,14 +13,9 @@ serve(async (req) => {
   }
 
   try {
-    const { email } = await req.json();
-    console.log('Auto-confirming user:', email);
-    
-    if (!email) {
-      throw new Error('Email is required');
-    }
+    console.log('Auto-confirm user function called');
 
-    // Create Supabase client with service role key to modify auth.users
+    // Create Supabase client with service role key for admin operations
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
@@ -32,9 +27,30 @@ serve(async (req) => {
       }
     );
 
-    // Update the user to confirm their email
+    const { email } = await req.json();
+    
+    if (!email) {
+      throw new Error('Email is required');
+    }
+
+    console.log('Auto-confirming user:', email);
+
+    // Get user by email first
+    const { data: users, error: listError } = await supabaseAdmin.auth.admin.listUsers();
+    
+    if (listError) {
+      console.error('Error listing users:', listError);
+      throw listError;
+    }
+
+    const user = users.users.find((u: any) => u.email === email);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Update the user to be confirmed using admin client
     const { data, error } = await supabaseAdmin.auth.admin.updateUserById(
-      (await supabaseAdmin.auth.admin.listUsers()).data.users.find(u => u.email === email)?.id || '',
+      user.id,
       {
         email_confirm: true
       }
@@ -42,20 +58,11 @@ serve(async (req) => {
 
     if (error) {
       console.error('Error confirming user:', error);
-      // Try direct database update as fallback
-      const { error: dbError } = await supabaseAdmin
-        .from('auth.users')
-        .update({ email_confirmed_at: new Date().toISOString() })
-        .eq('email', email);
-        
-      if (dbError) {
-        console.error('Database update failed:', dbError);
-        throw new Error('Failed to confirm user');
-      }
+      throw error;
     }
 
     console.log('User confirmed successfully:', email);
-    
+
     return new Response(
       JSON.stringify({ success: true, message: 'User confirmed successfully' }),
       {
@@ -67,10 +74,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Auto-confirm error:', error);
     return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Unknown error',
-        success: false 
-      }),
+      JSON.stringify({ error: error.message }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 500,
